@@ -1,0 +1,612 @@
+/* Application-wide Styles */
+.root {
+    -fx-font-family: "Open Sans", "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 13px;
+    -fx-background-color: #f9f9f9;
+}
+
+/* Coursera-inspired Color Palette */
+* {
+    -primary-color: #0056D2;          /* Coursera blue */
+    -primary-dark-color: #00419E;     /* Darker blue */
+    -secondary-color: #2A73CC;        /* Secondary blue */
+    -accent-color: #5A86BF;           /* Accent blue */
+    -success-color: #1E8A5F;          /* Success green */
+    -warning-color: #F7B100;          /* Warning yellow */
+    -danger-color: #E3371E;           /* Error red */
+    -gray-100: #F5F7F8;               /* Light gray */
+    -gray-200: #E8EBED;               /* Lighter gray */
+    -gray-300: #D1DBE0;               /* Light gray for borders */
+    -gray-600: #6E7480;               /* Medium gray */
+    -gray-800: #3E4044;               /* Dark gray for text */
+}
+
+/* Animation Durations */
+* {
+    -fx-transition-duration: 200ms;
+}
+
+/* Form Styling */
+.form-field {
+    -fx-border-color: -gray-300;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-padding: 10px;
+    -fx-font-size: 14px;
+    -fx-background-color: white;
+    -fx-transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-field:focused {
+    -fx-border-color: -primary-color;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 86, 210, 0.25), 5, 0, 0, 0);
+}
+
+.form-field:hover {
+    -fx-border-color: -gray-600;
+}
+
+.form-field:hover:focused {
+    -fx-border-color: -primary-color;
+}
+
+.error-field {
+    -fx-border-color: -danger-color;
+    -fx-border-width: 1px;
+    -fx-background-color: derive(-danger-color, 95%);
+}
+
+/* Label Styling */
+.label {
+    -fx-text-fill: -gray-800;
+}
+
+/* Validation Message Styling */
+.validation-message {
+    -fx-font-size: 12px;
+    -fx-padding: 4px 0 0 5px;
+    -fx-text-fill: -danger-color;
+    -fx-opacity: 0.9;
+    -fx-wrap-text: true;
+}
+
+.validation-container {
+    -fx-spacing: 4px;
+}
+
+/* Button Styling */
+.button {
+    -fx-background-radius: 4px;
+    -fx-border-radius: 4px;
+    -fx-padding: 10px 20px;
+    -fx-cursor: hand;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-transition: background-color 0.2s, -fx-scale-x 0.1s, -fx-scale-y 0.1s;
+}
+
+.button:hover {
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+.button:pressed {
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+
+.primary-button {
+    -fx-background-color: -primary-color;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 12px 22px;
+}
+
+.primary-button:hover {
+    -fx-background-color: -primary-dark-color;
+}
+
+.primary-button:pressed {
+    -fx-background-color: derive(-primary-dark-color, -10%);
+}
+
+.secondary-button {
+    -fx-background-color: white;
+    -fx-border-color: -gray-300;
+    -fx-text-fill: -gray-800;
+    -fx-padding: 12px 22px;
+}
+
+.secondary-button:hover {
+    -fx-background-color: -gray-100;
+    -fx-border-color: -gray-600;
+}
+
+.secondary-button:pressed {
+    -fx-background-color: -gray-200;
+}
+
+.danger-button {
+    -fx-background-color: white;
+    -fx-border-color: -danger-color;
+    -fx-text-fill: -danger-color;
+    -fx-padding: 8px 16px;
+}
+
+.danger-button:hover {
+    -fx-background-color: -danger-color;
+    -fx-text-fill: white;
+}
+
+.danger-button:pressed {
+    -fx-background-color: derive(-danger-color, -10%);
+}
+
+/* Challenge Form Styling */
+.challenge-form {
+    -fx-background-color: white;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-border-color: -gray-300;
+    -fx-border-width: 1px;
+    -fx-padding: 20px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 10, 0, 0, 2);
+    -fx-transition: -fx-effect 0.3s;
+}
+
+.challenge-form:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 15, 0, 0, 3);
+}
+
+.challenge-header {
+    -fx-font-weight: bold;
+    -fx-font-size: 18px;
+    -fx-text-fill: -primary-color;
+}
+
+.challenge-header-box {
+    -fx-border-color: -gray-200;
+    -fx-border-width: 0 0 2 0;
+    -fx-padding: 0 0 8 0;
+    -fx-spacing: 10;
+}
+
+/* Title Styling */
+.title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -primary-color;
+    -fx-padding: 10px 0;
+}
+
+.subtitle {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -gray-800;
+    -fx-padding: 5px 0;
+}
+
+/* No Challenges Warning */
+.warning-box {
+    -fx-background-color: derive(-warning-color, 85%);
+    -fx-border-color: derive(-warning-color, 65%);
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-padding: 15px;
+    -fx-spacing: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 5, 0, 0, 1);
+}
+
+.warning-message {
+    -fx-text-fill: derive(-warning-color, -30%);
+    -fx-background-color: derive(-warning-color, 85%);
+    -fx-padding: 12px;
+    -fx-background-radius: 6px;
+    -fx-font-size: 14px;
+    -fx-alignment: center;
+}
+
+/* Code block styling */
+.html-editor {
+    -fx-border-color: -gray-300;
+    -fx-border-radius: 6px;
+    -fx-background-color: white;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.03), 5, 0, 0, 1);
+}
+
+.html-editor:focused {
+    -fx-border-color: -primary-color;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 86, 210, 0.15), 6, 0, 0, 0);
+}
+
+/* Customized HTML editor with reduced height */
+.small-html-editor {
+    -fx-pref-height: 120px;
+    -fx-max-height: 150px;
+    -fx-background-color: white;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-border-color: -gray-300;
+}
+
+.small-html-editor .top-toolbar {
+    -fx-pref-height: 36px;
+    -fx-background-color: -gray-100;
+    -fx-border-color: -gray-300;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-radius: 6px 6px 0 0;
+    -fx-background-radius: 6px 6px 0 0;
+}
+
+.small-html-editor .bottom-toolbar {
+    -fx-pref-height: 0px;
+    -fx-max-height: 0px;
+    -fx-min-height: 0px;
+    -fx-visibility: hidden;
+    -fx-managed: false;
+}
+
+.small-html-editor .web-view {
+    -fx-pref-height: 84px; /* 120px total - 36px toolbar */
+    -fx-min-height: 84px;
+    -fx-background-color: white;
+}
+
+.code-block {
+    -fx-font-family: "Consolas", "Monaco", "Courier New", monospace;
+    -fx-background-color: #2d2d2d;
+    -fx-border-color: #1d1d1d;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-padding: 15px;
+    -fx-text-fill: #e0e0e0;
+}
+
+/* Prism.js overrides */
+.html-editor .web-view pre[class*="language-"] {
+    margin: 12px 0;
+    border-radius: 6px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.html-editor .web-view code[class*="language-"] {
+    border-radius: 5px;
+    font-family: "JetBrains Mono", "Consolas", "Monaco", "Courier New", monospace;
+    font-size: 14px;
+}
+
+/* GridPane styling */
+.grid-pane {
+    -fx-hgap: 15;
+    -fx-vgap: 15;
+    -fx-padding: 15;
+}
+
+/* Main page styling */
+.main-panel {
+    -fx-background-color: white;
+    -fx-padding: 25px;
+    -fx-spacing: 20px;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-border-color: -gray-300;
+    -fx-border-width: 1px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 15, 0, 0, 3);
+}
+
+.form-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -primary-color;
+    -fx-padding: 5 0 15 0;
+}
+
+.section-header {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -primary-color;
+    -fx-padding: 10 0 8 0;
+    -fx-border-color: -gray-200;
+    -fx-border-width: 0 0 2 0;
+    -fx-border-insets: 0 0 10 0;
+}
+
+/* ScrollPane styling */
+.scroll-pane {
+    -fx-background-color: white;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: white;
+}
+
+.scroll-pane .scroll-bar:vertical {
+    -fx-background-color: white;
+    -fx-background-radius: 0;
+    -fx-padding: 0 2 0 0;
+}
+
+.scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: -gray-300;
+    -fx-background-radius: 5px;
+}
+
+.scroll-pane .scroll-bar:vertical .thumb:hover,
+.scroll-pane .scroll-bar:vertical .thumb:pressed {
+    -fx-background-color: -gray-600;
+}
+
+.scroll-pane .scroll-bar:vertical .increment-button,
+.scroll-pane .scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 5px;
+}
+
+.scroll-pane .scroll-bar:vertical .increment-arrow,
+.scroll-pane .scroll-bar:vertical .decrement-arrow {
+    -fx-background-color: -gray-600;
+    -fx-pref-width: 8px;
+    -fx-pref-height: 8px;
+}
+
+/* Add Button */
+.add-button {
+    -fx-background-color: -success-color;
+    -fx-text-fill: white;
+    -fx-padding: 12px 22px;
+    -fx-graphic-text-gap: 8px;
+}
+
+.add-button:hover {
+    -fx-background-color: derive(-success-color, -10%);
+}
+
+.add-button:pressed {
+    -fx-background-color: derive(-success-color, -20%);
+}
+
+/* Animation keyframes (JavaFX doesn't fully support keyframes, using static styling instead) */
+.fade-in {
+    -fx-opacity: 1;
+}
+
+.slide-up {
+    -fx-translate-y: 0;
+    -fx-opacity: 1;
+}
+
+/* Enhanced editor buttons */
+.editor-button {
+    -fx-background-radius: 3px;
+    -fx-padding: 3px 5px;
+    -fx-cursor: hand;
+}
+
+.editor-button:hover {
+    -fx-background-color: -gray-200;
+}
+
+.editor-button:pressed {
+    -fx-background-color: -gray-300;
+}
+
+/* Transition effects */
+.transition-node {
+    -fx-transition: -fx-translate-y 0.2s ease-out, -fx-opacity 0.2s ease-out;
+}
+
+/* Tab Pane styling */
+.tab-pane {
+    -fx-tab-min-width: 100px;
+    -fx-tab-max-width: 150px;
+    -fx-tab-min-height: 40px;
+}
+
+.tab-pane .tab-header-area {
+    -fx-padding: 5 5 0 5;
+}
+
+.tab-pane .tab {
+    -fx-background-color: -gray-100;
+    -fx-background-radius: 6px 6px 0 0;
+    -fx-border-radius: 6px 6px 0 0;
+    -fx-padding: 10 15;
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color: white;
+    -fx-border-color: -gray-300 -gray-300 white -gray-300;
+    -fx-border-width: 1 1 2 1;
+}
+
+.tab-pane .tab-content-area {
+    -fx-background-color: white;
+    -fx-border-color: -gray-300;
+    -fx-border-width: 1;
+    -fx-border-radius: 0 0 6px 6px;
+    -fx-background-radius: 0 0 6px 6px;
+}
+
+/* Competition Card Styling */
+.competition-card {
+    -fx-background-color: white;
+    -fx-background-radius: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 2);
+    -fx-border-radius: 8px;
+    -fx-border-color: rgba(0,0,0,0.05);
+    -fx-border-width: 1px;
+    -fx-margin: 10px;
+    -fx-max-width: 350px;
+    -fx-min-width: 330px;
+}
+
+.competition-card:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 15, 0, 0, 3);
+    -fx-cursor: hand;
+}
+
+.competition-title {
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-wrap-text: true;
+    -fx-max-width: 200px;
+}
+
+.competition-category {
+    -fx-text-fill: #3E4044;
+}
+
+.competition-status {
+    -fx-padding: 2px 6px;
+    -fx-background-radius: 3px;
+    -fx-font-size: 12px;
+}
+
+.competition-status-active {
+    -fx-background-color: rgba(0, 170, 0, 0.1);
+    -fx-text-fill: #007500;
+}
+
+.competition-status-planned {
+    -fx-background-color: rgba(0, 100, 255, 0.1);
+    -fx-text-fill: #0055cc;
+}
+
+.competition-status-completed {
+    -fx-background-color: rgba(150, 150, 150, 0.1);
+    -fx-text-fill: #555555;
+}
+
+.competition-status-draft {
+    -fx-background-color: rgba(255, 150, 0, 0.1);
+    -fx-text-fill: #cc7700;
+}
+
+.competition-date {
+    -fx-text-fill: -gray-800;
+}
+
+/* Pagination styling */
+.pagination {
+    -fx-page-information-visible: false;
+}
+
+.pagination .pagination-control .button {
+    -fx-background-color: white;
+    -fx-border-color: -gray-300;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+}
+
+.pagination .pagination-control .button:hover {
+    -fx-background-color: -gray-100;
+}
+
+.pagination .pagination-control .button:pressed {
+    -fx-background-color: -gray-200;
+}
+
+.pagination .pagination-control .page-number {
+    -fx-background-color: white;
+    -fx-border-color: -gray-300;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+}
+
+.pagination .pagination-control .page-number:selected {
+    -fx-background-color: -primary-color;
+    -fx-text-fill: white;
+    -fx-border-color: -primary-color;
+}
+
+/* Dialog Styling */
+.dialog-pane {
+    -fx-background-color: white;
+    -fx-border-color: -gray-300;
+    -fx-border-width: 1px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+}
+
+.dialog-pane .header-panel {
+    -fx-background-color: -gray-100;
+    -fx-background-radius: 8px 8px 0 0;
+    -fx-border-radius: 8px 8px 0 0;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: -gray-300;
+}
+
+.dialog-pane .header-panel .label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -primary-color;
+}
+
+.dialog-pane .content {
+    -fx-padding: 15px;
+}
+
+.dialog-pane .button-bar .button {
+    -fx-background-color: white;
+    -fx-border-color: -gray-300;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+}
+
+.dialog-pane .button-bar .button:hover {
+    -fx-background-color: -gray-100;
+}
+
+/* Content container styling */
+.content-container {
+    -fx-background-color: white;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-border-color: -gray-300;
+    -fx-border-width: 1px;
+    -fx-min-height: 500px;
+}
+
+/* Transparent ScrollPane styling */
+.transparent-scroll-pane {
+    -fx-background: transparent;
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-border-color: transparent;
+}
+
+.transparent-scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.transparent-scroll-pane .scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-background-radius: 4px;
+    -fx-padding: 0 4 0 0;
+}
+
+.transparent-scroll-pane .scroll-bar:vertical .thumb {
+    -fx-background-color: -gray-300;
+    -fx-background-radius: 4px;
+}
+
+.transparent-scroll-pane .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: -gray-600;
+}
+
+.transparent-scroll-pane .scroll-bar:vertical .increment-button,
+.transparent-scroll-pane .scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.transparent-scroll-pane .scroll-bar:vertical .increment-arrow,
+.transparent-scroll-pane .scroll-bar:vertical .decrement-arrow {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+} 

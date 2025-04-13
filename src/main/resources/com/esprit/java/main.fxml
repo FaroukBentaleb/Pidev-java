@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.esprit.java.controllers.CompetitionsListController"
+      prefHeight="800.0" prefWidth="1200.0"
+      style="-fx-background-color: #f5f5f5; -fx-padding: 20;">
+    
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 10;">
+        <Label text="Competitions" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+        <Button text="Create New" onAction="#handleCreateCompetition" 
+                style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+    </HBox>
+    
+    <!-- Main Content Container -->
+    <VBox fx:id="mainContainer" VBox.vgrow="ALWAYS" style="-fx-padding: 10;">
+        <!-- Content will be loaded here -->
+    </VBox>
+    
+</VBox> 

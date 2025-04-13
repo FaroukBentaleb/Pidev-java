@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox maxHeight="280.0" maxWidth="350.0" minHeight="280.0" minWidth="350.0" prefHeight="280.0" prefWidth="350.0" spacing="0.0" styleClass="competition-card" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fx:id="competitionImage" fitHeight="280.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true" />
+      <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+         <children>
+            <Label fx:id="titleLabel" styleClass="competition-title" text="Competition Title" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <HBox spacing="5.0">
+               <children>
+                  <Label text="Category:" />
+                  <Label fx:id="categoryLabel" styleClass="competition-category" text="Web Development" wrapText="true" />
+               </children>
+            </HBox>
+            <HBox spacing="5.0">
+               <children>
+                  <Label text="Status:" />
+                  <Label fx:id="statusLabel" styleClass="competition-status" text="Active" />
+               </children>
+            </HBox>
+            <HBox spacing="5.0">
+               <children>
+                  <Label text="Date:" />
+                  <Label fx:id="dateLabel" styleClass="competition-date" text="2023-01-15" />
+               </children>
+            </HBox>
+            <HBox spacing="5.0">
+               <children>
+                  <Label text="Duration:" />
+                  <Label fx:id="durationLabel" styleClass="competition-duration" text="60 minutes" />
+               </children>
+            </HBox>
+            <HBox alignment="BOTTOM_RIGHT" spacing="10.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <Button fx:id="editBtn" mnemonicParsing="false" styleClass="secondary-button" text="Edit" />
+                  <Button fx:id="deleteBtn" mnemonicParsing="false" styleClass="danger-button" text="Delete" />
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
+         </padding>
+      </VBox>
+   </children>
+</HBox> 
