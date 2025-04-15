@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.Reponses">
+    <Label fx:id="labelTitre" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+    <ListView fx:id="listReponses" prefHeight="300" prefWidth="400" />
+</AnchorPane>

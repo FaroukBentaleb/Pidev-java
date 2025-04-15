@@ -1,0 +1,79 @@
+/* Style général */
+.header-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+/* Scroll */
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+/* Bouton archive */
+.btn-archive {
+    -fx-background-color: #f0f0f0;
+    -fx-text-fill: #007BFF;
+    -fx-border-color: #007BFF;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-padding: 8 16;
+}
+
+.btn-archive:hover {
+    -fx-background-color: #007BFF;
+    -fx-text-fill: white;
+}
+
+/* Boutons personnalisés */
+.button {
+    -fx-background-radius: 8px;
+    -fx-padding: 6 12;
+    -fx-font-size: 14px;
+}
+
+/* Bouton principal */
+.btn-primary {
+    -fx-background-color: #007bff;
+    -fx-text-fill: white;
+}
+
+.btn-primary:hover {
+    -fx-background-color: #0056b3;
+}
+
+/* Bouton succès */
+.btn-success {
+    -fx-background-color: #28a745;
+    -fx-text-fill: white;
+}
+
+.btn-success:hover {
+    -fx-background-color: #1e7e34;
+}
+
+/* Bouton danger */
+.btn-danger {
+    -fx-background-color: #dc3545;
+    -fx-text-fill: white;
+}
+
+.btn-danger:hover {
+    -fx-background-color: #c82333;
+}
+
+/* Statuts */
+.statut-traite {
+    -fx-text-fill: green;
+    -fx-font-weight: bold;
+}
+
+.statut-encours {
+    -fx-text-fill: orange;
+    -fx-font-weight: bold;
+}
+
+.statut-non-traite {
+    -fx-text-fill: red;
+    -fx-font-weight: bold;
+}

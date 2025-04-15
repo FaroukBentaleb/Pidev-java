@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1280" stylesheets="@DisplayReclamations.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.DisplayReclamations">
+
+    <children>
+        <Label fx:id="headerLabel" layoutX="545.0" layoutY="342.0" text="Réclamations" />
+        <VBox fx:id="reclamationsContainer" />
+    </children>
+</AnchorPane>
