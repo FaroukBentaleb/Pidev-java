@@ -1,0 +1,17 @@
+tn\learniverse\controllers\CreateAccount.class
+tn\learniverse\services\UserService.class
+tn\learniverse\services\ICourse.class
+tn\learniverse\entities\Lesson.class
+tn\learniverse\services\IUser.class
+tn\learniverse\services\ILesson.class
+tn\learniverse\tools\DBConnection.class
+tn\learniverse\controllers\AddCourseController.class
+tn\learniverse\entities\Course.class
+tn\learniverse\controllers\EditProfile.class
+tn\learniverse\controllers\Profile.class
+tn\learniverse\services\CourseService.class
+tn\learniverse\services\LessonService.class
+tn\learniverse\tests\MainFX.class
+tn\learniverse\controllers\Login.class
+tn\learniverse\entities\user.class
+tn\learniverse\tests\Main.class
