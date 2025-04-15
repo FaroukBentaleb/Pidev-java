@@ -84,7 +84,7 @@ public class CreateAccount implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        signup_role.getItems().addAll("Student", "Insctructor", "Admin");
+        signup_role.getItems().addAll("Student", "Insctructor");
         signup_role.setValue("Student");
         setupRealTimeValidation();
     }

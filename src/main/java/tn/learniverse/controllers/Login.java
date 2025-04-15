@@ -53,4 +53,8 @@ public class Login {
     public void Signup_btn(ActionEvent actionEvent) {
         Navigator.redirect(actionEvent,"/CreateAccount.fxml");
     }
+
+    public void forgotPassword(ActionEvent actionEvent) {
+
+    }
 }
