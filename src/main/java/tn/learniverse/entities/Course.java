@@ -8,10 +8,8 @@ import java.util.Objects;
 public class Course {
 
     private int id;
+
     private int id_user;
-    private String image;
-    private String video_url;
-    private boolean is_frozen;
 
     private String title;
 
@@ -24,6 +22,12 @@ public class Course {
     private String level;
 
     private String category;
+
+    private String image;
+
+    private String video_url;
+
+    private boolean is_frozen;
 
     private List<Lesson> lessons;
 

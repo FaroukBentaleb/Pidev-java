@@ -1,19 +1,13 @@
 package tn.learniverse.entities;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
 public class Lesson {
     private int id;
-    @NotBlank(message = "Le titre de la leçon est obligatoire")
-    @Size(min = 5, max = 100, message = "Le titre doit contenir entre 5 et 100 caractères")
+
     private String title;
 
-    @NotBlank(message = "La description est obligatoire")
-    @Size(min = 40, max = 300, message = "Le titre doit contenir entre 5 et 100 caractères")
     private String description;
 
-    @NotBlank(message = "Le contenu de la leçon est requis")
     private String content;
 
     //c pas obligatoire
@@ -24,6 +18,14 @@ public class Lesson {
     public Lesson() {
     }
 
+    public Lesson(int id,String title, String description, String content, String attachment,Course course) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.content = content;
+        this.attachment = attachment;
+        this.course = course;
+    }
     public Lesson(String title, String description, String content, String attachment,Course course) {
         this.title = title;
         this.description = description;

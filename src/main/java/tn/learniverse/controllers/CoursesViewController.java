@@ -41,12 +41,9 @@ public class CoursesViewController implements Initializable {
 
         // Chargez l'image au démarrage
         try {
-            // Remplacez ce chemin par le chemin réel de votre image
+
             courseDefaultImage = new Image(getClass().getResourceAsStream("/images/logo.png"));
 
-            // Si votre image est dans un autre emplacement, utilisez un de ces formats:
-            // courseDefaultImage = new Image("file:/path/to/your/image.png");
-            // courseDefaultImage = new Image("https://example.com/your-image.png");
         } catch (Exception e) {
             System.err.println("Impossible de charger l'image par défaut: " + e.getMessage());
             // Image de secours si la première ne se charge pas
@@ -143,32 +140,22 @@ public class CoursesViewController implements Initializable {
 
     private void viewCourseDetails(Course course) {
         try {
-            // This would typically load a course details view
-            // For now, we'll just show the course info in an alert
-            String courseDetails =
-                    "Title: " + course.getTitle() + "\n\n" +
-                            "Description: " + course.getDescription() + "\n\n" +
-                            "Duration: " + course.getDuration() + " hours\n\n" +
-                            "Price: " + course.getPrice() + " DT\n\n" +
-                            "Level: " + course.getLevel() + "\n\n" +
-                            "Category: " + course.getCategory();
+            // Charger la vue détaillée du cours
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/CourseDetailsView.fxml"));
+            Parent root = loader.load();
 
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("Course Details");
-            alert.setHeaderText(course.getTitle());
-            alert.setContentText(courseDetails);
-            alert.showAndWait();
+            // Obtenir le contrôleur et passer le cours
+            CourseDetailsViewController controller = loader.getController();
+            controller.setCourse(course);
 
-            // In a complete application, you would load a dedicated view like:
-            // FXMLLoader loader = new FXMLLoader(getClass().getResource("/CourseDetailsView.fxml"));
-            // Parent root = loader.load();
-            // CourseDetailsViewController controller = loader.getController();
-            // controller.setCourse(course);
-            // Stage stage = new Stage();
-            // stage.setTitle(course.getTitle() + " - Details");
-            // stage.setScene(new Scene(root));
-            // stage.show();
-        } catch (Exception e) {
+            // Créer et configurer la nouvelle fenêtre
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL); // Bloque l'interaction avec la fenêtre parent
+            stage.setTitle(course.getTitle() + " - Details");
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
             showAlert(AlertType.ERROR, "Erreur", "Erreur lors de l'affichage des détails du cours: " + e.getMessage());
             e.printStackTrace();
         }
@@ -200,7 +187,6 @@ public class CoursesViewController implements Initializable {
         Alert confirmAlert = new Alert(AlertType.CONFIRMATION);
         confirmAlert.setTitle("Confirmation de suppression");
         confirmAlert.setHeaderText("Êtes-vous sûr de vouloir supprimer ce cours ?");
-        confirmAlert.setContentText("Cette action est irréversible.");
 
         confirmAlert.showAndWait().ifPresent(response -> {
             if (response == javafx.scene.control.ButtonType.OK) {
