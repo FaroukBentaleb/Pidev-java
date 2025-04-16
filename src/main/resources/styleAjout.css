@@ -1,0 +1,117 @@
+/* styles.css */
+.root {
+    -fx-font-family: 'Segoe UI', 'Arial', sans-serif;
+    -fx-background-color: white;
+}
+
+#navBar {
+    -fx-border-color: #f0f0f0;
+    -fx-border-width: 0 0 1 0;
+}
+
+.logo-container {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 1);
+}
+
+.logo-text {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #4752c4;
+}
+
+.nav-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #505050;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+    -fx-padding: 8px 4px;
+    -fx-border-width: 0 0 2 0;
+    -fx-border-color: transparent;
+}
+
+.nav-btn:hover {
+    -fx-text-fill: #6d7bff;
+    -fx-border-color: #6d7bff;
+}
+
+.active-nav-btn {
+    -fx-text-fill: #6d7bff;
+    -fx-font-weight: bold;
+    -fx-border-color: #6d7bff;
+}
+
+.user-btn {
+    -fx-background-color: #f0f2ff;
+    -fx-background-radius: 50%;
+    -fx-min-width: 40px;
+    -fx-min-height: 40px;
+    -fx-max-width: 40px;
+    -fx-max-height: 40px;
+    -fx-text-fill: #505050;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.post-container {
+    -fx-background-color: #f7f9ff;
+    -fx-background-radius: 20px;
+    -fx-padding: 40px;
+    -fx-spacing: 20px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 10, 0, 0, 1);
+}
+
+.section-title {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+    -fx-padding: 0 0 20 0;
+}
+
+.form-field {
+    -fx-background-color: white;
+    -fx-background-radius: 10px;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 10px;
+    -fx-padding: 12px;
+    -fx-font-size: 14px;
+}
+
+.form-field:focused {
+    -fx-border-color: #6d7bff;
+    -fx-effect: dropshadow(gaussian, rgba(109, 123, 255, 0.1), 5, 0, 0, 0);
+}
+
+.file-btn {
+    -fx-background-color: #f0f0f0;
+    -fx-text-fill: #505050;
+    -fx-background-radius: 10px;
+    -fx-padding: 10px 15px;
+    -fx-cursor: hand;
+}
+
+.file-btn:hover {
+    -fx-background-color: #e8e8e8;
+}
+
+.file-label {
+    -fx-text-fill: #757575;
+    -fx-padding: 10px 0;
+}
+
+.post-btn {
+    -fx-background-color: #6d7bff;
+    -fx-background-radius: 50px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 25px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(109, 123, 255, 0.3), 10, 0, 0, 2);
+}
+
+.post-btn:hover {
+    -fx-background-color: #5964da;
+}
+
+.post-btn .label {
+    -fx-padding: 0 0 0 10;
+}

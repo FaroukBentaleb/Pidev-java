@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+
+<BorderPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@styleAjout.css" xmlns="http://javafx.com/javafx/21.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.AjouterPosteController">
+   <top>
+      <HBox id="navBar" alignment="CENTER" spacing="15" style="-fx-background-color: white; -fx-padding: 10 20;">
+         <HBox alignment="CENTER_LEFT" spacing="15" HBox.hgrow="ALWAYS">
+            <StackPane styleClass="logo-container">
+               <Circle fill="#6d7bff" radius="20" />
+               <ImageView fitHeight="20" fitWidth="20" preserveRatio="true">
+
+               </ImageView>
+            </StackPane>
+            <Label styleClass="logo-text" text="LEARNIVERSE" />
+         </HBox>
+
+         <HBox alignment="CENTER" spacing="25" HBox.hgrow="ALWAYS">
+            <Button styleClass="nav-btn" text="Home" />
+            <Button styleClass="nav-btn" text="About" />
+            <Button styleClass="nav-btn" text="Courses" />
+            <Button styleClass="nav-btn" text="Competitions" />
+            <Button styleClass="nav-btn, active-nav-btn" text="Forum" />
+            <Button styleClass="nav-btn" text="Feedback" />
+         </HBox>
+
+         <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+            <Button styleClass="user-btn" text="U" />
+         </HBox>
+      </HBox>
+   </top>
+
+   <center>
+      <VBox alignment="TOP_CENTER" style="-fx-background-color: white; -fx-padding: 20;">
+         <VBox alignment="CENTER" maxWidth="800" styleClass="post-container">
+            <Label styleClass="section-title" text="Create a new Post" />
+
+            <ComboBox fx:id="categorieA" prefWidth="Infinity" promptText="Digital Marketing" styleClass="form-field" />
+
+            <TextField fx:id="titreA" promptText="Title..." styleClass="form-field" />
+
+            <TextArea fx:id="contenuA" prefHeight="200" promptText="Enter your message here..." styleClass="form-field" wrapText="true" />
+
+            <HBox alignment="CENTER_LEFT" spacing="20">
+               <Button onAction="#ajouterImage" styleClass="file-btn" text="Choose a file" />
+               <Label fx:id="labelimg" styleClass="file-label" text="No file selected" />
+               <Region HBox.hgrow="ALWAYS" />
+               <Button onAction="#ajouter" styleClass="post-btn" text="Post">
+                  <graphic>
+                     <Label style="-fx-text-fill: white; -fx-font-weight: bold;" text="❯" />
+                  </graphic>
+               </Button>
+            </HBox>
+         </VBox>
+      </VBox>
+   </center>
+</BorderPane>

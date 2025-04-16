@@ -1,0 +1,142 @@
+package tn.learniverse.services;
+
+import tn.learniverse.entities.Commentaire;
+import tn.learniverse.entities.user;
+import tn.learniverse.entities.Poste;
+
+import tn.learniverse.tools.DBConnection;
+
+import java.sql.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
+public class CommentaireService implements IForum<Commentaire> {
+
+    private Connection cnx;
+
+    public CommentaireService() {
+        cnx = DBConnection.getInstance().getConnection();
+    }
+
+    @Override
+    public void ajouter(Commentaire c) {
+        try {
+            // Fixer l'utilisateur manuellement
+            user u = new user();
+            u.setId(1); // utilisateur par défaut
+            c.setUser(u);
+
+            if (c.getDateComment() == null || c.getDateComment().isEmpty()) {
+                String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                c.setDateComment(currentDate);
+            }
+
+            c.setVisible(true);
+
+
+            String sql = "INSERT INTO commentaire (contenu, date_comment, id_poste_id, id_user_id, visible, gifurl) " +
+                    "VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement ps = cnx.prepareStatement(sql);
+            ps.setString(1, c.getContenu());
+            ps.setDate(2, Date.valueOf(c.getDateComment()));
+            ps.setInt(3, c.getPoste().getId());
+            ps.setInt(4, c.getUser().getId());
+            ps.setBoolean(5, c.isVisible());
+            ps.setString(6, c.getGifurl());
+
+            ps.executeUpdate();
+            System.out.println("✅ Commentaire ajouté avec succès !");
+        } catch (SQLException e) {
+            System.out.println("❌ Erreur lors de l'ajout du commentaire : " + e.getMessage());
+        }
+    }
+
+
+    @Override
+    public void modifier(Commentaire c) {
+        String sql = "UPDATE commentaire SET contenu=?, date_comment=?, visible=?, gifurl=? WHERE id=?";
+        try (PreparedStatement pst = cnx.prepareStatement(sql)) {
+            pst.setString(1, c.getContenu());
+            pst.setDate(2, Date.valueOf(c.getDateComment()));
+            pst.setBoolean(3, c.isVisible());
+            pst.setString(4, c.getGifurl());
+            pst.setInt(5, c.getId());
+            pst.executeUpdate();
+            System.out.println("✅ Commentaire modifié !");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void supprimer(int id) {
+        String sql = "DELETE FROM commentaire WHERE id=?";
+        try (PreparedStatement pst = cnx.prepareStatement(sql)) {
+            pst.setInt(1, id);
+            pst.executeUpdate();
+            System.out.println("🗑️ Commentaire supprimé !");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public Commentaire getById(int id) {
+        String sql = "SELECT * FROM commentaire WHERE id=?";
+        try (PreparedStatement pst = cnx.prepareStatement(sql)) {
+            pst.setInt(1, id);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                Commentaire c = new Commentaire();
+                c.setId(rs.getInt("id"));
+                c.setContenu(rs.getString("contenu"));
+                c.setDateComment(rs.getDate("date_comment").toString());
+                c.setVisible(rs.getBoolean("visible"));
+                c.setGifurl(rs.getString("gifurl"));
+                // Charger les objets Poste et User si nécessaire
+                return c;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<Commentaire> getAll() {
+        List<Commentaire> commentaires = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM commentaire";
+            PreparedStatement ps = cnx.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Commentaire c = new Commentaire();
+                c.setId(rs.getInt("id"));
+                c.setContenu(rs.getString("contenu"));
+                c.setDateComment(rs.getString("date_comment"));
+                c.setVisible(rs.getBoolean("visible"));
+                c.setGifurl(rs.getString("gifurl"));
+
+                // Créer et associer l'utilisateur
+                user u = new user();
+                u.setId(rs.getInt("id_user_id"));
+                c.setUser(u);
+
+                // Créer et associer le poste
+                Poste p = new Poste();
+                p.setId(rs.getInt("id_poste_id"));
+                c.setPoste(p);
+
+                commentaires.add(c);
+            }
+        } catch (SQLException e) {
+            System.out.println("❌ Erreur getAll commentaires : " + e.getMessage());
+            e.printStackTrace();
+        }
+        return commentaires;
+    }
+
+}
