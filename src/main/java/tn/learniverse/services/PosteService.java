@@ -62,20 +62,22 @@ public class PosteService implements IForum<Poste> {
 
     @Override
     public void modifier(Poste p) {
-        String sql = "UPDATE poste SET titre=?, contenu=?, date_post=?, visible=?, nb_com=?, categorie=?, photo=? WHERE id=?";
+        String sql = "UPDATE poste SET titre=?, contenu=?, categorie=?, photo=? WHERE id=?";
         try (PreparedStatement pst = cnx.prepareStatement(sql)) {
             pst.setString(1, p.getTitre());
             pst.setString(2, p.getContenu());
-            pst.setDate(3, Date.valueOf(p.getDatePost()));
-            pst.setBoolean(4, p.isVisible());
-            pst.setInt(5, p.getNbCom());
-            pst.setString(6, p.getCategorie());
-            pst.setString(7, p.getPhoto());
-            pst.setInt(8, p.getId());
-            pst.executeUpdate();
+            pst.setString(3, p.getCategorie());
+            pst.setString(4, p.getPhoto());
+            pst.setInt(5, p.getId());
+
+            int rowsUpdated = pst.executeUpdate();
+            if (rowsUpdated == 0) {
+                throw new SQLException("La modification a échoué, aucun poste trouvé avec cet ID");
+            }
             System.out.println("✅ Poste modifié !");
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("❌ Erreur modification poste : " + e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 
@@ -140,6 +142,8 @@ public class PosteService implements IForum<Poste> {
 
             while (rs.next()) {
                 Poste p = new Poste();
+
+                p.setId(rs.getInt("id"));
 
                 // Récupérer les informations du poste
                 p.setTitre(rs.getString("titre"));

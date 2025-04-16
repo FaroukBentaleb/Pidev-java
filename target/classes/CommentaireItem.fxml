@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21.0.2"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="tn.learniverse.controllers.CommentaireItemController"
+      style="-fx-padding: 10; -fx-background-color: #f5f5f5; -fx-background-radius: 5;"
+      spacing="10">
+
+    <HBox spacing="10">
+        <Label fx:id="auteurLabel" style="-fx-font-weight: bold;"/>
+        <Label fx:id="dateLabel" style="-fx-text-fill: gray; -fx-font-size: 12;"/>
+    </HBox>
+
+    <Label fx:id="contenuLabel" wrapText="true"/>
+
+    <ImageView fx:id="gifImageView" fitWidth="200" preserveRatio="true" visible="false"/>
+
+    <HBox spacing="5" alignment="CENTER_RIGHT">
+        <Button text="Modifier" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"
+                onAction="#handleModifier"/>
+        <Button text="Supprimer" style="-fx-background-color: #f44336; -fx-text-fill: white;"
+                onAction="#handleSupprimer"/>
+    </HBox>
+</VBox>

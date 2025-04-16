@@ -139,4 +139,43 @@ public class CommentaireService implements IForum<Commentaire> {
         return commentaires;
     }
 
+    public List<Commentaire> getByPosteId(int posteId) {
+        List<Commentaire> commentaires = new ArrayList<>();
+        String sql = "SELECT c.*, u.prenom, u.nom FROM commentaire c " +
+                "JOIN user u ON c.id_user_id = u.id " +
+                "WHERE c.id_poste_id = ? " +
+                "ORDER BY c.date_comment DESC";
+
+        try (PreparedStatement ps = cnx.prepareStatement(sql)) {
+            ps.setInt(1, posteId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Commentaire c = new Commentaire();
+                c.setId(rs.getInt("id"));
+                c.setContenu(rs.getString("contenu"));
+                c.setDateComment(rs.getString("date_comment"));
+                c.setGifurl(rs.getString("gifurl"));
+
+                // Créer l'objet Poste avec juste l'ID
+                Poste p = new Poste();
+                p.setId(posteId);
+                c.setPoste(p);
+
+                // Créer l'objet User
+                user u = new user();
+                u.setId(rs.getInt("id_user_id"));
+                u.setPrenom(rs.getString("prenom"));
+                u.setNom(rs.getString("nom"));
+                c.setUser(u);
+
+                commentaires.add(c);
+            }
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la récupération des commentaires: " + e.getMessage());
+        }
+
+        return commentaires;
+    }
+
 }
