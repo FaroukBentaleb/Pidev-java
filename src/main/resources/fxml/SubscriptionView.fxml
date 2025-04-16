@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.shape.SVGPath?>
+
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.learniverse.controller.SubscriptionController"
+      stylesheets="@../styles/styles.css">
+
+    <!-- Sidebar -->
+    <VBox styleClass="sidebar">
+        <VBox styleClass="sidebar-header">
+            <Text text="Learniverse" styleClass="logo-text"/>
+        </VBox>
+        
+        <VBox styleClass="nav-items">
+            <Button text="Home" styleClass="nav-button">
+                <graphic>
+                    <SVGPath content="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                            styleClass="nav-icon"/>
+                </graphic>
+            </Button>
+            
+            <Button text="Courses" styleClass="nav-button">
+                <graphic>
+                    <SVGPath content="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                            styleClass="nav-icon"/>
+                </graphic>
+            </Button>
+            
+            <Button text="Forum" styleClass="nav-button">
+                <graphic>
+                    <SVGPath content="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"
+                            styleClass="nav-icon"/>
+                </graphic>
+            </Button>
+            
+            <Button text="Competitions" styleClass="nav-button">
+                <graphic>
+                    <SVGPath content="M5 3l14 9-14 9V3zm0 0l14 9-14 9V3zm7 4v10m0-10v10m0-10h3m-3 0h3"
+                            styleClass="nav-icon"/>
+                </graphic>
+            </Button>
+            
+            <Button text="Offers" styleClass="nav-button, nav-button-active">
+                <graphic>
+                    <SVGPath content="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
+                            styleClass="nav-icon"/>
+                </graphic>
+            </Button>
+        </VBox>
+    </VBox>
+
+    <!-- Main Content -->
+    <BorderPane HBox.hgrow="ALWAYS">
+        <top>
+            <VBox spacing="20" styleClass="header-section">
+                <padding>
+                    <Insets top="20" right="30" bottom="20" left="30"/>
+                </padding>
+                
+                <HBox alignment="CENTER_LEFT" spacing="20">
+                    <Text text="Subscriptions" styleClass="header-text"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <TextField fx:id="searchField" promptText="Search subscriptions..." styleClass="search-field"/>
+                    <Button fx:id="addButton" text="+ New Subscription" styleClass="add-button"/>
+                </HBox>
+                
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <ComboBox fx:id="filterStatus" promptText="Filter by Status" styleClass="filter-combo"/>
+                    <ComboBox fx:id="sortBy" promptText="Sort by" styleClass="filter-combo"/>
+                </HBox>
+            </VBox>
+        </top>
+
+        <center>
+            <ScrollPane fitToWidth="true" fitToHeight="true" styleClass="content-area" VBox.vgrow="ALWAYS">
+                <content>
+                    <VBox alignment="TOP_CENTER" spacing="20">
+                        <padding>
+                            <Insets top="20" right="20" bottom="20" left="20"/>
+                        </padding>
+                        <FlowPane fx:id="cardsContainer" hgap="20" vgap="20" styleClass="cards-container">
+                            <!-- Cards will be added here dynamically -->
+                        </FlowPane>
+                    </VBox>
+                </content>
+            </ScrollPane>
+        </center>
+
+        <bottom>
+            <HBox alignment="CENTER" spacing="10" styleClass="footer-section">
+                <padding>
+                    <Insets top="10" right="30" bottom="10" left="30"/>
+                </padding>
+                <Button fx:id="refreshButton" text="Refresh" styleClass="refresh-button"/>
+                <Pagination fx:id="pagination" styleClass="custom-pagination"/>
+            </HBox>
+        </bottom>
+    </BorderPane>
+</HBox> 

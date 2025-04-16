@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.chart.*?>
+
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.learniverse.controller.OffreController"
+      stylesheets="@../styles/styles.css"
+      HBox.hgrow="ALWAYS">
+
+    <!-- Sidebar -->
+    <VBox styleClass="sidebar">
+        <VBox styleClass="sidebar-header">
+            <Text text="Learniverse" styleClass="logo-text"/>
+        </VBox>
+        
+        <VBox styleClass="nav-items">
+            <Button text="Home" styleClass="nav-button">
+                <graphic>
+                    <SVGPath content="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                            styleClass="nav-icon"/>
+                </graphic>
+            </Button>
+            
+            <Button text="Courses" styleClass="nav-button">
+                <graphic>
+                    <SVGPath content="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                            styleClass="nav-icon"/>
+                </graphic>
+            </Button>
+            
+            <Button text="Forum" styleClass="nav-button">
+                <graphic>
+                    <SVGPath content="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"
+                            styleClass="nav-icon"/>
+                </graphic>
+            </Button>
+            
+            <Button text="Competitions" styleClass="nav-button">
+                <graphic>
+                    <SVGPath content="M5 3l14 9-14 9V3zm0 0l14 9-14 9V3zm7 4v10m0-10v10m0-10h3m-3 0h3"
+                            styleClass="nav-icon"/>
+                </graphic>
+            </Button>
+            
+            <Button text="Offers" styleClass="nav-button, nav-button-active">
+                <graphic>
+                    <SVGPath content="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
+                            styleClass="nav-icon"/>
+                </graphic>
+            </Button>
+        </VBox>
+    </VBox>
+
+    <!-- Main Content with ScrollPane -->
+    <ScrollPane fitToWidth="true" 
+                styleClass="main-scroll-pane" 
+                HBox.hgrow="ALWAYS"
+                vbarPolicy="ALWAYS"
+                hbarPolicy="NEVER">
+        <content>
+            <VBox spacing="20" styleClass="main-content">
+                <padding>
+                    <Insets top="20" right="30" bottom="20" left="30"/>
+                </padding>
+
+                <!-- Statistics Panel -->
+                <HBox spacing="20" styleClass="stats-panel">
+                    <VBox styleClass="stat-card">
+                        <Text text="Total Offers" styleClass="stat-label"/>
+                        <Text fx:id="totalOffersText" text="0" styleClass="stat-value"/>
+                    </VBox>
+                    <VBox styleClass="stat-card">
+                        <Text text="Active Offers" styleClass="stat-label"/>
+                        <Text fx:id="activeOffersText" text="0" styleClass="stat-value"/>
+                    </VBox>
+                    <VBox styleClass="stat-card">
+                        <Text text="Average Price" styleClass="stat-label"/>
+                        <Text fx:id="avgPriceText" text="0" styleClass="stat-value"/>
+                    </VBox>
+                    <VBox styleClass="stat-card">
+                        <Text text="Total Subscriptions" styleClass="stat-label"/>
+                        <Text fx:id="totalSubscriptionsText" text="0" styleClass="stat-value"/>
+                    </VBox>
+                </HBox>
+
+                <!-- Charts Section -->
+                <HBox spacing="20" styleClass="charts-container">
+                    <VBox styleClass="chart-card">
+                        <Text text="Offer Distribution" styleClass="chart-title"/>
+                        <PieChart fx:id="statusDistributionChart" styleClass="mini-chart"/>
+                    </VBox>
+                    <VBox styleClass="chart-card">
+                        <Text text="Price Trends" styleClass="chart-title"/>
+                        <LineChart fx:id="priceTrendsChart" styleClass="mini-chart">
+                            <xAxis>
+                                <CategoryAxis fx:id="priceTrendsXAxis"/>
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis fx:id="priceTrendsYAxis"/>
+                            </yAxis>
+                        </LineChart>
+                    </VBox>
+                </HBox>
+
+                <!-- Search and Filter Section -->
+                <VBox spacing="10">
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <HBox styleClass="search-box">
+                            <SVGPath content="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" 
+                                    styleClass="search-icon"/>
+                            <TextField fx:id="searchField" promptText="Search offers..." 
+                                     styleClass="search-field"/>
+                        </HBox>
+                        <Button fx:id="advancedSearchButton" text="Advanced Search" 
+                               styleClass="filter-button">
+                            <tooltip>
+                                <Tooltip text="Open advanced search options"/>
+                            </tooltip>
+                        </Button>
+                        <Button fx:id="clearFiltersButton" text="Clear All Filters" 
+                               styleClass="filter-button">
+                            <tooltip>
+                                <Tooltip text="Reset all filters"/>
+                            </tooltip>
+                        </Button>
+                    </HBox>
+
+                    <!-- Quick Filter Chips -->
+                    <HBox fx:id="filterChipsContainer" spacing="5" styleClass="filter-chips">
+                        <padding>
+                            <Insets top="5" bottom="5"/>
+                        </padding>
+                    </HBox>
+
+                    <!-- Filter Controls -->
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <ComboBox fx:id="filterStatus" promptText="Filter by Status" 
+                                 styleClass="filter-combo"/>
+                        <ComboBox fx:id="sortBy" promptText="Sort by" 
+                                 styleClass="filter-combo"/>
+                        <ComboBox fx:id="itemsPerPage" promptText="Items per page" 
+                                 styleClass="filter-combo"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Button fx:id="refreshButton" text="Refresh" 
+                               styleClass="action-button">
+                            <tooltip>
+                                <Tooltip text="Refresh offers list"/>
+                            </tooltip>
+                        </Button>
+                        <Button fx:id="addButton" text="Add New Offer" 
+                               styleClass="action-button">
+                            <tooltip>
+                                <Tooltip text="Create new offer"/>
+                            </tooltip>
+                        </Button>
+                    </HBox>
+                </VBox>
+
+                <!-- Cards Container -->
+                <FlowPane fx:id="cardsContainer" hgap="20" vgap="20" styleClass="cards-container">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+                </FlowPane>
+
+                <!-- Pagination -->
+                <HBox alignment="CENTER" spacing="20" styleClass="pagination-container">
+                    <Text fx:id="paginationInfo" text="Showing 0 of 0 offers" 
+                          styleClass="pagination-info"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <HBox alignment="CENTER" spacing="5">
+                        <Button fx:id="prevPageButton" text="Previous" 
+                               styleClass="pagination-button"/>
+                        <TextField fx:id="jumpToPageField" promptText="Page" 
+                                 styleClass="page-input"/>
+                        <Text text="/" styleClass="pagination-text"/>
+                        <Text fx:id="totalPagesText" text="0" styleClass="pagination-text"/>
+                        <Button fx:id="nextPageButton" text="Next" 
+                               styleClass="pagination-button"/>
+                    </HBox>
+                </HBox>
+            </VBox>
+        </content>
+    </ScrollPane>
+</HBox> 
