@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.AmbientLight?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="700.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.CoursesViewController">
+    <children>
+        <VBox alignment="TOP_CENTER" spacing="20.0" style="-fx-background-color: #f0f4f8;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <!-- Header Section -->
+            <HBox alignment="CENTER_LEFT" prefHeight="60.0" style="-fx-background-color: linear-gradient(to right, #6A11CB, #2575FC); -fx-background-radius: 0 0 15 15;">
+                <padding>
+                    <Insets left="20.0" right="20.0" />
+                </padding>
+                <children>
+                    <HBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+                        <children>
+                            <Label text="Learniverse" textFill="WHITE">
+                                <font>
+                                    <Font name="System Bold" size="24.0" />
+                                </font>
+                                <graphic>
+                                    <Label text="🎓" textFill="WHITE">
+                                        <font>
+                                            <Font size="24.0" />
+                                        </font>
+                                    </Label>
+                                </graphic>
+                            </Label>
+                        </children>
+                    </HBox>
+
+                    <HBox alignment="CENTER" prefHeight="60.0" prefWidth="385.0" spacing="30.0">
+                        <children>
+                            <Button mnemonicParsing="false" onAction="#navigateToHome" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-cursor: hand;" text="Home">
+                                <font>
+                                    <Font size="14.0" />
+                                </font>
+                            </Button>
+                            <Button mnemonicParsing="false" onAction="#navigateToCourses" style="-fx-background-color: white; -fx-text-fill: #6A11CB; -fx-background-radius: 15; -fx-cursor: hand;" text="Courses">
+                                <font>
+                                    <Font size="14.0" />
+                                </font>
+                            </Button>
+                            <Button mnemonicParsing="false" onAction="#navigateToAbout" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-cursor: hand;" text="About">
+                                <font>
+                                    <Font size="14.0" />
+                                </font>
+                            </Button>
+                        </children>
+                    </HBox>
+
+                    <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+                        <!-- J'ai retiré le bouton "Add Course" d'ici -->
+                    </HBox>
+                </children>
+                <VBox.margin>
+                    <Insets />
+                </VBox.margin>
+            </HBox>
+
+            <!-- Main Content Area -->
+            <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;" VBox.vgrow="ALWAYS">
+                <content>
+                    <VBox fx:id="coursesContainer" spacing="20.0">
+                        <padding>
+                            <Insets bottom="30.0" left="30.0" right="30.0" top="10.0" />
+                        </padding>
+                    </VBox>
+                </content>
+            </ScrollPane>
+        </VBox>
+
+        <!-- Bouton flottant "Add Course" -->
+        <Button mnemonicParsing="false" onAction="#handleAddCourse" prefHeight="50.0" prefWidth="47.0" style="-fx-background-color: #6A11CB; -fx-text-fill: white; -fx-background-radius: 30; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 2);" text="+" textFill="WHITE" AnchorPane.bottomAnchor="28.0" AnchorPane.rightAnchor="31.0">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+            <padding>
+                <Insets bottom="10.0" left="15.0" right="15.0" top="10.0" />
+            </padding>
+        </Button>
+      <AmbientLight color="CHARTREUSE" layoutX="748.0" layoutY="646.0" lightOn="true" />
+    </children>
+</AnchorPane>

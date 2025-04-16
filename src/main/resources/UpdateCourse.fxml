@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="700.0" prefWidth="800.0" stylesheets="@add-course.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.UpdateCourseController">
+    <children>
+        <VBox alignment="CENTER" layoutX="63.0" layoutY="21.0" prefHeight="710.0" prefWidth="673.0" spacing="10.0"
+              style="-fx-background-color: linear-gradient(to right, #6A11CB, #2575FC); -fx-background-radius: 15;"
+              AnchorPane.bottomAnchor="51.0" AnchorPane.leftAnchor="63.0" AnchorPane.rightAnchor="64.19999999999993"
+              AnchorPane.topAnchor="21.0">
+            <padding>
+                <Insets bottom="20.0" left="40.0" right="40.0" top="20.0"/>
+            </padding>
+            <children>
+                <Label text="Update Course" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="30.0"/>
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="10.0"/>
+                    </VBox.margin>
+                </Label>
+
+                <TextField fx:id="titleField" promptText="Titre" styleClass="input-field"/>
+                <Label fx:id="titleErrorLabel" textFill="RED" visible="false">
+                    <font>
+                        <Font size="12.0"/>
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="5.0"/>
+                    </VBox.margin>
+                </Label>
+
+                <TextArea fx:id="descriptionField" prefHeight="100.0" promptText="Description" styleClass="input-field"/>
+                <Label fx:id="descriptionErrorLabel" textFill="RED" visible="false">
+                    <font>
+                        <Font size="12.0"/>
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="5.0"/>
+                    </VBox.margin>
+                </Label>
+
+                <TextField fx:id="durationField" promptText="Durée (en heures)" styleClass="input-field"/>
+                <Label fx:id="durationErrorLabel" textFill="RED" visible="false">
+                    <font>
+                        <Font size="12.0"/>
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="5.0"/>
+                    </VBox.margin>
+                </Label>
+
+                <TextField fx:id="priceField" promptText="Prix (en DT)" styleClass="input-field"/>
+                <Label fx:id="priceErrorLabel" textFill="RED" visible="false">
+                    <font>
+                        <Font size="12.0"/>
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="5.0"/>
+                    </VBox.margin>
+                </Label>
+
+                <ComboBox fx:id="levelComboBox" prefWidth="Infinity" promptText="Niveau" styleClass="input-field"/>
+                <Label fx:id="levelErrorLabel" textFill="RED" visible="false">
+                    <font>
+                        <Font size="12.0"/>
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="5.0"/>
+                    </VBox.margin>
+                </Label>
+
+                <ComboBox fx:id="categoryComboBox" prefWidth="Infinity" promptText="Catégorie" styleClass="input-field"/>
+                <Label fx:id="categoryErrorLabel" textFill="RED" visible="false">
+                    <font>
+                        <Font size="12.0"/>
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="5.0"/>
+                    </VBox.margin>
+                </Label>
+
+                <Button fx:id="updateButton" onAction="#UpdateCourse" prefWidth="200.0" styleClass="add-button" text="Update">
+                    <font>
+                        <Font size="16.0"/>
+                    </font>
+                    <VBox.margin>
+                        <Insets top="10.0"/>
+                    </VBox.margin>
+                </Button>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

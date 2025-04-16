@@ -34,24 +34,39 @@ public class CourseService implements ICourse<Course>{
 
     @Override
     public void updateCourse(Course course) throws SQLException {
-        String sql = "update course set" +
-                " title = ?, " +
+        if (course.getId() <= 0) {
+            throw new SQLException("Invalid course ID: " + course.getId());
+        }
+
+        String sql = "UPDATE course SET " +
+                "title = ?, " +
                 "description = ?, " +
                 "duration = ?, " +
                 "price = ?, " +
                 "level = ?, " +
                 "category = ? " +
-                "where id = ?";
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setString(1, course.getTitle());
-        ps.setString(2, course.getDescription());
-        ps.setInt(3, course.getDuration());
-        ps.setDouble(4, course.getPrice());
-        ps.setString(5, course.getLevel());
-        ps.setString(6, course.getCategory());
-        ps.setInt(7, course.getId());
-        ps.executeUpdate();
-        System.out.println("Course updated!");
+                "WHERE id = ?";
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, course.getTitle());
+            ps.setString(2, course.getDescription());
+            ps.setInt(3, course.getDuration());
+            ps.setDouble(4, course.getPrice());
+            ps.setString(5, course.getLevel());
+            ps.setString(6, course.getCategory());
+            ps.setInt(7, course.getId());
+
+            int rowsAffected = ps.executeUpdate();
+
+            if (rowsAffected == 0) {
+                throw new SQLException("Course update failed, no rows affected. Course ID: " + course.getId());
+            } else {
+                System.out.println("Course updated successfully! ID: " + course.getId() + ", Rows affected: " + rowsAffected);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error updating course with ID " + course.getId() + ": " + e.getMessage());
+            throw e;
+        }
     }
 
     @Override
@@ -73,6 +88,7 @@ public class CourseService implements ICourse<Course>{
 
         while (rs.next()) {
             Course c = new Course();
+            c.setId(rs.getInt("id"));
             c.setTitle(rs.getString("title"));
             c.setDescription(rs.getString("description"));
             c.setDuration(rs.getInt("duration"));
@@ -81,6 +97,10 @@ public class CourseService implements ICourse<Course>{
             c.setCategory(rs.getString("category"));
             courses.add(c);
         }
+
+        // Fermer les ressources
+        rs.close();
+        ps.close();
 
         return courses;
     }

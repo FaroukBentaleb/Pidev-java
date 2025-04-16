@@ -13,29 +13,32 @@ public class Course {
     private String video_url;
     private boolean is_frozen;
 
-    @NotBlank(message = "Le titre est obligatoire")
-    @Size(min = 5, max = 50, message = "Le titre doit être entre 5 et 50 caractères")
     private String title;
 
-    @NotBlank(message = "La description est obligatoire")
     private String description;
 
-    @Min(value = 1, message = "La durée doit être supérieure à 0")
     private int duration;
 
-    @Positive(message = "Le prix doit être un nombre positif")
-    @DecimalMin(value = "0.0")
     private double price;
 
-    @NotBlank(message = "Le niveau est requis")
     private String level;
 
-    @NotBlank(message = "La catégorie est obligatoire")
     private String category;
 
     private List<Lesson> lessons;
 
     public Course() {
+    }
+
+    public Course(int id,String title, String description, int duration, double price, String level, String category, int id_user) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.duration = duration;
+        this.price = price;
+        this.level = level;
+        this.category = category;
+        this.id_user = id_user;
     }
 
     public Course( String title, String description, int duration, double price, String level, String category, int id_user) {
