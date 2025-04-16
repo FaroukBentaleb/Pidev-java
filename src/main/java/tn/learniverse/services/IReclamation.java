@@ -10,4 +10,5 @@ public interface IReclamation<T> {
     void modifier(int id,String Contenu) throws SQLException;
     void supprimer(T t);
     List<T> recuperer(User user) throws SQLException;
+
 }

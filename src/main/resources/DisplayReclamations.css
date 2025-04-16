@@ -36,6 +36,10 @@
 .btn-primary {
     -fx-background-color: #007bff;
     -fx-text-fill: white;
+    -fx-pref-height: 40px;
+    -fx-pref-width: 120px;
+    -fx-translate-x: 860px;
+    -fx-translate-y: -20px;
 }
 
 .btn-primary:hover {
@@ -46,7 +50,16 @@
 .btn-success {
     -fx-background-color: #28a745;
     -fx-text-fill: white;
+    -fx-pref-width: 180px;
+    -fx-min-width: 180px;
+    -fx-max-width: 180px;
+    -fx-pref-height: 50px;
+    -fx-min-height: 50px;
+    -fx-max-height: 50px;
+    -fx-translate-x: 900px;
+    -fx-translate-y: -20px;
 }
+
 
 .btn-success:hover {
     -fx-background-color: #1e7e34;
@@ -56,6 +69,10 @@
 .btn-danger {
     -fx-background-color: #dc3545;
     -fx-text-fill: white;
+    -fx-pref-height: 100px;
+    -fx-pref-width: 120px;
+    -fx-translate-x: 900px;
+    -fx-translate-y: -20px;
 }
 
 .btn-danger:hover {
@@ -66,14 +83,24 @@
 .statut-traite {
     -fx-text-fill: green;
     -fx-font-weight: bold;
+    -fx-font-size: 20px;
 }
 
 .statut-encours {
     -fx-text-fill: orange;
     -fx-font-weight: bold;
+    -fx-font-size: 20px;
 }
 
 .statut-non-traite {
     -fx-text-fill: red;
     -fx-font-weight: bold;
+    -fx-font-size: 20px;
+}
+.status-date-row {
+    -fx-pref-width: 400px;
+}
+#date-label {
+    -fx-font-size: 20px;
+    -fx-translate-x: 900px;
 }

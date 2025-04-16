@@ -14,8 +14,6 @@ import javafx.stage.Stage;
 import tn.learniverse.entities.User;
 import tn.learniverse.entities.Reclamation;
 import tn.learniverse.services.ReclamationService;
-
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -24,20 +22,26 @@ import java.util.Date;
 import java.util.List;
 
 public class DisplayReclamations {
-    @FXML private VBox reclamationsContainer;
-    @FXML private Label headerLabel;
+    @FXML
+    private VBox reclamationsContainer;
+    @FXML
+    private Label headerLabel;
     private final ReclamationService reclamationService = new ReclamationService();
 
     public void initialize() {
+        reclamationsContainer.setSpacing(5);
+
         try {
             User user = new User();
-            user.setId(2);
+            user.setId(3);
             List<Reclamation> reclamations = reclamationService.recuperer(user);
             if (reclamations.isEmpty()) {
                 headerLabel.setText("Aucune réclamation pour l'utilisateur 3");
             } else {
                 for (Reclamation rec : reclamations) {
-                    reclamationsContainer.getChildren().add(createReclamationBox(rec));
+                    VBox box = createReclamationBox(rec);
+                    VBox.setMargin(box, new Insets(5, 0, 5, 0));
+                    reclamationsContainer.getChildren().add(box);
                 }
             }
         } catch (SQLException e) {
@@ -48,37 +52,37 @@ public class DisplayReclamations {
 
     private VBox createReclamationBox(Reclamation rec) {
         VBox box = new VBox(10);
-        box.setPadding(new Insets(15));
+        box.setPadding(new Insets(30));
         box.setStyle("-fx-background-color: white; " +
-                      "-fx-border-radius: 15px; " +
-                      "-fx-background-radius: 15px; " +
-                      "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0.5, 0, 4); " +
-                      "-fx-border-color: #ccc; " +
-                      "-fx-border-width: 1; " +
-                      "-fx-pref-width: 400;" +
-                      "-fx-pref-height: 150;");
+                "-fx-border-radius: 15px; " +
+                "-fx-background-radius: 15px; " +
+                "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0.5, 0, 4); " +
+                "-fx-border-color: #ccc; " +
+                "-fx-border-width: 1; " +
+                "-fx-pref-width: 400;" +
+                "-fx-pref-height: 200;" +
+                "-fx-padding: 35; " +
+                "-fx-margin: 10;");
         box.getStyleClass().add("card");
 
         Date dateReclamation = rec.getDateReclamation();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         String formattedDate = dateFormat.format(dateReclamation);
-
-        HBox statusDateBox = new HBox(80);
         Label statusLabel = new Label(rec.getStatut());
         statusLabel.getStyleClass().add(getStatusClass(rec.getStatut()));
 
-
         Label dateLabel = new Label(formattedDate);
-        dateLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: gray;");
+        dateLabel.setId("date-label");
 
+        HBox statusDateBox = new HBox();
+        statusDateBox.getStyleClass().add("status-date-row");
         statusDateBox.getChildren().addAll(statusLabel, dateLabel);
 
-        // Titre de la réclamation
         Label titleLabel = new Label(rec.getTitre());
-        titleLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
-
+        titleLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 20px;");
         Text contentText = new Text(rec.getContenu());
-        contentText.setWrappingWidth(250);
+        contentText.setWrappingWidth(1000);
+        contentText.setStyle("-fx-font-size: 20px;");
 
         HBox actions = new HBox(10);
         if (rec.getStatut().equals("Traité")) {
@@ -89,12 +93,13 @@ public class DisplayReclamations {
             });
             Button btnArchiver = createButton("Archiver", "btn-danger");
             actions.getChildren().addAll(btnVoirReponse, btnArchiver);
-
         } else if (rec.getStatut().equals("En Cours")) {
-            actions.getChildren().add(createButton("Voir Réponse", "btn-primary", e -> viewResponses(rec, (Node) e.getSource())));
+            actions.getChildren().add(createButton("Voir Réponse", "btn-primary",
+                    e -> viewResponses(rec, (Node) e.getSource())));
         } else {
             actions.getChildren().add(createButton("Modifier Contenu", "btn-success"));
         }
+
         box.getChildren().addAll(statusDateBox, titleLabel, contentText, actions);
         return box;
     }
@@ -104,7 +109,8 @@ public class DisplayReclamations {
         btn.getStyleClass().add(styleClass);
         return btn;
     }
-    private Button createButton(String text, String styleClass, EventHandler<javafx.event.ActionEvent> eventHandler) {
+
+    private Button createButton(String text, String styleClass, EventHandler<ActionEvent> eventHandler) {
         Button btn = new Button(text);
         btn.getStyleClass().add(styleClass);
         btn.setOnAction(eventHandler);
@@ -118,6 +124,7 @@ public class DisplayReclamations {
             default -> "statut-non-traite";
         };
     }
+
     private void viewResponses(Reclamation rec, Node sourceNode) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/reponses.fxml"));
@@ -129,12 +136,8 @@ public class DisplayReclamations {
             stage.setTitle("Réponses à la réclamation");
             stage.setScene(new Scene(root));
             stage.show();
-
-        } catch (IOException e) {
+        } catch (IOException | SQLException e) {
             e.printStackTrace();
         }
     }
-
-
-
 }
