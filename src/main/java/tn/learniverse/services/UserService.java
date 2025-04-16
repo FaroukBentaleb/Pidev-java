@@ -116,10 +116,28 @@ public class UserService implements IUser <User>{
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                usr.setNom(rs.getString("nom"));
-                usr.setPrenom(rs.getString("prenom"));
-                usr.setEmail(rs.getString("email"));
-                usr.setMdp(rs.getString("mdp"));
+                usr = new User(
+                        rs.getString("nom"),
+                        rs.getString("prenom"),
+                        rs.getString("email"),
+                        rs.getString("role"),
+                        rs.getString("mdp"),
+                        rs.getString("date_de_naissance"),
+                        rs.getInt("tel"),
+                        rs.getString("field"),
+                        rs.getString("description"),
+                        rs.getInt("experience"),
+                        rs.getString("job"),
+                        rs.getString("resume"),
+                        rs.getString("picture"),
+                        rs.getString("facebook_link"),
+                        rs.getString("instagram_link"),
+                        rs.getString("linkedin_link"),
+                        rs.getBoolean("verified"),
+                        rs.getInt("logs"),
+                        rs.getInt("ban")
+                );
+
             }
         }
         catch (SQLException e) {

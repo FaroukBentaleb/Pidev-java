@@ -1,4 +1,4 @@
-package tn.learniverse.controllers;
+package tn.learniverse.controllers.user;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -69,7 +69,7 @@ public class CreateAccount implements Initializable {
                 try {
                     userService.CreateAccount(new User(name,familyName,email,role,pwd));
                     Navigator.showAlert(Alert.AlertType.INFORMATION, "Account Created Successfully", "You can proceed to logging in");
-                    Navigator.redirect(event,"/Login.fxml");
+                    Navigator.redirect(event, "/fxml/user/Login.fxml");
                 }
                 catch (SQLException e){
                     Navigator.showAlert(Alert.AlertType.ERROR, "Error creating account", "Something went wrong");
@@ -90,7 +90,7 @@ public class CreateAccount implements Initializable {
     }
 
     public void Login_btn(ActionEvent actionEvent) {
-        Navigator.redirect(actionEvent,"/Login.fxml");
+        Navigator.redirect(actionEvent, "/fxml/user/Login.fxml");
     }
     private void setupRealTimeValidation() {
         // Name

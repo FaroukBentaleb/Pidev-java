@@ -1,4 +1,4 @@
-package tn.learniverse.controllers;
+package tn.learniverse.controllers.user;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
@@ -45,7 +45,7 @@ public class Profile implements Initializable {
     }
 
     public void cancelChanges(ActionEvent actionEvent) {
-        Navigator.redirect(actionEvent,"/home.fxml");
+        Navigator.redirect(actionEvent, "/fxml/home.fxml");
 
     }
     public void deleteAccount(ActionEvent actionEvent) {
@@ -58,7 +58,7 @@ public class Profile implements Initializable {
         if (result.get() == ButtonType.OK) {
             UserService userService = new UserService();
             userService.DeleteAccount(Session.getCurrentUser());
-            Navigator.redirect(actionEvent,"/Login.fxml");
+            Navigator.redirect(actionEvent, "/fxml/user/Login.fxml");
         }
     }
 
@@ -99,7 +99,7 @@ public class Profile implements Initializable {
         }
         else{
             ActionEvent event = new ActionEvent();
-            Navigator.redirect(event,"/Login.fxml");
+            Navigator.redirect(event, "/fxml/user/Login.fxml");
         }
     }
 }
