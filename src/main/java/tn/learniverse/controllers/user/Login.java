@@ -6,6 +6,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import org.mindrot.jbcrypt.BCrypt;
 import tn.learniverse.entities.*;
 import tn.learniverse.services.*;
 import tn.learniverse.tools.Navigator;
@@ -43,12 +44,19 @@ public class Login implements Initializable {
                         alert.showAndWait();
                     }
                     else{
-                        if(usr.getMdp().equals(pwd)) {
-                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        if( BCrypt.checkpw(pwd, usr.getMdp())) {
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("Login Successful");
+                            alert.setHeaderText("Welcome !!");
                             alert.setContentText("Connected successfully");
                             alert.showAndWait();
                             Session.setCurrentUser(usr);
-                            Navigator.redirect(actionEvent, "/fxml/homePage.fxml");
+                            if(Session.getCurrentUser().getRole().equals("Admin")){
+                                Navigator.redirect(actionEvent, "/fxml/Back.fxml");
+                            }
+                            else{
+                                Navigator.redirect(actionEvent, "/fxml/homePage.fxml");
+                            }
                         }
                         else{
                             Alert alert = new Alert(Alert.AlertType.ERROR);

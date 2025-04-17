@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+
+<BorderPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #f0f4f8;" stylesheets="@../../css/profile-style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.user.ProfileTrial">
+    <left>
+        <VBox alignment="TOP_CENTER" maxHeight="887.0" prefHeight="674.0" prefWidth="220.0" spacing="15" style="-fx-background-color: linear-gradient(to bottom, #1976D2, #64B5F6); -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 0);">
+            <padding><Insets bottom="15.0" left="15.0" right="15.0" top="20.0" /></padding>
+            <Label style="-fx-text-fill: white; -fx-font-size: 26px; -fx-font-weight: bold;" text="Learniverse" />
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic><Label style="-fx-text-fill: white;" text="📊" /></graphic>
+                <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
+                <text>Dashboard</text>
+            </Button>
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic><Label style="-fx-text-fill: white;" text="📚" /></graphic>
+                <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
+                <text>My Courses</text>
+            </Button>
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic><Label style="-fx-text-fill: white;" text="🔍" /></graphic>
+                <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
+                <text>Discover</text>
+            </Button>
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic><Label style="-fx-text-fill: white;" text="👥" /></graphic>
+                <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
+                <text>Community</text>
+            </Button>
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: rgba(255,255,255,0.2); -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic><Label style="-fx-text-fill: white;" text="👤" /></graphic>
+                <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
+                <text>Profile</text>
+            </Button>
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic><Label style="-fx-text-fill: white;" text="⚙️" /></graphic>
+                <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
+                <text>Settings</text>
+            </Button>
+            <VBox VBox.vgrow="ALWAYS" />
+            <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="10" style="-fx-background-color: rgba(255,255,255,0.1); -fx-background-radius: 8;">
+                <padding><Insets bottom="8.0" left="10.0" right="10.0" top="8.0" /></padding>
+                <StackPane>
+                    <Circle fill="#ffffff53" radius="26.0" />
+                    <ImageView fx:id="UserPicture" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+                </StackPane>
+                <VBox spacing="2">
+                    <Label fx:id="usernameLabel" style="-fx-text-fill: white; -fx-font-weight: bold;" text="Farouk">
+                        <VBox.margin><Insets top="10.0" /></VBox.margin>
+                    </Label>
+                    <Label fx:id="role" style="-fx-text-fill: rgba(255,255,255,0.7); -fx-font-size: 11px;" text="Student" />
+                </VBox>
+                <Button onAction="#Logout" prefHeight="25.0" prefWidth="32.0" style="-fx-background-color: transparent; -fx-cursor: hand;" text="🔓">
+                    <HBox.margin><Insets left="10.0" /></HBox.margin>
+                </Button>
+            </HBox>
+         <BorderPane.margin>
+            <Insets top="-70.0" />
+         </BorderPane.margin>
+        </VBox>
+    </left>
+    <top>
+        <HBox alignment="CENTER" maxWidth="1061.0" prefHeight="70.0" prefWidth="1073.0" style="-fx-background-color: white; -fx-padding: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2);" BorderPane.alignment="TOP_RIGHT">
+            <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="My Profile" />
+            <HBox HBox.hgrow="ALWAYS" />
+            <HBox alignment="CENTER" maxHeight="-Infinity" prefHeight="40.0" prefWidth="350.0" spacing="10" style="-fx-background-color: #F0F2F5; -fx-background-radius: 20;">
+                <padding><Insets left="15.0" right="15.0" /></padding>
+                <Label style="-fx-text-fill: #666;" text="🔍" />
+                <TextField fx:id="searchField" prefHeight="40.0" promptText="Search for courses..." style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS" />
+            </HBox>
+            <HBox alignment="CENTER" spacing="15" style="-fx-padding: 0 0 0 20;">
+                <Label style="-fx-text-fill: #555; -fx-font-size: 18px;" text="🔔" />
+                <HBox fx:id="authButtons" alignment="CENTER" prefHeight="40.0" spacing="10" />
+            </HBox>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+        </HBox>
+    </top>
+    <center>
+        <ScrollPane fitToWidth="true" prefHeight="720.0" prefViewportHeight="720.0" vbarPolicy="ALWAYS">
+            <content>
+                <VBox prefWidth="980" spacing="20" styleClass="main-content">
+                    <padding>
+                        <Insets bottom="30" left="40" right="40" top="30" />
+                    </padding>
+
+                    <!-- Header -->
+                    <Label styleClass="section-header" text="Profile Information" textFill="#1a73e8" />
+                    <HBox alignment="CENTER_LEFT" spacing="20">
+                        <StackPane>
+                            <Circle fill="#1976D2" radius="55" />
+                            <ImageView fx:id="profileImage" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
+                        </StackPane>
+                        <VBox spacing="5">
+                            <HBox alignment="CENTER_LEFT" spacing="10">
+                                <Label fx:id="profileNameLabel" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Farouk Bentaleb" />
+                                <HBox fx:id="verifiedBadge">
+                                    <Label fx:id="" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-padding: 2 8; -fx-background-radius: 10;" text="Verified" />
+                                </HBox>
+                            </HBox>
+                            <Label style="-fx-text-fill: #666;" text="Student • Member since January 2023" />
+                        </VBox>
+                    </HBox>
+                    <!-- Personal Details -->
+                    <VBox styleClass="section-container">
+                        <Label styleClass="section-title" text="Personal Details" />
+                        <HBox spacing="20">
+                            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                                <Label styleClass="field-label" text="Name" />
+                                <TextField fx:id="nameField" promptText="Name" styleClass="text-field" />
+                            </VBox>
+                            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                                <Label styleClass="field-label" text="Family Name" />
+                                <TextField fx:id="familyNameField" promptText="Family Name" styleClass="text-field" />
+                            </VBox>
+                        </HBox>
+                        <HBox spacing="20">
+                            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                                <Label styleClass="field-label" text="Email" />
+                                <TextField fx:id="emailField" promptText="Email" styleClass="text-field" />
+                            </VBox>
+                            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                                <Label styleClass="field-label" text="Phone" />
+                                <TextField fx:id="phoneField" promptText="Phone" styleClass="text-field" />
+                            </VBox>
+                        </HBox>
+                        <HBox spacing="20">
+                            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                                <Label styleClass="field-label" text="Date of Birth" />
+                                <DatePicker fx:id="birthDatePicker" promptText="Date of Birth" styleClass="date-picker" />
+                            </VBox>
+                        </HBox>
+                    </VBox>
+                    <!-- Professional Info -->
+                    <VBox styleClass="section-container">
+                        <Label styleClass="section-title" text="Professional Information" />
+                        <HBox spacing="20">
+                            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                                <Label styleClass="field-label" text="Job Title" />
+                                <TextField fx:id="jobTitleField" promptText="Job Title" styleClass="text-field" />
+                            </VBox>
+                            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                                <Label styleClass="field-label" text="Experience" />
+                                <TextField fx:id="experienceField" promptText="Experience (years)" styleClass="text-field" />
+                            </VBox>
+                        </HBox>
+                        <VBox spacing="5">
+                            <Label styleClass="field-label" text="Description" />
+                            <TextArea fx:id="descriptionArea" prefHeight="100.0" promptText="Description" styleClass="text-area" wrapText="true" />
+                        </VBox>
+                    </VBox>
+                    <!-- Documents -->
+                    <VBox styleClass="section-container">
+                        <Label styleClass="section-title" text="Documents &amp; Media" />
+                        <HBox spacing="20">
+                            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                                <Label styleClass="field-label" text="Resume" />
+                                <HBox styleClass="file-upload-container">
+                                    <Button onAction="#chooseResumeFile" styleClass="file-choose-button" text="Choose file" />
+                                    <Label fx:id="resumeFileLabel" styleClass="file-name-label" text="No file chosen" />
+                                </HBox>
+                            </VBox>
+                            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                                <Label styleClass="field-label" text="Profile Picture" />
+                                <HBox styleClass="file-upload-container">
+                                    <Button onAction="#chooseProfilePicture" styleClass="file-choose-button" text="Choose file" />
+                                    <Label fx:id="pictureFileLabel" styleClass="file-name-label" text="No file chosen" />
+                                </HBox>
+                            </VBox>
+                        </HBox>
+                    </VBox>
+                    <!-- Social Media -->
+                    <VBox styleClass="section-container">
+                        <Label styleClass="section-title" text="Social Media Links" />
+                        <HBox spacing="20">
+                            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                                <Label styleClass="field-label" text="Facebook URL" />
+                                <TextField fx:id="facebookField" promptText="Facebook URL" styleClass="text-field" />
+                            </VBox>
+                            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                                <Label styleClass="field-label" text="Instagram URL" />
+                                <TextField fx:id="instagramField" promptText="Instagram URL" styleClass="text-field" />
+                            </VBox>
+                            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                                <Label styleClass="field-label" text="LinkedIn URL" />
+                                <TextField fx:id="linkedinField" promptText="LinkedIn URL" styleClass="text-field" />
+                            </VBox>
+                        </HBox>
+                    </VBox>
+                    <!-- Buttons -->
+                    <HBox alignment="CENTER_RIGHT" spacing="10">
+                        <Button onAction="#saveProfile" styleClass="save-button" text="Save Infos" />
+                        <Button onAction="#cancelChanges" styleClass="cancel-button" text="Cancel" />
+                        <Button onAction="#deleteAccount" styleClass="delete-button" text="Delete Account" />
+                    </HBox>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+</BorderPane>

@@ -10,6 +10,7 @@ import tn.learniverse.tools.Navigator;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class CreateAccount implements Initializable {
 
@@ -67,7 +68,10 @@ public class CreateAccount implements Initializable {
             // Proceed only if all valid
             if (isValid) {
                 try {
-                    userService.CreateAccount(new User(name,familyName,email,role,pwd));
+                    String hashedPassword = BCrypt.hashpw(pwd, BCrypt.gensalt());
+                    System.out.println("pwd: " + pwd);
+                    System.out.println("hashedPassword: " + hashedPassword);
+                    userService.CreateAccount(new User(name,familyName,email,role,hashedPassword));
                     Navigator.showAlert(Alert.AlertType.INFORMATION, "Account Created Successfully", "You can proceed to logging in");
                     Navigator.redirect(event, "/fxml/user/Login.fxml");
                 }

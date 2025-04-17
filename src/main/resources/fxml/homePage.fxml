@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
@@ -83,18 +84,31 @@
 
             <!-- Profile at bottom -->
             <VBox VBox.vgrow="ALWAYS" />
-            <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="10" style="-fx-background-color: rgba(255,255,255,0.1); -fx-background-radius: 8;">
+            <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0" style="-fx-background-color: rgba(255,255,255,0.1); -fx-background-radius: 8;">
                 <padding>
                     <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
                 </padding>
                 <StackPane>
-                    <Circle fill="white" radius="18" />
-                    <Label style="-fx-text-fill: #1976D2; -fx-font-size: 16px; -fx-font-weight: bold;" text="F" />
+                    <Circle fill="#ffffff53" radius="26.0" />
+               <ImageView fx:id="UserPicture" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
                 </StackPane>
                 <VBox spacing="2">
-                    <Label fx:id="username" style="-fx-text-fill: white; -fx-font-weight: bold;" text="Farouk" />
+                    <Label fx:id="username" style="-fx-text-fill: white; -fx-font-weight: bold;" text="Farouk">
+                  <VBox.margin>
+                     <Insets top="10.0" />
+                  </VBox.margin></Label>
                     <Label fx:id="role" style="-fx-text-fill: rgba(255,255,255,0.7); -fx-font-size: 11px;" text="Student" />
                 </VBox>
+                <Button onAction="#Profile" prefHeight="25.0" prefWidth="32.0" style="-fx-background-color: transparent; -fx-cursor: hand;" text="👥">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin></Button>
+            <Button onAction="#Logout" prefHeight="25.0" prefWidth="32.0" style="-fx-background-color: transparent; -fx-cursor: hand;" text="🔓" />
+
+
             </HBox>
         </VBox>
     </left>
@@ -110,7 +124,7 @@
                     <HBox HBox.hgrow="ALWAYS" />
 
                     <!-- Search Area -->
-                    <HBox alignment="CENTER" maxHeight="-Infinity" prefHeight="40.0" prefWidth="440.0" spacing="10" style="-fx-background-color: #F0F2F5; -fx-background-radius: 20;">
+                    <HBox alignment="CENTER" maxHeight="-Infinity" prefHeight="40.0" prefWidth="350.0" spacing="10" style="-fx-background-color: #F0F2F5; -fx-background-radius: 20;">
                         <padding>
                             <Insets left="15.0" right="15.0" />
                         </padding>

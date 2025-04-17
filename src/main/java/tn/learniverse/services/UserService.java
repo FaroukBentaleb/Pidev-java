@@ -137,7 +137,6 @@ public class UserService implements IUser <User>{
                         rs.getInt("logs"),
                         rs.getInt("ban")
                 );
-
             }
         }
         catch (SQLException e) {
