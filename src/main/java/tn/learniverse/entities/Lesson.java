@@ -34,6 +34,12 @@ public class Lesson {
         this.course = course;
     }
 
+    public Lesson(String title, String description, String attachment) {
+        this.title = title;
+        this.description = description;
+        this.attachment = attachment;
+    }
+
     public int getId() {
         return id;
     }

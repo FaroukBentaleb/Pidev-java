@@ -9,7 +9,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import tn.learniverse.entities.Course;
 import tn.learniverse.entities.Lesson;
 import tn.learniverse.services.LessonService;
 
@@ -22,7 +21,7 @@ import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class AddLessonController implements Initializable {
+public class EditLessonController implements Initializable {
 
     @FXML
     private TextField titleField;
@@ -49,7 +48,7 @@ public class AddLessonController implements Initializable {
     private Label attachmentErrorLabel;
 
     @FXML
-    private Button addButton;
+    private Button updateButton;
 
     @FXML
     private Button cancelButton;
@@ -57,7 +56,7 @@ public class AddLessonController implements Initializable {
     @FXML
     private Button browseButton;
 
-    private Course selectedCourse;
+    private Lesson lessonToEdit;
     private LessonService lessonService;
     private Runnable refreshCallback;
 
@@ -92,12 +91,22 @@ public class AddLessonController implements Initializable {
         }
     }
 
-    public void setCourse(Course course) {
-        this.selectedCourse = course;
+    public void setLesson(Lesson lesson) {
+        this.lessonToEdit = lesson;
+        populateFields();
     }
 
     public void setRefreshCallback(Runnable callback) {
         this.refreshCallback = callback;
+    }
+
+    private void populateFields() {
+        if (lessonToEdit != null) {
+            titleField.setText(lessonToEdit.getTitle());
+            descriptionField.setText(lessonToEdit.getDescription());
+            contentField.setText(lessonToEdit.getContent());
+            attachmentField.setText(lessonToEdit.getAttachment());
+        }
     }
 
     private void setupValidations() {
@@ -253,7 +262,7 @@ public class AddLessonController implements Initializable {
 
     private String saveAttachmentFile() {
         if (selectedFile == null) {
-            return null;
+            return lessonToEdit.getAttachment(); // Retourner le nom existant si pas de nouveau fichier
         }
 
         try {
@@ -273,7 +282,7 @@ public class AddLessonController implements Initializable {
     }
 
     @FXML
-    private void addLesson() {
+    private void updateLesson() {
         if (!validateInputs()) {
             return;
         }
@@ -282,17 +291,16 @@ public class AddLessonController implements Initializable {
             // Sauvegarder le fichier d'attachement s'il existe
             String savedFileName = saveAttachmentFile();
 
-            // Créer une nouvelle leçon
-            Lesson newLesson = new Lesson(
-                    titleField.getText(),
-                    descriptionField.getText(),
-                    contentField.getText(),
-                    savedFileName,
-                    selectedCourse
-            );
+            // Mettre à jour les champs de la leçon
+            lessonToEdit.setTitle(titleField.getText());
+            lessonToEdit.setDescription(descriptionField.getText());
+            lessonToEdit.setContent(contentField.getText());
+            if (selectedFile != null) {
+                lessonToEdit.setAttachment(savedFileName);
+            }
 
-            lessonService.addLesson(newLesson);
-            showAlert(Alert.AlertType.INFORMATION, "Success", "Lesson added successfully!");
+            lessonService.updateLesson(lessonToEdit);
+            showAlert(Alert.AlertType.INFORMATION, "Success", "Lesson updated successfully!");
 
             // Appeler le callback pour rafraîchir la liste des leçons
             if (refreshCallback != null) {
@@ -303,7 +311,7 @@ public class AddLessonController implements Initializable {
             closeWindow();
 
         } catch (SQLException e) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Failed to save lesson: " + e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to update lesson: " + e.getMessage());
         }
     }
 
@@ -324,6 +332,4 @@ public class AddLessonController implements Initializable {
         alert.setContentText(content);
         alert.showAndWait();
     }
-
-
 }

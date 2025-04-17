@@ -79,4 +79,28 @@ public class LessonService implements ILesson<Lesson> {
 
         return lessons;
     }
+
+    public List<Lesson> getLessonsByCourse(Course course) throws SQLException {
+        String sql = "SELECT * FROM lesson WHERE course_id = ?";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setInt(1, course.getId());
+
+        ResultSet rs = ps.executeQuery();
+        List<Lesson> lessons = new ArrayList<>();
+
+        while (rs.next()) {
+            Lesson lesson = new Lesson();
+            lesson.setId(rs.getInt("id"));
+            lesson.setTitle(rs.getString("title"));
+            lesson.setDescription(rs.getString("description"));
+            lesson.setContent(rs.getString("content"));
+            lesson.setAttachment(rs.getString("attachment"));
+            lesson.setCourse(course); // on garde l'objet course passé
+
+            lessons.add(lesson);
+        }
+
+        return lessons;
+    }
+
 }

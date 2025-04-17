@@ -78,7 +78,6 @@ public class CourseService implements ICourse<Course>{
         System.out.println("Course deleted successfully");
     }
 
-
     public List<Course> getAllCourses() throws SQLException {
         String sql = "SELECT * FROM course";
         PreparedStatement ps = connection.prepareStatement(sql);
@@ -95,6 +94,7 @@ public class CourseService implements ICourse<Course>{
             c.setPrice(rs.getDouble("price"));
             c.setLevel(rs.getString("level"));
             c.setCategory(rs.getString("category"));
+            c.setIs_frozen(rs.getBoolean("is_frozen"));
             courses.add(c);
         }
 
@@ -105,4 +105,46 @@ public class CourseService implements ICourse<Course>{
         return courses;
     }
 
+    public void toggleCourseVisibility(Course course) throws SQLException {
+        String sql = "UPDATE course SET is_frozen = ? WHERE id = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setBoolean(1, !course.isIs_frozen());  // Inverse l'état actuel
+            ps.setInt(2, course.getId());
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                // Mettre à jour l'objet local
+                course.setIs_frozen(!course.isIs_frozen());
+                System.out.println("Course visibility toggled for ID: " + course.getId() +
+                        " - Is now " + (course.isIs_frozen() ? "frozen" : "unfrozen"));
+            }
+        }
+    }
+
+    public List<Course> getVisibleCourses() throws SQLException {
+        String sql = "SELECT * FROM course WHERE is_frozen = false";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+
+        List<Course> courses = new ArrayList<>();
+
+        while (rs.next()) {
+            Course c = new Course();
+            c.setId(rs.getInt("id"));
+            c.setTitle(rs.getString("title"));
+            c.setDescription(rs.getString("description"));
+            c.setDuration(rs.getInt("duration"));
+            c.setPrice(rs.getDouble("price"));
+            c.setLevel(rs.getString("level"));
+            c.setCategory(rs.getString("category"));
+            c.setIs_frozen(rs.getBoolean("is_frozen"));
+            courses.add(c);
+        }
+
+        // Close resources
+        rs.close();
+        ps.close();
+
+        return courses;
+    }
 }

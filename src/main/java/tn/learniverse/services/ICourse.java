@@ -1,6 +1,7 @@
 package tn.learniverse.services;
 
 import tn.learniverse.entities.Course;
+import tn.learniverse.entities.Lesson;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -10,5 +11,4 @@ public interface ICourse <C>{
     void updateCourse (C c) throws SQLException;
     void deleteCourse (C c) throws SQLException;
     List<C> getAllCourses() throws SQLException;
-
     }

@@ -266,32 +266,32 @@ public class CourseDetailsViewController implements Initializable {
     // Fonction pour développer/réduire le contenu de la leçon
     private void toggleLessonContent(VBox content, Button expandButton) {
         if (expandedLessonContent != null && expandedLessonContent != content) {
-            // Fermer la leçon qui était ouverte
             expandedLessonContent.setVisible(false);
             expandedLessonContent.setMaxHeight(0);
-
-            // Chercher et mettre à jour le bouton d'expansion de cette leçon
             Button prevExpandButton = findExpandButtonForContent(expandedLessonContent);
-            if (prevExpandButton != null) {
-                prevExpandButton.setText("⯆");
-            }
+            if (prevExpandButton != null) prevExpandButton.setText("⯆");
         }
 
         boolean isExpanded = content.isVisible();
         if (isExpanded) {
-            // Réduire la leçon
             content.setVisible(false);
             content.setMaxHeight(0);
             expandButton.setText("⯆");
             expandedLessonContent = null;
         } else {
-            // Développer la leçon
             content.setVisible(true);
             content.setMaxHeight(Double.MAX_VALUE);
             expandButton.setText("⯅");
             expandedLessonContent = content;
+
+            // Animation de slide
+            TranslateTransition tt = new TranslateTransition(Duration.millis(300), content);
+            tt.setFromY(-10);
+            tt.setToY(0);
+            tt.play();
         }
     }
+
 
     private Button findExpandButtonForContent(VBox content) {
         // Cette fonction trouve le bouton d'expansion associé à un contenu donné
@@ -313,14 +313,14 @@ public class CourseDetailsViewController implements Initializable {
         return null;
     }
 
+    // cette méthode pour ouvrir le formulaire d'édition
     private void openEditLessonWindow(Lesson lesson) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AddLesson.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/EditLesson.fxml"));
             Parent root = loader.load();
 
-            AddLessonController controller = loader.getController();
-            controller.setCourse(course);
-            controller.setLessonForEdit(lesson);
+            EditLessonController controller = loader.getController();
+            controller.setLesson(lesson);
             controller.setRefreshCallback(this::loadLessons);
 
             Stage stage = new Stage();

@@ -8,5 +8,5 @@ public interface ILesson<L> {
     void updateLesson(L l) throws SQLException;
     void deleteLesson(L l) throws SQLException;
     List<L> getAllLessons() throws SQLException;
-  //L getLessonById(int id) throws SQLException;
+
 }

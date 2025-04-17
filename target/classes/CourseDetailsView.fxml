@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import java.net.URL?>
 <AnchorPane prefHeight="650.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.CourseDetailsViewController">
     <children>
         <VBox alignment="TOP_CENTER" prefHeight="650.0" prefWidth="900.0" style="-fx-background-color: #f5f7fa;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -30,14 +31,6 @@
                                 <Insets left="20.0" />
                             </padding>
                         </HBox>
-                        <Button mnemonicParsing="false" onAction="#closeWindow" style="-fx-background-color: transparent; -fx-text-fill: white;" text="X">
-                            <font>
-                                <Font name="System Bold" size="14.0" />
-                            </font>
-                            <HBox.margin>
-                                <Insets right="20.0" />
-                            </HBox.margin>
-                        </Button>
                     </children>
                 </HBox>
 
@@ -153,5 +146,10 @@
             </children>
         </VBox>
     </children>
+
+    <stylesheets>
+        <URL value="@coursedetails.css"/>
+    </stylesheets>
+
 </AnchorPane>
 
