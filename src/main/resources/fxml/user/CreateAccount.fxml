@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.user.CreateAccount">
+   <children>
+      <HBox alignment="CENTER" prefHeight="720.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <!-- Form Panel (White) -->
+         <StackPane styleClass="right-panel" HBox.hgrow="ALWAYS">
+            <VBox alignment="CENTER" maxWidth="400" spacing="25">
+               <ImageView fx:id="logoImageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               </ImageView>
+               <!-- Signup Form -->
+               <VBox spacing="10.0">
+   
+                  <TextField fx:id="signup_name" promptText="Enter your first name" styleClass="input-field" />
+                  <Label fx:id="error_name" styleClass="error-label" />
+   
+                  <TextField fx:id="signup_family_name" promptText="Enter your last name" styleClass="input-field" />
+                  <Label fx:id="error_family_name" styleClass="error-label" />
+   
+                  <TextField fx:id="signup_email" promptText="Enter your email address" styleClass="input-field" />
+                  <Label fx:id="error_email" styleClass="error-label" />
+   
+                  <ChoiceBox fx:id="signup_role" styleClass="choice-box" />
+   
+                  <PasswordField fx:id="signup_pwd" promptText="Enter your password" styleClass="input-field" />
+                  <Label fx:id="error_pwd" styleClass="error-label" />
+   
+                  <PasswordField fx:id="signup_conf_pwd" promptText="Re-enter your password" styleClass="input-field" />
+                  <Label fx:id="error_conf_pwd" styleClass="error-label" />
+   
+                  <Button onAction="#Signup_btn" styleClass="signup-button" text="Sign Up" />
+               </VBox>
+            </VBox>
+         </StackPane>
+
+         <!-- Welcome Panel (Blue) -->
+         <StackPane prefHeight="720.0" prefWidth="0.0" styleClass="left-panel" HBox.hgrow="ALWAYS">
+            <VBox alignment="CENTER" maxWidth="400" spacing="20.0">
+               <Label styleClass="welcome-title" text="Welcome to Learniverse!" />
+               <Label styleClass="welcome-subtitle" text="Already have an account?" textAlignment="CENTER" wrapText="true" />
+               <Label styleClass="welcome-message" text="Please log in to continue your learning journey" textAlignment="CENTER" wrapText="true" />
+               <Button onAction="#Login_btn" prefHeight="42.0" prefWidth="300.0" styleClass="alt-button" text="Login" />
+               <padding>
+                  <Insets bottom="10.0" top="10.0" />
+               </padding>
+            </VBox>
+         </StackPane>
+      </HBox>
+   </children>
+</AnchorPane>
