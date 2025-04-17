@@ -17,6 +17,7 @@ public class Competition {
     private boolean isFreesed;
     private int instructorId;
     private List<Challenge> challenges;
+    private String webImageUrl;
 
     // Constructors, getters, and setters...
 
@@ -126,6 +127,14 @@ public class Competition {
 
     public void setChallenges(List<Challenge> challenges) {
         this.challenges = challenges;
+    }
+
+    public String getWebImageUrl() {
+        return webImageUrl;
+    }
+
+    public void setWebImageUrl(String webImageUrl) {
+        this.webImageUrl = webImageUrl;
     }
 
 }

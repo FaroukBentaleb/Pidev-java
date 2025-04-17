@@ -282,11 +282,53 @@ public class CustomHtmlEditor extends HTMLEditor {
      * Handles the code block button action
      */
     private void handleCodeBlockAction(ActionEvent event) {
-        String codeHtml = CodeHighlighter.showCodeDialog();
-        
-        if (codeHtml != null && !codeHtml.isEmpty()) {
-            // Insert the HTML for the code block at the current cursor position
-            executeHTMLCommand("insertHTML", codeHtml);
+        try {
+            WebView webView = (WebView) lookup("WebView");
+            if (webView != null) {
+                String codeHtml = CodeHighlighter.showCodeDialog();
+                
+                if (codeHtml != null && !codeHtml.isEmpty()) {
+                    // Direct JavaScript injection approach
+                    String script = """
+                        (function() {
+                            var sel = window.getSelection();
+                            if (sel.rangeCount > 0) {
+                                var range = sel.getRangeAt(0);
+                                var div = document.createElement('div');
+                                div.innerHTML = `%s`;
+                                
+                                // Clear any existing selection
+                                range.deleteContents();
+                                
+                                // Insert the code block
+                                var fragment = document.createDocumentFragment();
+                                while (div.firstChild) {
+                                    fragment.appendChild(div.firstChild);
+                                }
+                                range.insertNode(fragment);
+                                
+                                // Move cursor to end
+                                range.collapse(false);
+                                sel.removeAllRanges();
+                                sel.addRange(range);
+                                
+                                // Force update
+                                document.execCommand('insertText', false, '');
+                            }
+                        })();
+                    """.formatted(codeHtml.replace("`", "\\`"));
+                    
+                    webView.getEngine().executeScript(script);
+                    
+                    // Log success
+                    System.out.println("Code block inserted successfully");
+                }
+            } else {
+                System.err.println("WebView not found");
+            }
+        } catch (Exception e) {
+            System.err.println("Error inserting code block: " + e.getMessage());
+            e.printStackTrace();
         }
     }
     
@@ -295,19 +337,59 @@ public class CustomHtmlEditor extends HTMLEditor {
      */
     private void executeHTMLCommand(String command, String value) {
         try {
-            // Use reflection to access protected executeHTMLCommand method
-            Method method = HTMLEditor.class.getDeclaredMethod("executeHTMLCommand", String.class, String.class);
-            method.setAccessible(true);
-            method.invoke(this, command, value);
-        } catch (Exception e) {
-            // Fallback to direct JavaScript execution if reflection fails
             WebView webView = (WebView) lookup("WebView");
             if (webView != null) {
-                webView.getEngine().executeScript(
-                    "document.execCommand('" + command + "', false, " + 
-                    (value != null ? "'" + value.replace("'", "\\'") + "'" : "null") + ");"
-                );
+                if ("insertHTML".equals(command) && value != null) {
+                    // Escape special characters
+                    String escapedValue = value.replace("`", "\\`")
+                                             .replace("$", "\\$");
+                    
+                    String script = """
+                        (function() {
+                            try {
+                                var sel = window.getSelection();
+                                if (sel.rangeCount > 0) {
+                                    var range = sel.getRangeAt(0);
+                                    var div = document.createElement('div');
+                                    div.innerHTML = `%s`;
+                                    
+                                    range.deleteContents();
+                                    var fragment = document.createDocumentFragment();
+                                    while (div.firstChild) {
+                                        fragment.appendChild(div.firstChild);
+                                    }
+                                    range.insertNode(fragment);
+                                    
+                                    // Move cursor to end
+                                    range.collapse(false);
+                                    sel.removeAllRanges();
+                                    sel.addRange(range);
+                                    
+                                    return true;
+                                }
+                                return false;
+                            } catch (e) {
+                                console.error('Error:', e);
+                                return false;
+                            }
+                        })();
+                    """.formatted(escapedValue);
+                    
+                    Object result = webView.getEngine().executeScript(script);
+                    System.out.println("Insert HTML result: " + result);
+                } else {
+                    // For other commands, use standard execCommand
+                    webView.getEngine().executeScript(
+                        String.format("document.execCommand('%s', false, %s);",
+                            command,
+                            value != null ? "'" + value.replace("'", "\\'") + "'" : "null"
+                        )
+                    );
+                }
             }
+        } catch (Exception e) {
+            System.err.println("Error executing HTML command: " + e.getMessage());
+            e.printStackTrace();
         }
     }
     
@@ -321,7 +403,83 @@ public class CustomHtmlEditor extends HTMLEditor {
         // Clean up HTML if needed
         html = html.replace("<meta charset=\"utf-8\">", "<meta charset=\"UTF-8\">");
         
+        // Fix any potential issues with code blocks
+        try {
+            WebView webView = (WebView) lookup("WebView");
+            if (webView != null) {
+                // This script fixes potential formatting issues with code blocks
+                String fixScript = """
+                    (function() {
+                        // Find all code blocks and ensure they have proper styling
+                        var codeBlocks = document.querySelectorAll('code[class^="language-"]');
+                        for (var i = 0; i < codeBlocks.length; i++) {
+                            var block = codeBlocks[i];
+                            var pre = block.closest('pre');
+                            
+                            // Ensure pre has proper styling
+                            if (pre && !pre.getAttribute('style')) {
+                                pre.style.backgroundColor = '#f5f5f5';
+                                pre.style.padding = '10px';
+                                pre.style.borderRadius = '5px';
+                                pre.style.margin = '10px 0';
+                                pre.style.fontFamily = 'monospace';
+                                pre.style.overflowX = 'auto';
+                            }
+                            
+                            // Ensure code has proper styling
+                            if (!block.getAttribute('style')) {
+                                block.style.display = 'block';
+                                block.style.whiteSpace = 'pre';
+                                block.style.fontFamily = 'Courier New, monospace';
+                            }
+                        }
+                        return document.documentElement.outerHTML;
+                    })();
+                """;
+                
+                // Try to execute the fix script
+                try {
+                    Object result = webView.getEngine().executeScript(fixScript);
+                    if (result != null && result instanceof String) {
+                        // Extract the body content only
+                        String fullHtml = (String) result;
+                        if (fullHtml.contains("<body>") && fullHtml.contains("</body>")) {
+                            int start = fullHtml.indexOf("<body>") + 6;
+                            int end = fullHtml.indexOf("</body>");
+                            if (start > 0 && end > start) {
+                                String bodyContent = fullHtml.substring(start, end).trim();
+                                return bodyContent;
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    // Silently continue with the original HTML if script fails
+                    System.err.println("Failed to fix code blocks: " + e.getMessage());
+                }
+            }
+        } catch (Exception e) {
+            // Continue with the original HTML
+            System.err.println("Error accessing WebView: " + e.getMessage());
+        }
+        
         return html;
+    }
+    
+    /**
+     * Get the JavaFX property for the HTML text
+     * This allows binding to the HTML content
+     */
+    public javafx.beans.property.StringProperty htmlTextProperty() {
+        // Use reflection to get the htmlText property from the parent class
+        try {
+            java.lang.reflect.Field field = HTMLEditor.class.getDeclaredField("htmlText");
+            field.setAccessible(true);
+            return (javafx.beans.property.StringProperty) field.get(this);
+        } catch (Exception e) {
+            // If reflection fails, create a new property (note: this won't be linked to parent)
+            System.err.println("Could not access htmlText property: " + e.getMessage());
+            return new javafx.beans.property.SimpleStringProperty(this.getHtmlText());
+        }
     }
     
     /**

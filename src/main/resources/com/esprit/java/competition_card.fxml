@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<HBox maxHeight="280.0" maxWidth="350.0" minHeight="280.0" minWidth="350.0" prefHeight="280.0" prefWidth="350.0" spacing="0.0" styleClass="competition-card" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<HBox maxHeight="280.0" maxWidth="350.0" minHeight="280.0" minWidth="350.0" prefHeight="280.0" prefWidth="350.0" spacing="0.0" 
+      styleClass="competition-card" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fx:id="competitionImage" fitHeight="280.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true" />
       <VBox spacing="5.0" HBox.hgrow="ALWAYS">
@@ -18,34 +20,42 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <HBox spacing="5.0">
+            <HBox spacing="5.0" styleClass="info-row">
                <children>
-                  <Label text="Category:" />
+                  <FontIcon iconLiteral="mdi2c-certificate" iconColor="#2196f3" iconSize="16" />
                   <Label fx:id="categoryLabel" styleClass="competition-category" text="Web Development" wrapText="true" />
                </children>
             </HBox>
-            <HBox spacing="5.0">
+            <HBox spacing="5.0" styleClass="info-row">
                <children>
-                  <Label text="Status:" />
+                  <FontIcon iconLiteral="mdi2c-check-circle" iconColor="#2196f3" iconSize="16" />
                   <Label fx:id="statusLabel" styleClass="competition-status" text="Active" />
                </children>
             </HBox>
-            <HBox spacing="5.0">
+            <HBox spacing="5.0" styleClass="info-row">
                <children>
-                  <Label text="Date:" />
+                  <FontIcon iconLiteral="mdi2c-calendar" iconColor="#2196f3" iconSize="16" />
                   <Label fx:id="dateLabel" styleClass="competition-date" text="2023-01-15" />
                </children>
             </HBox>
-            <HBox spacing="5.0">
+            <HBox spacing="5.0" styleClass="info-row">
                <children>
-                  <Label text="Duration:" />
+                  <FontIcon iconLiteral="mdi2t-timer" iconColor="#2196f3" iconSize="16" />
                   <Label fx:id="durationLabel" styleClass="competition-duration" text="60 minutes" />
                </children>
             </HBox>
             <HBox alignment="BOTTOM_RIGHT" spacing="10.0" VBox.vgrow="ALWAYS">
                <children>
-                  <Button fx:id="editBtn" mnemonicParsing="false" styleClass="secondary-button" text="Edit" />
-                  <Button fx:id="deleteBtn" mnemonicParsing="false" styleClass="danger-button" text="Delete" />
+                  <MFXButton fx:id="editBtn" text="Edit" styleClass="mfx-button, secondary-button">
+                     <graphic>
+                        <FontIcon iconLiteral="mdi2p-pencil" iconColor="#2196f3" />
+                     </graphic>
+                  </MFXButton>
+                  <MFXButton fx:id="deleteBtn" text="Delete" styleClass="mfx-button, danger-button">
+                     <graphic>
+                        <FontIcon iconLiteral="mdi2d-delete" iconColor="#e3371e" />
+                     </graphic>
+                  </MFXButton>
                </children>
             </HBox>
          </children>

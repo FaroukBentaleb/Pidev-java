@@ -47,7 +47,15 @@ public class CompetitionService {
         competition.setCurrentParticipant(resultSet.getInt("current_participant"));
         competition.setDateFin(resultSet.getTimestamp("date_fin").toLocalDateTime());
         competition.setImageUrl(resultSet.getString("image_url"));
-
+        competition.setFreesed(resultSet.getBoolean("is_freesed"));
+        
+        // Check if the web_image_url column exists in the result set
+        try {
+            competition.setWebImageUrl(resultSet.getString("web_image_url"));
+        } catch (SQLException e) {
+            // Column might not exist yet, so we'll just use the regular image URL
+            competition.setWebImageUrl(null);
+        }
 
         competition.setChallenges(getChallengesForCompetition(competition.getId()));
 
@@ -69,7 +77,7 @@ public class CompetitionService {
             throw e;
         }
     }
-    private List<Challenge> getChallengesForCompetition(int competitionId) throws SQLException {
+    public List<Challenge> getChallengesForCompetition(int competitionId) throws SQLException {
         List<Challenge> challenges = new ArrayList<>();
         String sql = "SELECT * FROM challenge WHERE id_competition_id = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -99,8 +107,11 @@ public class CompetitionService {
             conn = connection; // Use the injected connection
             conn.setAutoCommit(false); // Start the transaction
 
+            // Check if web_image_url column exists and create it if not
+            createWebImageUrlColumnIfNotExists();
+
             // 1. Insert the Competition
-            String competitionSql = "INSERT INTO competition (nom, description, categorie, etat, date_comp, duration, current_participant, date_fin, image_url, is_freesed, id_instructor_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String competitionSql = "INSERT INTO competition (nom, description, categorie, etat, date_comp, duration, current_participant, date_fin, image_url, web_image_url, is_freesed, id_instructor_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             competitionStatement = conn.prepareStatement(competitionSql, Statement.RETURN_GENERATED_KEYS);
             competitionStatement.setString(1, competition.getNom());
             competitionStatement.setString(2, competition.getDescription());
@@ -111,8 +122,9 @@ public class CompetitionService {
             competitionStatement.setInt(7, competition.getCurrentParticipant());
             competitionStatement.setTimestamp(8, Timestamp.valueOf(competition.getDateFin()));
             competitionStatement.setString(9, competition.getImageUrl());
-            competitionStatement.setBoolean(10, competition.isFreesed());
-            competitionStatement.setInt(11, 4);
+            competitionStatement.setString(10, competition.getWebImageUrl());
+            competitionStatement.setBoolean(11, competition.isFreesed());
+            competitionStatement.setInt(12, 4);
 
             int affectedRows = competitionStatement.executeUpdate();
             if (affectedRows == 0) {
@@ -191,8 +203,11 @@ public class CompetitionService {
             conn = connection;
             conn.setAutoCommit(false); // Start transaction
 
+            // Check if web_image_url column exists and create it if not
+            createWebImageUrlColumnIfNotExists();
+
             // 1. Update the Competition
-            String competitionSql = "UPDATE competition SET nom = ?, description = ?, categorie = ?, etat = ?, date_comp = ?, duration = ?, current_participant = ?, date_fin = ?, image_url = ?, is_freesed = ?, id_instructor_id = ? WHERE id = ?";
+            String competitionSql = "UPDATE competition SET nom = ?, description = ?, categorie = ?, etat = ?, date_comp = ?, duration = ?, current_participant = ?, date_fin = ?, image_url = ?, web_image_url = ?, is_freesed = ?, id_instructor_id = ? WHERE id = ?";
             competitionStatement = conn.prepareStatement(competitionSql);
             competitionStatement.setString(1, competition.getNom());
             competitionStatement.setString(2, competition.getDescription());
@@ -203,9 +218,10 @@ public class CompetitionService {
             competitionStatement.setInt(7, competition.getCurrentParticipant());
             competitionStatement.setTimestamp(8, Timestamp.valueOf(competition.getDateFin()));
             competitionStatement.setString(9, competition.getImageUrl());
-            competitionStatement.setBoolean(10, competition.isFreesed());
-            competitionStatement.setInt(11, 4);
-            competitionStatement.setInt(12, competition.getId());
+            competitionStatement.setString(10, competition.getWebImageUrl());
+            competitionStatement.setBoolean(11, competition.isFreesed());
+            competitionStatement.setInt(12, 4);
+            competitionStatement.setInt(13, competition.getId());
             int competitionRowsAffected = competitionStatement.executeUpdate();
             if (competitionRowsAffected == 0) {
                 throw new SQLException("Updating competition failed, no rows affected for ID: " + competition.getId());
@@ -295,6 +311,29 @@ public class CompetitionService {
             }
         }
         return null;
+    }
+
+    // Helper method to check and create the web_image_url column if it doesn't exist
+    private void createWebImageUrlColumnIfNotExists() {
+        try {
+            // Check if column exists
+            String checkColumnSql = "SHOW COLUMNS FROM competition LIKE 'web_image_url'";
+            try (Statement stmt = connection.createStatement();
+                ResultSet rs = stmt.executeQuery(checkColumnSql)) {
+                
+                if (!rs.next()) {
+                    // Column doesn't exist, create it
+                    String addColumnSql = "ALTER TABLE competition ADD COLUMN web_image_url VARCHAR(255) AFTER image_url";
+                    try (Statement alterStmt = connection.createStatement()) {
+                        alterStmt.executeUpdate(addColumnSql);
+                        System.out.println("Added web_image_url column to competition table");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error checking/creating web_image_url column: " + e.getMessage());
+            // Continue execution even if this fails
+        }
     }
 
     // CRUD methods (createCompetition, getCompetitionById, etc.) ...

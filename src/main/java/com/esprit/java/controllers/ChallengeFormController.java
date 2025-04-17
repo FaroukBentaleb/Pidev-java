@@ -12,7 +12,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-
+import javafx.scene.control.Alert;
+import com.esprit.java.controllers.CustomHtmlEditor;
 import com.esprit.java.Models.Challenge;
 import com.esprit.java.Utility.RichTextUtils;
 import com.esprit.java.Utility.CompetitionViewHelper;
@@ -51,6 +52,9 @@ public class ChallengeFormController implements Initializable {
     
     private int challengeNumber;
     private CompetitionStep2Controller parentController;
+    
+    private Challenge challenge;
+    private Runnable onDeleteHandler;
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -122,12 +126,8 @@ public class ChallengeFormController implements Initializable {
     
     @FXML
     void handleRemoveChallenge(ActionEvent event) {
-        // Get the parent VBox containing this challenge form
-        Node challengeForm = ((Node) event.getSource()).getParent().getParent().getParent();
-        
-        // Ask the parent controller to remove this challenge
-        if (parentController != null) {
-            parentController.removeChallenge((VBox) challengeForm, challengeNumber);
+        if (onDeleteHandler != null) {
+            onDeleteHandler.run();
         }
     }
     
@@ -145,8 +145,9 @@ public class ChallengeFormController implements Initializable {
     }
     
     public Challenge getChallenge() {
-        Challenge challenge = new Challenge();
-        
+        if (challenge == null) {
+            challenge = new Challenge();
+        }
         challenge.setTitle(titleField.getText().trim());
         challenge.setDescription(descriptionEditor.getHtmlText());
         challenge.setContent(contentEditor.getHtmlText());
@@ -317,5 +318,47 @@ public class ChallengeFormController implements Initializable {
                 solutionEditor.setHtmlText(RichTextUtils.textToHtml(solution));
             }
         }
+    }
+    
+    public String getTitle() {
+        return titleField.getText().trim();
+    }
+    
+    public String getDescription() {
+        return descriptionEditor != null ? descriptionEditor.getHtmlText() : "";
+    }
+    
+    public String getContent() {
+        return contentEditor != null ? contentEditor.getHtmlText() : "";
+    }
+    
+    public String getSolution() {
+        return solutionEditor != null ? solutionEditor.getHtmlText() : "";
+    }
+    
+    public boolean validateForm() {
+        return validateInputs();
+    }
+
+    public void setChallenge(Challenge challenge) {
+        this.challenge = challenge;
+        if (challenge != null) {
+            titleField.setText(challenge.getTitle());
+            descriptionEditor.setHtmlText(challenge.getDescription());
+            contentEditor.setHtmlText(challenge.getContent());
+            solutionEditor.setHtmlText(challenge.getSolution());
+        }
+    }
+
+    public void setOnDelete(Runnable handler) {
+        this.onDeleteHandler = handler;
+    }
+
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 } 

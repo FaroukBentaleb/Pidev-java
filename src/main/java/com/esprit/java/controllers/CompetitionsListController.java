@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
-
+import com.esprit.java.controllers.CompetitionViewController;
 import com.esprit.java.Utility.DatabaseConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,6 +19,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -30,10 +31,17 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
+import javafx.scene.layout.Priority;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.stage.Stage;
 
 import com.esprit.java.Models.Challenge;
 import com.esprit.java.Models.Competition;
 import com.esprit.java.Services.CompetitionService;
+
+import org.kordamp.ikonli.javafx.FontIcon;
 
 public class CompetitionsListController implements Initializable {
 
@@ -82,6 +90,11 @@ public class CompetitionsListController implements Initializable {
                 filterCompetitions(newValue);
             });
             
+            // Setup listeners to handle window resizing
+            competitionsContainer.widthProperty().addListener((obs, oldVal, newVal) -> {
+                adjustGridLayout(newVal.doubleValue());
+            });
+            
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Database Error", 
                     "Failed to connect to the database", e.getMessage());
@@ -89,7 +102,7 @@ public class CompetitionsListController implements Initializable {
         }
     }
     
-    private void loadCompetitions() {
+    void loadCompetitions() {
         try {
             // Fetch all competitions from the database
             allCompetitions = competitionService.getAllCompetitions();
@@ -291,6 +304,9 @@ public class CompetitionsListController implements Initializable {
             setDefaultOrPlaceholderImage(competitionImage);
         }
         
+        // Add click handler to the card for viewing
+        card.setOnMouseClicked(event -> handleViewCompetition(competition));
+        
         // Add button event handlers
         editBtn.setOnAction(event -> handleEditCompetition(competition));
         deleteBtn.setOnAction(event -> handleDeleteCompetition(competition));
@@ -413,9 +429,38 @@ public class CompetitionsListController implements Initializable {
         }
     }
     
+    private void handleViewCompetition(Competition competition) {
+        try {
+            // Load competition view
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/esprit/java/competition_view.fxml"));
+            Parent view = loader.load();
+            
+            // Get the current scene's root
+            Node root = competitionsContainer.getScene().getRoot();
+            if (root instanceof VBox) {
+                VBox container = (VBox) root;
+                // Clear the container and add the view
+                container.getChildren().clear();
+                container.getChildren().add(view);
+                
+
+                CompetitionViewController controller = loader.getController();
+                controller.setCompetition(competition);
+            } else {
+                showAlert(Alert.AlertType.ERROR, "Error", 
+                        "Layout Error", "Could not find the main container.");
+            }
+            
+        } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR, "Error", 
+                    "Could not load competition view", e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
     private void handleEditCompetition(Competition competition) {
         try {
-            // Load competition edit form (Step 1)
+            // Load competition edit form
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/esprit/java/competition_step1.fxml"));
             Parent form = loader.load();
             
@@ -429,18 +474,12 @@ public class CompetitionsListController implements Initializable {
                 
                 // Get the controller and set the competition
                 CompetitionStep1Controller controller = loader.getController();
-// Map the list to the correct type
-                List<Challenge> challenges = competition.getChallenges().stream()
-                    .map(challenge -> (Challenge) challenge) // Ensure compatibility
-                    .collect(Collectors.toList());
-
-                // Pass the mapped list to the method
+                
+                // Fetch challenges for this competition
+                List<Challenge> challenges = competitionService.getChallengesForCompetition(competition.getId());
+                
+                // Set both competition and its challenges
                 controller.setCompetition(competition, challenges);
-                // Set up the close handler
-                controller.setOnCloseHandler(() -> {
-                    // When form is closed, reload the competitions list
-                    loadCompetitions();
-                });
             } else {
                 showAlert(Alert.AlertType.ERROR, "Error", 
                         "Layout Error", "Could not find the main container.");
@@ -448,7 +487,11 @@ public class CompetitionsListController implements Initializable {
             
         } catch (IOException e) {
             showAlert(Alert.AlertType.ERROR, "Error", 
-                    "Could not load competition edit form", e.getMessage());
+                    "Could not load competition form", e.getMessage());
+            e.printStackTrace();
+        } catch (SQLException e) {
+            showAlert(Alert.AlertType.ERROR, "Error", 
+                    "Could not fetch challenges", e.getMessage());
             e.printStackTrace();
         }
     }
@@ -512,5 +555,31 @@ public class CompetitionsListController implements Initializable {
     
     public void setMainContainer(VBox container) {
         this.mainContainer = container;
+    }
+    
+    private void adjustGridLayout(double width) {
+        // Dynamically adjust the number of columns based on container width
+        int numColumns = 3; // Default
+        
+        if (width < 800) {
+            numColumns = 1;
+        } else if (width < 1200) {
+            numColumns = 2;
+        }
+        
+        // Clear existing constraints
+        competitionsContainer.getColumnConstraints().clear();
+        
+        // Add new constraints
+        for (int i = 0; i < numColumns; i++) {
+            ColumnConstraints column = new ColumnConstraints();
+            column.setHgrow(Priority.SOMETIMES);
+            column.setMinWidth(330);
+            column.setPrefWidth(330);
+            competitionsContainer.getColumnConstraints().add(column);
+        }
+        
+        // Refresh the grid
+        displayCompetitionsPage(pagination.getCurrentPageIndex());
     }
 } 
