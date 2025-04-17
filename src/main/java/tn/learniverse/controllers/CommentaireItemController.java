@@ -41,25 +41,26 @@ public class CommentaireItemController {
 
     @FXML
     private void handleModifier() {
-        // Boîte de dialogue pour modifier le commentaire
         TextInputDialog dialog = new TextInputDialog(commentaire.getContenu());
-        dialog.setTitle("Modifier le commentaire");
-        dialog.setHeaderText("Modification du commentaire");
-        dialog.setContentText("Nouveau texte:");
+        dialog.setTitle("Modify");
+        dialog.setHeaderText("Modify your comment");
+        dialog.setContentText("your new Comment");
 
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(nouveauContenu -> {
             commentaire.setContenu(nouveauContenu);
             commentaireService.modifier(commentaire);
             if (refreshCallback != null) {
-                refreshCallback.run(); // Rafraîchir la liste
+                refreshCallback.run();
             }
         });
     }
 
     @FXML
     private void handleSupprimer() {
-        // Confirmation avant suppression
+        System.out.println("Tentative de suppression du commentaire ID: " + commentaire.getId());
+        System.out.println("Contenu du commentaire: " + commentaire.getContenu());
+
         Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
         confirmation.setTitle("Confirmation de suppression");
         confirmation.setHeaderText("Supprimer ce commentaire ?");
@@ -67,9 +68,28 @@ public class CommentaireItemController {
 
         Optional<ButtonType> result = confirmation.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            commentaireService.supprimer(commentaire.getId());
-            if (refreshCallback != null) {
-                refreshCallback.run(); // Rafraîchir la liste
+            System.out.println("Utilisateur a confirmé la suppression");
+
+            try {
+                commentaireService.supprimer(commentaire.getId());
+                System.out.println("Méthode supprimer() appelée avec succès");
+
+                if (refreshCallback != null) {
+                    System.out.println("Rafraîchissement de la liste...");
+                    refreshCallback.run();
+                } else {
+                    System.out.println("Attention: refreshCallback est null!");
+                }
+            } catch (Exception e) {
+                System.err.println("Erreur lors de la suppression:");
+                e.printStackTrace();
+
+                // Afficher une alerte à l'utilisateur
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setTitle("Erreur");
+                errorAlert.setHeaderText("Échec de la suppression");
+                errorAlert.setContentText("Une erreur est survenue lors de la suppression du commentaire.");
+                errorAlert.showAndWait();
             }
         }
     }

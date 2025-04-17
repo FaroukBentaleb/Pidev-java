@@ -1,28 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 
 <VBox xmlns="http://javafx.com/javafx/21.0.2"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="tn.learniverse.controllers.CommentaireItemController"
-      style="-fx-padding: 10; -fx-background-color: #f5f5f5; -fx-background-radius: 5;"
+      stylesheets="@styleAffichage.css"
+      style="-fx-padding: 15; -fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #e0e0e0; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0.3, 0, 2);"
       spacing="10">
 
-    <HBox spacing="10">
-        <Label fx:id="auteurLabel" style="-fx-font-weight: bold;"/>
-        <Label fx:id="dateLabel" style="-fx-text-fill: gray; -fx-font-size: 12;"/>
+
+
+    <HBox spacing="10" styleClass="post-header">
+        <Label styleClass="published-by-label" text="Published By" />
+        <Label fx:id="auteurLabel" styleClass="author-name" />
+
+        <Label styleClass="post-category" text="📅" />
+        <Label fx:id="dateLabel" styleClass="post-category" />
     </HBox>
 
-    <Label fx:id="contenuLabel" wrapText="true"/>
 
-    <ImageView fx:id="gifImageView" fitWidth="200" preserveRatio="true" visible="false"/>
+    <Label fx:id="contenuLabel" wrapText="true" style="-fx-font-size: 30;"/>
 
-    <HBox spacing="5" alignment="CENTER_RIGHT">
-        <Button text="Modifier" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"
+    <ImageView fx:id="gifImageView"
+               fitWidth="250"
+               preserveRatio="true"
+               visible="false"
+               style="-fx-background-color: #f0f0f0; -fx-padding: 5;"/>
+
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Update"
+                style="-fx-background-color: #1976D2; -fx-text-fill: white; -fx-background-radius: 5;"
                 onAction="#handleModifier"/>
-        <Button text="Supprimer" style="-fx-background-color: #f44336; -fx-text-fill: white;"
+        <Button text="Delete"
+                style="-fx-background-color: #00087d; -fx-text-fill: white; -fx-background-radius: 5;"
                 onAction="#handleSupprimer"/>
     </HBox>
 </VBox>

@@ -74,10 +74,20 @@ public class CommentaireService implements IForum<Commentaire> {
     public void supprimer(int id) {
         String sql = "DELETE FROM commentaire WHERE id=?";
         try (PreparedStatement pst = cnx.prepareStatement(sql)) {
+            System.out.println("Exécution de la suppression pour commentaire ID: " + id);
             pst.setInt(1, id);
-            pst.executeUpdate();
-            System.out.println("🗑️ Commentaire supprimé !");
+            int rowsDeleted = pst.executeUpdate();
+
+            if (rowsDeleted > 0) {
+                System.out.println("✅ Commentaire ID " + id + " supprimé avec succès. Lignes affectées: " + rowsDeleted);
+            } else {
+                System.out.println("⚠️ Aucun commentaire trouvé avec l'ID: " + id);
+            }
         } catch (SQLException e) {
+            System.out.println("❌ Erreur SQL lors de la suppression: ");
+            System.err.println("Code d'erreur SQL: " + e.getErrorCode());
+            System.err.println("Message SQL: " + e.getMessage());
+            System.err.println("État SQL: " + e.getSQLState());
             e.printStackTrace();
         }
     }

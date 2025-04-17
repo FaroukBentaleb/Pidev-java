@@ -69,7 +69,6 @@ public class PosteService implements IForum<Poste> {
             pst.setString(3, p.getCategorie());
             pst.setString(4, p.getPhoto());
             pst.setInt(5, p.getId());
-
             int rowsUpdated = pst.executeUpdate();
             if (rowsUpdated == 0) {
                 throw new SQLException("La modification a échoué, aucun poste trouvé avec cet ID");

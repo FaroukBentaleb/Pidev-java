@@ -227,3 +227,22 @@
 }
 
 
+
+.add-post-btn {
+    -fx-background-color: #00087d;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20;
+    -fx-background-radius: 8px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 2);
+}
+.add-post-btn:hover {
+    -fx-background-color: #4cb0ed;
+}
+
+
+
+
+

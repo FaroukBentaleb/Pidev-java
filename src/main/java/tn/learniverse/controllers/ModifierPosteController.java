@@ -6,7 +6,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import tn.learniverse.entities.Poste;
 import tn.learniverse.services.PosteService;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -20,10 +19,33 @@ public class ModifierPosteController {
     @FXML private TextField titreU;
     @FXML private TextArea contenuU;
     @FXML private Label labelimgU;
-
     private Poste currentPoste;
     private Runnable refreshCallback;
     private String newImagePath;
+    @FXML
+    private Label titreErrorLabel;
+    @FXML
+    private Label contenuErrorLabel;
+    @FXML
+    private boolean isTitreValid = false;
+    private boolean isContenuValid = false;
+    @FXML
+    private Button postButton;
+
+
+    @FXML
+    public void initialize() {
+        categorieU.getItems().addAll(
+                "Programming & Tech",
+                "Digital Marketing",
+                "Health & Fitness",
+                "Product Design"
+        );
+
+        setupValidationListenersU();
+        postButton.setDisable(true);
+    }
+
 
     public void setPosteData(Poste poste, Runnable callback) {
         this.currentPoste = poste;
@@ -38,15 +60,6 @@ public class ModifierPosteController {
         if (poste.getPhoto() != null && !poste.getPhoto().isEmpty()) {
             labelimgU.setText(poste.getPhoto().substring(poste.getPhoto().lastIndexOf("/") + 1));
         }
-    }
-    @FXML
-    public void initialize() {
-        categorieU.getItems().addAll(
-                "Programming & Tech",
-                "Digital Marketing",
-                "Health & Fitness",
-                "Product Design"
-        );
     }
 
     @FXML
@@ -89,7 +102,6 @@ public class ModifierPosteController {
                 return;
             }
 
-            // Mettre à jour l'objet Poste
             currentPoste.setTitre(titreU.getText());
             currentPoste.setContenu(contenuU.getText());
             currentPoste.setCategorie(categorieU.getValue());
@@ -124,5 +136,56 @@ public class ModifierPosteController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    private void setupValidationListenersU() {
+        titreU.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == null || newValue.trim().isEmpty()) {
+                titreErrorLabel.setText("Le titre ne peut pas être vide");
+                isTitreValid = false;
+            } else if (newValue.length() > 10) {
+                titreErrorLabel.setText("Le titre ne peut pas dépasser 10 caractères");
+                isTitreValid = false;
+            } else {
+                titreErrorLabel.setText("");
+                isTitreValid = true;
+            }
+            updatePostButtonStateU();
+        });
+
+        contenuU.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == null || newValue.trim().isEmpty()) {
+                contenuErrorLabel.setText("Le contenu ne peut pas être vide");
+                isContenuValid = false;
+            } else if (newValue.length() > 10) {
+                contenuErrorLabel.setText("Le contenu ne peut pas dépasser 10 caractères");
+                isContenuValid = false;
+            } else {
+                contenuErrorLabel.setText("");
+                isContenuValid = true;
+            }
+            updatePostButtonStateU();
+        });
+
+        // Validation de la catégorie
+        categorieU.valueProperty().addListener((observable, oldValue, newValue) -> {
+            updatePostButtonStateU();
+        });
+    }
+
+
+    private void updatePostButtonStateU() {
+
+        boolean allFieldsValid = isTitreValid && isContenuValid && (categorieU.getValue() != null);
+        postButton.setDisable(!allFieldsValid);
+
+        // Style optionnel
+        if (allFieldsValid) {
+            postButton.getStyleClass().removeAll("post-btn-disabled");
+            postButton.getStyleClass().add("post-btn-enabled");
+        } else {
+            postButton.getStyleClass().removeAll("post-btn-enabled");
+            postButton.getStyleClass().add("post-btn-disabled");
+        }
     }
 }

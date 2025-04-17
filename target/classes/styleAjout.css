@@ -115,3 +115,32 @@
 .post-btn .label {
     -fx-padding: 0 0 0 10;
 }
+
+.post-btn-enabled {
+    -fx-background-color: #6d7bff;
+    -fx-cursor: hand;
+}
+
+.post-btn-disabled {
+    -fx-background-color: #cccccc;
+    -fx-cursor: default;
+}
+
+.post-btn-enabled {
+    -fx-background-color: #6d7bff;
+    -fx-cursor: hand;
+}
+
+.post-btn-disabled {
+    -fx-background-color: #cccccc;
+    -fx-cursor: default;
+}
+
+.error-label {
+    -fx-text-fill: #ff0000;
+    -fx-font-size: 12px;
+}
+.error-label {
+    -fx-text-fill: #ff0000;
+    -fx-font-size: 12px;
+}

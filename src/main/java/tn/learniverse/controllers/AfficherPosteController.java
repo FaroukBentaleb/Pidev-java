@@ -1,11 +1,15 @@
 package tn.learniverse.controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import tn.learniverse.services.PosteService;
 import tn.learniverse.entities.Poste;
 import java.io.IOException;
@@ -21,6 +25,8 @@ public class AfficherPosteController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         chargerPosts();
     }
+
+
 
     private void chargerPosts() {
         postsContainer.getChildren().clear();
@@ -38,5 +44,25 @@ public class AfficherPosteController implements Initializable {
             }
         }
     }
+
+    @FXML
+    void AjoutPoste1(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterPoste.fxml"));
+            Parent root = loader.load();
+
+            AjouterPosteController controller = loader.getController();
+            controller.setRefreshCallback(this::chargerPosts); // méthode de rafraîchissement
+
+            Stage stage = new Stage();
+            stage.setTitle("Ajouter un post");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }
 

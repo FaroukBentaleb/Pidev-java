@@ -14,16 +14,14 @@ public class MainFX extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
     @Override
     public void start(Stage stage) throws Exception {
         primaryStage = stage;
-        showAjouterPosteScene(); // Affiche d'abord l'interface d'ajout
+        showAfficherPostesScene();
         stage.setTitle("Learniverse - Forum");
         stage.show();
     }
 
-    // Méthode pour afficher la scène d'ajout
     public static void showAjouterPosteScene() throws IOException {
         Parent root = FXMLLoader.load(MainFX.class.getResource("/AjouterPoste.fxml"));
         primaryStage.setScene(new Scene(root));
@@ -31,6 +29,11 @@ public class MainFX extends Application {
 
     public static void showAfficherPostesScene() throws IOException {
         Parent root = FXMLLoader.load(MainFX.class.getResource("/AfficherPoste.fxml"));
+        primaryStage.setScene(new Scene(root));
+    }
+
+    public static void showBackForumScene() throws IOException {
+        Parent root = FXMLLoader.load(MainFX.class.getResource("/BackForum.fxml"));
         primaryStage.setScene(new Scene(root));
     }
 }

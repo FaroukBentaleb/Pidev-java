@@ -1,5 +1,4 @@
 package tn.learniverse.controllers;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -9,7 +8,6 @@ import javafx.scene.Parent;
 import tn.learniverse.entities.Commentaire;
 import tn.learniverse.entities.Poste;
 import tn.learniverse.services.CommentaireService;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -52,7 +50,7 @@ public class AfficherCommentairesController {
         List<Commentaire> commentaires = commentaireService.getByPosteId(poste.getId());
 
         if (commentaires.isEmpty()) {
-            Label aucunCommentaire = new Label("Aucun commentaire pour ce poste");
+            Label aucunCommentaire = new Label("No comments for this post");
             aucunCommentaire.setStyle("-fx-font-style: italic; -fx-text-fill: gray;");
             commentairesVBox.getChildren().add(aucunCommentaire);
         } else {
