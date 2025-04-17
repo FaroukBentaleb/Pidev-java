@@ -19,10 +19,7 @@
          <!-- Form Panel (White) -->
          <StackPane styleClass="right-panel" HBox.hgrow="ALWAYS">
             <VBox alignment="CENTER" maxWidth="400" spacing="25">
-               <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                  <image>
-                     <Image url="@../../logo.png" />
-                  </image>
+               <ImageView fx:id="logoImageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                </ImageView>
                <!-- Signup Form -->
                <VBox spacing="10.0">

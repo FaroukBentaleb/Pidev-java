@@ -2,10 +2,9 @@ package tn.learniverse.controllers.user;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import org.mindrot.jbcrypt.BCrypt;
 import tn.learniverse.entities.*;
 import tn.learniverse.services.*;
@@ -21,6 +20,9 @@ public class Login implements Initializable {
     public PasswordField login_pwd;
     public Label error_email;
     public Label error_pwd;
+    public TextField textField;
+    public CheckBox showPasswordCheckBox;
+    public ImageView logoImageView;
 
     public void Login_btn(ActionEvent actionEvent) {
         UserService userService = new UserService();
@@ -45,17 +47,28 @@ public class Login implements Initializable {
                     }
                     else{
                         if( BCrypt.checkpw(pwd, usr.getMdp())) {
-                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                            alert.setTitle("Login Successful");
-                            alert.setHeaderText("Welcome !!");
-                            alert.setContentText("Connected successfully");
-                            alert.showAndWait();
-                            Session.setCurrentUser(usr);
-                            if(Session.getCurrentUser().getRole().equals("Admin")){
-                                Navigator.redirect(actionEvent, "/fxml/Back.fxml");
+                            if(usr.getBan()==1){
+                                Navigator.showAlert(Alert.AlertType.ERROR,"Account Banned","Your account has been Banned by the admin.\nPlease contact support for more details!");
                             }
                             else{
-                                Navigator.redirect(actionEvent, "/fxml/homePage.fxml");
+                                if(usr.getLogs()==0){
+                                    Navigator.showAlert(Alert.AlertType.ERROR,"Account locked","Your account has been locked due to many login attempts.\nPlease reset your password or contact support for more details!");
+                                }
+                                else{
+                                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                    alert.setTitle("Login Successful");
+                                    alert.setHeaderText("Welcome !!");
+                                    alert.setContentText("Connected successfully");
+                                    alert.showAndWait();
+                                    Session.setCurrentUser(usr);
+                                    if(Session.getCurrentUser().getRole().equals("Admin")){
+                                        Navigator.redirect(actionEvent, "/fxml/Back.fxml");
+                                    }
+                                    else{
+                                        Navigator.redirect(actionEvent, "/fxml/homePage.fxml");
+                                    }
+
+                                }
                             }
                         }
                         else{
@@ -67,10 +80,7 @@ public class Login implements Initializable {
                     }
                 }
                 catch (Exception e){
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("No User Found");
-                    alert.setContentText("The given email/password doesn't match any account!!");
-                    alert.showAndWait();
+                    System.out.println(e.getMessage());
                 }
             }
         }
@@ -100,9 +110,11 @@ public class Login implements Initializable {
         login_pwd.textProperty().addListener((obs, oldVal, newVal) -> {
             if (!newVal.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$")) {
                 login_pwd.setStyle("-fx-border-color: red;");
+                textField.setStyle("-fx-border-color: red;");
                 error_pwd.setText("8+ chars, upper & lower case, special char");
             } else {
                 login_pwd.setStyle(null);
+                textField.setStyle(null);
                 error_pwd.setText("");
             }
         });
@@ -118,6 +130,7 @@ public class Login implements Initializable {
 
         if (!login_pwd.getText().matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$")) {
             login_pwd.setStyle("-fx-border-color: red;");
+            textField.setStyle("-fx-border-color: red;");
             error_pwd.setText("8+ chars, upper & lower case, special char");
             isValid = false;
         }
@@ -129,5 +142,22 @@ public class Login implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setupRealTimeValidation();
+        logoImageView.setImage(new Image("file:/C:/wamp64/www/images/logo/logo.png"));
+        textField.textProperty().bindBidirectional(login_pwd.textProperty());
+
+        // Toggle visibility
+        showPasswordCheckBox.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
+            if (isSelected) {
+                textField.setVisible(true);
+                textField.setManaged(true);
+                login_pwd.setVisible(false);
+                login_pwd.setManaged(false);
+            } else {
+                login_pwd.setVisible(true);
+                login_pwd.setManaged(true);
+                textField.setVisible(false);
+                textField.setManaged(false);
+            }
+        });
     }
 }

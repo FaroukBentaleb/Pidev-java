@@ -4,6 +4,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import tn.learniverse.entities.*;
 import tn.learniverse.services.*;
 import tn.learniverse.tools.Navigator;
@@ -16,6 +18,7 @@ public class CreateAccount implements Initializable {
 
     private final UserService userService = new UserService();
     public Button login_btn;
+    public ImageView logoImageView;
 
     @FXML
     private TextField signup_email;
@@ -88,6 +91,7 @@ public class CreateAccount implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        logoImageView.setImage(new Image("file:/C:/wamp64/www/images/logo/logo.png"));
         signup_role.getItems().addAll("Student", "Insctructor");
         signup_role.setValue("Student");
         setupRealTimeValidation();

@@ -2,6 +2,7 @@ package tn.learniverse.services;
 
 import tn.learniverse.entities.*;
 import tn.learniverse.tools.DBConnection;
+import tn.learniverse.tools.Session;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -30,47 +31,53 @@ public class UserService implements IUser <User>{
 
     @Override
     public void ModifyAccount(User usr)  throws SQLException {
-        String query = "UPDATE User u SET "
-                + "nom = ?, "
-                + "prenom = ?, "
-                + "email = ?, "
-                + "date_de_naissance = ?, "
-                + "tel = ?, "
-                + "field = ?, "
-                + "description = ?, "
-                + "experience = ?, "
-                + "job = ?, "
-                + "resume = ?, "
-                + "picture = ?, "
-                + "facebook_link = ?, "
-                + "instagram_link = ?, "
-                + "linkedin_link = ?, "
-                + "verified = ?, "
-                + "logs = ?, "
-                + "ban = ? "
-                + "WHERE u.email = ?";
+        try {
+            String query = "UPDATE User u SET "
+                    + "nom = ?, "
+                    + "prenom = ?, "
+                    + "email = ?, "
+                    + "date_de_naissance = ?, "
+                    + "tel = ?, "
+                    + "field = ?, "
+                    + "description = ?, "
+                    + "experience = ?, "
+                    + "job = ?, "
+                    + "resume = ?, "
+                    + "picture = ?, "
+                    + "facebook_link = ?, "
+                    + "instagram_link = ?, "
+                    + "linkedin_link = ?, "
+                    + "verified = ?, "
+                    + "logs = ?, "
+                    + "ban = ? "
+                    + "WHERE u.email = ?";
 
-        PreparedStatement ps = connection.prepareStatement(query);
-        ps.setString(1, usr.getNom());
-        ps.setString(2, usr.getPrenom());
-        ps.setString(3, usr.getEmail());
-        ps.setString(4, usr.getDateDeNaissance());
-        ps.setInt(5, usr.getTel());
-        ps.setString(6, usr.getField());
-        ps.setString(7, usr.getDescription());
-        ps.setInt(8, usr.getExperience());
-        ps.setString(9, usr.getJob());
-        ps.setString(10, usr.getResume());
-        ps.setString(11, usr.getPicture());
-        ps.setString(12, usr.getFacebookLink());
-        ps.setString(13, usr.getInstagramLink());
-        ps.setString(14, usr.getLinkedinLink());
-        ps.setBoolean(15, usr.isVerified());
-        ps.setInt(16, usr.getLogs());
-        ps.setInt(17, usr.getBan());
-        ps.setString(18, usr.getEmail());
+            PreparedStatement ps = connection.prepareStatement(query);
+            User currentUser = Session.getCurrentUser();
+            ps.setString(1, usr.getNom());
+            ps.setString(2, usr.getPrenom());
+            ps.setString(3, usr.getEmail());
+            ps.setString(4, usr.getDateDeNaissance() != null ? usr.getDateDeNaissance() : currentUser.getDateDeNaissance());
+            ps.setInt(5, usr.getTel() != 0 ? usr.getTel() : currentUser.getTel());
+            ps.setString(6, usr.getField() != null ? usr.getField() : currentUser.getField());
+            ps.setString(7, usr.getDescription() != null ? usr.getDescription() : currentUser.getDescription());
+            ps.setInt(8, usr.getExperience() != 0 ? usr.getExperience() : currentUser.getExperience());
+            ps.setString(9, usr.getJob() != null ? usr.getJob() : currentUser.getJob());
+            ps.setString(10, usr.getResume() != null ? usr.getResume() : currentUser.getResume());
+            ps.setString(11, usr.getPicture() != null ? usr.getPicture() : currentUser.getPicture());
+            ps.setString(12, usr.getFacebookLink() != null ? usr.getFacebookLink() : currentUser.getFacebookLink());
+            ps.setString(13, usr.getInstagramLink() != null ? usr.getInstagramLink() : currentUser.getInstagramLink());
+            ps.setString(14, usr.getLinkedinLink() != null ? usr.getLinkedinLink() : currentUser.getLinkedinLink());
+            ps.setBoolean(15, usr.isVerified()); // Assuming false is a valid value
+            ps.setInt(16, usr.getLogs() != 0 ? usr.getLogs() : currentUser.getLogs());
+            ps.setInt(17, usr.getBan() != 0 ? usr.getBan() : currentUser.getBan());
+            ps.setString(18, usr.getEmail());
 
-        ps.executeUpdate();
+            ps.executeUpdate();
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
         System.out.println("Account Updated successfully");
     }
 

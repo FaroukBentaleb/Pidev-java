@@ -15,11 +15,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class homePage implements Initializable {
-    public Label username;
     public Label role;
     public TextField searchField;
     public Label greetings;
     public ImageView UserPicture;
+    public Label usernameLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -30,15 +30,18 @@ public class homePage implements Initializable {
                 Navigator.redirect(event,"/fxml/user/Login.fxml");
             }
             else{
-                this.username.setText(Session.getCurrentUser().getNom());
+                this.usernameLabel.setText(Session.getCurrentUser().getNom());
                 this.role.setText(Session.getCurrentUser().getRole());
                 String picturePath = Session.getCurrentUser().getPicture();
                 Image image;
 
                 if (picturePath != null) {
                     image = new Image("file:///" + picturePath.replace("\\", "/"), 50, 50, false, false);
+                    if(image.isError()){
+                        image = new Image("file:///C:/wamp64/www/images/users/user.jpg", 50, 50, false, false);
+                    }
                 } else {
-                    image = new Image("logo.png", 50, 50, false, false);
+                    image = new Image("file:///C:/wamp64/www/images/users/user.jpg", 50, 50, false, false);
                 }
 
                 this.UserPicture.setImage(image);
@@ -60,6 +63,6 @@ public class homePage implements Initializable {
     }
 
     public void Profile(ActionEvent actionEvent) {
-        Navigator.redirect(actionEvent,"/fxml/user/ProfileTrial.fxml");
+        Navigator.redirect(actionEvent,"/fxml/user/Profile.fxml");
     }
 }
