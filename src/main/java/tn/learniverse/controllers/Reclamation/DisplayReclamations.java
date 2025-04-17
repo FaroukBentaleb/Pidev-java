@@ -1,4 +1,4 @@
-package tn.learniverse.controllers;
+package tn.learniverse.controllers.Reclamation;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import javafx.geometry.Insets;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import tn.learniverse.entities.User;
 import tn.learniverse.entities.Reclamation;
@@ -22,6 +23,10 @@ import java.util.Date;
 import java.util.List;
 
 public class DisplayReclamations {
+    private User user;
+    public void setUser(User user) {
+        this.user = user;
+    }
     @FXML
     private VBox reclamationsContainer;
     @FXML
@@ -97,7 +102,8 @@ public class DisplayReclamations {
             actions.getChildren().add(createButton("Voir Réponse", "btn-primary",
                     e -> viewResponses(rec, (Node) e.getSource())));
         } else {
-            actions.getChildren().add(createButton("Modifier Contenu", "btn-success"));
+            actions.getChildren().add(createButton("Modifier Contenu", "btn-success",
+                    e -> openModifierReclamationDialog(rec)));
         }
 
         box.getChildren().addAll(statusDateBox, titleLabel, contentText, actions);
@@ -127,7 +133,7 @@ public class DisplayReclamations {
 
     private void viewResponses(Reclamation rec, Node sourceNode) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/reponses.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reclamation/Reponses.fxml"));
             Parent root = loader.load();
             Reponses responsesController = loader.getController();
             responsesController.setReclamation(rec);
@@ -140,4 +146,23 @@ public class DisplayReclamations {
             e.printStackTrace();
         }
     }
+    private void openModifierReclamationDialog(Reclamation reclamation) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reclamation/ModifierReclamation.fxml"));
+            Parent root = loader.load();
+            ModifierReclamation controller = loader.getController();
+            controller.setReclamation(reclamation);
+
+            Stage stage = new Stage();
+            stage.setTitle("Modifier la réclamation");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }
+

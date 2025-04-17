@@ -1,5 +1,6 @@
 package tn.learniverse.entities;
 
+import java.security.Timestamp;
 import java.util.Date;
 
 public class Reponse {
@@ -14,14 +15,36 @@ public class Reponse {
     public Reponse() {
     }
 
-    public Reponse(String contenu, Date dateReponse, Reclamation reclamation, Date dateModification, User user, int statut) {
+
+    public Reponse(String contenu) {
+        this.contenu = contenu;
+    }
+    public Reponse(String contenu, Date dateReponse, Reclamation reclamation, User user, int statut) {
+        this.contenu = contenu;
+        this.dateReponse = dateReponse;
+        this.reclamation = reclamation;
+        this.user = user;
+        this.statut = statut;
+    }
+    public Reponse(String contenu, Timestamp dateReponse, Reclamation reclamation, Timestamp dateModification, User user, int statut) {
+        this.contenu = contenu;
+        this.dateReponse = dateReponse.getTimestamp();
+        this.reclamation = reclamation;
+        this.dateModification = dateModification.getTimestamp();
+        this.user = user;
+        this.statut = statut;
+    }
+
+    public Reponse(String contenu, java.sql.Timestamp dateReponse, Reclamation reclamation, java.sql.Timestamp dateModification, User userReponse, int statut) {
         this.contenu = contenu;
         this.dateReponse = dateReponse;
         this.reclamation = reclamation;
         this.dateModification = dateModification;
-        this.user = user;
+        this.user = userReponse;
         this.statut = statut;
     }
+
+
 
     public int getId() {
         return id;

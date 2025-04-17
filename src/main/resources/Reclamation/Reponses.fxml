@@ -7,7 +7,7 @@
 <AnchorPane prefHeight="720.0" prefWidth="1280.0"
             xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="tn.learniverse.controllers.Reponses">
+            fx:controller="tn.learniverse.controllers.Reclamation.Reponses">
 
     <Label fx:id="labelTitre" layoutX="20.0" layoutY="10.0"
            style="-fx-font-size: 18px; -fx-font-weight: bold;" />

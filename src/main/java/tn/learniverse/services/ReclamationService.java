@@ -19,28 +19,30 @@ public class ReclamationService implements IReclamation<Reclamation> {
     }
 
     @Override
-    public void ajouter(Reclamation r) throws SQLException {
+    public void ajouter(Reclamation r, User user) throws SQLException {
         sql = "INSERT INTO reclamation (titre, date_reclamation, contenu, statut, id_user_id, statut_archivation, statut_archivation_back, date_modification, fichier) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ste = cnx.prepareStatement(sql);
+
+        java.sql.Timestamp defaultModificationDate = java.sql.Timestamp.valueOf("1970-01-01 00:00:00");
         ste.setString(1, r.getTitre());
-        ste.setTimestamp(2, new java.sql.Timestamp(r.getDateReclamation().getTime()));
+        ste.setTimestamp(2, new java.sql.Timestamp(System.currentTimeMillis()));
         ste.setString(3, r.getContenu());
-        ste.setString(4, r.getStatut());
-        ste.setInt(6, r.getStatutArchivation());
-        ste.setInt(7, r.getStatutArchivationBack());
-        ste.setDate(8, new java.sql.Date(r.getDateModification().getTime()));
-        ste.setString(9, r.getFichier());
-        ste.setInt(5, r.getUser().getId());
+        ste.setString(4, "Non Traité");
+        ste.setInt(5, user.getId());
+        ste.setInt(6, 0);
+        ste.setInt(7, 0);
+        ste.setTimestamp(8, defaultModificationDate);
+        ste.setString(9,"NULL");
         ste.executeUpdate();
         System.out.println("Réclamation ajoutée !");
     }
-
     @Override
-    public void modifier(int id,String contenu) throws SQLException {
-        sql = "UPDATE reclamation SET contenu = '"+contenu+"' WHERE id = ?";
+    public void modifier(int id, String contenu) throws SQLException {
+        sql = "UPDATE reclamation SET contenu = ?, date_modification = CURRENT_TIMESTAMP WHERE id = ?";
         PreparedStatement st = cnx.prepareStatement(sql);
-        st.setInt(1, id);
+        st.setString(1, contenu);
+        st.setInt(2, id);
         st.executeUpdate();
         System.out.println("Réclamation modifiée !");
     }
