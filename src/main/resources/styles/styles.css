@@ -438,100 +438,189 @@ DatePicker:focused {
 
 /* Offer Card Styles */
 .offer-card {
-    -fx-background-color: white;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);
-    -fx-background-radius: 8;
-    -fx-border-radius: 8;
-    -fx-border-color: #e0e0e0;
+    -fx-background-color: linear-gradient(to bottom right, white, #fafafa);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 0, 1);
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-border-color: #f0f0f0;
     -fx-border-width: 1;
+    -fx-transition-duration: 0.3s;
+    -fx-transition: all 0.3s ease-in-out;
+    -fx-min-width: 320;
+    -fx-max-width: 320;
+    -fx-min-height: 380;
+    -fx-max-height: 380;
+    -fx-spacing: 0;
 }
 
 .offer-card:hover {
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 15, 0, 0, 4);
-    -fx-translate-y: -2;
+    -fx-background-color: linear-gradient(to bottom right, white, #f5f5f5);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15, 0, 0, 5);
+    -fx-translate-y: -4;
+    -fx-border-color: #e8e8e8;
+    -fx-cursor: hand;
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
 }
 
 .offer-header {
-    -fx-border-color: transparent transparent #e0e0e0 transparent;
+    -fx-border-color: transparent transparent #f0f0f0 transparent;
     -fx-border-width: 0 0 1 0;
+    -fx-padding: 20 24;
+    -fx-spacing: 12;
+    -fx-background-color: rgba(255, 255, 255, 0.7);
+    -fx-background-radius: 12 12 0 0;
+}
+
+.offer-content {
+    -fx-padding: 16 24;
+    -fx-spacing: 12;
+    -fx-alignment: TOP_LEFT;
+    -fx-pref-width: 320;
 }
 
 .offer-title {
-    -fx-font-size: 18;
+    -fx-font-size: 22;
     -fx-font-weight: bold;
+    -fx-text-fill: #1e293b;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 1, 0, 0, 1);
 }
 
-.status-badge {
-    -fx-padding: 5 10;
-    -fx-background-radius: 12;
-    -fx-font-size: 12;
-    -fx-font-weight: bold;
-}
-
-.status-active {
-    -fx-background-color: #e8f5e9;
-    -fx-text-fill: #2e7d32;
-}
-
-.status-inactive {
-    -fx-background-color: #ffebee;
-    -fx-text-fill: #c62828;
+.price-section {
+    -fx-padding: 4 0 8 0;
+    -fx-spacing: 8;
+    -fx-alignment: CENTER_LEFT;
+    -fx-pref-width: 272;
 }
 
 .price-amount {
-    -fx-font-size: 24;
+    -fx-font-size: 32;
     -fx-font-weight: bold;
-    -fx-text-fill: #1976d2;
+    -fx-text-fill: #2563eb;
+    -fx-effect: dropshadow(gaussian, rgba(37,99,235,0.2), 1, 0, 0, 1);
 }
 
 .price-period {
-    -fx-font-size: 14;
-    -fx-text-fill: #757575;
+    -fx-font-size: 15;
+    -fx-text-fill: #64748b;
 }
 
 .discount-badge {
-    -fx-background-color: #fff3e0;
-    -fx-text-fill: #f57c00;
-    -fx-padding: 3 8;
-    -fx-background-radius: 12;
+    -fx-background-color: linear-gradient(to right, #fb923c, #f97316);
+    -fx-text-fill: white;
+    -fx-padding: 4 12;
+    -fx-background-radius: 16;
+    -fx-font-size: 13;
     -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 0, 1);
+}
+
+.content-wrapper {
+    -fx-spacing: 12;
+    -fx-padding: 0;
+    -fx-alignment: TOP_LEFT;
+    -fx-pref-width: 272;
+    -fx-min-height: 160;
+    -fx-pref-height: 160;
 }
 
 .description-box {
-    -fx-background-color: #f5f5f5;
-    -fx-background-radius: 4;
-    -fx-padding: 10;
+    -fx-background-color: linear-gradient(to bottom right, #f8fafc, #f1f5f9);
+    -fx-background-radius: 8;
+    -fx-padding: 12;
+    -fx-pref-width: 272;
+    -fx-min-height: 80;
+    -fx-max-height: 80;
+    -fx-alignment: TOP_LEFT;
+    -fx-effect: innershadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2);
 }
 
 .description-text {
-    -fx-font-size: 14;
-    -fx-fill: #424242;
+    -fx-font-size: 13;
+    -fx-fill: #475569;
+    -fx-line-spacing: 1.4;
+    -fx-wrap-text: true;
+    -fx-text-alignment: LEFT;
+    -fx-font-smoothing-type: LCD;
+    -fx-pref-width: 248;
 }
 
 .action-buttons {
-    -fx-spacing: 10;
+    -fx-spacing: 12;
+    -fx-padding: 16 24;
+    -fx-alignment: CENTER_RIGHT;
+    -fx-background-color: linear-gradient(to bottom, transparent, rgba(248,250,252,0.8));
+    -fx-background-radius: 0 0 12 12;
+    -fx-border-color: transparent;
+    -fx-border-width: 1 0 0 0;
+    -fx-pref-width: 320;
+}
+
+.divider {
+    -fx-stroke: #e2e8f0;
+    -fx-stroke-width: 1;
+    -fx-opacity: 0.6;
+}
+
+.status-badge {
+    -fx-padding: 6 16;
+    -fx-background-radius: 20;
+    -fx-font-size: 13;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 4, 0, 0, 1);
+}
+
+.status-active {
+    -fx-background-color: linear-gradient(to right, #22c55e, #16a34a);
+    -fx-text-fill: white;
+}
+
+.status-inactive {
+    -fx-background-color: linear-gradient(to right, #ef4444, #dc2626);
+    -fx-text-fill: white;
 }
 
 .edit-button {
-    -fx-background-color: #1976d2;
+    -fx-background-color: linear-gradient(to right, #3b82f6, #2563eb);
     -fx-text-fill: white;
-    -fx-padding: 8 16;
-    -fx-background-radius: 4;
+    -fx-padding: 10 24;
+    -fx-background-radius: 8;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-min-width: 110;
+    -fx-effect: dropshadow(gaussian, rgba(59,130,246,0.3), 8, 0, 0, 0);
 }
 
 .delete-button {
-    -fx-background-color: #f44336;
-    -fx-text-fill: white;
-    -fx-padding: 8 16;
-    -fx-background-radius: 4;
+    -fx-background-color: transparent;
+    -fx-text-fill: #ef4444;
+    -fx-padding: 9 23;
+    -fx-background-radius: 8;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-min-width: 110;
+    -fx-border-color: #ef4444;
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
 }
 
 .edit-button:hover {
-    -fx-background-color: #1565c0;
+    -fx-background-color: linear-gradient(to right, #2563eb, #1d4ed8);
+    -fx-effect: dropshadow(gaussian, rgba(59,130,246,0.4), 12, 0, 0, 0);
+    -fx-translate-y: -1;
 }
 
 .delete-button:hover {
-    -fx-background-color: #d32f2f;
+    -fx-background-color: #ef4444;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(239,68,68,0.3), 8, 0, 0, 0);
+    -fx-translate-y: -1;
+}
+
+.button-icon {
+    -fx-fill: currentColor;
+    -fx-font-size: 14;
+    -fx-translate-y: -1;
 }
 
 .no-results-text {

@@ -20,6 +20,7 @@ public class Offre {
     private String targetAudience;
     private String benefits;
     private LocalDateTime createdAt;
+    private int courseId;
 
     // Constructors
     public Offre() {
@@ -176,6 +177,14 @@ public class Offre {
         this.createdAt = createdAt;
     }
 
+    public int getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(int courseId) {
+        this.courseId = courseId;
+    }
+
     // Helper method to get status based on isActive
     public String getStatus() {
         return isActive ? "Active" : "Inactive";
@@ -193,6 +202,7 @@ public class Offre {
                 ", validFrom=" + validFrom +
                 ", validUntil=" + validUntil +
                 ", isActive=" + isActive +
+                ", courseId=" + courseId +
                 '}';
     }
 } 

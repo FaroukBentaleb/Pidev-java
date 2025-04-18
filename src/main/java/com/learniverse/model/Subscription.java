@@ -4,19 +4,15 @@ import java.time.LocalDateTime;
 
 public class Subscription {
     private int id;
+    private int userId;
+    private int offreId;
     private int courseId;
     private LocalDateTime dateEarned;
     private String status;
-    private int userId;
-    private int offreId;
+    private long durationInDays;
 
-    // Constructors
+    // Default constructor
     public Subscription() {
-    }
-
-    public Subscription(LocalDateTime dateEarned, String status) {
-        this.dateEarned = dateEarned;
-        this.status = status;
     }
 
     // Getters and Setters
@@ -26,6 +22,22 @@ public class Subscription {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getOffreId() {
+        return offreId;
+    }
+
+    public void setOffreId(int offreId) {
+        this.offreId = offreId;
     }
 
     public int getCourseId() {
@@ -52,19 +64,24 @@ public class Subscription {
         this.status = status;
     }
 
-    public int getUserId() {
-        return userId;
+    public long getDurationInDays() {
+        return durationInDays;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setDurationInDays(long durationInDays) {
+        this.durationInDays = durationInDays;
     }
 
-    public int getOffreId() {
-        return offreId;
-    }
-
-    public void setOffreId(int offreId) {
-        this.offreId = offreId;
+    @Override
+    public String toString() {
+        return "Subscription{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", offreId=" + offreId +
+                ", courseId=" + courseId +
+                ", dateEarned=" + dateEarned +
+                ", status='" + status + '\'' +
+                ", durationInDays=" + durationInDays +
+                '}';
     }
 } 

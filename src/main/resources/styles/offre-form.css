@@ -1,0 +1,334 @@
+/* Form Container */
+.form-container {
+    -fx-background-color: #ffffff;
+    -fx-padding: 20;
+    -fx-spacing: 20;
+}
+
+/* Header Section */
+.form-header {
+    -fx-spacing: 15;
+    -fx-padding: 0 0 20 0;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 0 0 1 0;
+}
+
+.form-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.header-separator {
+    -fx-background-color: #e0e0e0;
+    -fx-pref-height: 2;
+}
+
+/* Section Headers */
+.section-header {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #34495e;
+    -fx-padding: 20 0 10 0;
+    -fx-background-color: #f8f9fa;
+    -fx-background-radius: 4;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 4;
+    -fx-padding: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 4, 0, 0, 1);
+}
+
+/* Required Fields */
+.required-fields-note {
+    -fx-text-fill: #e74c3c;
+    -fx-font-size: 13px;
+    -fx-font-style: italic;
+    -fx-padding: 5 0 10 0;
+}
+
+/* Field Container */
+.field-container {
+    -fx-spacing: 2;
+    -fx-alignment: TOP_LEFT;
+}
+
+/* Labels */
+.form-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #34495e;
+    -fx-padding: 0 0 5 0;
+}
+
+/* Required field indicator */
+.form-label.required::after {
+    -fx-content: " *";
+    -fx-text-fill: #e74c3c;
+    -fx-font-weight: bold;
+}
+
+/* Validation Messages */
+.validation-error {
+    -fx-text-fill: #e74c3c;
+    -fx-font-size: 12px;
+    -fx-padding: 4 0 0 2;
+    -fx-font-style: italic;
+    -fx-font-weight: bold;
+    -fx-wrap-text: true;
+    -fx-pref-width: 300;
+}
+
+/* Form Fields */
+.form-field {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 4;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 4;
+    -fx-padding: 12;
+    -fx-font-size: 14px;
+    -fx-pref-width: 300;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 4, 0, 0, 1);
+}
+
+.form-field:focused {
+    -fx-border-color: #3498db;
+    -fx-background-color: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(52, 152, 219, 0.2), 4, 0, 0, 1);
+}
+
+/* Validation States */
+.form-field.error {
+    -fx-border-color: #e74c3c;
+    -fx-border-width: 2;
+    -fx-background-color: #fff5f5;
+    -fx-effect: dropshadow(gaussian, rgba(231, 76, 60, 0.2), 4, 0, 0, 1);
+}
+
+.form-field.success {
+    -fx-border-color: #2ecc71;
+    -fx-border-width: 2;
+    -fx-background-color: #f0fff4;
+    -fx-effect: dropshadow(gaussian, rgba(46, 204, 113, 0.2), 4, 0, 0, 1);
+}
+
+/* Text Areas */
+.form-textarea {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 4;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 4;
+    -fx-padding: 12;
+    -fx-font-size: 14px;
+    -fx-pref-width: 300;
+    -fx-pref-row-count: 3;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 4, 0, 0, 1);
+}
+
+.form-textarea:focused {
+    -fx-border-color: #3498db;
+    -fx-background-color: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(52, 152, 219, 0.2), 4, 0, 0, 1);
+}
+
+.form-textarea.error {
+    -fx-border-color: #e74c3c;
+    -fx-border-width: 2;
+    -fx-background-color: #fff5f5;
+    -fx-effect: dropshadow(gaussian, rgba(231, 76, 60, 0.2), 4, 0, 0, 1);
+}
+
+.form-textarea.success {
+    -fx-border-color: #2ecc71;
+    -fx-border-width: 2;
+    -fx-background-color: #f0fff4;
+    -fx-effect: dropshadow(gaussian, rgba(46, 204, 113, 0.2), 4, 0, 0, 1);
+}
+
+/* ComboBox */
+.form-combo {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 4;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 4;
+    -fx-padding: 8;
+    -fx-font-size: 14px;
+    -fx-pref-width: 300;
+}
+
+.form-combo:focused {
+    -fx-border-color: #3498db;
+    -fx-background-color: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(52, 152, 219, 0.2), 4, 0, 0, 1);
+}
+
+.form-combo.error {
+    -fx-border-color: #e74c3c;
+    -fx-border-width: 2;
+    -fx-background-color: #fff5f5;
+}
+
+.form-combo.success {
+    -fx-border-color: #2ecc71;
+    -fx-border-width: 2;
+    -fx-background-color: #f0fff4;
+}
+
+/* DatePicker */
+.form-datepicker {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 4;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 4;
+    -fx-padding: 8;
+    -fx-font-size: 14px;
+    -fx-pref-width: 300;
+}
+
+.form-datepicker:focused {
+    -fx-border-color: #3498db;
+    -fx-background-color: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(52, 152, 219, 0.2), 4, 0, 0, 1);
+}
+
+.form-datepicker.error {
+    -fx-border-color: #e74c3c;
+    -fx-border-width: 2;
+    -fx-background-color: #fff5f5;
+}
+
+.form-datepicker.success {
+    -fx-border-color: #2ecc71;
+    -fx-border-width: 2;
+    -fx-background-color: #f0fff4;
+}
+
+/* CheckBox */
+.form-checkbox {
+    -fx-font-size: 14px;
+    -fx-text-fill: #34495e;
+}
+
+.form-checkbox .box {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 4;
+    -fx-border-width: 2;
+}
+
+.form-checkbox:selected .box {
+    -fx-background-color: #3498db;
+    -fx-border-color: #3498db;
+}
+
+.form-checkbox:selected .mark {
+    -fx-background-color: white;
+}
+
+/* Buttons */
+.form-buttons {
+    -fx-spacing: 15;
+    -fx-padding: 30 0 0 0;
+    -fx-alignment: CENTER_RIGHT;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1 0 0 0;
+}
+
+.save-button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 12 24;
+    -fx-background-radius: 4;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 4, 0, 0, 1);
+}
+
+.save-button:hover {
+    -fx-background-color: #2980b9;
+}
+
+.save-button:disabled {
+    -fx-background-color: #bdc3c7;
+    -fx-opacity: 0.7;
+    -fx-effect: none;
+}
+
+.cancel-button {
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 12 24;
+    -fx-background-radius: 4;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 4, 0, 0, 1);
+}
+
+.cancel-button:hover {
+    -fx-background-color: #c0392b;
+}
+
+/* ScrollBar */
+.scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 14;
+    -fx-padding: 0;
+}
+
+.scroll-bar:vertical .track {
+    -fx-background-color: #f8f9fa;
+    -fx-background-radius: 7;
+    -fx-border-radius: 7;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #bdc3c7;
+    -fx-background-radius: 7;
+    -fx-border-radius: 7;
+}
+
+.scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #95a5a6;
+}
+
+.scroll-bar:vertical .increment-button,
+.scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.scroll-bar:vertical .increment-arrow,
+.scroll-bar:vertical .decrement-arrow {
+    -fx-shape: " ";
+    -fx-padding: 0;
+}
+
+/* Section Containers */
+.section-container {
+    -fx-background-color: #ffffff;
+    -fx-padding: 20;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: #e0e0e0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 8, 0, 0, 2);
+}
+
+/* Field Groups */
+.field-group {
+    -fx-spacing: 8;
+}
+
+/* Placeholder text */
+.text-field:empty:focused {
+    -fx-prompt-text-fill: #95a5a6;
+}
+
+.text-area:empty:focused {
+    -fx-prompt-text-fill: #95a5a6;
+}
+
+/* Hover effects */
+.form-field:hover, .form-textarea:hover, .form-combo:hover, .form-datepicker:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 4, 0, 0, 1);
+} 

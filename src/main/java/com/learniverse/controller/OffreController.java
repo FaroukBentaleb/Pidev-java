@@ -1,7 +1,11 @@
 package com.learniverse.controller;
 
 import com.learniverse.dao.OffreDAO;
+import com.learniverse.dao.SubscriptionDAO;
 import com.learniverse.model.Offre;
+import com.learniverse.model.Subscription;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
@@ -15,6 +19,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -27,12 +32,14 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class OffreController {
     @FXML
@@ -83,6 +90,7 @@ public class OffreController {
     private Button nextPageButton;
 
     private OffreDAO offreDAO;
+    private SubscriptionDAO subscriptionDAO;
     private ObservableList<Offre> offres;
     private int currentPage = 1;
     private int itemsPerPageValue = 10;
@@ -90,8 +98,11 @@ public class OffreController {
 
     @FXML
     public void initialize() {
-        // Initialize DAO and observable list
+        // Initialize DAOs
         offreDAO = new OffreDAO();
+        subscriptionDAO = new SubscriptionDAO();
+        
+        // Initialize DAO and observable list
         offres = FXCollections.observableArrayList();
 
         // Initialize filter options
@@ -117,9 +128,6 @@ public class OffreController {
         cardsContainer.setVgap(20);
         cardsContainer.setPadding(new Insets(20));
 
-        // Initialize quick filter chips
-        initializeFilterChips();
-
         // Set up event handlers
         setupEventHandlers();
 
@@ -141,8 +149,6 @@ public class OffreController {
         // Button handlers
         addButton.setOnAction(e -> showOffreForm(null));
         refreshButton.setOnAction(e -> loadData());
-        clearFiltersButton.setOnAction(e -> clearAllFilters());
-        advancedSearchButton.setOnAction(e -> showAdvancedSearch());
 
         // Pagination handlers
         prevPageButton.setOnAction(e -> navigateToPage(currentPage - 1));
@@ -170,7 +176,7 @@ public class OffreController {
             filterOffres();
         } catch (Exception e) {
             e.printStackTrace();
-            showAlert("Error loading data: " + e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Error", "Error loading data: " + e.getMessage());
         }
     }
 
@@ -349,6 +355,21 @@ public class OffreController {
 
         buttonsBox.getChildren().addAll(editButton, deleteButton);
 
+        // Add Subscribe button
+        Button subscribeButton = new Button("Subscribe");
+        subscribeButton.getStyleClass().add("subscribe-button");
+        FontAwesomeIconView checkIcon = new FontAwesomeIconView(FontAwesomeIcon.CHECK);
+        checkIcon.setFill(Color.WHITE);
+        checkIcon.setSize("16");
+        subscribeButton.setGraphic(checkIcon);
+        subscribeButton.setOnAction(e -> handleSubscription(offre));
+
+        // Add button to card
+        HBox buttonBox = new HBox(10);
+        buttonBox.setAlignment(Pos.CENTER);
+        buttonBox.getChildren().addAll(subscribeButton);
+        buttonsBox.getChildren().add(buttonBox);
+
         // Add all sections to the card
         card.getChildren().addAll(
             header,
@@ -382,7 +403,7 @@ public class OffreController {
             stage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert("Error opening form: " + e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Error", "Error opening form: " + e.getMessage());
         }
     }
 
@@ -446,44 +467,6 @@ public class OffreController {
         }
     }
 
-    private void initializeFilterChips() {
-        String[] commonFilters = {
-            "Under $50", "Over $100", "Active Only", 
-            "With Discount", "Custom Plans", "New This Week"
-        };
-
-        for (String filter : commonFilters) {
-            Button chip = new Button(filter);
-            chip.getStyleClass().add("filter-chip");
-            chip.setOnAction(e -> toggleFilterChip(chip));
-            filterChipsContainer.getChildren().add(chip);
-        }
-    }
-
-    private void toggleFilterChip(Button chip) {
-        if (chip.getStyleClass().contains("active")) {
-            chip.getStyleClass().remove("active");
-            activeFilters.remove(chip.getText());
-        } else {
-            chip.getStyleClass().add("active");
-            activeFilters.put(chip.getText(), "");
-        }
-        filterOffres();
-    }
-
-    private void clearAllFilters() {
-        searchField.clear();
-        filterStatus.getSelectionModel().selectFirst();
-        sortBy.getSelectionModel().selectFirst();
-        filterChipsContainer.getChildren().forEach(node -> {
-            if (node instanceof Button) {
-                ((Button) node).getStyleClass().remove("active");
-            }
-        });
-        activeFilters.clear();
-        filterOffres();
-    }
-
     private void showAdvancedSearch() {
         // Implement advanced search dialog
         // This would open a new window with more search options
@@ -498,11 +481,53 @@ public class OffreController {
         }
     }
 
-    private void showAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
+    @FXML
+    private void handleSubscriptionManagement() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/SubscriptionView.fxml"));
+            Parent root = loader.load();
+            
+            Scene currentScene = cardsContainer.getScene();
+            Stage stage = (Stage) currentScene.getWindow();
+            
+            Scene newScene = new Scene(root, currentScene.getWidth(), currentScene.getHeight());
+            newScene.getStylesheets().add(getClass().getResource("/styles/styles.css").toExternalForm());
+            
+            stage.setScene(newScene);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "Error loading Subscription Management view: " + e.getMessage());
+        }
+    }
+
+    private void handleSubscription(Offre offre) {
+        try {
+            // Create new subscription
+            Subscription subscription = new Subscription();
+            subscription.setOffreId(offre.getId());
+            subscription.setUserId(1); // TODO: Replace with actual logged-in user ID
+            subscription.setDateEarned(LocalDateTime.now());
+            subscription.setStatus("Active");
+            subscription.setCourseId(offre.getCourseId());
+            
+            // Save subscription
+            subscriptionDAO.create(subscription);
+
+            // Show success message
+            showAlert(Alert.AlertType.INFORMATION, "Success", "Successfully subscribed to " + offre.getName());
+
+            // Refresh the view
+            loadData();
+        } catch (Exception ex) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to subscribe: " + ex.getMessage());
+        }
+    }
+
+    private void showAlert(Alert.AlertType type, String title, String content) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
         alert.setHeaderText(null);
-        alert.setContentText(message);
+        alert.setContentText(content);
         alert.showAndWait();
     }
 } 

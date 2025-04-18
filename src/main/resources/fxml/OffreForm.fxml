@@ -3,116 +3,165 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
 
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.learniverse.controller.OffreFormController"
-      spacing="15" styleClass="form-container">
+      styleClass="form-container"
+      stylesheets="@../styles/offre-form.css"
+      spacing="20" prefWidth="800" prefHeight="800">
     
     <padding>
-        <Insets top="20" right="30" bottom="20" left="30"/>
+        <Insets top="30" right="40" bottom="30" left="40"/>
     </padding>
 
-    <Label text="Offer Details" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+    <!-- Header Section -->
+    <VBox styleClass="form-header">
+        <Label text="Offer Details" styleClass="form-title"/>
+        <Separator styleClass="header-separator"/>
+        <Label styleClass="required-fields-note" text="* Required fields"/>
+    </VBox>
 
-    <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
-        <VBox spacing="15">
-            <padding>
-                <Insets top="10" right="10" bottom="10" left="10"/>
-            </padding>
+    <ScrollPane styleClass="form-scroll" fitToWidth="true" vbarPolicy="ALWAYS" hbarPolicy="NEVER">
+        <VBox spacing="20">
+            <!-- Basic Information Section -->
+            <VBox styleClass="section-container">
+                <Label styleClass="section-header" text="Basic Information"/>
+                
+                <GridPane styleClass="form-grid" vgap="15" hgap="20">
+                    <padding><Insets top="15" right="20" bottom="15" left="20"/></padding>
+                    
+                    <!-- Name Field -->
+                    <VBox styleClass="field-container" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                        <Label styleClass="form-label,required" text="Name"/>
+                        <TextField fx:id="nameField" styleClass="form-field"/>
+                    </VBox>
+                    
+                    <!-- Target Audience Field -->
+                    <VBox styleClass="field-container" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                        <Label styleClass="form-label" text="Target Audience"/>
+                        <TextField fx:id="targetAudienceField" styleClass="form-field"/>
+                    </VBox>
+                </GridPane>
+            </VBox>
 
-            <GridPane vgap="15" hgap="10">
-                <columnConstraints>
-                    <ColumnConstraints minWidth="120" prefWidth="150"/>
-                    <ColumnConstraints hgrow="ALWAYS"/>
-                </columnConstraints>
+            <!-- Pricing Section -->
+            <VBox styleClass="section-container">
+                <Label styleClass="section-header" text="Pricing Details"/>
+                
+                <GridPane styleClass="form-grid" vgap="15" hgap="20">
+                    <padding><Insets top="15" right="20" bottom="15" left="20"/></padding>
+                    
+                    <!-- Price Field -->
+                    <VBox styleClass="field-container" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                        <Label styleClass="form-label,required" text="Price per Month"/>
+                        <TextField fx:id="priceField" styleClass="form-field"/>
+                    </VBox>
+                    
+                    <!-- Discount Field -->
+                    <VBox styleClass="field-container" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                        <Label styleClass="form-label" text="Discount (%)"/>
+                        <TextField fx:id="discountField" styleClass="form-field"/>
+                    </VBox>
+                    
+                    <!-- Promo Code Field -->
+                    <VBox styleClass="field-container" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                        <Label styleClass="form-label" text="Promo Code"/>
+                        <TextField fx:id="promoCodeField" styleClass="form-field"/>
+                    </VBox>
+                </GridPane>
+            </VBox>
 
-                <!-- Name -->
-                <Label text="Name:" GridPane.rowIndex="0" GridPane.columnIndex="0" 
-                       style="-fx-font-weight: bold;"/>
-                <TextField fx:id="nameField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+            <!-- Plan Details Section -->
+            <VBox styleClass="section-container">
+                <Label styleClass="section-header" text="Plan Details"/>
+                
+                <GridPane styleClass="form-grid" vgap="15" hgap="20">
+                    <padding><Insets top="15" right="20" bottom="15" left="20"/></padding>
+                    
+                    <!-- Plan Type Field -->
+                    <VBox styleClass="field-container" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                        <Label styleClass="form-label,required" text="Plan Type"/>
+                        <ComboBox fx:id="planTypeCombo" styleClass="form-combo"/>
+                    </VBox>
+                    
+                    <!-- Custom Plan Field -->
+                    <VBox styleClass="field-container" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                        <Label styleClass="form-label" text="Custom Plan"/>
+                        <TextField fx:id="customPlanField" styleClass="form-field"/>
+                    </VBox>
+                    
+                    <!-- Max Subscriptions Field -->
+                    <VBox styleClass="field-container" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                        <Label styleClass="form-label" text="Max Subscriptions"/>
+                        <TextField fx:id="maxSubscriptionsField" styleClass="form-field"/>
+                    </VBox>
+                </GridPane>
+            </VBox>
 
-                <!-- Description -->
-                <Label text="Description:" GridPane.rowIndex="1" GridPane.columnIndex="0"
-                       style="-fx-font-weight: bold;"/>
-                <TextArea fx:id="descriptionArea" wrapText="true" prefRowCount="3" 
-                         GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            <!-- Validity Period Section -->
+            <VBox styleClass="section-container">
+                <Label styleClass="section-header" text="Validity Period"/>
+                
+                <GridPane styleClass="form-grid" vgap="15" hgap="20">
+                    <padding><Insets top="15" right="20" bottom="15" left="20"/></padding>
+                    
+                    <!-- Start Date Field -->
+                    <VBox styleClass="field-container" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                        <Label styleClass="form-label,required" text="Valid From"/>
+                        <DatePicker fx:id="startDatePicker" styleClass="form-datepicker"/>
+                    </VBox>
+                    
+                    <!-- End Date Field -->
+                    <VBox styleClass="field-container" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                        <Label styleClass="form-label,required" text="Valid Until"/>
+                        <DatePicker fx:id="endDatePicker" styleClass="form-datepicker"/>
+                    </VBox>
+                </GridPane>
+            </VBox>
 
-                <!-- Price -->
-                <Label text="Price per Month:" GridPane.rowIndex="2" GridPane.columnIndex="0"
-                       style="-fx-font-weight: bold;"/>
-                <TextField fx:id="priceField" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-
-                <!-- Discount -->
-                <Label text="Discount (%):" GridPane.rowIndex="3" GridPane.columnIndex="0"
-                       style="-fx-font-weight: bold;"/>
-                <TextField fx:id="discountField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
-
-                <!-- Applicable Plans -->
-                <Label text="Plan Type:" GridPane.rowIndex="4" GridPane.columnIndex="0"
-                       style="-fx-font-weight: bold;"/>
-                <ComboBox fx:id="planTypeComboBox" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
-
-                <!-- Custom Plan -->
-                <Label text="Custom Plan:" GridPane.rowIndex="5" GridPane.columnIndex="0"
-                       style="-fx-font-weight: bold;"/>
-                <TextField fx:id="customPlanField" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
-
-                <!-- Conditions -->
-                <Label text="Conditions:" GridPane.rowIndex="6" GridPane.columnIndex="0"
-                       style="-fx-font-weight: bold;"/>
-                <TextArea fx:id="conditionsArea" wrapText="true" prefRowCount="3"
-                         GridPane.rowIndex="6" GridPane.columnIndex="1"/>
-
-                <!-- Promo Code -->
-                <Label text="Promo Code:" GridPane.rowIndex="7" GridPane.columnIndex="0"
-                       style="-fx-font-weight: bold;"/>
-                <TextField fx:id="promoCodeField" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
-
-                <!-- Max Subscriptions -->
-                <Label text="Max Subscriptions:" GridPane.rowIndex="8" GridPane.columnIndex="0"
-                       style="-fx-font-weight: bold;"/>
-                <TextField fx:id="maxSubscriptionsField" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
-
-                <!-- Target Audience -->
-                <Label text="Target Audience:" GridPane.rowIndex="9" GridPane.columnIndex="0"
-                       style="-fx-font-weight: bold;"/>
-                <TextArea fx:id="targetAudienceArea" wrapText="true" prefRowCount="2"
-                         GridPane.rowIndex="9" GridPane.columnIndex="1"/>
-
-                <!-- Benefits -->
-                <Label text="Benefits:" GridPane.rowIndex="10" GridPane.columnIndex="0"
-                       style="-fx-font-weight: bold;"/>
-                <TextArea fx:id="benefitsArea" wrapText="true" prefRowCount="3"
-                         GridPane.rowIndex="10" GridPane.columnIndex="1"/>
-
-                <!-- Valid From -->
-                <Label text="Valid From:" GridPane.rowIndex="11" GridPane.columnIndex="0"
-                       style="-fx-font-weight: bold;"/>
-                <DatePicker fx:id="validFromPicker" GridPane.rowIndex="11" GridPane.columnIndex="1"/>
-
-                <!-- Valid Until -->
-                <Label text="Valid Until:" GridPane.rowIndex="12" GridPane.columnIndex="0"
-                       style="-fx-font-weight: bold;"/>
-                <DatePicker fx:id="validUntilPicker" GridPane.rowIndex="12" GridPane.columnIndex="1"/>
-
-                <!-- Active Status -->
-                <Label text="Status:" GridPane.rowIndex="13" GridPane.columnIndex="0"
-                       style="-fx-font-weight: bold;"/>
-                <CheckBox fx:id="activeCheckBox" text="Active" selected="true" 
-                         GridPane.rowIndex="13" GridPane.columnIndex="1"/>
-            </GridPane>
+            <!-- Additional Details Section -->
+            <VBox styleClass="section-container">
+                <Label styleClass="section-header" text="Additional Details"/>
+                
+                <GridPane styleClass="form-grid" vgap="15" hgap="20">
+                    <padding><Insets top="15" right="20" bottom="15" left="20"/></padding>
+                    
+                    <!-- Description Field -->
+                    <VBox styleClass="field-container" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                        <Label styleClass="form-label,required" text="Description"/>
+                        <TextArea fx:id="descriptionField" styleClass="form-textarea" wrapText="true" prefRowCount="3"/>
+                    </VBox>
+                    
+                    <!-- Conditions Field -->
+                    <VBox styleClass="field-container" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                        <Label styleClass="form-label,required" text="Conditions"/>
+                        <TextArea fx:id="conditionsField" styleClass="form-textarea" wrapText="true" prefRowCount="3"/>
+                    </VBox>
+                    
+                    <!-- Benefits Field -->
+                    <VBox styleClass="field-container" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                        <Label styleClass="form-label" text="Benefits"/>
+                        <TextArea fx:id="benefitsField" styleClass="form-textarea" wrapText="true" prefRowCount="3"/>
+                    </VBox>
+                    
+                    <!-- Active Field -->
+                    <VBox styleClass="field-container" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                        <Label styleClass="form-label" text="Active"/>
+                        <CheckBox fx:id="activeCheckBox" styleClass="form-checkbox" selected="true"/>
+                    </VBox>
+                </GridPane>
+            </VBox>
         </VBox>
+        <padding>
+            <Insets top="20" right="20" bottom="20" left="20"/>
+        </padding>
     </ScrollPane>
-
-    <!-- Buttons -->
-    <HBox spacing="10" alignment="CENTER_RIGHT">
-        <Button fx:id="saveButton" text="Save" 
-                style="-fx-background-color: #4CAF50; -fx-text-fill: white;" 
-                defaultButton="true"/>
-        <Button fx:id="cancelButton" text="Cancel" 
-                style="-fx-background-color: #f44336; -fx-text-fill: white;" 
-                cancelButton="true"/>
+    
+    <HBox styleClass="form-buttons" alignment="CENTER_RIGHT" spacing="10">
+        <Button fx:id="saveButton" text="Save" styleClass="save-button" onAction="#saveOffre" defaultButton="true"/>
+        <Button fx:id="cancelButton" text="Cancel" styleClass="cancel-button" onAction="#closeWindow" cancelButton="true"/>
     </HBox>
-
 </VBox> 
