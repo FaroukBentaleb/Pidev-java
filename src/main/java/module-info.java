@@ -1,20 +1,26 @@
-module com.esprit.java {
+module tn.learniverse {
+    requires javafx.controls;
+    requires javafx.fxml;
 
-    requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
     requires net.synedra.validatorfx;
     requires org.kordamp.ikonli.javafx;
-    requires org.kordamp.bootstrapfx.core;
+    requires org.kordamp.ikonli.materialdesign2;
+    requires org.kordamp.ikonli.material;
     requires java.sql;
-    requires javafx.web;
     requires MaterialFX;
-    requires jdk.jfr;
-    exports com.esprit.java.controllers to javafx.fxml;
-    opens com.esprit.java.controllers to javafx.fxml;
-    opens com.esprit.java to javafx.fxml;
-    exports com.esprit.java;
+    requires javafx.web;
     
-    // Open Models package to allow JavaFX to access bean properties
-    opens com.esprit.java.Models to javafx.base, javafx.fxml;
-    exports com.esprit.java.Models to javafx.base;
+    // Add access to JavaFX standard modules 
+    requires javafx.graphics;
+    
+    // Make sure tools package is properly exported and opened
+    opens tn.learniverse.controllers.Competition to javafx.fxml;
+    opens tn.learniverse to javafx.fxml;
+    opens tn.learniverse.tools to javafx.fxml, javafx.base, javafx.controls, javafx.web;
+    opens tn.learniverse.entities to javafx.base, javafx.fxml;
+    
+    exports tn.learniverse;
+    exports tn.learniverse.controllers.Competition to javafx.fxml;
+    exports tn.learniverse.tools to javafx.fxml, javafx.base, javafx.controls, javafx.web;
 }

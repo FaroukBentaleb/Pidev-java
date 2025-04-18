@@ -1,0 +1,24 @@
+.header-title {
+    -fx-text-fill: white;
+    -fx-font-family: 'Poppins';
+    -fx-font-weight: 600;
+    -fx-font-size: 24px;
+}
+
+.header-subtitle {
+    -fx-text-fill: rgba(255,255,255,0.8);
+    -fx-font-family: 'Poppins';
+    -fx-font-size: 14px;
+}
+
+.form-label {
+    -fx-font-family: 'Poppins';
+    -fx-font-weight: 500;
+    -fx-text-fill: #4f46e5;
+    -fx-font-size: 14px;
+}
+
+.form-input {
+    -fx-font-family: 'Poppins';
+    -fx-font-size: 14px;
+} 

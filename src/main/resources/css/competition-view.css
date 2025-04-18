@@ -1,0 +1,64 @@
+/* Competition View Styling */
+
+/* Scrollbar styling */
+.scroll-bar:vertical {
+    -fx-background-color: transparent;
+    -fx-pref-width: 12;
+}
+
+.scroll-bar:vertical .track {
+    -fx-background-color: #f0f4f8;
+    -fx-background-radius: 10;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #90caf9;
+    -fx-background-radius: 10;
+}
+
+.scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #64b5f6;
+}
+
+.scroll-bar:vertical .thumb:pressed {
+    -fx-background-color: #42a5f5;
+}
+
+.scroll-bar:vertical .increment-button,
+.scroll-bar:vertical .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 10 0 0;
+}
+
+.scroll-bar:vertical .increment-arrow,
+.scroll-bar:vertical .decrement-arrow {
+    -fx-background-color: #90caf9;
+    -fx-shape: " ";
+    -fx-padding: 0;
+}
+
+/* MFXScrollPane styling */
+.mfx-scroll-pane {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.mfx-scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.mfx-scroll-pane .corner {
+    -fx-background-color: transparent;
+}
+
+/* Challenge card styling */
+.challenge-card {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0, 0, 2);
+    -fx-padding: 20;
+}
+
+.challenge-card:hover {
+    -fx-effect: dropshadow(gaussian, rgba(33,150,243,0.2), 10, 0, 0, 3);
+} 
