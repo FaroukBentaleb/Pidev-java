@@ -12,7 +12,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="720.0" stylesheets="@css/DisplayReclamations.css" prefWidth="1280.0" style="-fx-background-color: #f0f4f8;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.Reclamation.DisplayReclamations">
+<BorderPane prefHeight="720.0" stylesheets="@css/DisplayReclamations.css" prefWidth="1280.0" style="-fx-background-color: #f0f4f8;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.Reclamation.ReclamationsArchivéesFront">
 
     <!-- LEFT NAV BAR - Modern with gradient -->
     <left>
@@ -144,9 +144,8 @@
 
                     <!-- Your Progress Section -->
                     <HBox maxWidth="980.0" spacing="20" />
-                    <Button fx:id="ReclamationArchivées" layoutX="429.0" mnemonicParsing="false" onAction="#afficherReclamationsArchivees" prefHeight="46.0" prefWidth="230.0" style="-fx-background-color: #1a73e8; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.5, 0, 4);" text="Reclamations Archivées" />
-                    <Button fx:id="Ajouter" layoutX="429.0" mnemonicParsing="false" onAction="#afficherAjouterReclamation" prefHeight="46.0" prefWidth="230.0" style="-fx-background-color: #1a73e8; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.5, 0, 4);" text="Ajouter Réclamation" />
-                        <VBox fx:id="reclamationsContainer" />
+                    <Button fx:id="ReclamationArchivées" layoutX="429.0" mnemonicParsing="false" onAction="#retourListeReclamations" prefHeight="46.0" prefWidth="230.0" style="-fx-background-color: #1a73e8; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.5, 0, 4);" text="Retour" />
+                    <VBox fx:id="reclamationsContainer" />
                 </VBox>
             </VBox>
         </ListView>

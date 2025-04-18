@@ -11,5 +11,8 @@ public interface IReclamation<T> {
     void modifier(int id,String Contenu) throws SQLException;
     void supprimer(T t);
     List<T> recuperer(User user) throws SQLException;
+    public List<Reclamation> recupererReclamationsArchivéesFront(User user) throws SQLException;
+    public void ArchiverFront(int id, int statut_archivation) throws SQLException;
+    public List<Reclamation> recupererReclamationsBack() throws SQLException;
 
 }

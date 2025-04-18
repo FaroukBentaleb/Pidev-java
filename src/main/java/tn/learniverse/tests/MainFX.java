@@ -16,13 +16,19 @@ public class MainFX extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reclamation/DisplayReclamations.fxml"));
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Learniverse");
-        primaryStage.show();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reclamation/DisplayReclamations.fxml"));
+            if (loader.getLocation() == null) {
+                throw new IOException("Cannot find FXML file at /Reclamation/Back.fxml");
+            }
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            primaryStage.setScene(scene);
+            primaryStage.setTitle("Learniverse");
+            primaryStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
-
-
 }

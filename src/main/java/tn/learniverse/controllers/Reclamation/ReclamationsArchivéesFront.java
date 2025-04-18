@@ -22,7 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class DisplayReclamations {
+public class ReclamationsArchivéesFront {
     private User user;
     public void setUser(User user) {
         this.user = user;
@@ -34,21 +34,14 @@ public class DisplayReclamations {
     private final ReclamationService reclamationService = new ReclamationService();
 
     public void initialize() {
-        reclamationsContainer.getChildren().clear();
         reclamationsContainer.setSpacing(5);
 
         try {
-            // Si l'utilisateur n'est pas déjà défini, créer un utilisateur par défaut
-            if (user == null) {
-                user = new User();
-                user.setId(3);
-                // Définir le rôle par défaut (à adapter selon votre logique)
-                user.setRole("Student");
-            }
-            
-            List<Reclamation> reclamations = reclamationService.recuperer(user);
+            User user = new User();
+            user.setId(3);
+            List<Reclamation> reclamations = reclamationService.recupererReclamationsArchivéesFront(user);
             if (reclamations.isEmpty()) {
-                headerLabel.setText("Aucune réclamation pour l'utilisateur " + user.getId());
+                headerLabel.setText("Aucune réclamation pour l'utilisateur 3");
             } else {
                 for (Reclamation rec : reclamations) {
                     VBox box = createReclamationBox(rec);
@@ -93,7 +86,7 @@ public class DisplayReclamations {
         Label titleLabel = new Label(rec.getTitre());
         titleLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 20px;");
         Text contentText = new Text(rec.getContenu());
-        contentText.setWrappingWidth(600);
+        contentText.setWrappingWidth(1000);
         contentText.setStyle("-fx-font-size: 20px;");
 
         HBox actions = new HBox(10);
@@ -103,18 +96,13 @@ public class DisplayReclamations {
                 Node sourceNode = (Node) event.getSource();
                 viewResponses(rec, sourceNode);
             });
-            Button btnArchiver = createButton("Archiver", "btn-danger");
-            btnArchiver.setOnAction(event -> archiverReclamation(rec));
-            actions.getChildren().addAll(btnVoirReponse, btnArchiver);
+            actions.getChildren().add(btnVoirReponse);
         } else if (rec.getStatut().equals("En Cours")) {
             actions.getChildren().add(createButton("Voir Réponse", "btn-primary",
                     e -> viewResponses(rec, (Node) e.getSource())));
         } else {
-            // Vérifier si l'utilisateur est un Student ou un Instructor
-            if (user != null && (user.getRole().equals("Student") || user.getRole().equals("Instructor"))) {
-                actions.getChildren().add(createButton("Modifier Contenu", "btn-success",
-                        e -> openModifierReclamationDialog(rec)));
-            }
+            actions.getChildren().add(createButton("Modifier Contenu", "btn-success",
+                    e -> openModifierReclamationDialog(rec)));
         }
 
         box.getChildren().addAll(statusDateBox, titleLabel, contentText, actions);
@@ -161,44 +149,25 @@ public class DisplayReclamations {
             VBox modifierBox = new VBox(10);
             modifierBox.setPadding(new Insets(20));
             modifierBox.setStyle("-fx-background-color: #f0f4f8; -fx-border-radius: 15px; -fx-background-radius: 15px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0.5, 0, 4);");
-
-            // Ajouter un TextArea pour le contenu de la réclamation
             TextArea reclamationContenu = new TextArea(reclamation.getContenu());
-            reclamationContenu.setPrefHeight(200);
-            reclamationContenu.setPrefWidth(400);
-            reclamationContenu.setStyle("-fx-font-size: 14px; -fx-border-color: #ccc; -fx-border-radius: 5px;");
-
-            // Ajouter des boutons pour enregistrer ou annuler
+            reclamationContenu.setPrefHeight(250);
+            reclamationContenu.setPrefWidth(540);
+            reclamationContenu.setPromptText("Décrivez votre réclamation en détail...");
+            reclamationContenu.setStyle("-fx-background-radius: 8; -fx-border-color: #e0e0e0; -fx-border-radius: 8; -fx-font-size: 14;");
             Button btnModifier = new Button("Modifier");
             btnModifier.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5px; -fx-background-radius: 5px;");
             btnModifier.setOnAction(event -> {
-                Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-                confirmationAlert.setTitle("Confirmation de modification");
-                confirmationAlert.setHeaderText(null);
-                confirmationAlert.setContentText("Voulez-vous vraiment modifier la réclamation ?");
-
-                confirmationAlert.showAndWait().ifPresent(response -> {
-                    if (response == ButtonType.OK) {
-                        String nouveauContenu = reclamationContenu.getText();
-                        try {
-                            reclamationService.modifier(reclamation.getId(), nouveauContenu);
-                            // Afficher une alerte de succès
-                            Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
-                            successAlert.setTitle("Modification réussie");
-                            successAlert.setHeaderText(null);
-                            successAlert.setContentText("Réclamation modifiée avec succès !");
-                            successAlert.showAndWait();
-
-                            // Fermer la fenêtre après modification
-                            Stage stage = (Stage) btnModifier.getScene().getWindow();
-                            stage.close();
-                            // Rafraîchir l'interface actuelle
-                            initialize();
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
+                String nouveauContenu = reclamationContenu.getText();
+                try {
+                    reclamationService.modifier(reclamation.getId(), nouveauContenu);
+                    // Fermer la fenêtre après modification
+                    Stage stage = (Stage) btnModifier.getScene().getWindow();
+                    stage.close();
+                    // Retourner à l'affichage des réclamations
+                    initialize();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             });
 
             Button btnAnnuler = new Button("Annuler");
@@ -226,61 +195,30 @@ public class DisplayReclamations {
         }
     }
 
-    @FXML
-    private void afficherReclamationsArchivees() {
+    public void afficherReclamationsArchivees(VBox container) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reclamation/ReclamationsArchivéesFront.fxml"));
-            Parent root = loader.load();
+            // Récupérer les réclamations archivées
+            List<Reclamation> reclamationsArchivees = reclamationService.recupererReclamationsArchivéesFront(user);
+            container.getChildren().clear();
 
-            Stage stage = new Stage();
-            stage.setTitle("Réclamations Archivées");
-            stage.setScene(new Scene(root));
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    private void afficherAjouterReclamation() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reclamation/AjouterReclamation.fxml"));
-            Parent root = loader.load();
-            Stage stage = new Stage();
-            stage.setTitle("Ajouter Réclamation");
-            stage.setScene(new Scene(root));
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
-            // Rafraîchir l'interface après la fermeture de la fenêtre d'ajout
-            initialize();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void archiverReclamation(Reclamation reclamation) {
-        if (user == null) {
-            user = new User();
-            user.setId(3);
-        }
-        try {
-            reclamationService.ArchiverFront(reclamation.getId(), 1);
-            List<Reclamation> reclamations = reclamationService.recuperer(user);
-            reclamationsContainer.getChildren().clear();
-
-            if (reclamations.isEmpty()) {
-                headerLabel.setText("Aucune réclamation pour l'utilisateur " + user.getId());
+            if (reclamationsArchivees.isEmpty()) {
+                headerLabel.setText("Aucune réclamation archivée pour l'utilisateur " + user.getId());
             } else {
-                for (Reclamation rec : reclamations) {
+                for (Reclamation rec : reclamationsArchivees) {
                     VBox box = createReclamationBox(rec);
                     VBox.setMargin(box, new Insets(5, 0, 5, 0));
-                    reclamationsContainer.getChildren().add(box);
+                    container.getChildren().add(box);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            headerLabel.setText("Erreur lors de la récupération des réclamations archivées");
         }
+    }
+
+    public void retourListeReclamations() {
+        Stage stage = (Stage) reclamationsContainer.getScene().getWindow();
+        stage.close();
     }
 }
 

@@ -38,8 +38,8 @@
     -fx-text-fill: white;
     -fx-pref-height: 40px;
     -fx-pref-width: 120px;
-    -fx-translate-x: 860px;
-    -fx-translate-y: -20px;
+    -fx-translate-x: 660px;
+    -fx-translate-y: 15px;
 }
 
 .btn-primary:hover {
@@ -56,7 +56,7 @@
     -fx-pref-height: 50px;
     -fx-min-height: 50px;
     -fx-max-height: 50px;
-    -fx-translate-x: 900px;
+    -fx-translate-x: 730px;
     -fx-translate-y: -20px;
 }
 
@@ -71,8 +71,8 @@
     -fx-text-fill: white;
     -fx-pref-height: 100px;
     -fx-pref-width: 120px;
-    -fx-translate-x: 900px;
-    -fx-translate-y: -20px;
+    -fx-translate-x: 670px;
+    -fx-translate-y: 15px;
 }
 
 .btn-danger:hover {
@@ -102,5 +102,5 @@
 }
 #date-label {
     -fx-font-size: 20px;
-    -fx-translate-x: 900px;
+    -fx-translate-x: 650px;
 }

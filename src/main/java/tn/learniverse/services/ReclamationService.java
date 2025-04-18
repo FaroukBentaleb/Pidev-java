@@ -33,7 +33,7 @@ public class ReclamationService implements IReclamation<Reclamation> {
         ste.setInt(6, 0);
         ste.setInt(7, 0);
         ste.setTimestamp(8, defaultModificationDate);
-        ste.setString(9,"NULL");
+        ste.setString(9,r.getFichier());
         ste.executeUpdate();
         System.out.println("Réclamation ajoutée !");
     }
@@ -129,6 +129,154 @@ public class ReclamationService implements IReclamation<Reclamation> {
 
         return reclamations;
     }
+    @Override
+    public List<Reclamation> recupererReclamationsArchivéesFront(User user) throws SQLException {
+        List<Reclamation> reclamations = new ArrayList<>();
+
+        sql = "SELECT r.*, u.id AS user_id, u.nom, u.prenom, u.email " +
+                "FROM reclamation r " +
+                "JOIN user u ON r.id_user_id = u.id " +
+                "WHERE r.statut_archivation = 1 AND r.id_user_id = ?";
+
+        PreparedStatement ste = cnx.prepareStatement(sql);
+        ste.setInt(1, user.getId());
+
+        ResultSet rs = ste.executeQuery();
+
+        while (rs.next()) {
+            User u = new User();
+            u.setId(rs.getInt("user_id"));
+            u.setNom(rs.getString("nom"));
+            u.setPrenom(rs.getString("prenom"));
+            u.setEmail(rs.getString("email"));
+
+            Reclamation rec = new Reclamation(
+                    rs.getString("titre"),
+                    rs.getTimestamp("date_reclamation"),
+                    rs.getString("contenu"),
+                    rs.getString("statut"),
+                    u,
+                    rs.getInt("statut_archivation"),
+                    rs.getInt("statut_archivation_back"),
+                    rs.getTimestamp("date_modification"),
+                    rs.getString("fichier")
+            );
+            rec.setId(rs.getInt("id"));
+            reclamations.add(rec);
+        }
+        for (Reclamation reclamation : reclamations) {
+            String sql1 = "SELECT r.*, u.id AS user_id, u.nom, u.prenom, u.email, u.role " +
+                    "FROM reponse r " +
+                    "LEFT JOIN user u ON r.id_user_id = u.id " +
+                    "WHERE r.id_reclamation_id = ?";
+
+
+            PreparedStatement ste1 = cnx.prepareStatement(sql1);
+            ste1.setInt(1, reclamation.getId());
+            ResultSet rs1 = ste1.executeQuery();
+            List<Reponse> reponses = new ArrayList<>();
+            while (rs1.next()) {
+                User userReponse = new User();
+                userReponse.setId(rs1.getInt("user_id"));
+                userReponse.setNom(rs1.getString("nom"));
+                userReponse.setPrenom(rs1.getString("prenom"));
+                userReponse.setEmail(rs1.getString("email"));
+                userReponse.setRole(rs1.getString("role"));
+                Reponse rep = new Reponse(
+                        rs1.getString("contenu"),
+                        rs1.getTimestamp("date_reponse"),
+                        reclamation,
+                        rs1.getTimestamp("date_modification"),
+                        userReponse,
+                        rs1.getInt("statut")
+                );
+                rep.setId(rs1.getInt("id"));
+                reponses.add(rep);
+            }
+            reclamation.setReponses(reponses);
+        }
+
+        return reclamations;
+    }
+    @Override
+    public void ArchiverFront(int id, int statut_archivation) throws SQLException {
+        sql = "UPDATE reclamation SET statut_archivation = ? WHERE id = ?";
+        PreparedStatement st = cnx.prepareStatement(sql);
+        st.setInt(1, statut_archivation);
+        st.setInt(2, id);
+        st.executeUpdate();
+    }
+    public void ArchiverBack(int id, int statut_archivation_back) throws SQLException {
+        sql = "UPDATE reclamation SET statut_archivation_back = ? WHERE id = ?";
+        PreparedStatement st = cnx.prepareStatement(sql);
+        st.setInt(1, statut_archivation_back);
+        st.setInt(2, id);
+        st.executeUpdate();
+        System.out.println("Réclamation archivée avec succès !");
+    }
+
+    public void updateStatut(int id, String statut) throws SQLException {
+        sql = "UPDATE reclamation SET statut = ? WHERE id = ?";
+        PreparedStatement st = cnx.prepareStatement(sql);
+        st.setString(1, statut);
+        st.setInt(2, id);
+        st.executeUpdate();
+        System.out.println("Statut de la réclamation mis à jour avec succès !");
+    }
+
+    @Override
+    public List<Reclamation> recupererReclamationsBack() throws SQLException {
+        List<Reclamation> reclamations = new ArrayList<>();
+
+        // Requête SQL pour sélectionner uniquement les réclamations avec statut_archivation_back = 0
+        sql = "SELECT * FROM reclamation WHERE statut_archivation_back = 0";
+
+        PreparedStatement ste = cnx.prepareStatement(sql);
+        ResultSet rs = ste.executeQuery();
+
+        while (rs.next()) {
+            // Création de l'objet Reclamation sans récupérer les informations utilisateur
+            Reclamation rec = new Reclamation(
+                    rs.getString("titre"),
+                    rs.getTimestamp("date_reclamation"),
+                    rs.getString("contenu"),
+                    rs.getString("statut"),
+                    null,  // Aucune information utilisateur dans cette méthode
+                    rs.getInt("statut_archivation"),
+                    rs.getInt("statut_archivation_back"),
+                    rs.getTimestamp("date_modification"),
+                    rs.getString("fichier")
+            );
+            rec.setId(rs.getInt("id"));
+            reclamations.add(rec);
+        }
+
+        // Optionnel : Ajouter les réponses si nécessaire (vous pouvez aussi les ignorer si ce n'est pas utile)
+        for (Reclamation reclamation : reclamations) {
+            String sql1 = "SELECT * FROM reponse WHERE id_reclamation_id = ?";
+
+            PreparedStatement ste1 = cnx.prepareStatement(sql1);
+            ste1.setInt(1, reclamation.getId());
+            ResultSet rs1 = ste1.executeQuery();
+            List<Reponse> reponses = new ArrayList<>();
+            while (rs1.next()) {
+                Reponse rep = new Reponse(
+                        rs1.getString("contenu"),
+                        rs1.getTimestamp("date_reponse"),
+                        reclamation,
+                        rs1.getTimestamp("date_modification"),
+                        null,  // Aucune information utilisateur dans les réponses (si vous ne la souhaitez pas)
+                        rs1.getInt("statut")
+                );
+                rep.setId(rs1.getInt("id"));
+                reponses.add(rep);
+            }
+            reclamation.setReponses(reponses);
+        }
+
+        return reclamations;
+    }
+
 
 
 }
