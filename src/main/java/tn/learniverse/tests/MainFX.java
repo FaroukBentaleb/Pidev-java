@@ -40,7 +40,7 @@ public class MainFX extends Application {
 
 
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/user/Login.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/user/login.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         Image icon = new Image(new FileInputStream("C:/wamp64/www/images/logo/logo.png"));

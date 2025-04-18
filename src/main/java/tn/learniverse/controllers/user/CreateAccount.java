@@ -19,6 +19,9 @@ public class CreateAccount implements Initializable {
     private final UserService userService = new UserService();
     public Button login_btn;
     public ImageView logoImageView;
+    public TextField textField;
+    public CheckBox showPasswordCheckBox;
+    public TextField textFieldconf;
 
     @FXML
     private TextField signup_email;
@@ -91,9 +94,36 @@ public class CreateAccount implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        logoImageView.setImage(new Image("file:/C:/wamp64/www/images/logo/logo.png"));
+        logoImageView.setImage(new Image("file:///C:/wamp64/www/images/logo/logo.png"));
         signup_role.getItems().addAll("Student", "Insctructor");
         signup_role.setValue("Student");
+        textField.textProperty().bindBidirectional(signup_pwd.textProperty());
+        textFieldconf.textProperty().bindBidirectional(signup_conf_pwd.textProperty());
+
+        // Toggle visibility
+        showPasswordCheckBox.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
+            if (isSelected) {
+                textField.setVisible(true);
+                textField.setManaged(true);
+                signup_pwd.setVisible(false);
+                signup_pwd.setManaged(false);
+
+                textFieldconf.setVisible(true);
+                textFieldconf.setManaged(true);
+                signup_conf_pwd.setVisible(false);
+                signup_conf_pwd.setManaged(false);
+            } else {
+                signup_pwd.setVisible(true);
+                signup_pwd.setManaged(true);
+                textField.setVisible(false);
+                textField.setManaged(false);
+
+                signup_conf_pwd.setVisible(true);
+                signup_conf_pwd.setManaged(true);
+                textFieldconf.setVisible(false);
+                textFieldconf.setManaged(false);
+            }
+        });
         setupRealTimeValidation();
     }
 
@@ -138,9 +168,11 @@ public class CreateAccount implements Initializable {
         signup_pwd.textProperty().addListener((obs, oldVal, newVal) -> {
             if (!newVal.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$")) {
                 signup_pwd.setStyle("-fx-border-color: red;");
-                error_pwd.setText("8+ chars, upper & lower case, special char");
+                textField.setStyle("-fx-border-color: red;");
+                error_pwd.setText("8+ characters (upper & lower case, special char)");
             } else {
                 signup_pwd.setStyle(null);
+                textField.setStyle(null);
                 error_pwd.setText("");
             }
         });
@@ -149,9 +181,11 @@ public class CreateAccount implements Initializable {
         signup_conf_pwd.textProperty().addListener((obs, oldVal, newVal) -> {
             if (!newVal.equals(signup_pwd.getText())) {
                 signup_conf_pwd.setStyle("-fx-border-color: red;");
+                textFieldconf.setStyle("-fx-border-color: red;");
                 error_conf_pwd.setText("Passwords do not match");
             } else {
                 signup_conf_pwd.setStyle(null);
+                textFieldconf.setStyle(null);
                 error_conf_pwd.setText("");
             }
         });

@@ -39,14 +39,9 @@ public class Login implements Initializable {
             if(validateLogin()){
                 try {
                     usr = userService.getUserByEmail(login_email.getText());
-                    if(usr == null) {
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("No User Found");
-                        alert.setContentText("The given email doesn't match any account!!");
-                        alert.showAndWait();
-                    }
-                    else{
-                        if( BCrypt.checkpw(pwd, usr.getMdp())) {
+                    if (usr != null) {
+                        String storedPassword = usr.getMdp();
+                        if (storedPassword != null && BCrypt.checkpw(pwd, storedPassword)) {
                             if(usr.getBan()==1){
                                 Navigator.showAlert(Alert.AlertType.ERROR,"Account Banned","Your account has been Banned by the admin.\nPlease contact support for more details!");
                             }
@@ -70,13 +65,17 @@ public class Login implements Initializable {
 
                                 }
                             }
-                        }
-                        else{
+                        } else {
                             Alert alert = new Alert(Alert.AlertType.ERROR);
-                            alert.setTitle("No User Found");
-                            alert.setContentText("The given password/email doesn't match any account!!");
+                            alert.setTitle("Login Failed");
+                            alert.setContentText("The given email/password doesn't match any account!");
                             alert.showAndWait();
                         }
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("No User Found");
+                        alert.setContentText("The given email doesn't match any account!");
+                        alert.showAndWait();
                     }
                 }
                 catch (Exception e){
@@ -111,7 +110,7 @@ public class Login implements Initializable {
             if (!newVal.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$")) {
                 login_pwd.setStyle("-fx-border-color: red;");
                 textField.setStyle("-fx-border-color: red;");
-                error_pwd.setText("8+ chars, upper & lower case, special char");
+                error_pwd.setText("8+ characters (upper & lower case, special char)");
             } else {
                 login_pwd.setStyle(null);
                 textField.setStyle(null);
@@ -131,7 +130,7 @@ public class Login implements Initializable {
         if (!login_pwd.getText().matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$")) {
             login_pwd.setStyle("-fx-border-color: red;");
             textField.setStyle("-fx-border-color: red;");
-            error_pwd.setText("8+ chars, upper & lower case, special char");
+            error_pwd.setText("8+ characters (upper & lower case, special char)");
             isValid = false;
         }
 
@@ -142,7 +141,7 @@ public class Login implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setupRealTimeValidation();
-        logoImageView.setImage(new Image("file:/C:/wamp64/www/images/logo/logo.png"));
+        logoImageView.setImage(new Image("file:///C:/wamp64/www/images/logo/logo.png"));
         textField.textProperty().bindBidirectional(login_pwd.textProperty());
 
         // Toggle visibility

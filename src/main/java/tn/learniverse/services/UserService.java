@@ -105,9 +105,12 @@ public class UserService implements IUser <User>{
         ) {
             while (rs.next()) {
                 User usr = new User();
+                usr.setId(Integer.parseInt(rs.getString("id")));
                 usr.setNom(rs.getString("nom"));
                 usr.setPrenom(rs.getString("prenom"));
                 usr.setEmail(rs.getString("email"));
+                usr.setRole(rs.getString("role"));
+                usr.setBan(Integer.parseInt(rs.getString("ban")));
                 users.add(usr);
             }
         }
@@ -148,7 +151,30 @@ public class UserService implements IUser <User>{
         }
         catch (SQLException e) {
             System.out.println(e.getMessage());
+            usr = null;
         }
         return usr;
+    }
+    public void banUser(int userId) throws SQLException {
+        String query = "UPDATE User SET ban = 1 WHERE id = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, userId);
+            ps.executeUpdate();
+
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void activateUser(int userId) throws SQLException {
+        String query = "UPDATE User SET ban = 0 WHERE id = ?";
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, userId);
+            ps.executeUpdate();
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

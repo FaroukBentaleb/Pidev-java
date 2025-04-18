@@ -2,11 +2,11 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -18,7 +18,7 @@
       <HBox alignment="CENTER" prefHeight="720.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <!-- Form Panel (White) -->
          <StackPane styleClass="right-panel" HBox.hgrow="ALWAYS">
-            <VBox alignment="CENTER" maxWidth="400" spacing="25">
+            <VBox alignment="CENTER" maxHeight="700.0" maxWidth="400" minHeight="700.0" prefHeight="700.0" spacing="5.0">
                <ImageView fx:id="logoImageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                </ImageView>
                <!-- Signup Form -->
@@ -33,13 +33,20 @@
                   <TextField fx:id="signup_email" promptText="Enter your email address" styleClass="input-field" />
                   <Label fx:id="error_email" styleClass="error-label" />
    
-                  <ChoiceBox fx:id="signup_role" styleClass="choice-box" />
-   
-                  <PasswordField fx:id="signup_pwd" promptText="Enter your password" styleClass="input-field" />
+                  <ChoiceBox fx:id="signup_role" styleClass="choice-box">
+                     <VBox.margin>
+                        <Insets bottom="10.0" top="-10.0" />
+                     </VBox.margin></ChoiceBox>
+
+                  <PasswordField fx:id="signup_pwd" promptText="Enter your Password" styleClass="input-field" />
+                  <TextField fx:id="textField" managed="false" promptText="Password" styleClass="input-field" visible="false" />
                   <Label fx:id="error_pwd" styleClass="error-label" />
    
                   <PasswordField fx:id="signup_conf_pwd" promptText="Re-enter your password" styleClass="input-field" />
+                  <TextField fx:id="textFieldconf" managed="false" promptText="Password" styleClass="input-field" visible="false" />
                   <Label fx:id="error_conf_pwd" styleClass="error-label" />
+
+                  <CheckBox fx:id="showPasswordCheckBox" text="Show" />
    
                   <Button onAction="#Signup_btn" styleClass="signup-button" text="Sign Up" />
                </VBox>
