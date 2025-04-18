@@ -193,14 +193,15 @@
                             <VBox spacing="5">
                                 <Label style="-fx-text-fill: #666; -fx-font-size: 12px;" text="FIRST NAME" />
                                 <TextField fx:id="firstNameField" style="-fx-background-color: #f8f9fa; -fx-background-radius: 8; -fx-padding: 10; -fx-border-color: #e1e4e8; -fx-border-radius: 8;" text="Farouk" />
-                                <Label fx:id="firstNameErrorLabel" textFill="red" />
+
                             </VBox>
+                            <Label fx:id="firstNameErrorLabel" textFill="red" />
 
                             <VBox spacing="5">
                                 <Label style="-fx-text-fill: #666; -fx-font-size: 12px;" text="EMAIL" />
                                 <TextField fx:id="emailField" style="-fx-background-color: #f8f9fa; -fx-background-radius: 8; -fx-padding: 10; -fx-border-color: #e1e4e8; -fx-border-radius: 8;" text="farouk@learniverse.com" />
-                                <Label fx:id="emailFieldErrorLabel" textFill="red" />
                             </VBox>
+                            <Label fx:id="emailFieldErrorLabel" textFill="red" visible="true"/>
                         </VBox>
 
                         <VBox spacing="15" HBox.hgrow="ALWAYS">

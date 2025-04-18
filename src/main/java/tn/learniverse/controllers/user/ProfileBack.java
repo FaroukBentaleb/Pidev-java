@@ -54,6 +54,7 @@ public class ProfileBack implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        setupRealTimeValidation();
         try {
             ImageView imageView = new ImageView();
             Image image = new Image("file:///C:/wamp64/www/images/icon/logout.png",
@@ -178,41 +179,45 @@ public class ProfileBack implements Initializable {
     private void setupRealTimeValidation() {
         firstNameField.textProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal.trim().length() < 2) {
-                firstNameField.setStyle("-fx-border-color: red;");
-                firstNameErrorLabel.setStyle("-fx-color: red;");
+                firstNameField.setStyle("-fx-background-color: #f8f9fa; -fx-background-radius: 8; -fx-padding: 10; -fx-border-radius: 8;-fx-border-color: red;");
                 firstNameErrorLabel.setText("Name must be at least 2 characters.");
+                firstNameErrorLabel.setStyle("-fx-text-fill: red;");
             } else {
-                firstNameField.setStyle(null);
+                firstNameField.setStyle("-fx-background-color: #f8f9fa; -fx-background-radius: 8; -fx-padding: 10; -fx-border-radius: 8;-fx-border-color: #e1e4e8;");
                 firstNameErrorLabel.setText("");
             }
         });
 
         lastNameField.textProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal.trim().length() < 2) {
-                lastNameField.setStyle("-fx-border-color: red;");
+                lastNameField.setStyle("-fx-background-color: #f8f9fa; -fx-background-radius: 8; -fx-padding: 10; -fx-border-radius: 8;-fx-border-color: red;");
                 lastNameFieldErrorLabel.setText("Family name must be at least 2 characters.");
+                lastNameFieldErrorLabel.setStyle("-fx-text-fill: red;");
             } else {
-                lastNameField.setStyle(null);
+                lastNameField.setStyle("-fx-background-color: #f8f9fa; -fx-background-radius: 8; -fx-padding: 10; -fx-border-radius: 8;-fx-border-color: #e1e4e8;");
                 lastNameFieldErrorLabel.setText("");
             }
         });
 
         emailField.textProperty().addListener((obs, oldVal, newVal) -> {
             if (!newVal.matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
-                emailField.setStyle("-fx-border-color: red;");
+                emailField.setStyle("-fx-background-color: #f8f9fa; -fx-background-radius: 8; -fx-padding: 10; -fx-border-radius: 8;-fx-border-color: red;");
                 emailFieldErrorLabel.setText("Enter a valid email address.");
+                emailFieldErrorLabel.setStyle("-fx-text-fill: red;");
             } else {
-                emailField.setStyle(null);
+                emailField.setStyle("-fx-background-color: #f8f9fa; -fx-background-radius: 8; -fx-padding: 10; -fx-border-radius: 8;-fx-border-color: #e1e4e8;");
                 emailFieldErrorLabel.setText("");
             }
         });
 
         phoneField.textProperty().addListener((obs, oldVal, newVal) -> {
             if (!newVal.isEmpty() && !newVal.matches("^\\+?[0-9]{6,15}$")) {
-                phoneField.setStyle("-fx-border-color: red;");
+                phoneField.setStyle("-fx-background-color: #f8f9fa; -fx-background-radius: 8; -fx-padding: 10; -fx-border-radius: 8;-fx-border-color: red;");
                 phoneFieldErrorLabel.setText("Enter a valid phone number.");
+                phoneFieldErrorLabel.setVisible(true);
+                phoneFieldErrorLabel.setStyle("-fx-text-fill: red;");
             } else {
-                phoneField.setStyle(null);
+                phoneField.setStyle("-fx-background-color: #f8f9fa; -fx-background-radius: 8; -fx-padding: 10; -fx-border-radius: 8;-fx-border-color: #e1e4e8;");
                 phoneFieldErrorLabel.setText("");
             }
         });
