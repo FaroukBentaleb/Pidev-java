@@ -14,5 +14,8 @@ public interface IReclamation<T> {
     public List<Reclamation> recupererReclamationsArchivéesFront(User user) throws SQLException;
     public void ArchiverFront(int id, int statut_archivation) throws SQLException;
     public List<Reclamation> recupererReclamationsBack() throws SQLException;
+    public List<Reclamation> rechercher(String searchText, User user) throws SQLException;
+    public List<Reclamation> rechercherBack(String searchText) throws SQLException;
+    public List<Reclamation> recupererReclamationsBackPaginees(int page, int pageSize) throws SQLException;
 
 }

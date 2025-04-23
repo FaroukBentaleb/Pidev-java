@@ -123,7 +123,7 @@
                             <Insets left="15.0" right="15.0" />
                         </padding>
                         <Label style="-fx-text-fill: #666;" text="🔍" />
-                        <TextField fx:id="searchField" prefHeight="40.0" promptText="Search for courses..." style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS" />
+                        <TextField fx:id="searchField" prefHeight="40.0" promptText="rechercher des reclamations..." style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS" />
                     </HBox>
 
                     <!-- Notification icons and login buttons -->

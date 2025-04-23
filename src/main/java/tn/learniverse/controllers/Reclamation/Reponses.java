@@ -56,17 +56,17 @@ public class Reponses {
     public void setReclamation(Reclamation rec) throws SQLException {
         this.reclamation = rec;
         labelTitre.setText("Réponses pour : " + rec.getTitre());
-
         user = new User();
         user.setId(3);
+        user.setPrenom(rec.getUser().getPrenom());
+        user.setNom(rec.getUser().getNom());
+        user.setRole(rec.getUser().getRole());
+        user.setEmail(rec.getUser().getEmail());
 
         List<Reponse> reponses = rec.getReponses();
         for (Reponse reponse : reponses) {
             if (reponse.getUser() == null) {
                 reponse.setUser(user);
-            }
-            if (reponse.getStatut() == 0) {
-                // Logique pour mettre à jour le statut si nécessaire
             }
         }
         observableReponses = FXCollections.observableArrayList(reponses);
@@ -83,10 +83,21 @@ public class Reponses {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
-        if (user != null && dateReponse != null) {
-            String prenom = user.getPrenom() != null ? user.getPrenom() : "Inconnu";
-            String nom = user.getNom() != null ? user.getNom() : "Inconnu";
-            String auteur = "Admin".equals(user.getRole()) ? "Learniverse" : prenom + " " + nom;
+        // Utiliser l'utilisateur de la réponse pour l'affichage
+        User responseUser = reponse.getUser();
+        if (responseUser != null && dateReponse != null) {
+            String auteur;
+            // Vérifier le rôle de l'utilisateur pour l'affichage
+            if ("Admin".equals(responseUser.getRole())) {
+                auteur = "Admin Learniverse";
+            } else {
+                // Pour Student ou Instructor, afficher le nom complet et le rôle
+                String prenom = responseUser.getPrenom() != null ? responseUser.getPrenom() : "Inconnu";
+                String nom = responseUser.getNom() != null ? responseUser.getNom() : "Inconnu";
+                String role = responseUser.getRole() != null ? responseUser.getRole() : "Inconnu";
+                auteur = prenom + " " + nom + " (" + role + ")";
+            }
+
             String dateFormatted = dateFormat.format(dateReponse);
 
             Label header = new Label("Répondu par: " + auteur + " le " + dateFormatted);
@@ -106,27 +117,31 @@ public class Reponses {
         content.setStyle("-fx-font-size: 14; -fx-text-fill: #333;");
         bubble.getChildren().add(content);
 
-        // ----- Boutons selon le statut et rôle -----
+        // ----- Gestion des boutons selon le statut et le rôle de l'utilisateur -----
         if (reponse != null && reponse.getStatut() == 0) {
             HBox buttonBox = new HBox();
             buttonBox.setSpacing(10);
             buttonBox.setAlignment(Pos.CENTER_RIGHT);
 
-            if ("Admin".equals(reponse.getUser().getRole())) {
+            // Si ce n'est pas une réponse d'admin, afficher "Modifier Réponse"
+            if (responseUser != null && !"Admin".equals(responseUser.getRole())) {
+                Button btnModifier = new Button("Modifier Réponse");
+                btnModifier.setStyle("-fx-background-color: #34A853; -fx-text-fill: white; -fx-background-radius: 5;");
+                btnModifier.setOnAction(e -> openModifierReponseDialog(reponse));
+                buttonBox.getChildren().add(btnModifier);
+            } 
+            // Si c'est une réponse d'admin, afficher "Répondre"
+            else {
                 Button btnRepondre = new Button("Répondre");
-                btnRepondre.setStyle("-fx-background-color: #1a73e8; -fx-text-fill: white; -fx-background-radius: 5;");
+                btnRepondre.setStyle("-fx-background-color: #4285F4; -fx-text-fill: white; -fx-background-radius: 5;");
                 btnRepondre.setOnAction(e -> openReponseDialog("répondre", reponse));
                 buttonBox.getChildren().add(btnRepondre);
             }
 
-            if ("Student".equals(reponse.getUser().getRole()) || "Instructor".equals(reponse.getUser().getRole())) {
-                Button btnModifier = new Button("Modifier Réponse");
-                btnModifier.setStyle("-fx-background-color: #1a73e8; -fx-text-fill: white; -fx-background-radius: 5;");
-                btnModifier.setOnAction(e -> openModifierReponseDialog(reponse));
-                buttonBox.getChildren().add(btnModifier);
+            // Ajouter les boutons seulement s'il y en a
+            if (!buttonBox.getChildren().isEmpty()) {
+                bubble.getChildren().add(buttonBox);
             }
-
-            bubble.getChildren().add(buttonBox);
         }
 
         HBox wrapper = new HBox(bubble);
@@ -247,17 +262,37 @@ public class Reponses {
                     return;
                 }
                 try {
+                    if (!observableReponses.isEmpty()) {
+                        Reponse lastReponse = observableReponses.get(observableReponses.size() - 1);
+                        lastReponse.setStatut(1);
+                        reponseService.updateStatut(lastReponse.getId(), 1);
+                    }
+                    if (user.getPrenom() == null || user.getNom() == null || user.getRole() == null) {
+                        user.setPrenom(reclamation.getUser().getPrenom());
+                        user.setNom(reclamation.getUser().getNom());
+                        user.setRole(reclamation.getUser().getRole());
+                        user.setEmail(reclamation.getUser().getEmail());
+                    }
+
                     Reponse reponse = new Reponse(contenu, new Date(), reclamation, user, 0);
                     reponseService.ajouter(reponse, user, reclamation);
-                    
                     reponse.setUser(user);
-                    reponse.setStatut(1);
-
                     observableReponses.add(reponse);
                     refreshReponses();
                     stage.close();
+
+                    Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+                    successAlert.setTitle("Succès");
+                    successAlert.setHeaderText(null);
+                    successAlert.setContentText("La réponse a été ajoutée avec succès.");
+                    successAlert.showAndWait();
                 } catch (SQLException ex) {
                     ex.printStackTrace();
+                    Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                    errorAlert.setTitle("Erreur");
+                    errorAlert.setHeaderText(null);
+                    errorAlert.setContentText("Une erreur est survenue lors de l'ajout de la réponse.");
+                    errorAlert.showAndWait();
                 }
             });
 

@@ -59,5 +59,12 @@ public class ReponseService implements IReponse<Reponse>{
             e.printStackTrace();
         }
     }
-
+    @Override
+    public void updateStatut(int id, int statut) throws SQLException {
+        String sql = "UPDATE reponse SET statut = ? WHERE id = ?";
+        PreparedStatement st = cnx.prepareStatement(sql);
+        st.setInt(1, statut);
+        st.setInt(2, id);
+        st.executeUpdate();
+    }
 }

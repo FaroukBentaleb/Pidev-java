@@ -33,28 +33,93 @@ public class DisplayReclamationBack {
     private VBox reclamationsContainer;
     @FXML
     private Label headerLabel;
+    @FXML
+    private TextField searchField;
+    @FXML
+    private Pagination pagination;
     private final ReclamationService reclamationService = new ReclamationService();
+    private final int ITEMS_PER_PAGE = 5;
 
     public void initialize() {
-        reclamationsContainer.getChildren().clear();
-        reclamationsContainer.setSpacing(5);
-
         try {
-            User user = new User();
-            user.setId(2);
-            List<Reclamation> reclamations = reclamationService.recupererReclamationsBack();
-            if (reclamations.isEmpty()) {
-                headerLabel.setText("Aucune réclamation pour l'utilisateur 3");
-            } else {
-                for (Reclamation rec : reclamations) {
-                    VBox box = createReclamationBox(rec);
-                    VBox.setMargin(box, new Insets(5, 0, 5, 0));
-                    reclamationsContainer.getChildren().add(box);
+            reclamationsContainer.setSpacing(5);
+
+            int totalPages = reclamationService.getTotalPages(ITEMS_PER_PAGE);
+
+            pagination.setPageCount(Math.max(1, totalPages));
+            pagination.setCurrentPageIndex(0);
+            pagination.setMaxPageIndicatorCount(100);
+
+            pagination.currentPageIndexProperty().addListener((obs, oldIndex, newIndex) -> {
+                try {
+                    loadReclamationsForPage(newIndex.intValue() + 1);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    showErrorMessage("Erreur lors du chargement des réclamations");
                 }
-            }
+            });
+
+            searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+                try {
+                    if (newValue == null || newValue.trim().isEmpty()) {
+                        loadReclamationsForPage(pagination.getCurrentPageIndex() + 1);
+                    } else {
+                        List<Reclamation> reclamations = reclamationService.rechercherBack(newValue.trim());
+                        displayReclamations(reclamations);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    showErrorMessage("Erreur lors de la recherche des réclamations");
+                }
+            });
+
+            loadReclamationsForPage(1);
+            
         } catch (SQLException e) {
             e.printStackTrace();
-            headerLabel.setText("Erreur lors de la récupération des réclamations");
+            showErrorMessage("Erreur lors de l'initialisation");
+        }
+    }
+
+    private void loadReclamationsForPage(int page) throws SQLException {
+        List<Reclamation> reclamations = reclamationService.recupererReclamationsBackPaginees(page, ITEMS_PER_PAGE);
+        displayReclamations(reclamations);
+    }
+
+    private void displayReclamations(List<Reclamation> reclamations) {
+        reclamationsContainer.getChildren().clear();
+        
+        if (reclamations.isEmpty()) {
+            VBox emptyMessageBox = new VBox();
+            emptyMessageBox.setAlignment(Pos.CENTER);
+            emptyMessageBox.setPrefHeight(400);
+            
+            Label emptyMessage = new Label("Aucune réclamation disponible");
+            emptyMessage.setStyle("-fx-font-size: 24px; " +
+                                "-fx-font-weight: bold; " +
+                                "-fx-text-fill: #666666; " +
+                                "-fx-background-color: white; " +
+                                "-fx-padding: 20px 40px; " +
+                                "-fx-background-radius: 10px; " +
+                                "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0.5, 0, 4);");
+            
+            emptyMessageBox.getChildren().add(emptyMessage);
+            reclamationsContainer.getChildren().add(emptyMessageBox);
+            reclamationsContainer.setAlignment(Pos.CENTER);
+        } else {
+            for (Reclamation rec : reclamations) {
+                VBox box = createReclamationBox(rec);
+                VBox.setMargin(box, new Insets(5, 0, 5, 0));
+                reclamationsContainer.getChildren().add(box);
+            }
+        }
+    }
+
+    private void showErrorMessage(String message) {
+        if (headerLabel != null) {
+            headerLabel.setText(message);
+        } else {
+            System.err.println(message);
         }
     }
 
@@ -139,20 +204,14 @@ public class DisplayReclamationBack {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reclamation/ReponsesBack.fxml"));
             Parent root = loader.load();
-            
-            // Récupérer le contrôleur et initialiser la réclamation
+
             ReponsesBack responsesController = loader.getController();
             responsesController.setReclamation(rec);
-            
-            // Obtenir la scène actuelle
             Scene currentScene = sourceNode.getScene();
-            
-            // Mettre à jour la scène avec la nouvelle vue
             currentScene.setRoot(root);
             
         } catch (IOException | SQLException e) {
             e.printStackTrace();
-            // Afficher une alerte en cas d'erreur
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
             errorAlert.setTitle("Erreur");
             errorAlert.setHeaderText(null);
@@ -170,11 +229,9 @@ public class DisplayReclamationBack {
             mainContainer.setPrefWidth(600);
             mainContainer.setAlignment(Pos.CENTER);
 
-            // Titre de la réclamation
             Label titleLabel = new Label("Répondre à : " + reclamation.getTitre());
             titleLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;");
 
-            // Zone de texte pour la réponse avec style moderne
             TextArea reponseTextArea = new TextArea();
             reponseTextArea.setPromptText("Votre réponse ici (minimum 10 caractères)");
             reponseTextArea.setPrefRowCount(10);
@@ -182,13 +239,9 @@ public class DisplayReclamationBack {
             reponseTextArea.setStyle("-fx-font-size: 14px; -fx-background-color: white; " +
                     "-fx-border-color: #e0e0e0; -fx-border-radius: 5px; " +
                     "-fx-background-radius: 5px; -fx-padding: 10px;");
-
-            // Label pour les messages d'erreur
             Label errorLabel = new Label();
             errorLabel.setStyle("-fx-text-fill: #e74c3c; -fx-font-size: 12px;");
             errorLabel.setVisible(false);
-
-            // Conteneur pour les boutons
             HBox buttonBox = new HBox(15);
             buttonBox.setAlignment(Pos.CENTER);
 
@@ -202,8 +255,6 @@ public class DisplayReclamationBack {
                     "-fx-font-weight: bold; -fx-padding: 10 20; -fx-background-radius: 5;");
 
             buttonBox.getChildren().addAll(btnRepondre, btnAnnuler);
-
-            // Contrôle de saisie avec listener
             reponseTextArea.textProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue.trim().length() < 10) {
                     errorLabel.setText("La réponse doit contenir au moins 10 caractères");
@@ -215,12 +266,10 @@ public class DisplayReclamationBack {
                 }
             });
 
-            // Action du bouton Répondre
             btnRepondre.setOnAction(event -> {
                 try {
-                    // Créer et sauvegarder la réponse
                     User admin = new User();
-                    admin.setId(2); // ID de l'admin
+                    admin.setId(2);
                     admin.setRole("Admin");
                     
                     Reponse reponse = new Reponse(reponseTextArea.getText(), new Date(), reclamation, admin, 0);
@@ -240,8 +289,6 @@ public class DisplayReclamationBack {
                             .orElse(reclamation);
                     
                     controller.setReclamation(updatedReclamation);
-                    
-                    // Mettre à jour la scène
                     Scene scene = btnRepondre.getScene();
                     Stage primaryStage = (Stage) scene.getWindow();
                     primaryStage.setScene(new Scene(root));
@@ -256,18 +303,14 @@ public class DisplayReclamationBack {
                 }
             });
 
-            // Action du bouton Annuler
             btnAnnuler.setOnAction(event -> stage.close());
 
-            // Ajouter tous les éléments au conteneur principal
             mainContainer.getChildren().addAll(
                 titleLabel,
                 reponseTextArea,
                 errorLabel,
                 buttonBox
             );
-
-            // Créer et afficher la scène
             Scene scene = new Scene(mainContainer);
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -309,7 +352,6 @@ public class DisplayReclamationBack {
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
-            // Rafraîchir l'interface après la fermeture de la fenêtre d'ajout
             initialize();
         } catch (IOException e) {
             e.printStackTrace();
@@ -318,13 +360,8 @@ public class DisplayReclamationBack {
 
     private void archiverReclamation(Reclamation reclamation) {
         try {
-            // 1. Archiver la réclamation
             reclamationService.ArchiverBack(reclamation.getId(), 1);
-            
-            // 2. Rafraîchir l'affichage immédiatement
             refreshDisplay();
-            
-            // 3. Afficher un message de succès
             Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
             successAlert.setTitle("Succès");
             successAlert.setHeaderText(null);
@@ -340,17 +377,12 @@ public class DisplayReclamationBack {
             errorAlert.showAndWait();
         }
     }
-
-    // Nouvelle méthode pour rafraîchir l'affichage
     private void refreshDisplay() {
         try {
-            // Vider le conteneur
             reclamationsContainer.getChildren().clear();
-            
-            // Récupérer les réclamations non archivées
+
             List<Reclamation> reclamations = reclamationService.recupererReclamationsBack();
-            
-            // Mettre à jour l'affichage
+
             if (reclamations.isEmpty()) {
                 headerLabel.setText("Aucune réclamation non archivée");
             } else {

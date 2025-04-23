@@ -46,7 +46,6 @@ public class ReponsesBack {
     private Reclamation reclamation;
     private User user;
     private ObservableList<Reponse> observableReponses;
-    private static final int ADMIN_USER_ID = 2; // ID utilisateur pour l'admin
 
     @FXML
     private void initialize() {
@@ -56,26 +55,15 @@ public class ReponsesBack {
     public void setReclamation(Reclamation rec) throws SQLException {
         this.reclamation = rec;
         labelTitre.setText("Réponses pour : " + rec.getTitre());
-
-        // Utilisateur courant pour l'ajout de nouvelles réponses uniquement
         user = new User();
-        user.setId(ADMIN_USER_ID); // Définir l'ID 2 pour l'administrateur
-        user.setRole("Admin"); // Définir le rôle comme Admin
+        user.setId(2);
+        user.setRole("Admin");
 
         List<Reponse> reponses = rec.getReponses();
-        System.out.println("Nombre de réponses : " + reponses.size());
-
-        // Parcourir les réponses et créer des utilisateurs si nécessaire
         for (Reponse reponse : reponses) {
-            System.out.println("Réponse ID: " + reponse.getId() +
-                    ", Statut: " + reponse.getStatut() +
-                    ", User ID: " + (reponse.getUser() != null ? reponse.getUser().getId() : "null") +
-                    ", Rôle utilisateur: " + (reponse.getUser() != null ? reponse.getUser().getRole() : "null"));
-
-            // Si l'utilisateur est null, créer un utilisateur par défaut avec ID=2 et rôle Admin
             if (reponse.getUser() == null) {
                 User defaultUser = new User();
-                defaultUser.setId(ADMIN_USER_ID);
+                defaultUser.setId(2);
                 defaultUser.setRole("Admin");
                 defaultUser.setPrenom("Admin");
                 defaultUser.setNom("Learniverse");
@@ -97,18 +85,16 @@ public class ReponsesBack {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
-        // Utiliser l'utilisateur de la réponse pour l'affichage
         User responseUser = reponse.getUser();
         if (responseUser != null && dateReponse != null) {
             String auteur;
-            // Vérifier le rôle de l'utilisateur pour l'affichage
             if ("Admin".equals(responseUser.getRole())) {
                 auteur = "Learniverse";
             } else {
-                // Pour Student ou Instructor, afficher le nom complet
                 String prenom = responseUser.getPrenom() != null ? responseUser.getPrenom() : "Inconnu";
                 String nom = responseUser.getNom() != null ? responseUser.getNom() : "Inconnu";
-                auteur = prenom + " " + nom;
+                String role = responseUser.getRole() != null ? responseUser.getRole() : "Inconnu";
+                auteur = prenom + " " + nom + " ";
             }
 
             String dateFormatted = dateFormat.format(dateReponse);
@@ -130,33 +116,23 @@ public class ReponsesBack {
         content.setStyle("-fx-font-size: 14; -fx-text-fill: #333;");
         bubble.getChildren().add(content);
 
-        // ----- Gestion des boutons selon le statut et le rôle de l'utilisateur -----
-        if (reponse != null) {
+        if (reponse != null && reponse.getStatut() == 0) {
             HBox buttonBox = new HBox();
             buttonBox.setSpacing(10);
             buttonBox.setAlignment(Pos.CENTER_RIGHT);
 
-            User currentUser = this.user; // L'utilisateur actuel (admin avec ID 2)
-
-            // Si l'utilisateur courant est Admin (ID 2)
-            if (currentUser != null && currentUser.getId() == ADMIN_USER_ID && "Admin".equals(currentUser.getRole())) {
-                // Si le statut est 0, afficher le bouton Répondre
-                if (reponse.getStatut() == 0) {
-                    Button btnRepondre = new Button("Répondre");
-                    btnRepondre.setStyle("-fx-background-color: #1a73e8; -fx-text-fill: white; -fx-background-radius: 5;");
-                    btnRepondre.setOnAction(e -> openReponseDialog("répondre", reponse));
-                    buttonBox.getChildren().add(btnRepondre);
-                }
-            }
-
-            // Si l'utilisateur de la réponse est Student ou Instructor et si le statut est 0
-            if (responseUser != null &&
-                    ("Student".equals(responseUser.getRole()) || "Instructor".equals(responseUser.getRole()))
-                    && reponse.getStatut() == 0) {
+            if (responseUser != null && "Admin".equals(responseUser.getRole())) {
                 Button btnModifier = new Button("Modifier Réponse");
-                btnModifier.setStyle("-fx-background-color: #1a73e8; -fx-text-fill: white; -fx-background-radius: 5;");
+                btnModifier.setStyle("-fx-background-color: #34A853; -fx-text-fill: white; -fx-background-radius: 5;");
                 btnModifier.setOnAction(e -> openModifierReponseDialog(reponse));
                 buttonBox.getChildren().add(btnModifier);
+            } 
+            // Si ce n'est pas une réponse d'admin, afficher "Répondre"
+            else {
+                Button btnRepondre = new Button("Répondre");
+                btnRepondre.setStyle("-fx-background-color: #4285F4; -fx-text-fill: white; -fx-background-radius: 5;");
+                btnRepondre.setOnAction(e -> openReponseDialog("répondre", reponse));
+                buttonBox.getChildren().add(btnRepondre);
             }
 
             // Ajouter les boutons seulement s'il y en a
@@ -210,7 +186,6 @@ public class ReponsesBack {
             Button btnSave = new Button("Enregistrer");
             btnSave.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 5;");
             btnSave.setOnAction(e -> {
-                // Alerte de confirmation après la modification
                 Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
                 confirmationAlert.setTitle("Confirmation de modification");
                 confirmationAlert.setHeaderText("Modifier la réponse");
@@ -284,20 +259,38 @@ public class ReponsesBack {
                     return;
                 }
                 try {
+                    // Mettre à jour le statut de la réponse précédente à 1 (non modifiable)
+                    if (!observableReponses.isEmpty()) {
+                        Reponse lastReponse = observableReponses.get(observableReponses.size() - 1);
+                        lastReponse.setStatut(1);
+                        reponseService.updateStatut(lastReponse.getId(), 1);
+                    }
+
                     // Créer une nouvelle réponse avec l'utilisateur admin (ID=2)
                     Reponse reponse = new Reponse(contenu, new Date(), reclamation, user, 0);
                     reponseService.ajouter(reponse, user, reclamation);
 
                     // Assurer que l'utilisateur est correctement défini
                     reponse.setUser(user);
-                    reponse.setStatut(1); // Mettre à jour le statut
 
                     // Ajouter la réponse à la liste observable et rafraîchir l'affichage
                     observableReponses.add(reponse);
                     refreshReponses();
                     stage.close();
+
+                    // Afficher un message de succès
+                    Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+                    successAlert.setTitle("Succès");
+                    successAlert.setHeaderText(null);
+                    successAlert.setContentText("La réponse a été ajoutée avec succès.");
+                    successAlert.showAndWait();
                 } catch (SQLException ex) {
                     ex.printStackTrace();
+                    Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                    errorAlert.setTitle("Erreur");
+                    errorAlert.setHeaderText(null);
+                    errorAlert.setContentText("Une erreur est survenue lors de l'ajout de la réponse.");
+                    errorAlert.showAndWait();
                 }
             });
 

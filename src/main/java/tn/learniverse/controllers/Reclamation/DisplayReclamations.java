@@ -31,24 +31,85 @@ public class DisplayReclamations {
     private VBox reclamationsContainer;
     @FXML
     private Label headerLabel;
+    @FXML
+    private TextField searchField;
     private final ReclamationService reclamationService = new ReclamationService();
 
     public void initialize() {
         reclamationsContainer.getChildren().clear();
         reclamationsContainer.setSpacing(5);
 
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                if (user == null) {
+                    user = new User();
+                    user.setId(3);
+                    user.setRole("Student");
+                }
+                
+                reclamationsContainer.getChildren().clear();
+                List<Reclamation> reclamations;
+                
+                if (newValue == null || newValue.trim().isEmpty()) {
+                    reclamations = reclamationService.recuperer(user);
+                } else {
+                    reclamations = reclamationService.rechercher(newValue.trim(), user);
+                }
+
+                if (reclamations.isEmpty()) {
+                    VBox emptyMessageBox = new VBox();
+                    emptyMessageBox.setAlignment(javafx.geometry.Pos.CENTER);
+                    emptyMessageBox.setPrefHeight(400);
+                    Label emptyMessage = new Label(newValue.trim().isEmpty() ? 
+                        "Aucune réclamation disponible" : 
+                        "Aucune réclamation trouvée pour : " + newValue);
+                    emptyMessage.setStyle("-fx-font-size: 24px; " +
+                                        "-fx-font-weight: bold; " +
+                                        "-fx-text-fill: #666666; " +
+                                        "-fx-background-color: white; " +
+                                        "-fx-padding: 20px 40px; " +
+                                        "-fx-background-radius: 10px; " +
+                                        "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0.5, 0, 4);");
+                    
+                    emptyMessageBox.getChildren().add(emptyMessage);
+                    reclamationsContainer.getChildren().add(emptyMessageBox);
+                    reclamationsContainer.setAlignment(javafx.geometry.Pos.CENTER);
+                } else {
+                    for (Reclamation rec : reclamations) {
+                        VBox box = createReclamationBox(rec);
+                        VBox.setMargin(box, new Insets(5, 0, 5, 0));
+                        reclamationsContainer.getChildren().add(box);
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                headerLabel.setText("Erreur lors de la recherche des réclamations");
+            }
+        });
         try {
-            // Si l'utilisateur n'est pas déjà défini, créer un utilisateur par défaut
             if (user == null) {
                 user = new User();
                 user.setId(3);
-                // Définir le rôle par défaut (à adapter selon votre logique)
                 user.setRole("Student");
             }
             
             List<Reclamation> reclamations = reclamationService.recuperer(user);
             if (reclamations.isEmpty()) {
-                headerLabel.setText("Aucune réclamation pour l'utilisateur " + user.getId());
+                VBox emptyMessageBox = new VBox();
+                emptyMessageBox.setAlignment(javafx.geometry.Pos.CENTER);
+                emptyMessageBox.setPrefHeight(400);
+                Label emptyMessage = new Label("Aucune réclamation disponible");
+                emptyMessage.setStyle("-fx-font-size: 24px; " +
+                                    "-fx-font-weight: bold; " +
+                                    "-fx-text-fill: #666666; " +
+                                    "-fx-background-color: white; " +
+                                    "-fx-padding: 20px 40px; " +
+                                    "-fx-background-radius: 10px; " +
+                                    "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0.5, 0, 4);");
+                
+                emptyMessageBox.getChildren().add(emptyMessage);
+                reclamationsContainer.getChildren().add(emptyMessageBox);
+                reclamationsContainer.setAlignment(javafx.geometry.Pos.CENTER);
             } else {
                 for (Reclamation rec : reclamations) {
                     VBox box = createReclamationBox(rec);
@@ -110,7 +171,6 @@ public class DisplayReclamations {
             actions.getChildren().add(createButton("Voir Réponse", "btn-primary",
                     e -> viewResponses(rec, (Node) e.getSource())));
         } else {
-            // Vérifier si l'utilisateur est un Student ou un Instructor
             if (user != null && (user.getRole().equals("Student") || user.getRole().equals("Instructor"))) {
                 actions.getChildren().add(createButton("Modifier Contenu", "btn-success",
                         e -> openModifierReclamationDialog(rec)));
@@ -148,8 +208,6 @@ public class DisplayReclamations {
             Parent responsesRoot = loader.load();
             Reponses responsesController = loader.getController();
             responsesController.setReclamation(rec);
-
-            // Clear the current content and add the responses view
             reclamationsContainer.getChildren().clear();
             reclamationsContainer.getChildren().add(responsesRoot);
         } catch (IOException | SQLException e) {
@@ -214,7 +272,7 @@ public class DisplayReclamations {
 
             modifierBox.getChildren().addAll(reclamationContenu, actions);
 
-            // Créer une nouvelle scène et un nouveau stage pour afficher l'interface de modification
+
             Scene scene = new Scene(modifierBox);
             Stage stage = new Stage();
             stage.setTitle("Modifier la réclamation");

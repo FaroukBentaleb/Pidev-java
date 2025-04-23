@@ -64,7 +64,7 @@ public class ReclamationService implements IReclamation<Reclamation> {
     public List<Reclamation> recuperer(User user) throws SQLException {
         List<Reclamation> reclamations = new ArrayList<>();
 
-        sql = "SELECT r.*, u.id AS user_id, u.nom, u.prenom, u.email " +
+        sql = "SELECT r.*, u.id AS user_id, u.nom, u.prenom, u.email,u.role " +
                 "FROM reclamation r " +
                 "JOIN user u ON r.id_user_id = u.id " +
                 "WHERE r.statut_archivation = 0 AND r.id_user_id = ?";
@@ -80,6 +80,7 @@ public class ReclamationService implements IReclamation<Reclamation> {
             u.setNom(rs.getString("nom"));
             u.setPrenom(rs.getString("prenom"));
             u.setEmail(rs.getString("email"));
+            u.setRole(rs.getString("role"));
 
             Reclamation rec = new Reclamation(
                     rs.getString("titre"),
@@ -226,22 +227,110 @@ public class ReclamationService implements IReclamation<Reclamation> {
 
     @Override
     public List<Reclamation> recupererReclamationsBack() throws SQLException {
+        return recupererReclamationsBackPaginees(1, 5);
+    }
+    @Override
+    public List<Reclamation> rechercher(String searchText, User user) throws SQLException {
         List<Reclamation> reclamations = new ArrayList<>();
 
-        // Requête SQL pour sélectionner uniquement les réclamations avec statut_archivation_back = 0
-        sql = "SELECT * FROM reclamation WHERE statut_archivation_back = 0";
+        sql = "SELECT r.*, u.id AS user_id, u.nom, u.prenom, u.email, u.role " +
+                "FROM reclamation r " +
+                "JOIN user u ON r.id_user_id = u.id " +
+                "WHERE r.statut_archivation = 0 AND r.id_user_id = ? " +
+                "AND (LOWER(r.titre) LIKE LOWER(?) OR LOWER(r.contenu) LIKE LOWER(?))";
 
         PreparedStatement ste = cnx.prepareStatement(sql);
+        ste.setInt(1, user.getId());
+        ste.setString(2, "%" + searchText + "%");
+        ste.setString(3, "%" + searchText + "%");
+
         ResultSet rs = ste.executeQuery();
 
         while (rs.next()) {
-            // Création de l'objet Reclamation sans récupérer les informations utilisateur
+            User u = new User();
+            u.setId(rs.getInt("user_id"));
+            u.setNom(rs.getString("nom"));
+            u.setPrenom(rs.getString("prenom"));
+            u.setEmail(rs.getString("email"));
+            u.setRole(rs.getString("role"));
+
             Reclamation rec = new Reclamation(
                     rs.getString("titre"),
                     rs.getTimestamp("date_reclamation"),
                     rs.getString("contenu"),
                     rs.getString("statut"),
-                    null,  // Aucune information utilisateur dans cette méthode
+                    u,
+                    rs.getInt("statut_archivation"),
+                    rs.getInt("statut_archivation_back"),
+                    rs.getTimestamp("date_modification"),
+                    rs.getString("fichier")
+            );
+            rec.setId(rs.getInt("id"));
+            reclamations.add(rec);
+        }
+        for (Reclamation reclamation : reclamations) {
+            String sql1 = "SELECT r.*, u.id AS user_id, u.nom, u.prenom, u.email, u.role " +
+                    "FROM reponse r " +
+                    "LEFT JOIN user u ON r.id_user_id = u.id " +
+                    "WHERE r.id_reclamation_id = ?";
+
+            PreparedStatement ste1 = cnx.prepareStatement(sql1);
+            ste1.setInt(1, reclamation.getId());
+            ResultSet rs1 = ste1.executeQuery();
+            List<Reponse> reponses = new ArrayList<>();
+            while (rs1.next()) {
+                User userReponse = new User();
+                userReponse.setId(rs1.getInt("user_id"));
+                userReponse.setNom(rs1.getString("nom"));
+                userReponse.setPrenom(rs1.getString("prenom"));
+                userReponse.setEmail(rs1.getString("email"));
+                userReponse.setRole(rs1.getString("role"));
+                Reponse rep = new Reponse(
+                        rs1.getString("contenu"),
+                        rs1.getTimestamp("date_reponse"),
+                        reclamation,
+                        rs1.getTimestamp("date_modification"),
+                        userReponse,
+                        rs1.getInt("statut")
+                );
+                rep.setId(rs1.getInt("id"));
+                reponses.add(rep);
+            }
+            reclamation.setReponses(reponses);
+        }
+
+        return reclamations;
+    }
+    @Override
+    public List<Reclamation> rechercherBack(String searchText) throws SQLException {
+        List<Reclamation> reclamations = new ArrayList<>();
+
+        sql = "SELECT r.*, u.id AS user_id, u.nom, u.prenom, u.email, u.role " +
+                "FROM reclamation r " +
+                "JOIN user u ON r.id_user_id = u.id " +
+                "WHERE r.statut_archivation_back = 0 " +
+                "AND (LOWER(r.titre) LIKE LOWER(?) OR LOWER(r.contenu) LIKE LOWER(?))";
+
+        PreparedStatement ste = cnx.prepareStatement(sql);
+        ste.setString(1, "%" + searchText + "%");
+        ste.setString(2, "%" + searchText + "%");
+
+        ResultSet rs = ste.executeQuery();
+
+        while (rs.next()) {
+            User u = new User();
+            u.setId(rs.getInt("user_id"));
+            u.setNom(rs.getString("nom"));
+            u.setPrenom(rs.getString("prenom"));
+            u.setEmail(rs.getString("email"));
+            u.setRole(rs.getString("role"));
+
+            Reclamation rec = new Reclamation(
+                    rs.getString("titre"),
+                    rs.getTimestamp("date_reclamation"),
+                    rs.getString("contenu"),
+                    rs.getString("statut"),
+                    u,
                     rs.getInt("statut_archivation"),
                     rs.getInt("statut_archivation_back"),
                     rs.getTimestamp("date_modification"),
@@ -251,21 +340,30 @@ public class ReclamationService implements IReclamation<Reclamation> {
             reclamations.add(rec);
         }
 
-        // Optionnel : Ajouter les réponses si nécessaire (vous pouvez aussi les ignorer si ce n'est pas utile)
+        // Récupérer les réponses pour chaque réclamation
         for (Reclamation reclamation : reclamations) {
-            String sql1 = "SELECT * FROM reponse WHERE id_reclamation_id = ?";
+            String sql1 = "SELECT r.*, u.id AS user_id, u.nom, u.prenom, u.email, u.role " +
+                    "FROM reponse r " +
+                    "LEFT JOIN user u ON r.id_user_id = u.id " +
+                    "WHERE r.id_reclamation_id = ?";
 
             PreparedStatement ste1 = cnx.prepareStatement(sql1);
             ste1.setInt(1, reclamation.getId());
             ResultSet rs1 = ste1.executeQuery();
             List<Reponse> reponses = new ArrayList<>();
             while (rs1.next()) {
+                User userReponse = new User();
+                userReponse.setId(rs1.getInt("user_id"));
+                userReponse.setNom(rs1.getString("nom"));
+                userReponse.setPrenom(rs1.getString("prenom"));
+                userReponse.setEmail(rs1.getString("email"));
+                userReponse.setRole(rs1.getString("role"));
                 Reponse rep = new Reponse(
                         rs1.getString("contenu"),
                         rs1.getTimestamp("date_reponse"),
                         reclamation,
                         rs1.getTimestamp("date_modification"),
-                        null,  // Aucune information utilisateur dans les réponses (si vous ne la souhaitez pas)
+                        userReponse,
                         rs1.getInt("statut")
                 );
                 rep.setId(rs1.getInt("id"));
@@ -277,8 +375,89 @@ public class ReclamationService implements IReclamation<Reclamation> {
         return reclamations;
     }
 
+    @Override
+    public List<Reclamation> recupererReclamationsBackPaginees(int page, int pageSize) throws SQLException {
+        List<Reclamation> reclamations = new ArrayList<>();
+        int offset = (page - 1) * pageSize;
 
+        sql = "SELECT r.*, u.id AS user_id, u.nom, u.prenom, u.email, u.role " +
+              "FROM reclamation r " +
+              "LEFT JOIN user u ON r.id_user_id = u.id " +
+              "WHERE r.statut_archivation_back = 0 " +
+              "LIMIT ? OFFSET ?";
 
+        PreparedStatement ste = cnx.prepareStatement(sql);
+        ste.setInt(1, pageSize);
+        ste.setInt(2, offset);
+        ResultSet rs = ste.executeQuery();
+
+        while (rs.next()) {
+            User u = new User();
+            u.setId(rs.getInt("id_user_id"));
+            u.setNom(rs.getString("nom"));
+            u.setPrenom(rs.getString("prenom"));
+            u.setEmail(rs.getString("email"));
+            u.setRole(rs.getString("role"));
+
+            Reclamation rec = new Reclamation(
+                    rs.getString("titre"),
+                    rs.getTimestamp("date_reclamation"),
+                    rs.getString("contenu"),
+                    rs.getString("statut"),
+                    u,
+                    rs.getInt("statut_archivation"),
+                    rs.getInt("statut_archivation_back"),
+                    rs.getTimestamp("date_modification"),
+                    rs.getString("fichier")
+            );
+            rec.setId(rs.getInt("id"));
+            reclamations.add(rec);
+        }
+        for (Reclamation reclamation : reclamations) {
+            String sql1 = "SELECT r.*, u.id AS user_id, u.nom, u.prenom, u.email, u.role " +
+                    "FROM reponse r " +
+                    "LEFT JOIN user u ON r.id_user_id = u.id " +
+                    "WHERE r.id_reclamation_id = ?";
+
+            PreparedStatement ste1 = cnx.prepareStatement(sql1);
+            ste1.setInt(1, reclamation.getId());
+            ResultSet rs1 = ste1.executeQuery();
+            List<Reponse> reponses = new ArrayList<>();
+            while (rs1.next()) {
+                User userReponse = new User();
+                userReponse.setId(rs1.getInt("user_id"));
+                userReponse.setNom(rs1.getString("nom"));
+                userReponse.setPrenom(rs1.getString("prenom"));
+                userReponse.setEmail(rs1.getString("email"));
+                userReponse.setRole(rs1.getString("role"));
+                Reponse rep = new Reponse(
+                        rs1.getString("contenu"),
+                        rs1.getTimestamp("date_reponse"),
+                        reclamation,
+                        rs1.getTimestamp("date_modification"),
+                        userReponse,
+                        rs1.getInt("statut")
+                );
+                rep.setId(rs1.getInt("id"));
+                reponses.add(rep);
+            }
+            reclamation.setReponses(reponses);
+        }
+
+        return reclamations;
+    }
+
+    public int getTotalPages(int pageSize) throws SQLException {
+        sql = "SELECT COUNT(*) FROM reclamation WHERE statut_archivation_back = 0";
+        PreparedStatement ste = cnx.prepareStatement(sql);
+        ResultSet rs = ste.executeQuery();
+        
+        if (rs.next()) {
+            int totalReclamations = rs.getInt(1);
+            return (int) Math.ceil((double) totalReclamations / pageSize);
+        }
+        return 0;
+    }
 }
 
 

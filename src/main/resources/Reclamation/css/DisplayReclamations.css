@@ -104,3 +104,66 @@
     -fx-font-size: 20px;
     -fx-translate-x: 650px;
 }
+
+.custom-pagination {
+    -fx-background-color: transparent;
+    -fx-padding: 10px;
+    -fx-pref-width: 1000px;
+}
+
+.custom-pagination .pagination-control {
+    -fx-spacing: 2;
+}
+
+.custom-pagination .pagination-control .control-box {
+    -fx-spacing: 2;
+    -fx-alignment: center;
+    -fx-pref-width: 1000px;
+}
+
+.custom-pagination .pagination-control .button,
+.custom-pagination .pagination-control .number-button {
+    -fx-background-color: #1a73e8;
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-padding: 4px;
+    -fx-background-radius: 4px;
+    -fx-min-width: 25px;
+    -fx-min-height: 25px;
+    -fx-pref-width: 25px;
+    -fx-pref-height: 25px;
+    -fx-cursor: hand;
+    -fx-alignment: center;
+    -fx-content-display: center;
+}
+
+.custom-pagination .pagination-control .number-button {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #1a73e8;
+    -fx-border-color: #1a73e8;
+    -fx-border-radius: 4px;
+}
+
+.custom-pagination .pagination-control .number-button:selected {
+    -fx-background-color: #1a73e8;
+    -fx-text-fill: white;
+}
+
+.custom-pagination .pagination-control .button:hover,
+.custom-pagination .pagination-control .number-button:hover {
+    -fx-background-color: #e8f0fe;
+    -fx-text-fill: #1a73e8;
+}
+
+.custom-pagination .pagination-control .page-information {
+    visibility: hidden;
+    -fx-max-width: 0;
+    -fx-pref-width: 0;
+    -fx-opacity: 0;
+}
+
+.custom-pagination > .page {
+    -fx-background-color: transparent;
+}
+
