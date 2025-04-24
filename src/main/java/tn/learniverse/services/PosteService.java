@@ -1,7 +1,7 @@
 package tn.learniverse.services;
 
 import tn.learniverse.entities.Poste;
-import tn.learniverse.entities.user;
+import tn.learniverse.entities.User;
 import tn.learniverse.entities.Commentaire;
 import tn.learniverse.tools.DBConnection;
 import java.time.LocalDate;
@@ -24,7 +24,7 @@ public class PosteService implements IForum<Poste> {
     public void ajouter(Poste p) {
         try {
             // Fixer l'utilisateur manuellement (id = 1)
-            user u = new user();
+            User u = new User();
             u.setId(1);
             p.setUser(u);
             // Générer la date du jour si non spécifiée
@@ -154,7 +154,7 @@ public class PosteService implements IForum<Poste> {
                 p.setPhoto(rs.getString("photo"));
 
                 // Récupérer les informations de l'utilisateur associé au poste
-                user u = new user();
+                User u = new User();
                 u.setId(rs.getInt("id_user_id"));
                 u.setNom(rs.getString("user_nom"));
                 u.setPrenom(rs.getString("user_prenom"));

@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Poste {
     private int id;
-    private user user;
+    private User user;
     private String titre;
     private String contenu;
     private String datePost;
@@ -18,7 +18,7 @@ public class Poste {
     private List<Commentaire> commentaires = new ArrayList<>();
     public Poste() {}
 
-    public Poste(int id, user user, String titre, String contenu, String datePost,
+    public Poste(int id, User user, String titre, String contenu, String datePost,
                  boolean visible, int nbCom, String categorie, String photo) {
         this.id = id;
         this.user = user;
@@ -46,11 +46,11 @@ public class Poste {
         this.id = id;
     }
 
-    public user getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(user user) {
+    public void setUser(User user) {
         this.user = user;
     }
 

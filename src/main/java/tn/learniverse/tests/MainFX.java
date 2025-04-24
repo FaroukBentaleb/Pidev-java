@@ -23,20 +23,6 @@ public class MainFX extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reclamation/DisplayReclamationBack.fxml"));
-            if (loader.getLocation() == null) {
-                throw new IOException("Cannot find FXML file at /Reclamation/Back.fxml");
-            }
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("Learniverse");
-            primaryStage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
-        }
 
 //        SystemInfo systemInfo = new SystemInfo();
 //        ComputerSystem cs = systemInfo.getHardware().getComputerSystem();
@@ -57,6 +43,9 @@ public class MainFX extends Application {
 
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/user/login.fxml"));
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reclamation/DisplayReclamationBack.fxml"));
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/CoursesView.fxml"));
+
         Parent root = loader.load();
         Scene scene = new Scene(root);
         Image icon = new Image(new FileInputStream("C:/wamp64/www/images/logo/logo.png"));
