@@ -1,7 +1,9 @@
 package tn.learniverse.controllers.Reclamation;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,6 +17,7 @@ import tn.learniverse.entities.Reponse;
 import tn.learniverse.entities.User;
 import tn.learniverse.entities.Reclamation;
 import tn.learniverse.services.ReclamationService;
+import tn.learniverse.services.FlaskClient;
 import javafx.event.EventHandler;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -226,11 +229,16 @@ public class DisplayReclamationBack {
 
             VBox mainContainer = new VBox(20);
             mainContainer.setStyle("-fx-background-color: #f8f9fa; -fx-padding: 30;");
-            mainContainer.setPrefWidth(600);
+            mainContainer.setPrefWidth(1100);
+            mainContainer.setPrefHeight(550);
             mainContainer.setAlignment(Pos.CENTER);
 
             Label titleLabel = new Label("Répondre à : " + reclamation.getTitre());
             titleLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;");
+
+            Label descriptionLabel = new Label("Contenu : " + reclamation.getContenu());
+            descriptionLabel.setWrapText(true);
+            descriptionLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #34495e;");
 
             TextArea reponseTextArea = new TextArea();
             reponseTextArea.setPromptText("Votre réponse ici (minimum 10 caractères)");
@@ -239,14 +247,30 @@ public class DisplayReclamationBack {
             reponseTextArea.setStyle("-fx-font-size: 14px; -fx-background-color: white; " +
                     "-fx-border-color: #e0e0e0; -fx-border-radius: 5px; " +
                     "-fx-background-radius: 5px; -fx-padding: 10px;");
+
+            Label suggestionLabel = new Label();
+            suggestionLabel.setWrapText(true);
+            suggestionLabel.setCursor(Cursor.HAND);
+            suggestionLabel.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; " +
+                    "-fx-text-fill: #3498db; -fx-background-color: white; -fx-padding: 5 10; " +
+                    "-fx-border-color: #3498db; -fx-border-radius: 15px; -fx-background-radius: 15px;");
+
+            suggestionLabel.setOnMouseClicked(event -> {
+                String suggestionText = suggestionLabel.getText().replace("Suggestion : ", "").trim();
+                if (!suggestionText.isEmpty()) {
+                    reponseTextArea.setText(suggestionText);
+                }
+            });
+
             Label errorLabel = new Label();
             errorLabel.setStyle("-fx-text-fill: #e74c3c; -fx-font-size: 12px;");
             errorLabel.setVisible(false);
+
             HBox buttonBox = new HBox(15);
             buttonBox.setAlignment(Pos.CENTER);
 
             Button btnRepondre = new Button("Répondre");
-            btnRepondre.setDisable(true); // Désactivé par défaut
+            btnRepondre.setDisable(true);
             btnRepondre.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white; " +
                     "-fx-font-weight: bold; -fx-padding: 10 20; -fx-background-radius: 5;");
 
@@ -255,6 +279,7 @@ public class DisplayReclamationBack {
                     "-fx-font-weight: bold; -fx-padding: 10 20; -fx-background-radius: 5;");
 
             buttonBox.getChildren().addAll(btnRepondre, btnAnnuler);
+
             reponseTextArea.textProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue.trim().length() < 10) {
                     errorLabel.setText("La réponse doit contenir au moins 10 caractères");
@@ -264,6 +289,15 @@ public class DisplayReclamationBack {
                     errorLabel.setVisible(false);
                     btnRepondre.setDisable(false);
                 }
+
+                if (!newValue.trim().isEmpty()) {
+                    new Thread(() -> {
+                        String suggestion = FlaskClient.getSuggestion(reclamation.getContenu(), newValue);
+                        Platform.runLater(() -> suggestionLabel.setText("Suggestion : " + suggestion));
+                    }).start();
+                } else {
+                    suggestionLabel.setText("");
+                }
             });
 
             btnRepondre.setOnAction(event -> {
@@ -271,7 +305,7 @@ public class DisplayReclamationBack {
                     User admin = new User();
                     admin.setId(2);
                     admin.setRole("Admin");
-                    
+
                     Reponse reponse = new Reponse(reponseTextArea.getText(), new Date(), reclamation, admin, 0);
                     ReponseService reponseService = new ReponseService();
                     reponseService.ajouter(reponse, admin, reclamation);
@@ -287,7 +321,7 @@ public class DisplayReclamationBack {
                             .filter(r -> r.getId() == reclamation.getId())
                             .findFirst()
                             .orElse(reclamation);
-                    
+
                     controller.setReclamation(updatedReclamation);
                     Scene scene = btnRepondre.getScene();
                     Stage primaryStage = (Stage) scene.getWindow();
@@ -306,11 +340,14 @@ public class DisplayReclamationBack {
             btnAnnuler.setOnAction(event -> stage.close());
 
             mainContainer.getChildren().addAll(
-                titleLabel,
-                reponseTextArea,
-                errorLabel,
-                buttonBox
+                    titleLabel,
+                    descriptionLabel,
+                    reponseTextArea,
+                    suggestionLabel,
+                    errorLabel,
+                    buttonBox
             );
+
             Scene scene = new Scene(mainContainer);
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -325,6 +362,8 @@ public class DisplayReclamationBack {
             errorAlert.showAndWait();
         }
     }
+
+
 
     @FXML
     private void afficherReclamationsArchivees() {

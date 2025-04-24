@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
@@ -13,8 +14,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<?import java.lang.String?>
-<BorderPane prefHeight="720.0" stylesheets="@css/DisplayReclamations.css" prefWidth="1280.0" style="-fx-background-color: #f0f4f8;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.Reclamation.DisplayReclamationBack">
+<BorderPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #f0f4f8;" stylesheets="@css/DisplayReclamations.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.Reclamation.DisplayReclamationBack">
 
     <!-- LEFT NAV BAR - Dark theme for admin panel -->
     <left>
@@ -159,15 +159,12 @@
 
                     <!-- Recent Activities and User Table -->
                     <HBox maxWidth="980.0" spacing="20" />
-                    <Button fx:id="ReclamationArchivées" layoutX="429.0" mnemonicParsing="false"  prefHeight="46.0" prefWidth="230.0" style="-fx-background-color: #1a73e8; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.5, 0, 4);" text="Reclamations Archivées" />
+                    <Button fx:id="ReclamationArchivées" layoutX="429.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="230.0" style="-fx-background-color: #1a73e8; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.5, 0, 4);" text="Reclamations Archivées" />
                     <VBox fx:id="reclamationsContainer" />
                     <HBox alignment="CENTER" spacing="10" style="-fx-padding: 20 0; -fx-pref-width: 1000;">
-                        <Pagination fx:id="pagination" 
-                            pageCount="1" 
-                            maxPageIndicatorCount="100"
-                            style="-fx-background-color: transparent;">
+                        <Pagination fx:id="pagination" maxPageIndicatorCount="100" pageCount="1" style="-fx-background-color: transparent;">
                             <styleClass>
-                                <String fx:value="custom-pagination"/>
+                                <String fx:value="custom-pagination" />
                             </styleClass>
                         </Pagination>
                     </HBox>
