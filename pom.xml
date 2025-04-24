@@ -74,8 +74,16 @@
             <artifactId>javafx-fxml</artifactId>
             <version>21.0.2</version>
         </dependency>
-
-
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.oshi</groupId>
+            <artifactId>oshi-core</artifactId>
+            <version>6.4.4</version>
+        </dependency>
     </dependencies>
     <build>
         <resources>
@@ -95,5 +103,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

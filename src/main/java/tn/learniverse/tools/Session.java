@@ -13,7 +13,7 @@ public class Session {
         return currentUser;
     }
 
-    public static void clearSession() {
+    public static void clear() {
         currentUser = null;
     }
 }

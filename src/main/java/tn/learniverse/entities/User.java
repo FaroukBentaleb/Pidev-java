@@ -208,6 +208,18 @@ public class User {
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
+    }
+    public User(String nom, String prenom, String email, int phone) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.tel = phone;
+    }
+    public User(String nom, String prenom, String email,String role, String mdp, String dateDeNaissance, int tel, String field, String description, int experience, String job, String resume, String picture, String facebookLink, String instagramLink, String linkedinLink, boolean verified, int logs, int ban) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.role = role;
         this.mdp = mdp;
         this.dateDeNaissance = dateDeNaissance;
         this.tel = tel;
