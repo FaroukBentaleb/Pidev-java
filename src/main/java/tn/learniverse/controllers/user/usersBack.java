@@ -412,4 +412,8 @@ public class usersBack implements Initializable {
     public void Profile(ActionEvent actionEvent) {
         Navigator.redirect(actionEvent,"/fxml/user/ProfileBack.fxml");
     }
+
+    public void Comp(ActionEvent actionEvent) {
+    Navigator.redirect(actionEvent,"/fxml/backoffice_competitions.fxml");
+    }
 }

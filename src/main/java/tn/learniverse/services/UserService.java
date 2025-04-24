@@ -18,13 +18,16 @@ public class UserService implements IUser <User>{
     }
     @Override
     public void CreateAccount(User usr) throws SQLException {
-        String query = "INSERT INTO User(nom,prenom,email,role,mdp)" + "VALUES (?,?,?,?,?)";
+        String query = "INSERT INTO User(nom,prenom,email,role,mdp,verified,logs,ban)" + "VALUES (?,?,?,?,?,?,?,?)";
         PreparedStatement ps = connection.prepareStatement(query);
         ps.setString(1, usr.getNom());
         ps.setString(2, usr.getPrenom());
         ps.setString(3, usr.getEmail());
         ps.setString(4, usr.getRole());
         ps.setString(5, usr.getMdp());
+        ps.setBoolean(6, false);
+        ps.setInt(7, 5);
+        ps.setInt(8, 0);
         ps.executeUpdate();
 
     }
@@ -127,6 +130,7 @@ public class UserService implements IUser <User>{
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 usr = new User(
+                        rs.getInt("id"),
                         rs.getString("nom"),
                         rs.getString("prenom"),
                         rs.getString("email"),

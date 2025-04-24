@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
@@ -39,6 +40,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -50,6 +53,8 @@ import  tn.learniverse.entities.Competition;
 import  tn.learniverse.services.CompetitionService;
 import  tn.learniverse.tools.DatabaseConnection;
 import org.kordamp.ikonli.javafx.FontIcon;
+import tn.learniverse.tools.Navigator;
+import tn.learniverse.tools.Session;
 
 public class BackofficeCompetitionsController implements Initializable {
 
@@ -58,7 +63,12 @@ public class BackofficeCompetitionsController implements Initializable {
     
     @FXML
     private TableView<Competition> competitionsTable;
-    
+    @FXML
+    public Label navUsernameLabel;
+    public Button Profilebtn;
+    public Label FirstLetter;
+    public Circle circleProfile;
+
     @FXML
     private TableColumn<Competition, String> nameColumn;
     
@@ -88,6 +98,17 @@ public class BackofficeCompetitionsController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // Initialize competition service
+        if(Session.getCurrentUser()!=null){
+            this.navUsernameLabel.setText(Session.getCurrentUser().getNom());
+            this.FirstLetter.setText(Session.getCurrentUser().getNom().toUpperCase().substring(0, 1));
+            Random random = new Random();
+            Color randomColor = Color.rgb(
+                    random.nextInt(256),
+                    random.nextInt(256),
+                    random.nextInt(256)
+            );
+            circleProfile.setFill(randomColor);
+        }
         try {
             Connection connection = DatabaseConnection.getConnection();
             competitionService = new CompetitionService(connection);
@@ -149,6 +170,7 @@ public class BackofficeCompetitionsController implements Initializable {
         // Apply table styling
         applyTableStyling();
     }
+
     
     private void applyTableStyling() {
         // Set row height
@@ -430,4 +452,20 @@ public class BackofficeCompetitionsController implements Initializable {
         alert.setContentText(content);
         alert.showAndWait();
     }
-} 
+    public void Logout(ActionEvent actionEvent) {
+        Session.clear();
+        Navigator.redirect(actionEvent,"/fxml/user/login.fxml");
+    }
+
+    public void Profile(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/fxml/user/ProfileBack.fxml");
+    }
+    public void usersButton(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/fxml/user/usersBack.fxml");
+    }
+
+    public void dash(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/fxml/Back.fxml");
+    }
+}
+

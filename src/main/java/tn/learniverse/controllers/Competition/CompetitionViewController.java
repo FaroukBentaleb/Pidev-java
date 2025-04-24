@@ -40,6 +40,7 @@ import  tn.learniverse.tools.DatabaseConnection;
 import tn.learniverse.services.CompetitionService;
 import tn.learniverse.entities.Competition;
 import tn.learniverse.entities.Challenge;
+import tn.learniverse.tools.Navigator;
 import tn.learniverse.tools.Session;
 
 public class CompetitionViewController implements Initializable {
@@ -583,4 +584,14 @@ public class CompetitionViewController implements Initializable {
             alert.showAndWait();
         }
     }
-} 
+
+    public void Profile(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/fxml/user/Profile.fxml");
+    }
+
+    public void Logout(ActionEvent actionEvent) {
+        Session.clear();
+        Navigator.showAlert(Alert.AlertType.INFORMATION,"See you soon ","You are going to logout");
+        Navigator.redirect(actionEvent,"/fxml/user/Login.fxml");
+    }
+}

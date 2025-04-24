@@ -75,7 +75,7 @@
             <text>Courses</text>
         </Button>
 
-        <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+        <Button alignment="BASELINE_LEFT" onAction="#Comp" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
             <graphic>
                 <Label style="-fx-text-fill: white;" text="📝" />
             </graphic>

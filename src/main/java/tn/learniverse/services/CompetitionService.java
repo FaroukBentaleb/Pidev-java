@@ -2,6 +2,7 @@ package tn.learniverse.services;
 
 import  tn.learniverse.entities.Challenge;
 import  tn.learniverse.entities.Competition;
+import tn.learniverse.tools.Session;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -111,6 +112,7 @@ public class CompetitionService {
 
             // Check if web_image_url column exists and create it if not
             createWebImageUrlColumnIfNotExists();
+            System.out.println(" user"+Session.getCurrentUser().getId());
 
             // 1. Insert the Competition
             String competitionSql = "INSERT INTO competition (nom, description, categorie, etat, date_comp, duration, current_participant, date_fin, image_url, web_image_url, is_freesed, id_instructor_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -126,7 +128,7 @@ public class CompetitionService {
             competitionStatement.setString(9, competition.getImageUrl());
             competitionStatement.setString(10, competition.getWebImageUrl());
             competitionStatement.setBoolean(11, competition.isFreesed());
-            competitionStatement.setInt(12, 4);
+            competitionStatement.setInt(12, Session.getCurrentUser().getId());
 
             int affectedRows = competitionStatement.executeUpdate();
             if (affectedRows == 0) {

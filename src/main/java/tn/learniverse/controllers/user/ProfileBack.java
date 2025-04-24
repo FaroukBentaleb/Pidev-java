@@ -222,4 +222,8 @@ public class ProfileBack implements Initializable {
             }
         });
     }
+
+    public void Comp(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/fxml/backoffice_competitions.fxml");
+    }
 }

@@ -34,6 +34,7 @@ import tn.learniverse.services.CompetitionService;
 import tn.learniverse.tools.DatabaseConnection;
 import tn.learniverse.entities.Competition;
 import tn.learniverse.entities.Challenge;
+import tn.learniverse.tools.Navigator;
 import tn.learniverse.tools.Session;
 import org.kordamp.ikonli.javafx.FontIcon;
 import io.github.palexdev.materialfx.controls.MFXIconWrapper;
@@ -103,7 +104,15 @@ public class CompetitionsListController implements Initializable {
             e.printStackTrace();
         }
     }
-    
+    public void Logout(ActionEvent actionEvent) {
+        Session.clear();
+        Navigator.showAlert(Alert.AlertType.INFORMATION,"See you soon ","You are going to logout");
+        Navigator.redirect(actionEvent,"/fxml/user/Login.fxml");
+    }
+    public void Profile(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/fxml/user/Profile.fxml");
+    }
+
     void loadCompetitions() {
         try {
             // Fetch all competitions from the database

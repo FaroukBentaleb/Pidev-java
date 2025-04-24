@@ -19,7 +19,7 @@
         <VBox alignment="TOP_CENTER" maxHeight="887.0" prefHeight="674.0" prefWidth="220.0" spacing="15" style="-fx-background-color: linear-gradient(to bottom, #1976D2, #64B5F6); -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 0);">
             <padding><Insets bottom="15.0" left="15.0" right="15.0" top="20.0" /></padding>
             <Label style="-fx-text-fill: white; -fx-font-size: 26px; -fx-font-weight: bold;" text="Learniverse" />
-            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: rgba(255,255,255,0.2); -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
                 <graphic><Label style="-fx-text-fill: white;" text="📊" /></graphic>
                 <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
                 <text>Dashboard</text>
@@ -28,6 +28,15 @@
                 <graphic><Label style="-fx-text-fill: white;" text="📚" /></graphic>
                 <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
                 <text>My Courses</text>
+            </Button>
+            <Button alignment="BASELINE_LEFT"  onAction="#Comp" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic>
+                    <Label style="-fx-text-fill: white;" text="🏆" />
+                </graphic>
+                <padding>
+                    <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
+                </padding>
+                <text>Competitions</text>
             </Button>
             <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
                 <graphic><Label style="-fx-text-fill: white;" text="🔍" /></graphic>

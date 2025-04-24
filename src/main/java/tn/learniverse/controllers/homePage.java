@@ -65,4 +65,7 @@ public class homePage implements Initializable {
     public void Profile(ActionEvent actionEvent) {
         Navigator.redirect(actionEvent,"/fxml/user/Profile.fxml");
     }
+    public void Comp(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/fxml/competitions_list.fxml");
+    }
 }
