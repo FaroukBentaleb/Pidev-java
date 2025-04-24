@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import io.github.palexdev.materialfx.controls.MFXIconWrapper?>
+<?import io.github.palexdev.mfxresources.fonts.MFXFontIcon?>
+
+<AnchorPane prefHeight="800.0" prefWidth="800.0" style="-fx-background-color: #f1f5f9;" stylesheets="@../css/styles.css, @../css/MFXColors.css, @../css/MFXButton.css, @../css/competition-steps.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.Competition.CompetitionStep2Controller">
+    <children>
+        <!-- Enhanced Header with Border Radius -->
+        <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-background-color: linear-gradient(to right, #4f46e5, #6366f1); -fx-padding: 20; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 2); -fx-background-radius: 0 0 20 20;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <MFXIconWrapper fx:id="puzzleIcon" />
+                <VBox spacing="2">
+                    <Label styleClass="header-title" text="Add Challenges" />
+                    <Label styleClass="header-subtitle" text="Step 2 of 2" />
+                </VBox>
+            </children>
+        </HBox>
+
+        <!-- Scrollable Content Area -->
+        <VBox spacing="20" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="100.0">
+        <!-- Add Challenge Button Header -->
+            <HBox alignment="CENTER_RIGHT" style="-fx-background-color: white; -fx-background-radius: 8; -fx-padding: 15; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 4, 0, 0, 1);">
+                <MFXButton onAction="#handleAddChallenge" styleClass="button-primary" prefHeight="40" text="Add Challenge" style="-fx-font-size: 14px; -fx-background-color: linear-gradient(to right, #4f46e5, #6366f1); -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 0 20;">
+                    <graphic>
+                        <MFXIconWrapper fx:id="plusIcon" />
+                    </graphic>
+                </MFXButton>
+            </HBox>
+            
+            <!-- Challenges Container -->
+            <MFXScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS">
+                <content>
+                    <VBox fx:id="challengesContainer" spacing="20" style="-fx-background-color: white; -fx-background-radius: 16; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 3); -fx-padding: 25; -fx-min-height: 300;">
+                        <VBox.margin>
+                            <Insets bottom="20.0" left="0.0" right="0.0" top="0.0" />
+                        </VBox.margin>
+                        <!-- Challenge cards will be added here dynamically -->
+                    </VBox>
+                </content>
+            </MFXScrollPane>
+        </VBox>
+
+        <!-- Enhanced Action Buttons with More Spacing -->
+        <HBox alignment="CENTER_RIGHT" spacing="15.0" style="-fx-background-color: linear-gradient(to right, #4f46e5, #6366f1); -fx-padding: 15 20; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 2, 0); -fx-background-radius: 20 20 0 0;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <children>
+                <MFXButton onAction="#handleBack" styleClass="button-outline" text="Back" style="-fx-border-color: white; -fx-text-fill: white; -fx-background-color: transparent;">
+                    <graphic>
+                        <MFXIconWrapper fx:id="backIcon" />
+                    </graphic>
+                </MFXButton>
+                <MFXButton onAction="#handleCreateCompetition" text="Create Competition" style="-fx-background-color: white; -fx-text-fill: #4f46e5; -fx-font-weight: bold;">
+                    <graphic>
+                        <MFXIconWrapper fx:id="checkIcon" />
+                    </graphic>
+                </MFXButton>
+            </children>
+        </HBox>
+    </children>
+</AnchorPane> 

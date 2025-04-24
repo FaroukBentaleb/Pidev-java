@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.geometry.Insets?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.control.Button?>
+
+<BorderPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #f0f4f8;" stylesheets="@../css/styles.css, @../css/MFXColors.css, @../css/MFXButton.css, @../css/competition-view.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.Competition.CompetitionViewController">
+    <!-- LEFT NAV BAR - Modern with gradient -->
+    <left>
+        <VBox alignment="TOP_CENTER" prefHeight="720.0" prefWidth="220.0" spacing="15" style="-fx-background-color: linear-gradient(to bottom, #1976D2, #64B5F6); -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 0);">
+            <padding>
+                <Insets bottom="15.0" left="15.0" right="15.0" top="20.0" />
+            </padding>
+
+            <!-- App Name/Logo -->
+            <Label style="-fx-text-fill: white; -fx-font-size: 26px; -fx-font-weight: bold;" text="Learniverse" />
+
+            <!-- Navigation Buttons -->
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic>
+                    <Label style="-fx-text-fill: white;" text="📊" />
+                </graphic>
+                <padding>
+                    <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
+                </padding>
+                <text>Dashboard</text>
+            </Button>
+
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: rgba(255,255,255,0.2); -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic>
+                    <Label style="-fx-text-fill: white;" text="🏆" />
+                </graphic>
+                <padding>
+                    <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
+                </padding>
+                <text>Competitions</text>
+            </Button>
+
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic>
+                    <Label style="-fx-text-fill: white;" text="📚" />
+                </graphic>
+                <padding>
+                    <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
+                </padding>
+                <text>My Courses</text>
+            </Button>
+
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic>
+                    <Label style="-fx-text-fill: white;" text="👥" />
+                </graphic>
+                <padding>
+                    <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
+                </padding>
+                <text>Community</text>
+            </Button>
+
+            <!-- Profile at bottom -->
+            <VBox VBox.vgrow="ALWAYS" />
+            <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="10" style="-fx-background-color: rgba(255,255,255,0.1); -fx-background-radius: 8;">
+                <padding>
+                    <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
+                </padding>
+                <StackPane>
+                    <Circle fill="white" radius="18" />
+                    <Label style="-fx-text-fill: #1976D2; -fx-font-size: 16px; -fx-font-weight: bold;" text="U" />
+                </StackPane>
+                <VBox spacing="2">
+                    <Label style="-fx-text-fill: white; -fx-font-weight: bold;" text="User" />
+                    <Label style="-fx-text-fill: rgba(255,255,255,0.7); -fx-font-size: 11px;" text="Student" />
+                </VBox>
+            </HBox>
+        </VBox>
+    </left>
+
+    <center>
+        <VBox spacing="20" style="-fx-background-color: #f5f5f9; -fx-padding: 25;" prefHeight="720">
+            <!-- TOP BAR -->
+            <HBox alignment="CENTER" prefHeight="70.0" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2);">
+                <!-- Back Button -->
+                <MFXButton onAction="#handleBackToList" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-background-radius: 20; -fx-padding: 10 20; -fx-font-weight: bold;" text="Back to List">
+                    <graphic>
+                        <FontIcon iconColor="WHITE" iconLiteral="mdi2a-arrow-left" iconSize="18" />
+                    </graphic>
+                </MFXButton>
+
+                <HBox HBox.hgrow="ALWAYS" />
+
+                <!-- Competition Name -->
+                <Label fx:id="nameLabel" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #334155;" />
+            </HBox>
+
+            <!-- Main Content -->
+            <MFXScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+                <BorderPane style="-fx-background-color: transparent;">
+                    <padding>
+                        <Insets left="30" right="30" />
+                    </padding>
+                    
+                    <!-- Left Side: Competition Info -->
+                    <left>
+                        <VBox spacing="20" style="-fx-background-color: white; -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 3); -fx-padding: 25;" prefWidth="300">
+                            <!-- Competition Image -->
+                            <StackPane style="-fx-background-color: #f8fafc; -fx-background-radius: 12; -fx-padding: 10;">
+                                <ImageView fx:id="competitionImage" fitWidth="300" fitHeight="180" preserveRatio="true" />
+                            </StackPane>
+                            
+                            <!-- Status Badge -->
+                            <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
+                                <Label fx:id="statusLabel" style="-fx-padding: 8 20; -fx-background-radius: 20; -fx-font-weight: bold; -fx-font-size: 14px;" />
+                            </HBox>
+                            
+                            <!-- Basic Info -->
+                            <VBox spacing="12" style="-fx-background-color: #f8fafc; -fx-background-radius: 12; -fx-padding: 15;">
+                                <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2196F3;" text="Competition Details" />
+                                
+                                <HBox spacing="10" alignment="CENTER_LEFT">
+                                    <FontIcon iconColor="#2196F3" iconLiteral="mdi2c-certificate" iconSize="18" />
+                                    <Label fx:id="categoryLabel" style="-fx-font-size: 14px;" />
+                                </HBox>
+                                
+                                <HBox spacing="10" alignment="CENTER_LEFT">
+                                    <FontIcon iconColor="#2196F3" iconLiteral="mdi2t-timer" iconSize="18" />
+                                    <Label fx:id="durationLabel" style="-fx-font-size: 14px;" />
+                                </HBox>
+                            </VBox>
+                            
+                            <!-- Date Information -->
+                            <VBox spacing="12" style="-fx-background-color: #f8fafc; -fx-background-radius: 12; -fx-padding: 15;">
+                                <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2196F3;" text="Schedule" />
+                                
+                                <!-- Start Date -->
+                                <VBox spacing="5" style="-fx-background-color: white; -fx-background-radius: 8; -fx-padding: 15;">
+                                    <HBox spacing="10" alignment="CENTER_LEFT">
+                                        <FontIcon iconColor="#4CAF50" iconLiteral="mdi2c-calendar-start" iconSize="20" />
+                                        <Label style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;" text="Start Date" />
+                                    </HBox>
+                                    <Label fx:id="startDateLabel" style="-fx-font-size: 14px; -fx-padding: 5 0 0 30;" />
+                                </VBox>
+                                
+                                <!-- End Date -->
+                                <VBox spacing="5" style="-fx-background-color: white; -fx-background-radius: 8; -fx-padding: 15;">
+                                    <HBox spacing="10" alignment="CENTER_LEFT">
+                                        <FontIcon iconColor="#F44336" iconLiteral="mdi2c-calendar-end" iconSize="20" />
+                                        <Label style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #F44336;" text="End Date" />
+                                    </HBox>
+                                    <Label fx:id="endDateLabel" style="-fx-font-size: 14px; -fx-padding: 5 0 0 30;" />
+                                </VBox>
+                            </VBox>
+                        </VBox>
+                    </left>
+                    
+                    <!-- Center: Description and Challenges -->
+                    <center>
+                        <VBox spacing="20" BorderPane.alignment="CENTER" HBox.hgrow="ALWAYS">
+                            <padding>
+                                <Insets left="10" right="10" />
+                            </padding>
+                            
+                            <!-- Description Section -->
+                            <VBox style="-fx-background-color: white; -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 3); -fx-padding: 25;">
+                                <HBox alignment="CENTER_LEFT" spacing="10">
+                                    <FontIcon iconColor="#2196F3" iconLiteral="mdi2f-file-document-outline" iconSize="20" />
+                                    <Label style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #334155;" text="Description" />
+                                </HBox>
+                                
+                                <VBox fx:id="descriptionContainer" style="-fx-background-color: #f8fafc; -fx-background-radius: 12; -fx-padding: 15; -fx-margin: 10 0 0 0;">
+                                    <Label fx:id="descriptionLabel" style="-fx-font-size: 14px; -fx-text-fill: #334155; -fx-wrap-text: true;" />
+                                </VBox>
+                            </VBox>
+                            
+                            <!-- Challenges Section -->
+                            <VBox style="-fx-background-color: white; -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 3); -fx-padding: 25;">
+                                <HBox alignment="CENTER_LEFT" spacing="10">
+                                    <FontIcon iconColor="#2196F3" iconLiteral="mdi2l-lightbulb" iconSize="20" />
+                                    <Label style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #334155;" text="Challenges" />
+                                </HBox>
+                                
+                                <VBox fx:id="challengesContainer" spacing="25" style="-fx-padding: 25 15 25 15; -fx-background-color: transparent;" />
+                            </VBox>
+                        </VBox>
+                    </center>
+                </BorderPane>
+            </MFXScrollPane>
+        </VBox>
+    </center>
+</BorderPane> 

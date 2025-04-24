@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import io.github.palexdev.materialfx.controls.MFXIconWrapper?>
+<?import io.github.palexdev.mfxresources.fonts.MFXFontIcon?>
+
+<BorderPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #f0f4f8;" stylesheets="@../css/styles.css, @../css/MFXColors.css, @../css/MFXButton.css, @../css/MFXTextField.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.Competition.CompetitionsListController">
+    <!-- LEFT NAV BAR - Modern with gradient -->
+    <left>
+        <VBox alignment="TOP_CENTER" prefHeight="720.0" prefWidth="220.0" spacing="15" style="-fx-background-color: linear-gradient(to bottom, #1976D2, #64B5F6); -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 0);">
+            <padding>
+                <Insets bottom="15.0" left="15.0" right="15.0" top="20.0" />
+            </padding>
+
+            <!-- App Name/Logo -->
+            <Label style="-fx-text-fill: white; -fx-font-size: 26px; -fx-font-weight: bold;" text="Learniverse" />
+
+            <!-- Navigation Buttons -->
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic>
+                    <Label style="-fx-text-fill: white;" text="📊" />
+                </graphic>
+                <padding>
+                    <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
+                </padding>
+                <text>Dashboard</text>
+            </Button>
+
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: rgba(255,255,255,0.2); -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic>
+                    <Label style="-fx-text-fill: white;" text="🏆" />
+                </graphic>
+                <padding>
+                    <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
+                </padding>
+                <text>Competitions</text>
+            </Button>
+
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic>
+                    <Label style="-fx-text-fill: white;" text="📚" />
+                </graphic>
+                <padding>
+                    <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
+                </padding>
+                <text>My Courses</text>
+            </Button>
+
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic>
+                    <Label style="-fx-text-fill: white;" text="👥" />
+                </graphic>
+                <padding>
+                    <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
+                </padding>
+                <text>Community</text>
+            </Button>
+
+            <!-- Profile at bottom -->
+            <VBox VBox.vgrow="ALWAYS" />
+            <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="10" style="-fx-background-color: rgba(255,255,255,0.1); -fx-background-radius: 8;">
+                <padding>
+                    <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
+                </padding>
+                <StackPane>
+                    <Circle fill="white" radius="18" />
+                    <Label style="-fx-text-fill: #1976D2; -fx-font-size: 16px; -fx-font-weight: bold;" text="U" />
+                </StackPane>
+                <VBox spacing="2">
+                    <Label style="-fx-text-fill: white; -fx-font-weight: bold;" text="User" />
+                    <Label style="-fx-text-fill: rgba(255,255,255,0.7); -fx-font-size: 11px;" text="Student" />
+                </VBox>
+            </HBox>
+        </VBox>
+    </left>
+
+    <center>
+        <MFXScrollPane fitToWidth="true" style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS">
+            <content>
+                <VBox spacing="20" style="-fx-background-color: #f5f5f9; -fx-padding: 25;" prefHeight="720">
+                    <!-- TOP BAR -->
+                    <HBox alignment="CENTER" prefHeight="70.0" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2);">
+                        <!-- Welcome message -->
+                        <Label style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #334155;" text="Competitions" />
+
+                        <HBox HBox.hgrow="ALWAYS" />
+
+                        <!-- Search Area -->
+                        <HBox alignment="CENTER" prefHeight="45.0" prefWidth="350.0" spacing="10" style="-fx-background-color: #F0F2F5; -fx-background-radius: 25;">
+                            <padding>
+                                <Insets left="15.0" right="15.0" />
+                            </padding>
+                            <Label style="-fx-text-fill: #666;" text="🔍" />
+                            <TextField fx:id="searchField" prefHeight="40.0" promptText="Search competitions..." style="-fx-background-color: transparent; -fx-font-family: 'Poppins';" HBox.hgrow="ALWAYS" />
+                        </HBox>
+
+                        <!-- Create Button -->
+                        <MFXButton fx:id="createBtn" onAction="#handleCreateCompetition" styleClass="mfx-button, primary-button" text="Create Competition" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-background-radius: 20; -fx-padding: 10 20; -fx-font-weight: bold;">
+                            <graphic>
+                                <Label style="-fx-text-fill: white;" text="➕" />
+                            </graphic>
+                            <HBox.margin>
+                                <Insets left="15.0" />
+                            </HBox.margin>
+                        </MFXButton>
+                    </HBox>
+
+                    <!-- Competition container -->
+                    <VBox fx:id="competitionsContainer" spacing="15" style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS">
+                        <!-- Competition cards will be added here dynamically as horizontal layouts -->
+                    </VBox>
+
+                    <!-- Pagination Controls -->
+                    <HBox alignment="CENTER" spacing="10.0">
+                        <Pagination fx:id="pagination" maxPageIndicatorCount="7" pageCount="1" prefHeight="50.0" styleClass="mfx-pagination" />
+                    </HBox>
+
+                    <!-- Status Label -->
+                    <HBox alignment="CENTER_LEFT">
+                        <MFXIconWrapper fx:id="infoIcon" />
+                        <Label fx:id="statusLabel" text="Showing competitions 1-6 of 20" styleClass="status-info">
+                            <HBox.margin>
+                                <Insets left="10.0" />
+                            </HBox.margin>
+                        </Label>
+                    </HBox>
+                </VBox>
+            </content>
+        </MFXScrollPane>
+    </center>
+</BorderPane>
