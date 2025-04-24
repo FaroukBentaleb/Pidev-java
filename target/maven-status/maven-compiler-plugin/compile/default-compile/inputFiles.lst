@@ -1,19 +1,50 @@
-C:\Users\NOUR EL HOUDA\Pidev\src\main\java\tn\learniverse\controllers\AddCourseController.java
-C:\Users\NOUR EL HOUDA\Pidev\src\main\java\tn\learniverse\controllers\AddLessonController.java
-C:\Users\NOUR EL HOUDA\Pidev\src\main\java\tn\learniverse\controllers\BackCoursesController.java
-C:\Users\NOUR EL HOUDA\Pidev\src\main\java\tn\learniverse\controllers\CourseDetailsViewController.java
-C:\Users\NOUR EL HOUDA\Pidev\src\main\java\tn\learniverse\controllers\CoursesViewController.java
-C:\Users\NOUR EL HOUDA\Pidev\src\main\java\tn\learniverse\controllers\EditLessonController.java
-C:\Users\NOUR EL HOUDA\Pidev\src\main\java\tn\learniverse\controllers\UpdateCourseController.java
-C:\Users\NOUR EL HOUDA\Pidev\src\main\java\tn\learniverse\entities\Course.java
-C:\Users\NOUR EL HOUDA\Pidev\src\main\java\tn\learniverse\entities\Lesson.java
-C:\Users\NOUR EL HOUDA\Pidev\src\main\java\tn\learniverse\entities\user.java
-C:\Users\NOUR EL HOUDA\Pidev\src\main\java\tn\learniverse\services\CourseService.java
-C:\Users\NOUR EL HOUDA\Pidev\src\main\java\tn\learniverse\services\ICourse.java
-C:\Users\NOUR EL HOUDA\Pidev\src\main\java\tn\learniverse\services\ILesson.java
-C:\Users\NOUR EL HOUDA\Pidev\src\main\java\tn\learniverse\services\IUser.java
-C:\Users\NOUR EL HOUDA\Pidev\src\main\java\tn\learniverse\services\LessonService.java
-C:\Users\NOUR EL HOUDA\Pidev\src\main\java\tn\learniverse\services\UserService.java
-C:\Users\NOUR EL HOUDA\Pidev\src\main\java\tn\learniverse\tests\Main.java
-C:\Users\NOUR EL HOUDA\Pidev\src\main\java\tn\learniverse\tests\MainFX.java
-C:\Users\NOUR EL HOUDA\Pidev\src\main\java\tn\learniverse\tools\DBConnection.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\controllers\AddCourseController.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\controllers\AddLessonController.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\controllers\back.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\controllers\BackController.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\controllers\BackCoursesController.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\controllers\CourseDetailsViewController.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\controllers\CoursesViewController.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\controllers\CreateAccount.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\controllers\EditLessonController.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\controllers\Home.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\controllers\homePage.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\controllers\Login.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\controllers\Profile.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\controllers\Reclamation\AjouterReclamation.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\controllers\Reclamation\DisplayReclamationBack.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\controllers\Reclamation\DisplayReclamations.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\controllers\Reclamation\ReclamationsArchivéesFront.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\controllers\Reclamation\Reponses.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\controllers\Reclamation\ReponsesBack.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\controllers\UpdateCourseController.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\controllers\user\CreateAccount.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\controllers\user\Login.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\controllers\user\LogsList.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\controllers\user\Profile.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\controllers\user\ProfileBack.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\controllers\user\Settings.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\controllers\user\usersBack.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\entities\Course.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\entities\Lesson.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\entities\Logs.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\entities\Reclamation.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\entities\Reponse.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\entities\User.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\services\CourseService.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\services\ICourse.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\services\ILesson.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\services\ILogs.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\services\IReclamation.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\services\IReponse.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\services\IUser.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\services\LessonService.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\services\LogsService.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\services\ReclamationService.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\services\ReponseService.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\services\UserService.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\tests\Main.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\tests\MainFX.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\tools\DBConnection.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\tools\Navigator.java
+D:\merge\Pidev-java\src\main\java\tn\learniverse\tools\Session.java
