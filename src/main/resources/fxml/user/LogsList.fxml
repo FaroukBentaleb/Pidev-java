@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.RadioButton?>
+<BorderPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #f0f4f8;" stylesheets="@../../css/profile-style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.user.LogsList">
+    <left>
+        <VBox alignment="TOP_CENTER" maxHeight="887.0" prefHeight="674.0" prefWidth="220.0" spacing="15" style="-fx-background-color: linear-gradient(to bottom, #1976D2, #64B5F6); -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 0);">
+            <padding><Insets bottom="15.0" left="15.0" right="15.0" top="20.0" /></padding>
+            <Label style="-fx-text-fill: white; -fx-font-size: 26px; -fx-font-weight: bold;" text="Learniverse" />
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic><Label style="-fx-text-fill: white;" text="📊" /></graphic>
+                <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
+                <text>Dashboard</text>
+            </Button>
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic><Label style="-fx-text-fill: white;" text="📚" /></graphic>
+                <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
+                <text>My Courses</text>
+            </Button>
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic><Label style="-fx-text-fill: white;" text="🔍" /></graphic>
+                <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
+                <text>Discover</text>
+            </Button>
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic><Label style="-fx-text-fill: white;" text="👥" /></graphic>
+                <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
+                <text>Community</text>
+            </Button>
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic><Label style="-fx-text-fill: white;" text="👤" /></graphic>
+                <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
+                <text>Profile</text>
+            </Button>
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: rgba(255,255,255,0.2); -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic><Label style="-fx-text-fill: white;" text="⚙️" /></graphic>
+                <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
+                <text>Settings</text>
+            </Button>
+            <VBox VBox.vgrow="ALWAYS" />
+            <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="10" style="-fx-background-color: rgba(255,255,255,0.1); -fx-background-radius: 8;">
+                <padding><Insets bottom="8.0" left="10.0" right="10.0" top="8.0" /></padding>
+                <StackPane>
+                    <Circle fill="#ffffff53" radius="26.0" />
+                    <ImageView fx:id="UserPicture" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+                </StackPane>
+                <VBox spacing="2">
+                    <Label fx:id="usernameLabel" style="-fx-text-fill: white; -fx-font-weight: bold;" text="Farouk">
+                        <VBox.margin><Insets top="10.0" /></VBox.margin>
+                    </Label>
+                    <Label fx:id="role" style="-fx-text-fill: rgba(255,255,255,0.7); -fx-font-size: 11px;" text="Student" />
+                </VBox>
+                <Button onAction="#Logout" prefHeight="25.0" prefWidth="32.0" style="-fx-background-color: transparent; -fx-cursor: hand;" text="🔓">
+                    <HBox.margin><Insets left="10.0" /></HBox.margin>
+                </Button>
+            </HBox>
+            <BorderPane.margin>
+                <Insets top="-70.0" />
+            </BorderPane.margin>
+        </VBox>
+    </left>
+    <top>
+        <HBox alignment="CENTER" maxWidth="1061.0" prefHeight="70.0" prefWidth="1073.0" style="-fx-background-color: white; -fx-padding: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2);" BorderPane.alignment="TOP_RIGHT">
+            <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Settings" />
+            <HBox HBox.hgrow="ALWAYS" />
+            <HBox alignment="CENTER" maxHeight="-Infinity" prefHeight="40.0" prefWidth="350.0" spacing="10" style="-fx-background-color: #F0F2F5; -fx-background-radius: 20;">
+                <padding><Insets left="15.0" right="15.0" /></padding>
+                <Label style="-fx-text-fill: #666;" text="🔍" />
+                <TextField fx:id="searchField" prefHeight="40.0" promptText="Search for courses..." style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS" />
+            </HBox>
+            <HBox alignment="CENTER" spacing="15" style="-fx-padding: 0 0 0 20;">
+                <Label style="-fx-text-fill: #555; -fx-font-size: 18px;" text="🔔" />
+                <HBox fx:id="authButtons" alignment="CENTER" prefHeight="40.0" spacing="10" />
+            </HBox>
+            <BorderPane.margin>
+                <Insets />
+            </BorderPane.margin>
+        </HBox>
+    </top>
+    <center>
+        <HBox prefHeight="650.0" prefWidth="1060.0">
+            <VBox prefWidth="230.0" spacing="2" style="-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 0, 0);">
+                <padding><Insets bottom="10.0" left="10.0" right="10.0" top="15.0" /></padding>
+                <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1976D2;" text="Settings">
+                    <VBox.margin><Insets bottom="15.0" left="10.0" /></VBox.margin>
+                </Label>
+                <Button fx:id="securityBtn" onAction="#showSecuritySettings" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: #1976D2; -fx-text-fill: white; -fx-font-size: 13px; -fx-background-radius: 5; -fx-alignment: BASELINE_LEFT;">
+                    <graphic><Label style="-fx-text-fill: white;" text="🔒" /></graphic>
+                    <padding><Insets bottom="8.0" left="10.0" right="10.0" top="8.0" /></padding>
+                    <text>Security</text>
+                </Button>
+                <Button fx:id="notificationsBtn" onAction="#showNotificationSettings" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-size: 13px; -fx-background-radius: 5; -fx-alignment: BASELINE_LEFT;">
+                    <graphic><Label text="🔔" /></graphic>
+                    <padding><Insets bottom="8.0" left="10.0" right="10.0" top="8.0" /></padding>
+                    <text>Notifications</text>
+                </Button>
+                <Button fx:id="appearanceBtn" onAction="#showAppearanceSettings" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-size: 13px; -fx-background-radius: 5; -fx-alignment: BASELINE_LEFT;">
+                    <graphic><Label text="🎨" /></graphic>
+                    <padding><Insets bottom="8.0" left="10.0" right="10.0" top="8.0" /></padding>
+                    <text>Appearance</text>
+                </Button>
+                <Button fx:id="privacyBtn" onAction="#showPrivacySettings" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-size: 13px; -fx-background-radius: 5; -fx-alignment: BASELINE_LEFT;">
+                    <graphic><Label text="🔐" /></graphic>
+                    <padding><Insets bottom="8.0" left="10.0" right="10.0" top="8.0" /></padding>
+                    <text>Privacy</text>
+                </Button>
+                <Button fx:id="learningBtn" onAction="#showLearningSettings" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-size: 13px; -fx-background-radius: 5; -fx-alignment: BASELINE_LEFT;">
+                    <graphic><Label text="📝" /></graphic>
+                    <padding><Insets bottom="8.0" left="10.0" right="10.0" top="8.0" /></padding>
+                    <text>Learning</text>
+                </Button>
+                <Button fx:id="languageBtn" onAction="#showLanguageSettings" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-size: 13px; -fx-background-radius: 5; -fx-alignment: BASELINE_LEFT;">
+                    <graphic><Label text="🌐" /></graphic>
+                    <padding><Insets bottom="8.0" left="10.0" right="10.0" top="8.0" /></padding>
+                    <text>Language</text>
+                </Button>
+                <Button fx:id="integrationBtn" onAction="#showIntegrationSettings" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-size: 13px; -fx-background-radius: 5; -fx-alignment: BASELINE_LEFT;">
+                    <graphic><Label text="🔄" /></graphic>
+                    <padding><Insets bottom="8.0" left="10.0" right="10.0" top="8.0" /></padding>
+                    <text>Integrations</text>
+                </Button>
+                <Button fx:id="dataBtn" onAction="#showDataSettings" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-size: 13px; -fx-background-radius: 5; -fx-alignment: BASELINE_LEFT;">
+                    <graphic><Label text="💾" /></graphic>
+                    <padding><Insets bottom="8.0" left="10.0" right="10.0" top="8.0" /></padding>
+                    <text>Data and Storage</text>
+                </Button>
+                <Button fx:id="accessibilityBtn" onAction="#showAccessibilitySettings" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-size: 13px; -fx-background-radius: 5; -fx-alignment: BASELINE_LEFT;">
+                    <graphic><Label text="♿" /></graphic>
+                    <padding><Insets bottom="8.0" left="10.0" right="10.0" top="8.0" /></padding>
+                    <text>Accessibility</text>
+                </Button>
+                <Button fx:id="helpBtn" onAction="#showHelpSettings" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-size: 13px; -fx-background-radius: 5; -fx-alignment: BASELINE_LEFT;">
+                    <graphic><Label text="❓" /></graphic>
+                    <padding><Insets bottom="8.0" left="10.0" right="10.0" top="8.0" /></padding>
+                    <text>Help and Support</text>
+                </Button>
+                <VBox VBox.vgrow="ALWAYS" />
+                <Button fx:id="logoutBtn" onAction="#logout" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: rgba(25,118,210,0.1); -fx-text-fill: #1976D2; -fx-font-size: 13px; -fx-background-radius: 5; -fx-alignment: BASELINE_LEFT;">
+                    <graphic><Label style="-fx-text-fill: #1976D2;" text="🚪" /></graphic>
+                    <padding><Insets bottom="8.0" left="10.0" right="10.0" top="8.0" /></padding>
+                    <text>Logout</text>
+                </Button>
+            </VBox>
+            <StackPane HBox.hgrow="ALWAYS">
+                <ScrollPane fx:id="settingsContentPane" fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: transparent; -fx-background: transparent;" vbarPolicy="ALWAYS" HBox.hgrow="ALWAYS">
+                    <content>
+                        <BorderPane fx:id="securitySettingsPane" style="-fx-background-color: transparent;">
+                            <center>
+                                <VBox spacing="20" style="-fx-background-color: transparent;">
+                                    <padding><Insets bottom="30.0" left="40.0" right="40.0" top="30.0" /></padding>
+                                    <!-- Trusted Devices Section -->
+                                    <VBox spacing="20" style="-fx-background-color: transparent;">
+                                        <padding><Insets bottom="30.0" left="40.0" right="40.0" top="30.0" /></padding>
+
+                                        <!-- Section Header -->
+                                        <HBox alignment="CENTER_LEFT" spacing="15">
+                                            <Label style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #1976D2;" text="Device Activity Logs" />
+                                            <Region HBox.hgrow="ALWAYS" />
+                                            <Button fx:id="refreshLogsBtn" onAction="#refreshLogs" style="-fx-background-color: #E3F2FD; -fx-text-fill: #1976D2; -fx-background-radius: 5;" text="Refresh" />
+                                        </HBox>
+
+                                        <!-- Device Logs Cards Container -->
+                                        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+                                            <VBox fx:id="logsContainer" spacing="15">
+                                                <!-- Current Device -->
+                                                <HBox style="-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0, 0, 2);">
+                                                    <VBox spacing="10" HBox.hgrow="ALWAYS">
+                                                        <padding><Insets bottom="20.0" left="20.0" right="20.0" top="20.0" /></padding>
+
+                                                        <!-- Status Bar -->
+                                                        <HBox alignment="CENTER_LEFT">
+                                                            <Label style="-fx-background-color: #E8F5E9; -fx-background-radius: 12; -fx-text-fill: #2E7D32; -fx-font-weight: bold; -fx-padding: 5 10;" text="Current Session" />
+                                                            <Region HBox.hgrow="ALWAYS" />
+                                                            <Label style="-fx-text-fill: #666; -fx-font-size: 12px;" text="Last activity: Now" />
+                                                        </HBox>
+
+                                                        <!-- Device Info -->
+                                                        <HBox alignment="CENTER_LEFT" spacing="15">
+                                                            <StackPane minHeight="50" minWidth="50" style="-fx-background-color: #E3F2FD; -fx-background-radius: 25;">
+                                                                <Label style="-fx-font-size: 24px; -fx-text-fill: #1976D2;" text="💻" />
+                                                            </StackPane>
+
+                                                            <VBox spacing="3">
+                                                                <Label style="-fx-font-weight: bold; -fx-font-size: 16px;" text="MacBook Pro" />
+                                                                <Label style="-fx-text-fill: #666;" text="macOS 14.3 • Chrome Browser" />
+                                                            </VBox>
+                                                        </HBox>
+
+                                                        <!-- Log Details -->
+                                                        <VBox spacing="8" style="-fx-padding: 10 0 0 0;">
+                                                            <HBox>
+                                                                <Label style="-fx-font-weight: bold; -fx-text-fill: #555;" text="Action: " />
+                                                                <Label text="Login authentication successful" />
+                                                            </HBox>
+                                                            <HBox>
+                                                                <Label style="-fx-font-weight: bold; -fx-text-fill: #555;" text="Location: " />
+                                                                <Label text="New York, United States" />
+                                                            </HBox>
+                                                            <HBox>
+                                                                <Label style="-fx-font-weight: bold; -fx-text-fill: #555;" text="IP Address: " />
+                                                                <Label text="192.168.1.100" />
+                                                            </HBox>
+                                                            <HBox>
+                                                                <Label style="-fx-font-weight: bold; -fx-text-fill: #555;" text="Timestamp: " />
+                                                                <Label text="April 17, 2025 - 10:35 AM" />
+                                                            </HBox>
+                                                        </VBox>
+
+                                                        <!-- Actions -->
+                                                        <HBox alignment="CENTER_RIGHT" spacing="10" style="-fx-padding: 10 0 0 0;">
+                                                            <Button style="-fx-background-color: #E3F2FD; -fx-text-fill: #1976D2; -fx-background-radius: 4;" text="View Details" />
+                                                        </HBox>
+                                                    </VBox>
+                                                </HBox>
+
+                                                <!-- Previous Login -->
+                                                <HBox style="-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 6, 0, 0, 2);">
+                                                    <VBox spacing="10" HBox.hgrow="ALWAYS">
+                                                        <padding><Insets bottom="20.0" left="20.0" right="20.0" top="20.0" /></padding>
+
+                                                        <!-- Status Bar -->
+                                                        <HBox alignment="CENTER_LEFT">
+                                                            <Label style="-fx-background-color: #FFF3E0; -fx-background-radius: 12; -fx-text-fill: #E65100; -fx-font-weight: bold; -fx-padding: 5 10;" text="Recent Activity" />
+                                                            <Region HBox.hgrow="ALWAYS" />
+                                                            <Label style="-fx-text-fill: #666; -fx-font-size: 12px;" text="12 hours ago" />
+                                                        </HBox>
+
+                                                        <!-- Device Info -->
+                                                        <HBox alignment="CENTER_LEFT" spacing="15">
+                                                            <StackPane minHeight="50" minWidth="50" style="-fx-background-color: #FFF3E0; -fx-background-radius: 25;">
+                                                                <Label style="-fx-font-size: 24px; -fx-text-fill: #E65100;" text="📱" />
+                                                            </StackPane>
+
+                                                            <VBox spacing="3">
+                                                                <Label style="-fx-font-weight: bold; -fx-font-size: 16px;" text="iPhone 15 Pro" />
+                                                                <Label style="-fx-text-fill: #666;" text="iOS 18.2 • Safari Browser" />
+                                                            </VBox>
+                                                        </HBox>
+
+                                                        <!-- Log Details -->
+                                                        <VBox spacing="8" style="-fx-padding: 10 0 0 0;">
+                                                            <HBox>
+                                                                <Label style="-fx-font-weight: bold; -fx-text-fill: #555;" text="Action: " />
+                                                                <Label text="Downloaded course materials" />
+                                                            </HBox>
+                                                            <HBox>
+                                                                <Label style="-fx-font-weight: bold; -fx-text-fill: #555;" text="Location: " />
+                                                                <Label text="New York, United States" />
+                                                            </HBox>
+                                                            <HBox>
+                                                                <Label style="-fx-font-weight: bold; -fx-text-fill: #555;" text="IP Address: " />
+                                                                <Label text="192.168.5.12" />
+                                                            </HBox>
+                                                            <HBox>
+                                                                <Label style="-fx-font-weight: bold; -fx-text-fill: #555;" text="Timestamp: " />
+                                                                <Label text="April 16, 2025 - 8:45 PM" />
+                                                            </HBox>
+                                                        </VBox>
+
+                                                        <!-- Actions -->
+                                                        <HBox alignment="CENTER_RIGHT" spacing="10" style="-fx-padding: 10 0 0 0;">
+                                                            <Button style="-fx-background-color: #FFF3E0; -fx-text-fill: #E65100; -fx-background-radius: 4;" text="View Details" />
+                                                            <Button onAction="#removeTrustedDevice" style="-fx-background-color: transparent; -fx-text-fill: #F44336;" text="Remove Device" />
+                                                        </HBox>
+                                                    </VBox>
+                                                </HBox>
+
+                                                <!-- Older Login -->
+                                                <HBox style="-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 6, 0, 0, 2);">
+                                                    <VBox spacing="10" HBox.hgrow="ALWAYS">
+                                                        <padding><Insets bottom="20.0" left="20.0" right="20.0" top="20.0" /></padding>
+
+                                                        <!-- Status Bar -->
+                                                        <HBox alignment="CENTER_LEFT">
+                                                            <Label style="-fx-background-color: #E0F7FA; -fx-background-radius: 12; -fx-text-fill: #006064; -fx-font-weight: bold; -fx-padding: 5 10;" text="Past Activity" />
+                                                            <Region HBox.hgrow="ALWAYS" />
+                                                            <Label style="-fx-text-fill: #666; -fx-font-size: 12px;" text="2 days ago" />
+                                                        </HBox>
+
+                                                        <!-- Device Info -->
+                                                        <HBox alignment="CENTER_LEFT" spacing="15">
+                                                            <StackPane minHeight="50" minWidth="50" style="-fx-background-color: #E0F7FA; -fx-background-radius: 25;">
+                                                                <Label style="-fx-font-size: 24px; -fx-text-fill: #006064;" text="🖥️" />
+                                                            </StackPane>
+
+                                                            <VBox spacing="3">
+                                                                <Label style="-fx-font-weight: bold; -fx-font-size: 16px;" text="Windows PC" />
+                                                                <Label style="-fx-text-fill: #666;" text="Windows 12 • Edge Browser" />
+                                                            </VBox>
+                                                        </HBox>
+
+                                                        <!-- Log Details -->
+                                                        <VBox spacing="8" style="-fx-padding: 10 0 0 0;">
+                                                            <HBox>
+                                                                <Label style="-fx-font-weight: bold; -fx-text-fill: #555;" text="Action: " />
+                                                                <Label text="Completed quiz in Java Programming" />
+                                                            </HBox>
+                                                            <HBox>
+                                                                <Label style="-fx-font-weight: bold; -fx-text-fill: #555;" text="Location: " />
+                                                                <Label text="Boston, United States" />
+                                                            </HBox>
+                                                            <HBox>
+                                                                <Label style="-fx-font-weight: bold; -fx-text-fill: #555;" text="IP Address: " />
+                                                                <Label text="172.16.254.1" />
+                                                            </HBox>
+                                                            <HBox>
+                                                                <Label style="-fx-font-weight: bold; -fx-text-fill: #555;" text="Timestamp: " />
+                                                                <Label text="April 15, 2025 - 3:22 PM" />
+                                                            </HBox>
+                                                        </VBox>
+
+                                                        <!-- Actions -->
+                                                        <HBox alignment="CENTER_RIGHT" spacing="10" style="-fx-padding: 10 0 0 0;">
+                                                            <Button style="-fx-background-color: #E0F7FA; -fx-text-fill: #006064; -fx-background-radius: 4;" text="View Details" />
+                                                            <Button onAction="#removeTrustedDevice" style="-fx-background-color: transparent; -fx-text-fill: #F44336;" text="Remove Device" />
+                                                        </HBox>
+                                                    </VBox>
+                                                </HBox>
+
+                                                <!-- Show More Button -->
+                                                <Button fx:id="showMoreLogsBtn" onAction="#loadMoreLogs" maxWidth="Infinity" style="-fx-background-color: #F5F5F5; -fx-text-fill: #1976D2; -fx-background-radius: 8;" text="Show More Activity">
+                                                    <VBox.margin><Insets top="5.0" /></VBox.margin>
+                                                </Button>
+                                            </VBox>
+                                        </ScrollPane>
+                                    </VBox>
+                                </VBox>
+                            </center>
+                        </BorderPane>
+                    </content>
+                </ScrollPane>
+            </StackPane>
+        </HBox>
+    </center>
+</BorderPane>
