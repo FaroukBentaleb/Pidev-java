@@ -26,6 +26,8 @@ import java.util.Date;
 import java.util.List;
 import javafx.geometry.Pos;
 import tn.learniverse.services.ReponseService;
+import tn.learniverse.services.EmailService;
+import javax.mail.MessagingException;
 
 public class DisplayReclamationBack {
     private User user;
@@ -311,23 +313,44 @@ public class DisplayReclamationBack {
                     reponseService.ajouter(reponse, admin, reclamation);
 
                     reclamationService.updateStatut(reclamation.getId(), "En Cours");
+
+                    String emailContent = String.format("""
+                        <h3>Détails de la réclamation :</h3>
+                        <p><strong>Titre :</strong> %s</p>
+                        <p><strong>Contenu :</strong> %s</p>
+                        <h3>Réponse à la Reclamation :</h3>
+                        <p>%s</p>
+                        """, 
+                        reclamation.getTitre(),
+                        reclamation.getContenu(),
+                        reponseTextArea.getText()
+                    );
+
+                    try {
+                        EmailService.sendEmail(
+                            reclamation.getUser().getEmail(),
+                            "Réponse à votre réclamation - " + reclamation.getTitre(),
+                            emailContent
+                        );
+                    } catch (MessagingException e) {
+                        System.err.println("Erreur lors de l'envoi de l'email : " + e.getMessage());
+                    }
+
                     stage.close();
+                    Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+                    successAlert.setTitle("Succès");
+                    successAlert.setHeaderText(null);
+                    successAlert.setContentText("Réponse ajoutée avec succès !");
+                    successAlert.showAndWait();
+                    try {
+                        int currentPage = pagination.getCurrentPageIndex() + 1;
+                        loadReclamationsForPage(currentPage);
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                        showErrorMessage("Erreur lors du rafraîchissement de l'interface");
+                    }
 
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reclamation/ReponsesBack.fxml"));
-                    Parent root = loader.load();
-                    ReponsesBack controller = loader.getController();
-                    List<Reclamation> reclamations = reclamationService.recupererReclamationsBack();
-                    Reclamation updatedReclamation = reclamations.stream()
-                            .filter(r -> r.getId() == reclamation.getId())
-                            .findFirst()
-                            .orElse(reclamation);
-
-                    controller.setReclamation(updatedReclamation);
-                    Scene scene = btnRepondre.getScene();
-                    Stage primaryStage = (Stage) scene.getWindow();
-                    primaryStage.setScene(new Scene(root));
-
-                } catch (SQLException | IOException e) {
+                } catch (SQLException e) {
                     e.printStackTrace();
                     Alert errorAlert = new Alert(Alert.AlertType.ERROR);
                     errorAlert.setTitle("Erreur");

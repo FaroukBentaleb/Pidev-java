@@ -137,7 +137,6 @@ public class ReclamationsArchivéesFront {
             Reponses responsesController = loader.getController();
             responsesController.setReclamation(rec);
 
-            // Clear the current content and add the responses view
             reclamationsContainer.getChildren().clear();
             reclamationsContainer.getChildren().add(responsesRoot);
         } catch (IOException | SQLException e) {
@@ -160,10 +159,8 @@ public class ReclamationsArchivéesFront {
                 String nouveauContenu = reclamationContenu.getText();
                 try {
                     reclamationService.modifier(reclamation.getId(), nouveauContenu);
-                    // Fermer la fenêtre après modification
                     Stage stage = (Stage) btnModifier.getScene().getWindow();
                     stage.close();
-                    // Retourner à l'affichage des réclamations
                     initialize();
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -183,7 +180,6 @@ public class ReclamationsArchivéesFront {
 
             modifierBox.getChildren().addAll(reclamationContenu, actions);
 
-            // Créer une nouvelle scène et un nouveau stage pour afficher l'interface de modification
             Scene scene = new Scene(modifierBox);
             Stage stage = new Stage();
             stage.setTitle("Modifier la réclamation");
@@ -197,7 +193,6 @@ public class ReclamationsArchivéesFront {
 
     public void afficherReclamationsArchivees(VBox container) {
         try {
-            // Récupérer les réclamations archivées
             List<Reclamation> reclamationsArchivees = reclamationService.recupererReclamationsArchivéesFront(user);
             container.getChildren().clear();
 

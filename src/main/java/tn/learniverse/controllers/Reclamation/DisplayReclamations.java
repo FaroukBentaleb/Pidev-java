@@ -220,13 +220,11 @@ public class DisplayReclamations {
             modifierBox.setPadding(new Insets(20));
             modifierBox.setStyle("-fx-background-color: #f0f4f8; -fx-border-radius: 15px; -fx-background-radius: 15px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0.5, 0, 4);");
 
-            // Ajouter un TextArea pour le contenu de la réclamation
             TextArea reclamationContenu = new TextArea(reclamation.getContenu());
             reclamationContenu.setPrefHeight(200);
             reclamationContenu.setPrefWidth(400);
             reclamationContenu.setStyle("-fx-font-size: 14px; -fx-border-color: #ccc; -fx-border-radius: 5px;");
 
-            // Ajouter des boutons pour enregistrer ou annuler
             Button btnModifier = new Button("Modifier");
             btnModifier.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5px; -fx-background-radius: 5px;");
             btnModifier.setOnAction(event -> {
@@ -240,17 +238,13 @@ public class DisplayReclamations {
                         String nouveauContenu = reclamationContenu.getText();
                         try {
                             reclamationService.modifier(reclamation.getId(), nouveauContenu);
-                            // Afficher une alerte de succès
                             Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
                             successAlert.setTitle("Modification réussie");
                             successAlert.setHeaderText(null);
                             successAlert.setContentText("Réclamation modifiée avec succès !");
                             successAlert.showAndWait();
-
-                            // Fermer la fenêtre après modification
                             Stage stage = (Stage) btnModifier.getScene().getWindow();
                             stage.close();
-                            // Rafraîchir l'interface actuelle
                             initialize();
                         } catch (SQLException e) {
                             e.printStackTrace();
@@ -310,7 +304,6 @@ public class DisplayReclamations {
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
-            // Rafraîchir l'interface après la fermeture de la fenêtre d'ajout
             initialize();
         } catch (IOException e) {
             e.printStackTrace();

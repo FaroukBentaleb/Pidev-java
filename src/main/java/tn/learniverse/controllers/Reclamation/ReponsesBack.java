@@ -126,8 +126,7 @@ public class ReponsesBack {
                 btnModifier.setStyle("-fx-background-color: #34A853; -fx-text-fill: white; -fx-background-radius: 5;");
                 btnModifier.setOnAction(e -> openModifierReponseDialog(reponse));
                 buttonBox.getChildren().add(btnModifier);
-            } 
-            // Si ce n'est pas une réponse d'admin, afficher "Répondre"
+            }
             else {
                 Button btnRepondre = new Button("Répondre");
                 btnRepondre.setStyle("-fx-background-color: #4285F4; -fx-text-fill: white; -fx-background-radius: 5;");
@@ -135,7 +134,6 @@ public class ReponsesBack {
                 buttonBox.getChildren().add(btnRepondre);
             }
 
-            // Ajouter les boutons seulement s'il y en a
             if (!buttonBox.getChildren().isEmpty()) {
                 bubble.getChildren().add(buttonBox);
             }
@@ -157,7 +155,7 @@ public class ReponsesBack {
         try {
             if ("modifier".equals(action)) {
                 openModifierReponseDialog(reponse);
-            } else {  // Ajout
+            } else {
                 openAjouterReponseDialog();
             }
         } catch (Exception e) {
@@ -198,7 +196,6 @@ public class ReponsesBack {
 
                 confirmationAlert.showAndWait().ifPresent(response -> {
                     if (response == buttonTypeOui) {
-                        // Si l'utilisateur confirme, enregistrer les modifications
                         String contenu = textArea.getText();
                         try {
                             reponseService.modifier(reponse.getId(), contenu, reponse.getUser(), reponse.getReclamation());
@@ -259,26 +256,19 @@ public class ReponsesBack {
                     return;
                 }
                 try {
-                    // Mettre à jour le statut de la réponse précédente à 1 (non modifiable)
                     if (!observableReponses.isEmpty()) {
                         Reponse lastReponse = observableReponses.get(observableReponses.size() - 1);
                         lastReponse.setStatut(1);
                         reponseService.updateStatut(lastReponse.getId(), 1);
                     }
-
-                    // Créer une nouvelle réponse avec l'utilisateur admin (ID=2)
                     Reponse reponse = new Reponse(contenu, new Date(), reclamation, user, 0);
                     reponseService.ajouter(reponse, user, reclamation);
 
-                    // Assurer que l'utilisateur est correctement défini
                     reponse.setUser(user);
-
-                    // Ajouter la réponse à la liste observable et rafraîchir l'affichage
                     observableReponses.add(reponse);
                     refreshReponses();
                     stage.close();
 
-                    // Afficher un message de succès
                     Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
                     successAlert.setTitle("Succès");
                     successAlert.setHeaderText(null);

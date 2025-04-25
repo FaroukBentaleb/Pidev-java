@@ -83,15 +83,12 @@ public class Reponses {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
-        // Utiliser l'utilisateur de la réponse pour l'affichage
         User responseUser = reponse.getUser();
         if (responseUser != null && dateReponse != null) {
             String auteur;
-            // Vérifier le rôle de l'utilisateur pour l'affichage
             if ("Admin".equals(responseUser.getRole())) {
                 auteur = "Admin Learniverse";
             } else {
-                // Pour Student ou Instructor, afficher le nom complet et le rôle
                 String prenom = responseUser.getPrenom() != null ? responseUser.getPrenom() : "Inconnu";
                 String nom = responseUser.getNom() != null ? responseUser.getNom() : "Inconnu";
                 String role = responseUser.getRole() != null ? responseUser.getRole() : "Inconnu";
@@ -117,28 +114,23 @@ public class Reponses {
         content.setStyle("-fx-font-size: 14; -fx-text-fill: #333;");
         bubble.getChildren().add(content);
 
-        // ----- Gestion des boutons selon le statut et le rôle de l'utilisateur -----
         if (reponse != null && reponse.getStatut() == 0) {
             HBox buttonBox = new HBox();
             buttonBox.setSpacing(10);
             buttonBox.setAlignment(Pos.CENTER_RIGHT);
 
-            // Si ce n'est pas une réponse d'admin, afficher "Modifier Réponse"
             if (responseUser != null && !"Admin".equals(responseUser.getRole())) {
                 Button btnModifier = new Button("Modifier Réponse");
                 btnModifier.setStyle("-fx-background-color: #34A853; -fx-text-fill: white; -fx-background-radius: 5;");
                 btnModifier.setOnAction(e -> openModifierReponseDialog(reponse));
                 buttonBox.getChildren().add(btnModifier);
-            } 
-            // Si c'est une réponse d'admin, afficher "Répondre"
+            }
             else {
                 Button btnRepondre = new Button("Répondre");
                 btnRepondre.setStyle("-fx-background-color: #4285F4; -fx-text-fill: white; -fx-background-radius: 5;");
                 btnRepondre.setOnAction(e -> openReponseDialog("répondre", reponse));
                 buttonBox.getChildren().add(btnRepondre);
             }
-
-            // Ajouter les boutons seulement s'il y en a
             if (!buttonBox.getChildren().isEmpty()) {
                 bubble.getChildren().add(buttonBox);
             }
@@ -159,7 +151,7 @@ public class Reponses {
         try {
             if ("modifier".equals(action)) {
                 openModifierReponseDialog(reponse);
-            } else {  // Ajout
+            } else {
                 openAjouterReponseDialog();
             }
         } catch (Exception e) {
