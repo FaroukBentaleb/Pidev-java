@@ -2,15 +2,12 @@ package tn.learniverse.controllers.Reclamation;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -18,9 +15,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import tn.learniverse.entities.Reclamation;
 import tn.learniverse.entities.User;
+import tn.learniverse.services.FlaskClient;
 import tn.learniverse.services.ReclamationService;
-import tn.learniverse.tools.Navigator;
-import tn.learniverse.tools.Session;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +24,8 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
@@ -36,25 +34,18 @@ public class AjouterReclamation implements Initializable {
     public Button btnUpload;
     @FXML
     private Button ReclamationAjouter;
-
     @FXML
     private TextArea reclamationContenu;
-
     @FXML
     private ImageView reclamationImg;
-
     @FXML
     private TextField reclamationtTitre;
-
     @FXML
     private TextField filePathTextField;
-
     @FXML
     private Label titreErrorLabel;
-
     @FXML
     private Label contenuErrorLabel;
-
     @FXML
     private Label fichierErrorLabel;
 
@@ -65,6 +56,8 @@ public class AjouterReclamation implements Initializable {
     private final Pattern ALLOWED_FILE_PATTERN = Pattern.compile(".*\\.(pdf|jpg|jpeg|png)$", Pattern.CASE_INSENSITIVE);
 
     private String fullFilePath;
+
+    private final List<String> bannedWords = Arrays.asList("merde", "con", "salope", "putain", "connard", "fuck"); // Liste d'insultes
 
     public void setDisplayReclamationsController(DisplayReclamations controller) {
         this.displayReclamationsController = controller;
@@ -79,6 +72,16 @@ public class AjouterReclamation implements Initializable {
         if (isValid) {
             String titre = reclamationtTitre.getText();
             String contenu = reclamationContenu.getText();
+            boolean test =FlaskClient.containsBadWords(contenu);
+            if (test) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Attention");
+                alert.setHeaderText(null);
+                alert.setContentText("Votre contenu contient des mots inappropriés. Veuillez corriger votre réclamation.");
+                alert.showAndWait();
+                return;
+            }
+
             String fichier = this.fullFilePath != null ? this.fullFilePath : "";
 
             Reclamation reclamation = new Reclamation();
@@ -115,11 +118,11 @@ public class AjouterReclamation implements Initializable {
         }
     }
 
+
     private boolean validateAllFields() {
         boolean isTitreValid = validateTitre();
         boolean isContenuValid = validateContenu();
         boolean isFichierValid = validateFichier();
-
         return isTitreValid && isContenuValid && isFichierValid;
     }
 
@@ -142,7 +145,6 @@ public class AjouterReclamation implements Initializable {
             reclamationtTitre.setStyle("-fx-border-color: red; -fx-border-radius: 8;");
             return false;
         }
-
         titreErrorLabel.setText("");
         return true;
     }
@@ -161,7 +163,6 @@ public class AjouterReclamation implements Initializable {
             reclamationContenu.setStyle("-fx-border-color: red; -fx-border-radius: 8;");
             return false;
         }
-
         contenuErrorLabel.setText("");
         return true;
     }
@@ -187,7 +188,6 @@ public class AjouterReclamation implements Initializable {
                 }
             }
         }
-
         return true;
     }
 
@@ -233,7 +233,7 @@ public class AjouterReclamation implements Initializable {
                     if (extension.toLowerCase().matches("\\.(png|jpg|jpeg)$")) {
                         Image image = new Image(destinationFile.toURI().toString());
                         reclamationImg.setImage(image);
-                    } else if (extension.toLowerCase().equals(".pdf")) {
+                    } else if (extension.equalsIgnoreCase(".pdf")) {
                         reclamationImg.setImage(new Image("file:///C:/wamp64/www/images/icons/pdf_icon.png"));
                     }
 
@@ -258,7 +258,6 @@ public class AjouterReclamation implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.reclamationImg.setImage(new Image("file:///C:/wamp64/www/images/logo/logo.png"));
-
         setupValidationListeners();
     }
 
@@ -280,6 +279,7 @@ public class AjouterReclamation implements Initializable {
                 titreErrorLabel.setText("");
             }
         });
+
         reclamationContenu.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.trim().isEmpty()) {
                 reclamationContenu.setStyle("-fx-border-color: #e0e0e0; -fx-border-radius: 8;");
@@ -291,29 +291,6 @@ public class AjouterReclamation implements Initializable {
             } else {
                 reclamationContenu.setStyle("-fx-border-color: green; -fx-border-radius: 8;");
                 contenuErrorLabel.setText("");
-            }
-        });
-
-        filePathTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.trim().isEmpty()) {
-                filePathTextField.setStyle("-fx-border-color: #e0e0e0; -fx-border-radius: 8;");
-                fichierErrorLabel.setText("");
-            } else {
-                if (!ALLOWED_FILE_PATTERN.matcher(newValue).matches()) {
-                    filePathTextField.setStyle("-fx-border-color: red; -fx-border-radius: 8;");
-                    fichierErrorLabel.setText("Format de fichier non accepté. Utilisez PDF, JPG ou PNG uniquement.");
-                    fichierErrorLabel.setTextFill(Color.RED);
-                } else if (this.fullFilePath != null) {
-                    File file = new File(this.fullFilePath);
-                    if (!file.exists()) {
-                        filePathTextField.setStyle("-fx-border-color: red; -fx-border-radius: 8;");
-                        fichierErrorLabel.setText("Le fichier n'existe pas.");
-                        fichierErrorLabel.setTextFill(Color.RED);
-                    } else {
-                        filePathTextField.setStyle("-fx-border-color: green; -fx-border-radius: 8;");
-                        fichierErrorLabel.setText("");
-                    }
-                }
             }
         });
     }

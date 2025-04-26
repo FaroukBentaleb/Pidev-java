@@ -67,8 +67,12 @@ public class DisplayReclamationBack {
             searchField.textProperty().addListener((observable, oldValue, newValue) -> {
                 try {
                     if (newValue == null || newValue.trim().isEmpty()) {
-                        loadReclamationsForPage(pagination.getCurrentPageIndex() + 1);
+                        pagination.setVisible(true);
+                        pagination.setManaged(true);
+                        loadReclamationsForPage(1);
                     } else {
+                        pagination.setVisible(false);
+                        pagination.setManaged(false);
                         List<Reclamation> reclamations = reclamationService.rechercherBack(newValue.trim());
                         displayReclamations(reclamations);
                     }
@@ -317,12 +321,16 @@ public class DisplayReclamationBack {
                     String emailContent = String.format("""
                         <h3>Détails de la réclamation :</h3>
                         <p><strong>Titre :</strong> %s</p>
+                        <p><strong>Date de réclamation :</strong> %s</p>
                         <p><strong>Contenu :</strong> %s</p>
                         <h3>Réponse à la Reclamation :</h3>
+                        <p><strong>Date de réponse :</strong> %s</p>
                         <p>%s</p>
                         """, 
                         reclamation.getTitre(),
+                        new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(reclamation.getDateReclamation()),
                         reclamation.getContenu(),
+                        new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date()),
                         reponseTextArea.getText()
                     );
 

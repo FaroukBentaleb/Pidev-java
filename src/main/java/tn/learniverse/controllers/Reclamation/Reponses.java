@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import tn.learniverse.entities.Reclamation;
 import tn.learniverse.entities.Reponse;
 import tn.learniverse.entities.User;
+import tn.learniverse.services.FlaskClient;
 import tn.learniverse.services.ReclamationService;
 import tn.learniverse.services.ReponseService;
 import javafx.geometry.Insets;
@@ -180,7 +181,16 @@ public class Reponses {
             Button btnSave = new Button("Enregistrer");
             btnSave.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 5;");
             btnSave.setOnAction(e -> {
-                // Alerte de confirmation après la modification
+                String contenu = textArea.getText();
+                boolean test = FlaskClient.containsBadWords(contenu);
+                if (test) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Attention");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Votre contenu contient des mots inappropriés. Veuillez corriger votre réponse.");
+                    alert.showAndWait();
+                    return;
+                }
                 Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
                 confirmationAlert.setTitle("Confirmation de modification");
                 confirmationAlert.setHeaderText("Modifier la réponse");
@@ -193,10 +203,9 @@ public class Reponses {
 
                 confirmationAlert.showAndWait().ifPresent(response -> {
                     if (response == buttonTypeOui) {
-                        // Si l'utilisateur confirme, enregistrer les modifications
-                        String contenu = textArea.getText();
+                        String contenu1  = textArea.getText();
                         try {
-                            reponseService.modifier(reponse.getId(), contenu, reponse.getUser(), reponse.getReclamation());
+                            reponseService.modifier(reponse.getId(), contenu1  , reponse.getUser(), reponse.getReclamation());
                             reponse.setContenu(contenu);
                             reponse.setDateModification(new Date());
                             refreshReponses();
@@ -249,6 +258,15 @@ public class Reponses {
             btnSubmit.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 5;");
             btnSubmit.setOnAction(e -> {
                 String contenu = textArea.getText();
+                boolean test = FlaskClient.containsBadWords(contenu);
+                if (test) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Attention");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Votre contenu contient des mots inappropriés. Veuillez corriger votre réponse.");
+                    alert.showAndWait();
+                    return;
+                }
                 if (contenu.trim().isEmpty()) {
                     System.out.println("La réponse ne peut pas être vide.");
                     return;
