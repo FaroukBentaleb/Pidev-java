@@ -1,19 +1,44 @@
 package tn.learniverse.controllers.user;
 
+import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
+import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
+import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
+import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
+import com.google.api.client.http.GenericUrl;
+import com.google.api.client.http.HttpRequest;
+import com.google.api.client.http.HttpRequestFactory;
+import com.google.api.client.http.HttpResponse;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.util.store.FileDataStoreFactory;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.json.JSONObject;
 import org.mindrot.jbcrypt.BCrypt;
 import tn.learniverse.entities.*;
 import tn.learniverse.services.*;
 import tn.learniverse.tools.Navigator;
 import tn.learniverse.tools.Session;
 
+import java.awt.*;
+import java.io.FileReader;
+import java.net.URI;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
-import java.util.concurrent.atomic.AtomicBoolean;
+import com.google.api.client.auth.oauth2.Credential;
+import javafx.scene.control.Alert;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class Login implements Initializable {
     public TextField login_email;
@@ -94,7 +119,6 @@ public class Login implements Initializable {
     }
     private void setupRealTimeValidation() {
 
-        // Email
         login_email.textProperty().addListener((obs, oldVal, newVal) -> {
             if (!newVal.matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
                 login_email.setStyle("-fx-border-color: red;");
@@ -105,7 +129,6 @@ public class Login implements Initializable {
             }
         });
 
-        // Password
         login_pwd.textProperty().addListener((obs, oldVal, newVal) -> {
             if (!newVal.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$")) {
                 login_pwd.setStyle("-fx-border-color: red;");
@@ -144,7 +167,6 @@ public class Login implements Initializable {
         logoImageView.setImage(new Image("file:///C:/wamp64/www/images/logo/logo.png"));
         textField.textProperty().bindBidirectional(login_pwd.textProperty());
 
-        // Toggle visibility
         showPasswordCheckBox.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
             if (isSelected) {
                 textField.setVisible(true);
@@ -158,5 +180,355 @@ public class Login implements Initializable {
                 textField.setManaged(false);
             }
         });
+    }
+    public void Google_btn(ActionEvent actionEvent) {
+        new Thread(() -> {
+            try {
+                Credential credential = GoogleAuthUtil.authorize();
+                if (credential != null) {
+                    String email = fetchUser(credential).getString("email");
+
+                    Platform.runLater(() -> {
+                        try {
+                            UserService userService = new UserService();
+                            User usr = userService.getUserByEmail(email);
+
+                            if (usr.getEmail() != null) {
+                                if (usr.getBan() == 1) {
+                                    Navigator.showAlert(Alert.AlertType.ERROR, "Account Banned",
+                                            "Your account has been Banned by the admin.\nPlease contact support for more details!");
+                                } else if (usr.getLogs() == 0) {
+                                    Navigator.showAlert(Alert.AlertType.ERROR, "Account locked",
+                                            "Your account has been locked due to many login attempts.\nPlease reset your password or contact support for more details!");
+                                } else {
+                                    Session.setCurrentUser(usr);
+                                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                    alert.setTitle("Login Successful");
+                                    alert.setHeaderText("Welcome, " + usr.getNom() + "!");
+                                    alert.setContentText("Connected successfully via Google");
+                                    alert.showAndWait();
+
+                                    if (Session.getCurrentUser().getRole().equals("Admin")) {
+                                        Navigator.redirect(actionEvent, "/fxml/Back.fxml");
+                                    } else {
+                                        Navigator.redirect(actionEvent, "/fxml/homePage.fxml");
+                                    }
+                                }
+                            } else {
+
+                                usr.setNom(fetchUser(credential).getString("given_name"));
+                                usr.setPrenom(fetchUser(credential).getString("family_name"));
+                                usr.setEmail(fetchUser(credential).getString("email"));
+                                usr.setPicture(fetchUser(credential).getString("picture"));
+                                Session.setCurrentUser(usr);
+                                System.out.println(fetchUser(credential));
+                                System.out.println(usr);
+                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                alert.setTitle("New User");
+                                alert.setHeaderText("Account not found");
+                                alert.setContentText("No account found with email: " + email + "\nBut do not worry we will be helping you create one!");
+
+                                ButtonType yesButton = new ButtonType("Proceed");
+
+                                alert.getButtonTypes().setAll(yesButton);
+
+                                alert.showAndWait();
+                                Navigator.redirect(actionEvent, "/fxml/user/ConfirmPwd.fxml");
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("Login Error");
+                            alert.setContentText("Error processing user data: " + e.getMessage());
+                            alert.showAndWait();
+                        }
+                    });
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Platform.runLater(() -> {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Login Failed");
+                    alert.setContentText("Google sign-in failed: " + e.getMessage());
+                    alert.showAndWait();
+                });
+            }
+        }).start();
+    }
+
+    public static JSONObject fetchUser(Credential credential) throws Exception {
+        try {
+            HttpRequestFactory requestFactory = new NetHttpTransport().createRequestFactory(
+                    request -> request.setHeaders(request.getHeaders().set("Authorization", "Bearer " + credential.getAccessToken()))
+            );
+
+            GenericUrl url = new GenericUrl("https://www.googleapis.com/oauth2/v3/userinfo");
+            HttpRequest request = requestFactory.buildGetRequest(url);
+            HttpResponse response = request.execute();
+
+            String json = response.parseAsString();
+            System.out.println("User info response: " + json);
+
+            JSONObject userInfo = new JSONObject(json);
+            if (userInfo.has("email")) {
+                return userInfo;
+            } else {
+                throw new Exception("Email not found in the response: " + json);
+            }
+        } catch (Exception e) {
+            System.err.println("Error fetching user email: " + e.getMessage());
+            e.printStackTrace();
+            throw new Exception("Failed to fetch user info: " + e.getMessage());
+        }
+    }
+
+    public static class GoogleAuthUtil {
+        private static final String CREDENTIALS_FILE = "C:/wamp64/www/images/credentials/client_secret.json";
+        private static final java.io.File DATA_STORE_DIR = new java.io.File(System.getProperty("user.home"), ".store/google_oauth_tokens");
+
+        public static Credential authorize() throws Exception {
+            try {
+                GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(
+                        JacksonFactory.getDefaultInstance(),
+                        new FileReader(CREDENTIALS_FILE)
+                );
+
+                if (clientSecrets.getDetails().getClientId().startsWith("YOUR") ||
+                        clientSecrets.getDetails().getClientSecret().startsWith("YOUR")) {
+                    System.err.println("Client secrets not properly configured in: " + CREDENTIALS_FILE);
+                    throw new Exception("Client secrets not properly configured. Check credentials file.");
+                }
+
+                if (!DATA_STORE_DIR.exists()) {
+                    DATA_STORE_DIR.mkdirs();
+                }
+
+                GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
+                        new NetHttpTransport(),
+                        JacksonFactory.getDefaultInstance(),
+                        clientSecrets,
+                        List.of("email", "profile")
+                )
+                        .setDataStoreFactory(new FileDataStoreFactory(DATA_STORE_DIR))
+                        .setAccessType("offline")
+                        .setApprovalPrompt("force")
+                        .build();
+
+                LocalServerReceiver receiver = new LocalServerReceiver.Builder()
+                        .setPort(8888)
+                        .setHost("localhost")
+                        .build();
+
+                System.out.println("Starting Google authorization process...");
+
+                flow.getCredentialDataStore().clear();
+
+                return new AuthorizationCodeInstalledApp(flow, receiver,
+                        new AuthorizationCodeInstalledApp.Browser() {
+                            @Override
+                            public void browse(String url) {
+                                if (!url.contains("prompt=")) {
+                                    url += (url.contains("?") ? "&" : "?") + "prompt=select_account";
+                                }
+                                System.out.println("Please open the following URL in your browser: " + url);
+                                try {
+                                    Desktop.getDesktop().browse(new URI(url));
+                                } catch (Exception e) {
+                                    System.out.println("Unable to open browser" + e.getMessage());
+                                }
+                            }
+                        }).authorize("user");
+            } catch (Exception e) {
+                System.err.println("Authorization error: " + e.getMessage());
+                e.printStackTrace();
+                throw e;
+            }
+        }
+    }
+
+
+
+
+    public void Github_btn(ActionEvent actionEvent) {
+        String clientId = "Ov23limTtxB1KtyLigav";
+        String redirectUri = "http://localhost:8889/github-callback";
+        String state = generateRandomState();
+
+        // GitHub OAuth authorization URL
+        String authUrl = "https://github.com/login/oauth/authorize" +
+                "?client_id=" + clientId +
+                "&redirect_uri=" + redirectUri +
+                "&state=" + state +
+                "&scope=user:email";
+
+        new Thread(() -> {
+            try {
+                // Start local server to receive the callback
+                LocalServerReceiver receiver = new LocalServerReceiver.Builder()
+                        .setPort(8889)
+                        .setHost("localhost")
+                        .build();
+
+                // Open browser for authentication
+                java.awt.Desktop.getDesktop().browse(new java.net.URI(authUrl));
+
+                // Wait for the callback
+                String code = waitForGitHubCallback(receiver);
+                if (code != null) {
+                    // Exchange code for token
+                    String accessToken = exchangeCodeForToken(code, clientId, "ad2448f57071f37c8319aee89b8b251d7b2990f3", redirectUri);
+
+                    // Get user email from GitHub
+                    String email = fetchGitHubUserEmail(accessToken);
+
+                    javafx.application.Platform.runLater(() -> {
+                        processGitHubLogin(email, actionEvent);
+                    });
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                javafx.application.Platform.runLater(() -> {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("GitHub Login Failed");
+                    alert.setContentText("GitHub sign-in failed: " + e.getMessage());
+                    alert.showAndWait();
+                });
+            }
+        }).start();
+    }
+
+    private String generateRandomState() {
+        return java.util.UUID.randomUUID().toString();
+    }
+
+    private String waitForGitHubCallback(LocalServerReceiver receiver) throws Exception {
+        // Custom handler to catch the GitHub callback
+        return receiver.getRedirectUri();
+    }
+
+    private String exchangeCodeForToken(String code, String clientId, String clientSecret, String redirectUri) throws Exception {
+        URL url = new URL("https://github.com/login/oauth/access_token");
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("Accept", "application/json");
+        conn.setDoOutput(true);
+
+        String params = "client_id=" + clientId +
+                "&client_secret=" + clientSecret +
+                "&code=" + code +
+                "&redirect_uri=" + redirectUri;
+
+        try (OutputStream os = conn.getOutputStream()) {
+            byte[] input = params.getBytes("utf-8");
+            os.write(input, 0, input.length);
+        }
+
+        int responseCode = conn.getResponseCode();
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"))) {
+                StringBuilder response = new StringBuilder();
+                String responseLine;
+                while ((responseLine = br.readLine()) != null) {
+                    response.append(responseLine.trim());
+                }
+
+                JSONObject jsonResponse = new JSONObject(response.toString());
+                return jsonResponse.getString("access_token");
+            }
+        } else {
+            throw new Exception("Failed to get GitHub access token, response code: " + responseCode);
+        }
+    }
+
+    private String fetchGitHubUserEmail(String accessToken) throws Exception {
+        URL url = new URL("https://api.github.com/user/emails");
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Authorization", "token " + accessToken);
+        conn.setRequestProperty("Accept", "application/json");
+
+        int responseCode = conn.getResponseCode();
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
+                StringBuilder response = new StringBuilder();
+                String responseLine;
+                while ((responseLine = br.readLine()) != null) {
+                    response.append(responseLine.trim());
+                }
+
+                org.json.JSONArray emails = new org.json.JSONArray(response.toString());
+
+                // Look for primary email
+                for (int i = 0; i < emails.length(); i++) {
+                    JSONObject emailObj = emails.getJSONObject(i);
+                    if (emailObj.optBoolean("primary", false)) {
+                        return emailObj.getString("email");
+                    }
+                }
+
+                // If no primary email found, return the first one
+                if (emails.length() > 0) {
+                    return emails.getJSONObject(0).getString("email");
+                }
+
+                throw new Exception("No email found in GitHub response");
+            }
+        } else {
+            throw new Exception("Failed to get GitHub user emails, response code: " + responseCode);
+        }
+    }
+
+    private void processGitHubLogin(String email, ActionEvent actionEvent) {
+        try {
+            UserService userService = new UserService();
+            User usr = userService.getUserByEmail(email);
+
+            if (usr != null) {
+                // User exists, log them in
+                if (usr.getBan() == 1) {
+                    Navigator.showAlert(Alert.AlertType.ERROR, "Account Banned",
+                            "Your account has been Banned by the admin.\nPlease contact support for more details!");
+                } else if (usr.getLogs() == 0) {
+                    Navigator.showAlert(Alert.AlertType.ERROR, "Account locked",
+                            "Your account has been locked due to many login attempts.\nPlease reset your password or contact support for more details!");
+                } else {
+                    Session.setCurrentUser(usr);
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Login Successful");
+                    alert.setHeaderText("Welcome, " + usr.getNom() + "!");
+                    alert.setContentText("Connected successfully via GitHub");
+                    alert.showAndWait();
+
+                    if (Session.getCurrentUser().getRole().equals("Admin")) {
+                        Navigator.redirect(actionEvent, "/fxml/Back.fxml");
+                    } else {
+                        Navigator.redirect(actionEvent, "/fxml/homePage.fxml");
+                    }
+                }
+            } else {
+                // User doesn't exist, prompt to create account
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("New User");
+                alert.setHeaderText("Account not found");
+                alert.setContentText("No account found with email: " + email + "\nWould you like to create a new account?");
+
+                ButtonType yesButton = new ButtonType("Yes");
+                ButtonType noButton = new ButtonType("No");
+
+                alert.getButtonTypes().setAll(yesButton, noButton);
+
+                alert.showAndWait().ifPresent(buttonType -> {
+                    if (buttonType == yesButton) {
+                        Navigator.redirect(actionEvent, "/fxml/user/CreateAccount.fxml");
+                    }
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Login Error");
+            alert.setContentText("Error processing user data: " + e.getMessage());
+            alert.showAndWait();
+        }
     }
 }

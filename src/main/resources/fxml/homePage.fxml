@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -19,10 +20,11 @@
         <VBox alignment="TOP_CENTER" maxHeight="887.0" prefHeight="674.0" prefWidth="220.0" spacing="15" style="-fx-background-color: linear-gradient(to bottom, #1976D2, #64B5F6); -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 0);">
             <padding><Insets bottom="15.0" left="15.0" right="15.0" top="20.0" /></padding>
             <Label style="-fx-text-fill: white; -fx-font-size: 26px; -fx-font-weight: bold;" text="Learniverse" />
+         <VBox maxHeight="30.0" prefHeight="30.0" prefWidth="190.0" />
             <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
-                <graphic><Label style="-fx-text-fill: white;" text="📊" /></graphic>
+                <graphic><Label style="-fx-text-fill: white;" text="🛍" /></graphic>
                 <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
-                <text>Dashboard</text>
+                <text>Offers</text>
             </Button>
             <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
                 <graphic><Label style="-fx-text-fill: white;" text="📚" /></graphic>
@@ -37,35 +39,62 @@
             <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
                 <graphic><Label style="-fx-text-fill: white;" text="👥" /></graphic>
                 <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
-                <text>Community</text>
+                <text>Forum</text>
             </Button>
-            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" onAction="#Profile" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8; -fx-cursor: hand;">
-                <graphic><Label style="-fx-text-fill: white;" text="👤" /></graphic>
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8; -fx-cursor: hand;">
+                <graphic><Label style="-fx-text-fill: white;" text="🏆" /></graphic>
                 <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
-                <text>Profile</text>
+                <text>Competitions</text>
             </Button>
-            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
-                <graphic><Label style="-fx-text-fill: white;" text="⚙️" /></graphic>
-                <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
-                <text>Settings</text>
-            </Button>
+         <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;" text="Complaints">
+            <graphic>
+               <Label style="-fx-text-fill: white;" text="📝" />
+            </graphic>
+            <padding>
+               <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
+            </padding>
+         </Button>
             <VBox prefHeight="180.0" prefWidth="190.0" VBox.vgrow="ALWAYS" />
-            <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="10" style="-fx-background-color: rgba(255,255,255,0.1); -fx-background-radius: 8;">
-                <padding><Insets bottom="8.0" left="10.0" right="10.0" top="8.0" /></padding>
-                <StackPane>
-                    <Circle fill="#ffffff53" radius="26.0" />
-                    <ImageView fx:id="UserPicture" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
-                </StackPane>
-                <VBox spacing="2">
-                    <Label fx:id="usernameLabel" style="-fx-text-fill: white; -fx-font-weight: bold;" text="Farouk">
-                        <VBox.margin><Insets top="10.0" /></VBox.margin>
-                    </Label>
-                    <Label fx:id="role" style="-fx-text-fill: rgba(255,255,255,0.7); -fx-font-size: 11px;" text="Student" />
-                </VBox>
-                <Button onAction="#Logout" prefHeight="25.0" prefWidth="32.0" style="-fx-background-color: transparent; -fx-cursor: hand;" text="🔓">
-                    <HBox.margin><Insets left="10.0" /></HBox.margin>
-                </Button>
-            </HBox>
+         <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0" style="-fx-background-color: rgba(255,255,255,0.1); -fx-background-radius: 8;">
+            <padding>
+               <Insets bottom="8.0" left="5.0" right="5.0" top="8.0" />
+            </padding>
+            <children>
+               <StackPane>
+                  <children>
+                     <Circle fill="#ffffff53" radius="26.0" />
+                     <ImageView fx:id="UserPicture" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                        <StackPane.margin>
+                           <Insets right="5.0" />
+                        </StackPane.margin>
+                     </ImageView>
+                  </children>
+               </StackPane>
+               <VBox prefHeight="36.0" prefWidth="72.0" spacing="2">
+                  <children>
+                     <Label fx:id="usernameLabel" minWidth="60.0" style="-fx-text-fill: white; -fx-font-weight: bold;" text="Username">
+                        <VBox.margin>
+                           <Insets top="10.0" />
+                        </VBox.margin>
+                     </Label>
+                     <Label fx:id="role" style="-fx-text-fill: rgba(255,255,255,0.7); -fx-font-size: 11px;" text="Admin" />
+                  </children>
+               </VBox>
+               <Button fx:id="Settingsbtn" mnemonicParsing="false" onAction="#Settings" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-border-color: transparent;">
+                  <tooltip>
+                     <Tooltip text="Logout" />
+                  </tooltip>
+                  <HBox.margin>
+                     <Insets left="30.0" />
+                  </HBox.margin>
+               </Button>
+               <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#Logout" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-border-color: transparent;">
+                  <tooltip>
+                     <Tooltip text="Logout" />
+                  </tooltip>
+               </Button>
+            </children>
+         </HBox>
             <BorderPane.margin>
                 <Insets />
             </BorderPane.margin>

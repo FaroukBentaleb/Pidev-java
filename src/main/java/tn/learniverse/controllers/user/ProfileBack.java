@@ -211,7 +211,7 @@ public class ProfileBack implements Initializable {
         });
 
         phoneField.textProperty().addListener((obs, oldVal, newVal) -> {
-            if (!newVal.isEmpty() && !newVal.matches("^\\+?[0-9]{6,15}$")) {
+            if (!newVal.isEmpty() && Integer.parseInt(newVal)!=0 && !newVal.matches("^\\+?[0-9]{6,15}$")) {
                 phoneField.setStyle("-fx-background-color: #f8f9fa; -fx-background-radius: 8; -fx-padding: 10; -fx-border-radius: 8;-fx-border-color: red;");
                 phoneFieldErrorLabel.setText("Enter a valid phone number.");
                 phoneFieldErrorLabel.setVisible(true);
