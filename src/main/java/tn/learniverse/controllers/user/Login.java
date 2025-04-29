@@ -27,17 +27,13 @@ import tn.learniverse.tools.Navigator;
 import tn.learniverse.tools.Session;
 
 import java.awt.*;
-import java.io.FileReader;
-import java.net.URI;
-import java.net.URL;
+import java.io.*;
+import java.net.*;
 import java.util.List;
 import java.util.ResourceBundle;
 import com.google.api.client.auth.oauth2.Credential;
 import javafx.scene.control.Alert;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
+
 import java.net.URL;
 
 public class Login implements Initializable {
@@ -351,43 +347,77 @@ public class Login implements Initializable {
 
     public void Github_btn(ActionEvent actionEvent) {
         String clientId = "Ov23limTtxB1KtyLigav";
-        String redirectUri = "http://localhost:8889/github-callback";
+        String redirectUri = "http://localhost:8888/github-callback";
         String state = generateRandomState();
 
-        // GitHub OAuth authorization URL
         String authUrl = "https://github.com/login/oauth/authorize" +
                 "?client_id=" + clientId +
                 "&redirect_uri=" + redirectUri +
                 "&state=" + state +
-                "&scope=user:email";
+                "&scope=user:email"+
+                "&prompt=login";;
 
         new Thread(() -> {
             try {
-                // Start local server to receive the callback
-                LocalServerReceiver receiver = new LocalServerReceiver.Builder()
-                        .setPort(8889)
-                        .setHost("localhost")
-                        .build();
+                ServerSocket serverSocket = new ServerSocket(8888);
 
-                // Open browser for authentication
-                java.awt.Desktop.getDesktop().browse(new java.net.URI(authUrl));
+                Desktop.getDesktop().browse(new URI(authUrl));
 
-                // Wait for the callback
-                String code = waitForGitHubCallback(receiver);
+                Socket socket = serverSocket.accept();
+
+                BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                String line;
+                String code = null;
+                while ((line = in.readLine()) != null) {
+                    if (line.startsWith("GET")) {
+                        String[] parts = line.split(" ")[1].split("\\?");
+                        if (parts.length > 1) {
+                            String query = parts[1];
+                            String[] params = query.split("&");
+                            for (String param : params) {
+                                String[] pair = param.split("=");
+                                if (pair.length == 2 && pair[0].equals("code")) {
+                                    code = pair[1];
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    if (line.isEmpty()) {
+                        break;
+                    }
+                }
+
+                PrintWriter out = new PrintWriter(socket.getOutputStream());
+                out.println("HTTP/1.1 200 OK");
+                out.println("Content-Type: text/html");
+                out.println();
+                out.println("<html><body><h1>Authentication successful!</h1><p>You can close this window now.</p></body></html>");
+                out.flush();
+                out.close();
+                socket.close();
+                serverSocket.close();
+
                 if (code != null) {
-                    // Exchange code for token
-                    String accessToken = exchangeCodeForToken(code, clientId, "ad2448f57071f37c8319aee89b8b251d7b2990f3", redirectUri);
+                    String accessToken = exchangeCodeForToken(code, clientId, "3792722bbcee600a10dc667668fbd7c47f6c4ed9", redirectUri);
 
-                    // Get user email from GitHub
-                    String email = fetchGitHubUserEmail(accessToken);
+                    String email = fetchGitHubUserEmail(accessToken).getString("email");
+                    String fullName = fetchGitHubUser(accessToken).optString("name", "");
+                    String[] parts = fullName.trim().split(" ", 2);
+                    String prenom = parts.length > 0 ? parts[0] : "";
+                    String nom = parts.length > 1 ? parts[1] : "";
+                    String picture = fetchGitHubUser(accessToken).getString("avatar_url");
 
-                    javafx.application.Platform.runLater(() -> {
-                        processGitHubLogin(email, actionEvent);
+                    Platform.runLater(() -> {
+                        processGitHubLogin(email, nom, prenom, picture, actionEvent);
                     });
+                } else {
+                    throw new Exception("No authorization code received from GitHub");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                javafx.application.Platform.runLater(() -> {
+                Platform.runLater(() -> {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("GitHub Login Failed");
                     alert.setContentText("GitHub sign-in failed: " + e.getMessage());
@@ -399,11 +429,6 @@ public class Login implements Initializable {
 
     private String generateRandomState() {
         return java.util.UUID.randomUUID().toString();
-    }
-
-    private String waitForGitHubCallback(LocalServerReceiver receiver) throws Exception {
-        // Custom handler to catch the GitHub callback
-        return receiver.getRedirectUri();
     }
 
     private String exchangeCodeForToken(String code, String clientId, String clientSecret, String redirectUri) throws Exception {
@@ -440,7 +465,7 @@ public class Login implements Initializable {
         }
     }
 
-    private String fetchGitHubUserEmail(String accessToken) throws Exception {
+    private JSONObject fetchGitHubUserEmail(String accessToken) throws Exception {
         URL url = new URL("https://api.github.com/user/emails");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
@@ -458,17 +483,15 @@ public class Login implements Initializable {
 
                 org.json.JSONArray emails = new org.json.JSONArray(response.toString());
 
-                // Look for primary email
                 for (int i = 0; i < emails.length(); i++) {
                     JSONObject emailObj = emails.getJSONObject(i);
                     if (emailObj.optBoolean("primary", false)) {
-                        return emailObj.getString("email");
+                        return emailObj;
                     }
                 }
 
-                // If no primary email found, return the first one
                 if (emails.length() > 0) {
-                    return emails.getJSONObject(0).getString("email");
+                    return emails.getJSONObject(0);
                 }
 
                 throw new Exception("No email found in GitHub response");
@@ -477,14 +500,37 @@ public class Login implements Initializable {
             throw new Exception("Failed to get GitHub user emails, response code: " + responseCode);
         }
     }
+    private JSONObject fetchGitHubUser(String accessToken) throws Exception {
+        URL url = new URL("https://api.github.com/user");
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Authorization", "token " + accessToken);
+        conn.setRequestProperty("Accept", "application/json");
 
-    private void processGitHubLogin(String email, ActionEvent actionEvent) {
+        int responseCode = conn.getResponseCode();
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
+                StringBuilder response = new StringBuilder();
+                String responseLine;
+                while ((responseLine = br.readLine()) != null) {
+                    response.append(responseLine.trim());
+                }
+
+                return new JSONObject(response.toString());
+            }
+        } else {
+            throw new Exception("Failed to get GitHub user profile, response code: " + responseCode);
+        }
+    }
+
+
+    private void processGitHubLogin(String email,String nom,String prenom,String picture, ActionEvent actionEvent) {
         try {
             UserService userService = new UserService();
             User usr = userService.getUserByEmail(email);
 
-            if (usr != null) {
-                // User exists, log them in
+            if (usr.getEmail() != null) {
+                System.out.println("github:" +usr);
                 if (usr.getBan() == 1) {
                     Navigator.showAlert(Alert.AlertType.ERROR, "Account Banned",
                             "Your account has been Banned by the admin.\nPlease contact support for more details!");
@@ -506,22 +552,22 @@ public class Login implements Initializable {
                     }
                 }
             } else {
-                // User doesn't exist, prompt to create account
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                usr.setNom(nom);
+                usr.setPrenom(prenom);
+                usr.setEmail(email);
+                usr.setPicture(picture);
+                Session.setCurrentUser(usr);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("New User");
                 alert.setHeaderText("Account not found");
-                alert.setContentText("No account found with email: " + email + "\nWould you like to create a new account?");
+                alert.setContentText("No account found with email: " + email + "\nBut do not worry we will be helping you create one!");
 
-                ButtonType yesButton = new ButtonType("Yes");
-                ButtonType noButton = new ButtonType("No");
+                ButtonType yesButton = new ButtonType("Proceed");
 
-                alert.getButtonTypes().setAll(yesButton, noButton);
+                alert.getButtonTypes().setAll(yesButton);
 
-                alert.showAndWait().ifPresent(buttonType -> {
-                    if (buttonType == yesButton) {
-                        Navigator.redirect(actionEvent, "/fxml/user/CreateAccount.fxml");
-                    }
-                });
+                alert.showAndWait();
+                Navigator.redirect(actionEvent, "/fxml/user/ConfirmPwd.fxml");
             }
         } catch (Exception e) {
             e.printStackTrace();
