@@ -49,8 +49,18 @@ public class DisplayReclamationBack {
     private TextField searchField;
     @FXML
     private Pagination pagination;
+    @FXML
+    private Button Trier;
+    @FXML
+    private DatePicker date;
+    @FXML
+    private ComboBox<String> statut;
+    @FXML
+    private Label errorMessageLabel;
     private final ReclamationService reclamationService = new ReclamationService();
     private final int ITEMS_PER_PAGE = 5;
+    private boolean isSortedByDate = false;
+    private boolean isFiltered = false;
 
     public void initialize() {
         try {
@@ -64,7 +74,13 @@ public class DisplayReclamationBack {
 
             pagination.currentPageIndexProperty().addListener((obs, oldIndex, newIndex) -> {
                 try {
-                    loadReclamationsForPage(newIndex.intValue() + 1);
+                    List<Reclamation> reclamations;
+                    if (isSortedByDate) {
+                        reclamations = reclamationService.trierReclamationsParDatePaginees(newIndex.intValue() + 1, ITEMS_PER_PAGE);
+                    } else {
+                        reclamations = reclamationService.recupererReclamationsBackPaginees(newIndex.intValue() + 1, ITEMS_PER_PAGE);
+                    }
+                    displayReclamations(reclamations);
                 } catch (SQLException e) {
                     e.printStackTrace();
                     showErrorMessage("Erreur lors du chargement des réclamations");
@@ -88,6 +104,19 @@ public class DisplayReclamationBack {
                     showErrorMessage("Erreur lors de la recherche des réclamations");
                 }
             });
+
+            Trier.setOnAction(event -> {
+                try {
+                    isSortedByDate = true;
+                    int currentPage = pagination.getCurrentPageIndex() + 1;
+                    List<Reclamation> sortedReclamations = reclamationService.trierReclamationsParDatePaginees(currentPage, ITEMS_PER_PAGE);
+                    displayReclamations(sortedReclamations);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    showErrorMessage("Erreur lors du tri des réclamations");
+                }
+            });
+            statut.getItems().addAll("Non Traité", "En Cours", "Traité");
 
             loadReclamationsForPage(1);
             
@@ -483,5 +512,84 @@ public class DisplayReclamationBack {
             errorAlert.setContentText("Erreur lors du rafraîchissement : " + e.getMessage());
             errorAlert.showAndWait();
         }
+    }
+
+    @FXML
+    private void filtrer(ActionEvent event) {
+        try {
+            java.sql.Date selectedDate = date.getValue() != null ? java.sql.Date.valueOf(date.getValue()) : null;
+            String selectedStatut = statut.getValue();
+
+            List<Reclamation> filteredReclamations;
+
+            if (selectedDate != null && selectedStatut != null) {
+                filteredReclamations = reclamationService.filtrerReclamationsParDateEtStatut(selectedDate, selectedStatut);
+                pagination.setVisible(false);
+            } else if (selectedDate != null) {
+                filteredReclamations = reclamationService.filtrerReclamationsParDate(selectedDate);
+                pagination.setVisible(false);
+            } else if (selectedStatut != null) {
+                filteredReclamations = reclamationService.filtrerReclamationsParStatut(selectedStatut);
+                pagination.setVisible(false);
+            } else {
+                errorMessageLabel.setText("Veuillez sélectionner une date ou un statut pour filtrer.");
+                return;
+            }
+
+            if (filteredReclamations.isEmpty()) {
+                showNoReclamationsMessage();
+            } else {
+                errorMessageLabel.setText("");
+                displayReclamations(filteredReclamations);
+            }
+
+            isFiltered = true;
+            isSortedByDate = false;
+            pagination.setVisible(false);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            errorMessageLabel.setText("Erreur lors du filtrage");
+        }
+    }
+
+    @FXML
+    private void trierParDate(ActionEvent event) {
+        try {
+            isSortedByDate = true;
+            isFiltered = false;
+            date.setValue(null);
+            statut.setValue(null);
+            pagination.setCurrentPageIndex(0);
+            int totalPages = reclamationService.getTotalPages(ITEMS_PER_PAGE);
+            pagination.setPageCount(Math.max(1, totalPages));
+            List<Reclamation> initialReclamations = reclamationService.recupererReclamationsBackPaginees(1, ITEMS_PER_PAGE);
+            displayReclamations(initialReclamations);
+            pagination.setVisible(true);
+            pagination.setManaged(true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showErrorMessage("Erreur lors du tri des réclamations");
+        }
+    }
+
+    private void showNoReclamationsMessage() {
+        errorMessageLabel.setText("");
+        VBox emptyMessageBox = new VBox();
+        emptyMessageBox.setAlignment(Pos.CENTER);
+        emptyMessageBox.setPrefHeight(400);
+        
+        Label emptyMessage = new Label("Aucune réclamation trouvée");
+        emptyMessage.setStyle("-fx-font-size: 24px; " +
+                              "-fx-font-weight: bold; " +
+                              "-fx-text-fill: #666666; " +
+                              "-fx-background-color: white; " +
+                              "-fx-padding: 20px 40px; " +
+                              "-fx-background-radius: 10px; " +
+                              "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0.5, 0, 4);");
+        
+        emptyMessageBox.getChildren().add(emptyMessage);
+        reclamationsContainer.getChildren().clear();
+        reclamationsContainer.getChildren().add(emptyMessageBox);
+        reclamationsContainer.setAlignment(Pos.CENTER);
     }
 }
