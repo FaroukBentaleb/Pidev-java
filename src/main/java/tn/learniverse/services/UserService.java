@@ -177,4 +177,21 @@ public class UserService implements IUser <User>{
             System.out.println(e.getMessage());
         }
     }
+    public int getUserIdByEmail(String email) {
+        int userId = 0;
+        try {
+            String query = "SELECT id FROM User u WHERE u.email = ? ";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                userId = Integer.parseInt(rs.getString("id"));
+            }
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return userId;
+    }
 }

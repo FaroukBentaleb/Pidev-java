@@ -21,6 +21,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.json.JSONObject;
 import org.mindrot.jbcrypt.BCrypt;
+import oshi.SystemInfo;
+import oshi.hardware.ComputerSystem;
+import oshi.software.os.OperatingSystem;
 import tn.learniverse.entities.*;
 import tn.learniverse.services.*;
 import tn.learniverse.tools.Navigator;
@@ -29,6 +32,8 @@ import tn.learniverse.tools.Session;
 import java.awt.*;
 import java.io.*;
 import java.net.*;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ResourceBundle;
 import com.google.api.client.auth.oauth2.Credential;
@@ -77,6 +82,7 @@ public class Login implements Initializable {
                                     alert.setContentText("Connected successfully");
                                     alert.showAndWait();
                                     Session.setCurrentUser(usr);
+                                    saveLogs();
                                     if(Session.getCurrentUser().getRole().equals("Admin")){
                                         Navigator.redirect(actionEvent, "/fxml/Back.fxml");
                                     }
@@ -198,6 +204,7 @@ public class Login implements Initializable {
                                             "Your account has been locked due to many login attempts.\nPlease reset your password or contact support for more details!");
                                 } else {
                                     Session.setCurrentUser(usr);
+                                    saveLogs();
                                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                                     alert.setTitle("Login Successful");
                                     alert.setHeaderText("Welcome, " + usr.getNom() + "!");
@@ -217,6 +224,7 @@ public class Login implements Initializable {
                                 usr.setEmail(fetchUser(credential).getString("email"));
                                 usr.setPicture(fetchUser(credential).getString("picture"));
                                 Session.setCurrentUser(usr);
+                                saveLogs();
                                 System.out.println(fetchUser(credential));
                                 System.out.println(usr);
                                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -539,6 +547,7 @@ public class Login implements Initializable {
                             "Your account has been locked due to many login attempts.\nPlease reset your password or contact support for more details!");
                 } else {
                     Session.setCurrentUser(usr);
+                    saveLogs();
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Login Successful");
                     alert.setHeaderText("Welcome, " + usr.getNom() + "!");
@@ -557,6 +566,7 @@ public class Login implements Initializable {
                 usr.setEmail(email);
                 usr.setPicture(picture);
                 Session.setCurrentUser(usr);
+                saveLogs();
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("New User");
                 alert.setHeaderText("Account not found");
@@ -576,5 +586,39 @@ public class Login implements Initializable {
             alert.setContentText("Error processing user data: " + e.getMessage());
             alert.showAndWait();
         }
+    }
+    public static String getLocation() {
+        try {
+            URL url = new URL("http://ip-api.com/line/?fields=city,country");
+            BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+            String city = in.readLine();
+            String country = in.readLine();
+            in.close();
+            return city + ", " + country;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Unknown Location";
+        }
+    }
+    private void saveLogs(){
+        LogsService logs = new LogsService();
+        SystemInfo systemInfo = new SystemInfo();
+        ComputerSystem cs = systemInfo.getHardware().getComputerSystem();
+        OperatingSystem os = systemInfo.getOperatingSystem();
+        String osInfo = os.toString();
+        String getlocation = getLocation();
+        UserService userService = new UserService();
+        Logs log = new Logs(
+                userService.getUserIdByEmail(Session.getCurrentUser().getEmail()),
+                "LOGIN",
+                LocalDateTime.now(),
+                cs.getSerialNumber(),
+                cs.getModel(),
+                osInfo,
+                getlocation,
+                0
+        );
+        logs.addLog(log);
+        Session.setCurrentLog(logs.getLogsByUserId(userService.getUserIdByEmail(Session.getCurrentUser().getEmail())).get(0));
     }
 }

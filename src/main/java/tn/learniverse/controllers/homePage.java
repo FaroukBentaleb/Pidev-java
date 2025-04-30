@@ -99,4 +99,8 @@ public class homePage implements Initializable {
     public void Settings(ActionEvent actionEvent) {
         Navigator.redirect(actionEvent,"/fxml/user/Settings.fxml");
     }
+
+    public void ToLogs(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/fxml/user/LogsList.fxml");
+    }
 }
