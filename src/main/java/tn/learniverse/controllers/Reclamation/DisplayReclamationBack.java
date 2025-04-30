@@ -1,4 +1,6 @@
 package tn.learniverse.controllers.Reclamation;
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,8 +30,13 @@ import javafx.geometry.Pos;
 import tn.learniverse.services.ReponseService;
 import tn.learniverse.services.EmailService;
 import javax.mail.MessagingException;
+import com.twilio.type.PhoneNumber;
+
+
 
 public class DisplayReclamationBack {
+    public static final String ACCOUNT_SID = "ACa5b91cf8110a06dfde772f780d6f4e5a";
+    public static final String AUTH_TOKEN = "21d4ea3471c5a8161b289db48a10674e";
     private User user;
     public void setUser(User user) {
         this.user = user;
@@ -306,7 +313,7 @@ public class DisplayReclamationBack {
                 }
             });
 
-            btnRepondre.setOnAction(event -> {
+                btnRepondre.setOnAction(event -> {
                 try {
                     User admin = new User();
                     admin.setId(2);
@@ -317,7 +324,13 @@ public class DisplayReclamationBack {
                     reponseService.ajouter(reponse, admin, reclamation);
 
                     reclamationService.updateStatut(reclamation.getId(), "En Cours");
-
+                    Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+                    String formattedPhoneNumber = "+216" + reclamation.getUser().getTel();
+                    Message message = Message.creator(
+                                    new PhoneNumber("+21658407572"), // To number
+                                    new PhoneNumber("+19786985856"), // From Twilio number
+                                    "vous avez une réponse sur votre reclamation !")
+                            .create();
                     String emailContent = String.format("""
                         <h3>Détails de la réclamation :</h3>
                         <p><strong>Titre :</strong> %s</p>
