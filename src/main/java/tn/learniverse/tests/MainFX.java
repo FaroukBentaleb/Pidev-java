@@ -17,7 +17,7 @@ public class MainFX extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reclamation/DisplayReclamationBack.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reclamation/DisplayReclamations.fxml"));
             if (loader.getLocation() == null) {
                 throw new IOException("Cannot find FXML file at /Reclamation/Back.fxml");
             }

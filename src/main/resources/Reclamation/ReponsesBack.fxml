@@ -126,7 +126,10 @@
                 <HBox HBox.hgrow="ALWAYS" />
 
                 <!-- Return Button -->
-                <Button fx:id="btnRetour" onAction="#retournerVersDisplayReclamations" style="-fx-background-color: #1a73e8; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 8 15;" text="Retour" />
+                <HBox spacing="10">
+                    <Button fx:id="reclamationTraite" onAction="#marquerReclamationTraitee" style="-fx-background-color: #1a73e8; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 8 15;" text="Marquer la reclamation comme traitée" />
+                    <Button fx:id="btnRetour" onAction="#retournerVersDisplayReclamations" style="-fx-background-color: #1a73e8; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 8 15;" text="Retour" />
+                </HBox>
             </HBox>
 
             <!-- MAIN CONTENT -->

@@ -1,5 +1,9 @@
 package tn.learniverse.controllers.Reclamation;
 
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -15,6 +19,7 @@ import javafx.stage.Stage;
 import tn.learniverse.entities.Reclamation;
 import tn.learniverse.entities.Reponse;
 import tn.learniverse.entities.User;
+import tn.learniverse.services.EmailService;
 import tn.learniverse.services.ReclamationService;
 import tn.learniverse.services.ReponseService;
 import javafx.geometry.Insets;
@@ -22,16 +27,22 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.event.ActionEvent;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import javax.mail.MessagingException;
+
 public class ReponsesBack {
+    public static final String ACCOUNT_SID = "ACa5b91cf8110a06dfde772f780d6f4e5a";
+    public static final String AUTH_TOKEN = "21d4ea3471c5a8161b289db48a10674e";
     @FXML
     private Label labelTitre;
     @FXML
@@ -40,6 +51,8 @@ public class ReponsesBack {
     private TextArea textAreaReponse;
     @FXML
     private Button btnRetour;
+    @FXML
+    private Button reclamationTraite;
 
     private final ReclamationService reclamationService = new ReclamationService();
     private final ReponseService reponseService = new ReponseService();
@@ -55,6 +68,11 @@ public class ReponsesBack {
     public void setReclamation(Reclamation rec) throws SQLException {
         this.reclamation = rec;
         labelTitre.setText("Réponses pour : " + rec.getTitre());
+        if ("Traité".equals(rec.getStatut())) {
+            reclamationTraite.setVisible(false);
+            reclamationTraite.setManaged(false);
+        }
+        
         user = new User();
         user.setId(2);
         user.setRole("Admin");
@@ -203,13 +221,43 @@ public class ReponsesBack {
                             reponse.setDateModification(new Date());
                             refreshReponses();
                             stage.close();
-
-                            // Afficher l'alerte après la modification
                             Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
                             successAlert.setTitle("Modification réussie");
                             successAlert.setHeaderText(null);
                             successAlert.setContentText("La réponse a été modifiée avec succès.");
                             successAlert.showAndWait();
+                            Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+                            String formattedPhoneNumber = "+216" + reclamation.getUser().getTel();
+                            Message message = Message.creator(
+                                            new PhoneNumber("+21658407572"), // To number
+                                            new PhoneNumber("+19786985856"), // From Twilio number
+                                            "vous avez une réponse sur votre reclamation !")
+                                    .create();
+                            String emailContent = String.format("""
+                        <h3>Détails de la réclamation :</h3>
+                        <p><strong>Titre :</strong> %s</p>
+                        <p><strong>Date de réclamation :</strong> %s</p>
+                        <p><strong>Contenu :</strong> %s</p>
+                        <h3>Réponse à la Reclamation :</h3>
+                        <p><strong>Date de réponse :</strong> %s</p>
+                        <p>%s</p>
+                        """,
+                                    reclamation.getTitre(),
+                                    new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(reclamation.getDateReclamation()),
+                                    reclamation.getContenu(),
+                                    new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date()),
+                                    contenu
+                            );
+
+                            try {
+                                EmailService.sendEmail(
+                                        reclamation.getUser().getEmail(),
+                                        "Réponse à votre réclamation - " + reclamation.getTitre(),
+                                        emailContent
+                                );
+                            } catch (MessagingException emailError) {
+                                System.err.println("Erreur lors de l'envoi de l'email : " + emailError.getMessage());
+                            }
                         } catch (SQLException ex) {
                             ex.printStackTrace();
                         }
@@ -274,6 +322,38 @@ public class ReponsesBack {
                     successAlert.setHeaderText(null);
                     successAlert.setContentText("La réponse a été ajoutée avec succès.");
                     successAlert.showAndWait();
+                    Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+                    String formattedPhoneNumber = "+216" + reclamation.getUser().getTel();
+                    Message message = Message.creator(
+                                    new PhoneNumber("+21658407572"), // To number
+                                    new PhoneNumber("+19786985856"), // From Twilio number
+                                    "vous avez une réponse sur votre reclamation !")
+                            .create();
+                    String emailContent = String.format("""
+                        <h3>Détails de la réclamation :</h3>
+                        <p><strong>Titre :</strong> %s</p>
+                        <p><strong>Date de réclamation :</strong> %s</p>
+                        <p><strong>Contenu :</strong> %s</p>
+                        <h3>Réponse à la Reclamation :</h3>
+                        <p><strong>Date de réponse :</strong> %s</p>
+                        <p>%s</p>
+                        """,
+                            reclamation.getTitre(),
+                            new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(reclamation.getDateReclamation()),
+                            reclamation.getContenu(),
+                            new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date()),
+                            contenu
+                    );
+
+                    try {
+                        EmailService.sendEmail(
+                                reclamation.getUser().getEmail(),
+                                "Réponse à votre réclamation - " + reclamation.getTitre(),
+                                emailContent
+                        );
+                    } catch (MessagingException emailError) {
+                        System.err.println("Erreur lors de l'envoi de l'email : " + emailError.getMessage());
+                    }
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                     Alert errorAlert = new Alert(Alert.AlertType.ERROR);
@@ -313,6 +393,46 @@ public class ReponsesBack {
             stage.setScene(new Scene(root));
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    public void marquerReclamationTraitee(ActionEvent actionEvent) {
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmationAlert.setTitle("Confirmation");
+        confirmationAlert.setHeaderText(null);
+        confirmationAlert.setContentText("Voulez-vous vraiment marquer cette réclamation comme traitée ?");
+
+        Optional<ButtonType> result = confirmationAlert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            try {
+                ReclamationService reclamationService = new ReclamationService();
+                reclamationService.updateStatut(reclamation.getId(), "Traité");
+
+                ReponseService reponseService = new ReponseService();
+                List<Reponse> reponses = reclamation.getReponses();
+                if (!reponses.isEmpty()) {
+                    Reponse derniereReponse = reponses.get(reponses.size() - 1);
+                    reponseService.updateStatut(derniereReponse.getId(), 1);
+                }
+
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reclamation/DisplayReclamationBack.fxml"));
+                Parent root = loader.load();
+                Scene scene = ((Node) actionEvent.getSource()).getScene();
+                scene.setRoot(root);
+
+                Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+                successAlert.setTitle("Succès");
+                successAlert.setHeaderText(null);
+                successAlert.setContentText("La réclamation a été marquée comme traitée avec succès.");
+                successAlert.showAndWait();
+
+            } catch (SQLException | IOException e) {
+                e.printStackTrace();
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setTitle("Erreur");
+                errorAlert.setHeaderText(null);
+                errorAlert.setContentText("Une erreur est survenue lors de la mise à jour du statut : " + e.getMessage());
+                errorAlert.showAndWait();
+            }
         }
     }
 }

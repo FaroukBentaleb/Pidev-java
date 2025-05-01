@@ -21,9 +21,11 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import tn.learniverse.services.ChatBotReclamationService;
 
 public class DisplayReclamations {
     private User user;
+    private final ChatBotReclamationService chatGPT = new ChatBotReclamationService();
     public void setUser(User user) {
         this.user = user;
     }
@@ -33,7 +35,17 @@ public class DisplayReclamations {
     private Label headerLabel;
     @FXML
     private TextField searchField;
+    @FXML
+    private TextArea chatArea;
+    @FXML
+    private TextField inputField;
     private final ReclamationService reclamationService = new ReclamationService();
+    @FXML
+    private Button chatbotButton;
+    @FXML
+    private Label hoverMessage;
+    @FXML
+    private VBox chatContainer;
 
     public void initialize() {
         reclamationsContainer.getChildren().clear();
@@ -332,6 +344,46 @@ public class DisplayReclamations {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void envoyerMessage() {
+        String message = inputField.getText().trim();
+        if (!message.isEmpty()) {
+            chatArea.appendText("Vous : " + message + "\n");
+            inputField.clear();
+
+            new Thread(() -> {
+                String response = chatGPT.envoyer(message);
+                javafx.application.Platform.runLater(() -> {
+                    chatArea.appendText("Chatbot : " + response + "\n");
+                });
+            }).start();
+        }
+    }
+
+    @FXML
+    private void showHoverMessage() {
+        hoverMessage.setText("Résolvez votre problème ici");
+        hoverMessage.setVisible(true);
+    }
+
+    @FXML
+    private void hideHoverMessage() {
+        hoverMessage.setVisible(false);
+    }
+
+    @FXML
+    private void openChat() {
+        chatContainer.setVisible(true);
+        if (chatArea.getText().isEmpty()) {
+            chatArea.appendText("Chatbot : Bonjour ! Comment puis-je vous aider aujourd'hui avec votre problème ?\n");
+        }
+    }
+
+    @FXML
+    private void closeChat() {
+        chatContainer.setVisible(false);
     }
 }
 

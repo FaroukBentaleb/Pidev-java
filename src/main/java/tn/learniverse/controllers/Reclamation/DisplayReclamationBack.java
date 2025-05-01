@@ -353,6 +353,19 @@ public class DisplayReclamationBack {
                     reponseService.ajouter(reponse, admin, reclamation);
 
                     reclamationService.updateStatut(reclamation.getId(), "En Cours");
+                    stage.close();
+                    Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
+                    successAlert.setTitle("Succès");
+                    successAlert.setHeaderText(null);
+                    successAlert.setContentText("Réponse ajoutée avec succès !");
+                    successAlert.showAndWait();
+                    try {
+                        int currentPage = pagination.getCurrentPageIndex() + 1;
+                        loadReclamationsForPage(currentPage);
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                        showErrorMessage("Erreur lors du rafraîchissement de l'interface");
+                    }
                     Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
                     String formattedPhoneNumber = "+216" + reclamation.getUser().getTel();
                     Message message = Message.creator(
@@ -368,36 +381,22 @@ public class DisplayReclamationBack {
                         <h3>Réponse à la Reclamation :</h3>
                         <p><strong>Date de réponse :</strong> %s</p>
                         <p>%s</p>
-                        """, 
-                        reclamation.getTitre(),
-                        new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(reclamation.getDateReclamation()),
-                        reclamation.getContenu(),
-                        new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date()),
-                        reponseTextArea.getText()
+                        """,
+                            reclamation.getTitre(),
+                            new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(reclamation.getDateReclamation()),
+                            reclamation.getContenu(),
+                            new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new Date()),
+                            reponseTextArea.getText()
                     );
 
                     try {
                         EmailService.sendEmail(
-                            reclamation.getUser().getEmail(),
-                            "Réponse à votre réclamation - " + reclamation.getTitre(),
-                            emailContent
+                                reclamation.getUser().getEmail(),
+                                "Réponse à votre réclamation - " + reclamation.getTitre(),
+                                emailContent
                         );
                     } catch (MessagingException e) {
                         System.err.println("Erreur lors de l'envoi de l'email : " + e.getMessage());
-                    }
-
-                    stage.close();
-                    Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
-                    successAlert.setTitle("Succès");
-                    successAlert.setHeaderText(null);
-                    successAlert.setContentText("Réponse ajoutée avec succès !");
-                    successAlert.showAndWait();
-                    try {
-                        int currentPage = pagination.getCurrentPageIndex() + 1;
-                        loadReclamationsForPage(currentPage);
-                    } catch (SQLException ex) {
-                        ex.printStackTrace();
-                        showErrorMessage("Erreur lors du rafraîchissement de l'interface");
                     }
 
                 } catch (SQLException e) {
