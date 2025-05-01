@@ -65,7 +65,7 @@ public class Login implements Initializable {
             if(validateLogin()){
                 try {
                     usr = userService.getUserByEmail(login_email.getText());
-                    if (usr != null) {
+                    if (usr.getEmail() != null) {
                         String storedPassword = usr.getMdp();
                         if (storedPassword != null && BCrypt.checkpw(pwd, storedPassword)) {
                             if(usr.getBan()==1){
@@ -93,6 +93,7 @@ public class Login implements Initializable {
                                 }
                             }
                         } else {
+                            userService.MnsLogs(usr.getEmail(),usr.getLogs());
                             Alert alert = new Alert(Alert.AlertType.ERROR);
                             alert.setTitle("Login Failed");
                             alert.setContentText("The given email/password doesn't match any account!");
@@ -117,7 +118,7 @@ public class Login implements Initializable {
     }
 
     public void forgotPassword(ActionEvent actionEvent) {
-
+        Navigator.redirect(actionEvent, "/fxml/user/ResetPwdEmail.fxml");
     }
     private void setupRealTimeValidation() {
 
