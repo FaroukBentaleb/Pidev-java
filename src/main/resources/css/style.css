@@ -213,3 +213,19 @@
 .signup-button:pressed {
     -fx-background-color: #4B5AE5;
 }
+.social-button {
+    -fx-background-color: white;
+    -fx-border-color: #E0E0E0;
+    -fx-border-radius: 4;
+    -fx-padding: 10 15;
+    -fx-font-size: 14px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 2, 0, 0, 1);
+}
+
+.social-button:hover {
+    -fx-background-color: #F8F8F8;
+}
+
+.social-button Text {
+    -fx-fill: #444444;
+}

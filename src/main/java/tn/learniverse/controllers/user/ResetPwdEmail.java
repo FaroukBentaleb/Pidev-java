@@ -33,11 +33,13 @@ public class ResetPwdEmail implements Initializable {
     @FXML
     public void Next_btn(ActionEvent actionEvent) {
         if (login_email.getText().isEmpty()) {
+            login_email.setStyle("-fx-border-color: red;");
             showError("Email required to proceed!");
             return;
         }
 
         if (!login_email.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
+            login_email.setStyle("-fx-border-color: red;");
             showError("Invalid email format");
             return;
         }

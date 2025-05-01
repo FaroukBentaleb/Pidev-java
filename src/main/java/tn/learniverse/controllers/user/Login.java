@@ -55,60 +55,52 @@ public class Login implements Initializable {
         User usr = new User();
         String login = login_email.getText();
         String pwd = login_pwd.getText();
-        if(login == null || login.isEmpty() || pwd == null || pwd.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("No given data");
-            alert.setContentText("Please fill all the fields");
-            alert.showAndWait();
-        }
-        else{
-            if(validateLogin()){
-                try {
-                    usr = userService.getUserByEmail(login_email.getText());
-                    if (usr.getEmail() != null) {
-                        String storedPassword = usr.getMdp();
-                        if (storedPassword != null && BCrypt.checkpw(pwd, storedPassword)) {
-                            if(usr.getBan()==1){
-                                Navigator.showAlert(Alert.AlertType.ERROR,"Account Banned","Your account has been Banned by the admin.\nPlease contact support for more details!");
+        if(validateLogin()){
+            try {
+                usr = userService.getUserByEmail(login_email.getText());
+                if (usr.getEmail() != null) {
+                    String storedPassword = usr.getMdp();
+                    if (storedPassword != null && BCrypt.checkpw(pwd, storedPassword)) {
+                        if(usr.getBan()==1){
+                            Navigator.showAlert(Alert.AlertType.ERROR,"Account Banned","Your account has been Banned by the admin.\nPlease contact support for more details!");
+                        }
+                        else{
+                            if(usr.getLogs()==0){
+                                Navigator.showAlert(Alert.AlertType.ERROR,"Account locked","Your account has been locked due to many login attempts.\nPlease reset your password or contact support for more details!");
                             }
                             else{
-                                if(usr.getLogs()==0){
-                                    Navigator.showAlert(Alert.AlertType.ERROR,"Account locked","Your account has been locked due to many login attempts.\nPlease reset your password or contact support for more details!");
+                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                alert.setTitle("Login Successful");
+                                alert.setHeaderText("Welcome !!");
+                                alert.setContentText("Connected successfully");
+                                alert.showAndWait();
+                                Session.setCurrentUser(usr);
+                                saveLogs();
+                                if(Session.getCurrentUser().getRole().equals("Admin")){
+                                    Navigator.redirect(actionEvent, "/fxml/Back.fxml");
                                 }
                                 else{
-                                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                                    alert.setTitle("Login Successful");
-                                    alert.setHeaderText("Welcome !!");
-                                    alert.setContentText("Connected successfully");
-                                    alert.showAndWait();
-                                    Session.setCurrentUser(usr);
-                                    saveLogs();
-                                    if(Session.getCurrentUser().getRole().equals("Admin")){
-                                        Navigator.redirect(actionEvent, "/fxml/Back.fxml");
-                                    }
-                                    else{
-                                        Navigator.redirect(actionEvent, "/fxml/homePage.fxml");
-                                    }
-
+                                    Navigator.redirect(actionEvent, "/fxml/homePage.fxml");
                                 }
+
                             }
-                        } else {
-                            userService.MnsLogs(usr.getEmail(),usr.getLogs());
-                            Alert alert = new Alert(Alert.AlertType.ERROR);
-                            alert.setTitle("Login Failed");
-                            alert.setContentText("The given email/password doesn't match any account!");
-                            alert.showAndWait();
                         }
                     } else {
+                        userService.MnsLogs(usr.getEmail(),usr.getLogs());
                         Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("No User Found");
-                        alert.setContentText("The given email doesn't match any account!");
+                        alert.setTitle("Login Failed");
+                        alert.setContentText("The given email/password doesn't match any account!");
                         alert.showAndWait();
                     }
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("No User Found");
+                    alert.setContentText("The given email doesn't match any account!");
+                    alert.showAndWait();
                 }
-                catch (Exception e){
-                    System.out.println(e.getMessage());
-                }
+            }
+            catch (Exception e){
+                System.out.println(e.getMessage());
             }
         }
     }
@@ -320,7 +312,7 @@ public class Login implements Initializable {
                         .build();
 
                 LocalServerReceiver receiver = new LocalServerReceiver.Builder()
-                        .setPort(8888)
+                        .setPort(0)
                         .setHost("localhost")
                         .build();
 
@@ -356,7 +348,7 @@ public class Login implements Initializable {
 
     public void Github_btn(ActionEvent actionEvent) {
         String clientId = "Ov23limTtxB1KtyLigav";
-        String redirectUri = "http://localhost:8888/github-callback";
+        String redirectUri = "http://localhost:9001/github-callback";
         String state = generateRandomState();
 
         String authUrl = "https://github.com/login/oauth/authorize" +
@@ -368,7 +360,7 @@ public class Login implements Initializable {
 
         new Thread(() -> {
             try {
-                ServerSocket serverSocket = new ServerSocket(8888);
+                ServerSocket serverSocket = new ServerSocket(9001);
 
                 Desktop.getDesktop().browse(new URI(authUrl));
 
