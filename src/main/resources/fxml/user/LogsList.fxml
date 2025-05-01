@@ -13,6 +13,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.text.Text?>
 <BorderPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #f0f4f8;" stylesheets="@../../css/profile-style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.user.LogsList">
     <left>
         <VBox alignment="TOP_CENTER" maxHeight="887.0" prefHeight="674.0" prefWidth="220.0" spacing="15" style="-fx-background-color: linear-gradient(to bottom, #1976D2, #64B5F6); -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 0);">
@@ -61,7 +63,7 @@
                     </Label>
                     <Label fx:id="role" style="-fx-text-fill: rgba(255,255,255,0.7); -fx-font-size: 11px;" text="Student" />
                 </VBox>
-                <Button  prefHeight="25.0" prefWidth="32.0" style="-fx-background-color: transparent; -fx-cursor: hand;" text="🔓">
+                <Button prefHeight="25.0" prefWidth="32.0" style="-fx-background-color: transparent; -fx-cursor: hand;" text="🔓">
                     <HBox.margin><Insets left="10.0" /></HBox.margin>
                 </Button>
             </HBox>
@@ -92,12 +94,12 @@
         <HBox prefHeight="650.0" prefWidth="1060.0">
             <VBox prefWidth="230.0" spacing="2" style="-fx-background-color: white; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 0, 0);">
                 <padding><Insets bottom="10.0" left="10.0" right="10.0" top="15.0" /></padding>
-                <Button fx:id="securityBtn" maxWidth="1.7976931348623157E308"  prefHeight="40.0" style="-fx-background-color: #1976D2; -fx-text-fill: white; -fx-font-size: 13px; -fx-background-radius: 5; -fx-alignment: BASELINE_LEFT;">
+                <Button fx:id="securityBtn" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: #1976D2; -fx-text-fill: white; -fx-font-size: 13px; -fx-background-radius: 5; -fx-alignment: BASELINE_LEFT;">
                     <graphic><Label style="-fx-text-fill: white;" text="🔒" /></graphic>
                     <padding><Insets bottom="8.0" left="10.0" right="10.0" top="8.0" /></padding>
                     <text>Security</text>
                 </Button>
-                <Button fx:id="notificationsBtn" maxWidth="1.7976931348623157E308"  prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-size: 13px; -fx-background-radius: 5; -fx-alignment: BASELINE_LEFT;">
+                <Button fx:id="notificationsBtn" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: #333; -fx-font-size: 13px; -fx-background-radius: 5; -fx-alignment: BASELINE_LEFT;">
                     <graphic><Label text="🔔" /></graphic>
                     <padding><Insets bottom="8.0" left="10.0" right="10.0" top="8.0" /></padding>
                     <text>Notifications</text>
@@ -124,7 +126,15 @@
                                         <HBox alignment="CENTER_LEFT" spacing="15">
                                             <Label style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #1976D2;" text="Device Activity Logs" />
                                             <Region HBox.hgrow="ALWAYS" />
-                                            <Button fx:id="refreshLogsBtn" style="-fx-background-color: #E3F2FD; -fx-text-fill: #1976D2; -fx-background-radius: 5;" text="Refresh" />
+                                            <Button onAction="#refreshLogsBtn" style="-fx-background-color: #E3F2FD; -fx-text-fill: #1976D2; -fx-background-radius: 5; -fx-cursor: hand;">
+                                                <graphic>
+                                                    <HBox spacing="5" alignment="CENTER">
+                                                        <SVGPath content="M12,4V1L8,5L12,9V6C15.31,6 18,8.69 18,12C18,15.31 15.31,18 12,18C8.69,18 6,15.31 6,12C6,10.6 6.44,9.31 7.19,8.27L5.77,6.85C4.67,8.17 4,10 4,12C4,16.42 7.58,20 12,20C16.42,20 20,16.42 20,12C20,7.58 16.42,4 12,4Z"
+                                                                 fill="#1976D2" />
+                                                        <Text text="Refresh" fill="#1976D2" />
+                                                    </HBox>
+                                                </graphic>
+                                            </Button>
                                         </HBox>
 
                                         <!-- Device Logs Cards Container -->

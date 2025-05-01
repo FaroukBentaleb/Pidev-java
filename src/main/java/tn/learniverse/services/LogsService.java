@@ -79,6 +79,20 @@ public class LogsService implements ILogs {
             return false;
         }
     }
+    public boolean logExists(int logId) {
+        String sql = "SELECT COUNT(*) FROM logs WHERE id = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, logId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+
 
     private Logs extractLog(ResultSet rs) throws SQLException {
         Logs log = new Logs();

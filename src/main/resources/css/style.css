@@ -229,3 +229,18 @@
 .social-button Text {
     -fx-fill: #444444;
 }
+.refresh-button {
+    -fx-background-color: #E3F2FD;
+    -fx-text-fill: #1976D2;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-padding: 6 12;
+}
+
+.refresh-button:hover {
+    -fx-background-color: #BBDEFB;
+}
+
+.refresh-button:pressed {
+    -fx-background-color: #90CAF9;
+}

@@ -1,5 +1,6 @@
 package tn.learniverse.controllers.user;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -138,5 +139,19 @@ public class LogsList implements Initializable {
         return row;
     }
 
+
+    public void refreshLogsBtn(ActionEvent actionEvent) {
+        loadLogs();
+    }
+    private void loadLogs() {
+        logsContainer.getChildren().clear();
+
+        LogsService logsService = new LogsService();
+        List<Logs> logs = logsService.getLogsByUserId(Session.getCurrentLog().getUserId());
+
+        for (Logs log : logs) {
+            logsContainer.getChildren().add(createLogCard(log));
+        }
+    }
 
 }
