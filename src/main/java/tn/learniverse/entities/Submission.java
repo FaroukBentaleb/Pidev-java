@@ -1,97 +1,50 @@
-//package tn.learniverse.entities;
-//
-//import tn.learniverse.tools.Session;
-//
-//import java.time.LocalDate;
-//
-//public class Submission {
-//    private int id;
-//    private Session.User user;
-//    private Competition competition;
-//    private LocalDate date;
-//    private String studentTry;
-//    private String aiFeedback;
-//    private int timeTaken;
-//
-//    public Submission() {
-//    }
-//
-//    public Submission(User user, Competition competition, LocalDate date, String studentTry, String aiFeedback, int timeTaken) {
-//        this.user = user;
-//        this.competition = competition;
-//        this.date = date;
-//        this.studentTry = studentTry;
-//        this.aiFeedback = aiFeedback;
-//        this.timeTaken = timeTaken;
-//    }
-//
-//    // Getters and Setters
-//    public int getId() {
-//        return id;
-//    }
-//
-//    public void setId(int id) {
-//        this.id = id;
-//    }
-//
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
-//
-//    public Competition getCompetition() {
-//        return competition;
-//    }
-//
-//    public void setCompetition(Competition competition) {
-//        this.competition = competition;
-//    }
-//
-//    public LocalDate getDate() {
-//        return date;
-//    }
-//
-//    public void setDate(LocalDate date) {
-//        this.date = date;
-//    }
-//
-//    public String getStudentTry() {
-//        return studentTry;
-//    }
-//
-//    public void setStudentTry(String studentTry) {
-//        this.studentTry = studentTry;
-//    }
-//
-//    public String getAiFeedback() {
-//        return aiFeedback;
-//    }
-//
-//    public void setAiFeedback(String aiFeedback) {
-//        this.aiFeedback = aiFeedback;
-//    }
-//
-//    public int getTimeTaken() {
-//        return timeTaken;
-//    }
-//
-//    public void setTimeTaken(int timeTaken) {
-//        this.timeTaken = timeTaken;
-//    }
-//
-//    @Override
-//    public String toString() {
-//        return "Submission{" +
-//                "id=" + id +
-//                ", user=" + user +
-//                ", competition=" + competition +
-//                ", date=" + date +
-//                ", studentTry='" + studentTry + '\'' +
-//                ", aiFeedback='" + aiFeedback + '\'' +
-//                ", timeTaken=" + timeTaken +
-//                '}';
-//    }
-//}
+package tn.learniverse.entities;
+
+import tn.learniverse.tools.Session.User;
+import java.time.LocalDate;
+import java.util.Arrays;
+
+public class Submission {
+    private int id;
+    private User User;
+    private Challenge Challenge;
+    private LocalDate date;
+    private String studentTry;
+    private String[] aiFeedback;
+    private String[] correctedCode;
+    private Integer timeTaken;
+    private Integer rating;
+    private Competition comp;
+
+    // Getters and Setters
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
+
+    public User getIdUser() { return User; }
+    public void setIdUser(User idUser) { this.User = idUser; }
+
+    public Challenge getIdChallenge() { return Challenge; }
+    public void setIdChallenge(Challenge idChallenge) { this.Challenge = idChallenge; }
+
+    public LocalDate getDate() { return date; }
+    public void setDate(LocalDate date) { this.date = date; }
+
+    public String getStudentTry() { return studentTry; }
+    public void setStudentTry(String studentTry) { this.studentTry = studentTry; }
+
+    public String[] getAiFeedback() { return aiFeedback; }
+    public void setAiFeedback(String[] aiFeedback) { this.aiFeedback = aiFeedback; }
+
+    public String[] getCorrectedCode() { return correctedCode; }
+    public void setCorrectedCode(String[] correctedCode) { this.correctedCode = correctedCode; }
+
+    public Integer getTimeTaken() { return timeTaken; }
+    public void setTimeTaken(Integer timeTaken) { this.timeTaken = timeTaken; }
+
+    public Integer getRating() { return rating; }
+    public void setRating(Integer rating) { this.rating = rating; }
+    public Competition getComp() { return comp; }
+    public void setComp(Competition comp) {
+        this.comp = comp;
+    }
+}

@@ -276,14 +276,14 @@ public class CompetitionStep1Controller implements Initializable {
         Node sourceNode = (Node) event.getSource();
         if (sourceNode == null || sourceNode.getScene() == null || sourceNode.getScene().getWindow() == null) {
             System.err.println("Could not get window reference for FileChooser.");
-            return; // Cannot proceed without a window
+            return;
         }
         Stage stage = (Stage) sourceNode.getScene().getWindow();
         File selectedFile = fileChooser.showOpenDialog(stage);
         
         if (selectedFile != null) {
             try {
-                // Define XAMPP htdocs directory path
+
                 String xamppPath = "C:/xampp/htdocs/competition_images";
                 
                 // Create directory if it doesn't exist
@@ -543,16 +543,39 @@ public class CompetitionStep1Controller implements Initializable {
         }
         
         // Validate start date
-        if (dateCompPicker != null && dateCompPicker.getValue() == null) {
+//        if (dateCompPicker != null && dateCompPicker.getValue() == null) {
+//            if (startDateError != null) {
+//                startDateError.setText("Please select a start date");
+//                startDateError.setVisible(true);
+//            }
+//            dateCompPicker.setStyle("-fx-border-color: red;");
+//            isValid = false;
+//        } else if (dateCompPicker != null) {
+//            dateCompPicker.setStyle("");
+//            if (startDateError != null) startDateError.setVisible(false);
+//        }
+        if (dateCompPicker == null || dateCompPicker.getValue() == null) {
             if (startDateError != null) {
                 startDateError.setText("Please select a start date");
                 startDateError.setVisible(true);
             }
             dateCompPicker.setStyle("-fx-border-color: red;");
             isValid = false;
-        } else if (dateCompPicker != null) {
-            dateCompPicker.setStyle("");
-            if (startDateError != null) startDateError.setVisible(false);
+        } else {
+            LocalDate selectedDate = dateCompPicker.getValue();
+            LocalDate today = LocalDate.now();
+
+            if (selectedDate.isBefore(today)) {
+                if (startDateError != null) {
+                    startDateError.setText("Start date must be today or a future date");
+                    startDateError.setVisible(true);
+                }
+                dateCompPicker.setStyle("-fx-border-color: red;");
+                isValid = false;
+            } else {
+                dateCompPicker.setStyle("");
+                if (startDateError != null) startDateError.setVisible(false);
+            }
         }
         
         // Validate end date

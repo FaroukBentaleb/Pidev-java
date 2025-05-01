@@ -21,6 +21,7 @@
     -gray-900: #0f172a;             /* Darkest gray */
 }
 
+
 /* Animation Durations */
 * {
     -fx-transition-duration: 200ms;
@@ -197,7 +198,338 @@
     -fx-text-fill: -gray-800;
     -fx-padding: 5px 0;
 }
+.pagination-button {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #334155;
+    -fx-background-radius: 8;
+    -fx-padding: 8 12;
+    -fx-font-size: 14px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2);
+}
 
+.pagination-button:hover {
+    -fx-background-color: #f0f2f5;
+}
+
+.pagination-button:disabled {
+    -fx-opacity: 0.4;
+    -fx-background-color: #ffffff;
+}
+/* Navigation Buttons */
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-background-radius: 10;
+    -fx-font-family: 'Inter';
+    -fx-alignment: baseline-left;
+}
+
+.nav-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+}
+
+.active-nav {
+    -fx-background-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+/* Pagination Buttons */
+.pagination-button {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #1e293b;
+    -fx-background-radius: 10;
+    -fx-padding: 10 16;
+    -fx-font-size: 15px;
+    -fx-font-family: 'Inter';
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 5, 0, 0, 1);
+}
+
+.pagination-button:hover {
+    -fx-background-color: #f1f5f9;
+}
+
+.pagination-button:disabled {
+    -fx-opacity: 0.5;
+    -fx-background-color: #ffffff;
+}
+
+/* Primary Button */
+.primary-button {
+    -fx-background-color: #2563eb;
+    -fx-text-fill: white;
+    -fx-background-radius: 25;
+    -fx-padding: 12 24;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-font-family: 'Inter';
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);
+}
+
+.primary-button:hover {
+    -fx-background-color: #1e40af;
+}
+
+/* Status Info */
+.status-info {
+    -fx-font-size: 14px;
+    -fx-text-fill: #64748b;
+    -fx-font-family: 'Inter';
+}
+/* Filter Buttons */
+.filter-button {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #1e293b;
+    -fx-background-radius: 25;
+    -fx-padding: 8 16;
+    -fx-font-size: 14px;
+    -fx-font-family: 'Inter';
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 5, 0, 0, 1);
+}
+
+.filter-button:hover {
+    -fx-background-color: #f1f5f9;
+}
+
+.filter-button:pressed {
+    -fx-background-color: #e2e8f0;
+}
+
+/* Sort Buttons */
+.sort-button {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #1e293b;
+    -fx-background-radius: 25;
+    -fx-padding: 8 16;
+    -fx-font-size: 14px;
+    -fx-font-family: 'Inter';
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 5, 0, 0, 1);
+}
+
+.sort-button:hover {
+    -fx-background-color: #f1f5f9;
+}
+
+.sort-button:pressed {
+    -fx-background-color: #e2e8f0;
+}
+/* Existing styles */
+.filter-button {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #1e293b;
+    -fx-background-radius: 25;
+    -fx-padding: 8 16;
+    -fx-font-size: 14px;
+    -fx-font-family: 'Inter';
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 5, 0, 0, 1);
+}
+
+.filter-button:hover {
+    -fx-background-color: #f1f5f9;
+}
+
+.filter-button:pressed {
+    -fx-background-color: #e2e8f0;
+}
+
+.sort-button {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #1e293b;
+    -fx-background-radius: 25;
+    -fx-padding: 8 16;
+    -fx-font-size: 14px;
+    -fx-font-family: 'Inter';
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 5, 0, 0, 1);
+}
+
+.sort-button:hover {
+    -fx-background-color: #f1f5f9;
+}
+
+.sort-button:pressed {
+    -fx-background-color: #e2e8f0;
+}
+
+.pagination-button {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #334155;
+    -fx-background-radius: 8;
+    -fx-padding: 8 12;
+    -fx-font-size: 14px;
+    -fx-font-family: 'Inter';
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 5, 0, 0, 1);
+}
+
+.pagination-button:hover {
+    -fx-background-color: #f1f5f9;
+}
+
+.pagination-button:pressed {
+    -fx-background-color: #e2e8f0;
+}
+
+/* New styles */
+.action-button {
+    -fx-background-color: #2563eb;
+    -fx-text-fill: #ffffff;
+    -fx-background-radius: 25;
+    -fx-padding: 8 16;
+    -fx-font-size: 14px;
+    -fx-font-family: 'Inter';
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 5, 0, 0, 1);
+}
+
+.action-button:hover {
+    -fx-background-color: #1e40af;
+}
+
+.action-button:pressed {
+    -fx-background-color: #1e3a8a;
+}
+
+.submitted-tag {
+    -fx-background-color: #2f855a;
+    -fx-text-fill: #ffffff;
+    -fx-background-radius: 12;
+    -fx-padding: 4 8;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Inter';
+}
+@font-face {
+    font-family: 'Inter';
+    src: url('/fonts/Inter-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Inter Bold';
+    src: url('/fonts/Inter-Bold.ttf');
+}
+
+/* Existing styles from competition_card.fxml and BackofficeCompetitionsController */
+.root {
+    -fx-font-family: 'Inter';
+}
+
+.action-button {
+    -fx-background-color: #2563eb;
+    -fx-text-fill: #ffffff;
+    -fx-background-radius: 25;
+    -fx-padding: 8 16;
+    -fx-font-size: 14px;
+    -fx-font-family: 'Inter';
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 5, 0, 0, 1);
+}
+
+.action-button:hover {
+    -fx-background-color: #1e40af;
+}
+
+.action-button:pressed {
+    -fx-background-color: #1e3a8a;
+}
+
+.submitted-tag {
+    -fx-background-color: #2f855a;
+    -fx-text-fill: #ffffff;
+    -fx-background-radius: 12;
+    -fx-padding: 4 8;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Inter';
+}
+
+.pagination-button {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #1e293b;
+    -fx-background-radius: 8;
+    -fx-padding: 8 12;
+    -fx-font-size: 14px;
+    -fx-font-family: 'Inter';
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 5, 0, 0, 1);
+}
+
+.pagination-button:hover {
+    -fx-background-color: #f1f5f9;
+}
+
+.dialog-pane {
+    -fx-background-color: #ffffff;
+    -fx-font-family: 'Inter';
+    -fx-font-size: 14px;
+}
+
+/* New styles for charts */
+.chart {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 12;
+    -fx-padding: 10;
+    -fx-font-family: 'Inter';
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 10, 0, 0, 2);
+}
+
+.chart-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1e293b;
+    -fx-font-family: 'Inter';
+}
+
+.chart-legend {
+    -fx-background-color: #f9fafb;
+    -fx-background-radius: 8;
+    -fx-padding: 5;
+    -fx-font-family: 'Inter';
+    -fx-font-size: 12px;
+}
+
+.pie-chart .chart-pie {
+    -fx-border-color: #ffffff;
+    -fx-border-width: 2;
+}
+
+.pie-chart .data0.chart-pie { -fx-pie-color: #2563eb; }
+.pie-chart .data1.chart-pie { -fx-pie-color: #2f855a; }
+.pie-chart .data2.chart-pie { -fx-pie-color: #f97316; }
+.pie-chart .data3.chart-pie { -fx-pie-color: #1e293b; }
+.pie-chart .data4.chart-pie { -fx-pie-color: #64748b; }
+
+.bar-chart .bar {
+    -fx-background-color: #2563eb;
+    -fx-background-radius: 8;
+}
+
+.line-chart .chart-series-line {
+    -fx-stroke: #2563eb;
+    -fx-stroke-width: 3;
+}
+
+.line-chart .chart-line-symbol {
+    -fx-background-color: #2563eb, #ffffff;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
+}
+
+.chart-plot-background {
+    -fx-background-color: #f9fafb;
+}
+
+.chart-vertical-grid-lines,
+.chart-horizontal-grid-lines {
+    -fx-stroke: #e5e7eb;
+}
+
+.axis {
+    -fx-font-family: 'Inter';
+    -fx-font-size: 12px;
+    -fx-tick-label-fill: #1e293b;
+}
+
+.axis-label {
+    -fx-font-family: 'Inter';
+    -fx-font-size: 14px;
+    -fx-text-fill: #1e293b;
+}
 /* No Challenges Warning */
 .warning-box {
     -fx-background-color: derive(-warning-color, 85%);

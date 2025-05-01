@@ -9,13 +9,11 @@
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import io.github.palexdev.materialfx.controls.MFXIconWrapper?>
 <?import io.github.palexdev.mfxresources.fonts.MFXFontIcon?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.image.*?>
-<?import io.github.palexdev.materialfx.controls.*?>
-
 <?import javafx.scene.shape.Rectangle?>
-<HBox fx:id="competitionCard" styleClass="competition-card-horizontal" stylesheets="@../css/styles.css, @../css/MFXColors.css, @../css/MFXButton.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.Competition.CompetitionCardController" prefWidth="1000" maxWidth="Infinity">
+
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.Region?>
+<HBox fx:id="competitionCard" styleClass="competition-card-horizontal" stylesheets="@../css/styles.css, @../css/MFXColors.css, @../css/MFXButton.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" prefWidth="1000" maxWidth="Infinity">
    <children>
       <ImageView fx:id="competitionImage" fitHeight="220.0" fitWidth="320.0" pickOnBounds="true" preserveRatio="true">
          <clip>
@@ -38,9 +36,9 @@
                   <javafx.scene.effect.DropShadow color="#00000022" radius="1.5" spread="0.05" />
                </effect>
             </Label>
-            
+
             <Separator style="-fx-background-color: #e2e8f0; -fx-opacity: 0.8;" />
-            
+
             <HBox spacing="40.0">
                <VBox spacing="12.0" HBox.hgrow="ALWAYS">
                   <HBox spacing="5.0" styleClass="info-row" alignment="CENTER_LEFT">
@@ -55,6 +53,11 @@
                         <MFXIconWrapper fx:id="statusIcon" />
                         <Label text="Status:" style="-fx-font-weight: bold; -fx-text-fill: #4a5568;" />
                         <Label fx:id="statusLabel" styleClass="competition-status" text="Active" style="-fx-font-weight: bold; -fx-background-color: #ebf8ff; -fx-background-radius: 4; -fx-padding: 2 8; -fx-text-fill: #2b6cb0;" />
+                        <Label fx:id="submittedTag" text="Submitted" style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #ffffff; -fx-background-color: #2f855a; -fx-padding: 2 8; -fx-background-radius: 4; -fx-font-family: 'Inter';" visible="false" managed="false">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </Label>
                      </children>
                   </HBox>
                   <HBox spacing="5.0" styleClass="info-row" alignment="CENTER_LEFT">
@@ -89,22 +92,27 @@
                   </HBox>
                </VBox>
             </HBox>
-            
-            <Label fx:id="descriptionPreviewLabel" text="This competition challenges participants to create responsive web applications using modern frontend frameworks. Competitors will be judged on design, functionality, and code quality." 
+
+            <Label fx:id="descriptionPreviewLabel" text="This competition challenges participants to create responsive web applications using modern frontend frameworks. Competitors will be judged on design, functionality, and code quality."
                    wrapText="true" maxHeight="60" style="-fx-text-fill: #4a5568; -fx-font-style: italic;" />
-            
+
             <Region VBox.vgrow="ALWAYS" />
-            
+
             <HBox alignment="CENTER_RIGHT" spacing="15.0">
                <children>
-                  <MFXButton fx:id="editBtn" text="Edit" styleClass="mfx-button, secondary-button" style="-fx-background-color: #4299e1; -fx-text-fill: white;">
+                  <MFXButton fx:id="checkBtn" text="Check Submission" styleClass="mfx-button, action-button" style="-fx-background-color: #2563eb; -fx-text-fill: #ffffff; -fx-background-radius: 25; -fx-padding: 8 16; -fx-font-size: 14px; -fx-font-family: 'Inter'; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 5, 0, 0, 1);">
                      <graphic>
-                        <MFXIconWrapper fx:id="editIcon" />
+                        <MFXFontIcon description="fas-check" size="14" color="#ffffff" />
                      </graphic>
                   </MFXButton>
-                  <MFXButton fx:id="deleteBtn" text="Delete" styleClass="mfx-button, danger-button" style="-fx-background-color: #e53e3e; -fx-text-fill: white;">
+                  <MFXButton fx:id="editBtn" text="Leaderboard" styleClass="mfx-button, action-button" style="-fx-background-color: #5d70e1; -fx-text-fill: #ffffff; -fx-background-radius: 25; -fx-padding: 8 16; -fx-font-size: 14px; -fx-font-family: 'Inter'; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 5, 0, 0, 1);">
                      <graphic>
-                        <MFXIconWrapper fx:id="deleteIcon" />
+                        <MFXFontIcon description="fas-trophy" size="14" color="#ffffff" />
+                     </graphic>
+                  </MFXButton>
+                  <MFXButton fx:id="viewBtn" text="More Details" styleClass="mfx-button, action-button" style="-fx-background-color: #5d70e1; -fx-text-fill: #ffffff; -fx-background-radius: 25; -fx-padding: 8 16; -fx-font-size: 14px; -fx-font-family: 'Inter'; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 5, 0, 0, 1);">
+                     <graphic>
+                        <MFXFontIcon description="mdi-information" size="14" color="#ffffff" />
                      </graphic>
                   </MFXButton>
                </children>
@@ -119,10 +127,10 @@
       <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
    </padding>
    <style>
-      -fx-background-color: white; 
-      -fx-background-radius: 16; 
-      -fx-border-color: #e2e8f0; 
-      -fx-border-radius: 16; 
+      -fx-background-color: white;
+      -fx-background-radius: 16;
+      -fx-border-color: #e2e8f0;
+      -fx-border-radius: 16;
       -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 10, 0, 0, 4);
    </style>
-</HBox> 
+</HBox>

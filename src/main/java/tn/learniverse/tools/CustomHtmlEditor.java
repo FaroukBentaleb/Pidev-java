@@ -26,8 +26,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.web.HTMLEditor;
 import javafx.scene.web.WebView;
 import javafx.util.Duration;
-import tn.learniverse.tools.*;
 
+import tn.learniverse.tools.CodeHighlighter;
 
 /**
  * An extension of HTMLEditor with additional features like code block insertion

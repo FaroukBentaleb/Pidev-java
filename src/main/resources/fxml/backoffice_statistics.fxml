@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
+<?import io.github.palexdev.mfxresources.fonts.MFXFontIcon?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.layout.StackPane?>
+
+<BorderPane prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #f4f7fb;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.Competition.BackofficeStatisticsController">
+    <left>
+        <VBox alignment="TOP_CENTER" prefHeight="800.0" prefWidth="260.0" spacing="15" style="-fx-background-color: #1e293b; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 12, 0, 2, 2);">
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="30.0" />
+            </padding>
+            <HBox alignment="CENTER" spacing="10">
+                <MFXFontIcon description="fas-rocket" size="30" color="#ffffff" />
+                <Label text="Learniverse" style="-fx-text-fill: white; -fx-font-size: 26px; -fx-font-weight: bold; -fx-font-family: 'Inter';" />
+            </HBox>
+            <Label text="Admin Panel" style="-fx-text-fill: #93c5fd; -fx-font-size: 14px; -fx-font-family: 'Inter';" />
+            <VBox spacing="10" style="-fx-background-color: rgba(255,255,255,0.1); -fx-background-radius: 12; -fx-padding: 15; -fx-margin: 20 0;">
+                <Label text="Quick Stats" style="-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-font-family: 'Inter';" />
+                <HBox spacing="10">
+                    <Label text="Total Competitions:" style="-fx-text-fill: #d1d5db; -fx-font-size: 14px; -fx-font-family: 'Inter';" />
+                    <Label fx:id="sidebarTotalCompetitionsLabel" text="0" style="-fx-text-fill: #60a5fa; -fx-font-size: 14px; -fx-font-weight: bold; -fx-font-family: 'Inter';" />
+                </HBox>
+                <HBox spacing="10">
+                    <Label text="Active:" style="-fx-text-fill: #d1d5db; -fx-font-size: 14px; -fx-font-family: 'Inter';" />
+                    <Label fx:id="sidebarActiveCompetitionsLabel" text="0" style="-fx-text-fill: #60a5fa; -fx-font-size: 14px; -fx-font-weight: bold; -fx-font-family: 'Inter';" />
+                </HBox>
+                <HBox spacing="10">
+                    <Label text="Completed:" style="-fx-text-fill: #d1d5db; -fx-font-size: 14px; -fx-font-family: 'Inter';" />
+                    <Label fx:id="sidebarCompletedCompetitionsLabel" text="0" style="-fx-text-fill: #60a5fa; -fx-font-size: 14px; -fx-font-weight: bold; -fx-font-family: 'Inter';" />
+                </HBox>
+            </VBox>
+            <MFXButton alignment="BASELINE_LEFT" graphicTextGap="12" maxWidth="Infinity" prefHeight="48.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 10; -fx-font-family: 'Inter'; -fx-padding: 12 15;">
+                <graphic>
+                    <MFXFontIcon description="fas-chart-line" size="20" color="#ffffff" />
+                </graphic>
+                <text>Dashboard</text>
+            </MFXButton>
+            <MFXButton alignment="BASELINE_LEFT" graphicTextGap="12" maxWidth="Infinity" prefHeight="48.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 10; -fx-font-family: 'Inter'; -fx-padding: 12 15;">
+                <graphic>
+                    <MFXFontIcon description="fas-users" size="20" color="#ffffff" />
+                </graphic>
+                <text>User Management</text>
+            </MFXButton>
+            <MFXButton alignment="BASELINE_LEFT" graphicTextGap="12" maxWidth="Infinity" prefHeight="48.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 10; -fx-font-family: 'Inter'; -fx-padding: 12 15;">
+                <graphic>
+                    <MFXFontIcon description="fas-trophy" size="20" color="#ffffff" />
+                </graphic>
+                <text>Competition Management</text>
+            </MFXButton>
+            <MFXButton alignment="BASELINE_LEFT" graphicTextGap="12" maxWidth="Infinity" prefHeight="48.0" style="-fx-background-color: rgba(255,255,255,0.15); -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 10; -fx-font-family: 'Inter'; -fx-padding: 12 15;">
+                <graphic>
+                    <MFXFontIcon description="fas-chart-bar" size="20" color="#ffffff" />
+                </graphic>
+                <text>Statistics</text>
+            </MFXButton>
+            <VBox VBox.vgrow="ALWAYS" />
+            <HBox alignment="CENTER_LEFT" prefHeight="60.0" spacing="12" style="-fx-background-color: rgba(255,255,255,0.12); -fx-background-radius: 12; -fx-padding: 10;">
+                <StackPane>
+                    <Circle fill="#2563eb" radius="20" style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 0);" />
+                    <Label text="A" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold; -fx-font-family: 'Inter';" />
+                </StackPane>
+                <VBox spacing="4">
+                    <Label text="Admin" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-font-family: 'Inter';" />
+                    <Label text="Administrator" style="-fx-text-fill: rgba(255,255,255,0.7); -fx-font-size: 12px; -fx-font-family: 'Inter';" />
+                </VBox>
+            </HBox>
+        </VBox>
+    </left>
+
+    <center>
+        <MFXScrollPane fitToWidth="true" style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS">
+            <content>
+                <VBox fx:id="statisticsContainer" spacing="25" style="-fx-background-color: #f9fafb; -fx-padding: 25;" prefWidth="940">
+                    <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0, 0, 3);">
+                        <Label text="Statistics Dashboard" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #1e293b; -fx-font-family: 'Inter';" />
+                        <HBox HBox.hgrow="ALWAYS" />
+                        <MFXButton fx:id="backButton" text="Back to Competitions" style="-fx-background-color: #2563eb; -fx-text-fill: white; -fx-background-radius: 25; -fx-padding: 10 20; -fx-font-size: 14px; -fx-font-family: 'Inter'; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 1);" />
+                    </HBox>
+
+                    <VBox spacing="15" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 4);">
+                        <Label text="Competitions Overview" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #1e293b; -fx-font-family: 'Inter';" />
+                        <Label text="Key metrics and trends for competition activity." style="-fx-font-size: 13px; -fx-text-fill: #64748b; -fx-font-family: 'Inter';" />
+                        <HBox spacing="15" alignment="CENTER">
+                            <VBox spacing="8" style="-fx-background-color: #f1f5f9; -fx-background-radius: 10; -fx-padding: 12; -fx-pref-width: 200;">
+                                <Label text="Total Competitions" style="-fx-font-size: 13px; -fx-text-fill: #4a5568; -fx-font-family: 'Inter';" />
+                                <Label fx:id="totalCompetitionsLabel" text="0" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2563eb; -fx-font-family: 'Inter';" />
+                            </VBox>
+                            <VBox spacing="8" style="-fx-background-color: #f1f5f9; -fx-background-radius: 10; -fx-padding: 12; -fx-pref-width: 200;">
+                                <Label text="Active Competitions" style="-fx-font-size: 13px; -fx-text-fill: #4a5568; -fx-font-family: 'Inter';" />
+                                <Label fx:id="activeCompetitionsLabel" text="0" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2563eb; -fx-font-family: 'Inter';" />
+                            </VBox>
+                            <VBox spacing="8" style="-fx-background-color: #f1f5f9; -fx-background-radius: 10; -fx-padding: 12; -fx-pref-width: 200;">
+                                <Label text="Completed Competitions" style="-fx-font-size: 13px; -fx-text-fill: #4a5568; -fx-font-family: 'Inter';" />
+                                <Label fx:id="completedCompetitionsLabel" text="0" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2563eb; -fx-font-family: 'Inter';" />
+                            </VBox>
+                            <VBox spacing="8" style="-fx-background-color: #f1f5f9; -fx-background-radius: 10; -fx-padding: 12; -fx-pref-width: 200;">
+                                <Label text="Avg Participants" style="-fx-font-size: 13px; -fx-text-fill: #4a5568; -fx-font-family: 'Inter';" />
+                                <Label fx:id="avgParticipantsLabel" text="0" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2563eb; -fx-font-family: 'Inter';" />
+                            </VBox>
+                        </HBox>
+                        <HBox spacing="15">
+                            <VBox spacing="8" prefWidth="460">
+                                <Label text="Status Distribution" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1e293b; -fx-font-family: 'Inter';" />
+                                <Label text="Planned, InProgress, and Completed competitions." style="-fx-font-size: 12px; -fx-text-fill: #64748b; -fx-font-family: 'Inter';" />
+                                <PieChart fx:id="statusPieChart" prefWidth="460" prefHeight="280" animated="true" style="-fx-background-color: #f1f5f9; -fx-background-radius: 10;" />
+                            </VBox>
+                            <VBox spacing="8" prefWidth="460">
+                                <Label text="Top Competitions" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1e293b; -fx-font-family: 'Inter';" />
+                                <Label text="Top 6 competitions by participant count." style="-fx-font-size: 12px; -fx-text-fill: #64748b; -fx-font-family: 'Inter';" />
+                                <BarChart fx:id="popularCompetitionsChart" prefWidth="460" prefHeight="280" animated="true" style="-fx-background-color: #f1f5f9; -fx-background-radius: 10;">
+                                    <xAxis>
+                                        <CategoryAxis label="Competition" />
+                                    </xAxis>
+                                    <yAxis>
+                                        <NumberAxis label="Participants" />
+                                    </yAxis>
+                                </BarChart>
+                            </VBox>
+                        </HBox>
+                        <VBox spacing="8">
+                            <Label text="Submission Ratings Trend" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1e293b; -fx-font-family: 'Inter';" />
+                            <Label text="Average submission rating (0-20) per month." style="-fx-font-size: 12px; -fx-text-fill: #64748b; -fx-font-family: 'Inter';" />
+                            <LineChart fx:id="submissionRatingsChart" prefWidth="920" prefHeight="280" animated="true" style="-fx-background-color: #f1f5f9; -fx-background-radius: 10;">
+                                <xAxis>
+                                    <CategoryAxis label="Month" />
+                                </xAxis>
+                                <yAxis>
+                                    <NumberAxis label="Average Rating" lowerBound="0" upperBound="20" tickUnit="5" autoRanging="false" />
+                                </yAxis>
+                            </LineChart>
+                        </VBox>
+                    </VBox>
+
+                    <VBox spacing="15" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 4);">
+                        <Label text="Challenges Overview" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #1e293b; -fx-font-family: 'Inter';" />
+                        <Label text="Completion rates and difficulty analysis." style="-fx-font-size: 13px; -fx-text-fill: #64748b; -fx-font-family: 'Inter';" />
+                        <HBox spacing="15" alignment="CENTER">
+                            <VBox spacing="8" style="-fx-background-color: #f1f5f9; -fx-background-radius: 10; -fx-padding: 12; -fx-pref-width: 200;">
+                                <Label text="Total Challenges" style="-fx-font-size: 13px; -fx-text-fill: #4a5568; -fx-font-family: 'Inter';" />
+                                <Label fx:id="totalChallengesLabel" text="0" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2563eb; -fx-font-family: 'Inter';" />
+                            </VBox>
+                            <VBox spacing="8" style="-fx-background-color: #f1f5f9; -fx-background-radius: 10; -fx-padding: 12; -fx-pref-width: 200;">
+                                <Label text="Avg Completion Rate" style="-fx-font-size: 13px; -fx-text-fill: #4a5568; -fx-font-family: 'Inter';" />
+                                <Label fx:id="avgCompletionRateLabel" text="0%" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2563eb; -fx-font-family: 'Inter';" />
+                            </VBox>
+                        </HBox>
+                        <HBox spacing="15">
+<!--                            <VBox spacing="8" prefWidth="460">-->
+<!--                                <Label text="Most Difficult Challenges" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1e293b; -fx-font-family: 'Inter';" />-->
+<!--                                <Label text="Top 5 challenges by lowest avg rating (0-20)." style="-fx-font-size: 12px; -fx-text-fill: #64748b; -fx-font-family: 'Inter';" />-->
+<!--                                <BarChart fx:id="difficultChallengesChart" prefWidth="460" prefHeight="280" animated="true" style="-fx-background-color: #f1f5f9; -fx-background-radius: 10;">-->
+<!--                                    <xAxis>-->
+<!--                                        <CategoryAxis label="Challenge" />-->
+<!--                                    </xAxis>-->
+<!--                                    <yAxis>-->
+<!--                                        <NumberAxis label="Rating (Lower = Harder)" lowerBound="0" upperBound="20" tickUnit="5" autoRanging="false" />-->
+<!--                                    </yAxis>-->
+<!--                                </BarChart>-->
+<!--                            </VBox>-->
+                            <VBox spacing="8" prefWidth="460">
+                                <Label text="Difficulty Distribution" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1e293b; -fx-font-family: 'Inter';" />
+                                <Label text="Challenges by avg rating range (0-20)." style="-fx-font-size: 12px; -fx-text-fill: #64748b; -fx-font-family: 'Inter';" />
+                                <BarChart fx:id="challengeDifficultyChart" prefWidth="460" prefHeight="280" animated="true" style="-fx-background-color: #f1f5f9; -fx-background-radius: 10;">
+                                    <xAxis>
+                                        <CategoryAxis label="Rating Range" />
+                                    </xAxis>
+                                    <yAxis>
+                                        <NumberAxis label="Challenge Count" />
+                                    </yAxis>
+                                </BarChart>
+                            </VBox>
+                        </HBox>
+                    </VBox>
+
+                    <VBox spacing="15" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 4);">
+                        <Label text="Submissions Overview" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #1e293b; -fx-font-family: 'Inter';" />
+                        <Label text="Submission volume, quality, and performance metrics." style="-fx-font-size: 13px; -fx-text-fill: #64748b; -fx-font-family: 'Inter';" />
+                        <HBox spacing="15" alignment="CENTER">
+                            <VBox spacing="8" style="-fx-background-color: #f1f5f9; -fx-background-radius: 10; -fx-padding: 12; -fx-pref-width: 200;">
+                                <Label text="Total Submissions" style="-fx-font-size: 13px; -fx-text-fill: #4a5568; -fx-font-family: 'Inter';" />
+                                <Label fx:id="totalSubmissionsLabel" text="0" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2563eb; -fx-font-family: 'Inter';" />
+                            </VBox>
+                            <VBox spacing="8" style="-fx-background-color: #f1f5f9; -fx-background-radius: 10; -fx-padding: 12; -fx-pref-width: 200;">
+                                <Label text="Avg Rating" style="-fx-font-size: 13px; -fx-text-fill: #4a5568; -fx-font-family: 'Inter';" />
+                                <Label fx:id="avgRatingLabel" text="0" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2563eb; -fx-font-family: 'Inter';" />
+                            </VBox>
+                            <VBox spacing="8" style="-fx-background-color: #f1f5f9; -fx-background-radius: 10; -fx-padding: 12; -fx-pref-width: 200;">
+                                <Label text="Avg Time Taken" style="-fx-font-size: 13px; -fx-text-fill: #4a5568; -fx-font-family: 'Inter';" />
+                                <Label fx:id="avgTimeTakenLabel" text="0 min" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2563eb; -fx-font-family: 'Inter';" />
+                            </VBox>
+                            <VBox spacing="8" style="-fx-background-color: #f1f5f9; -fx-background-radius: 10; -fx-padding: 12; -fx-pref-width: 200;">
+                                <Label text="Success Rate" style="-fx-font-size: 13px; -fx-text-fill: #4a5568; -fx-font-family: 'Inter';" />
+                                <Label fx:id="successRateLabel" text="0%" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2563eb; -fx-font-family: 'Inter';" />
+                            </VBox>
+                        </HBox>
+                        <VBox spacing="8">
+                            <Label text="Submissions Trend" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1e293b; -fx-font-family: 'Inter';" />
+                            <Label text="Number of submissions per month." style="-fx-font-size: 12px; -fx-text-fill: #64748b; -fx-font-family: 'Inter';" />
+                            <LineChart fx:id="submissionsOverTimeChart" prefWidth="920" prefHeight="280" animated="true" style="-fx-background-color: #f1f5f9; -fx-background-radius: 10;">
+                                <xAxis>
+                                    <CategoryAxis label="Month" />
+                                </xAxis>
+                                <yAxis>
+                                    <NumberAxis label="Submission Count" />
+                                </yAxis>
+                            </LineChart>
+                        </VBox>
+                    </VBox>
+                </VBox>
+            </content>
+        </MFXScrollPane>
+    </center>
+</BorderPane>
