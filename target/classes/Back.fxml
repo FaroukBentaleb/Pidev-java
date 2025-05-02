@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="tn.learniverse.controllers.BackController">
+
+    <!-- LEFT NAVIGATION -->
+    <left>
+        <VBox spacing="20" style="-fx-background-color: #0F172A; -fx-padding: 25;">
+            <Label text="Admin Panel" style="-fx-font-size: 24px; -fx-text-fill: white; -fx-font-weight: bold;" />
+            <Button text="Dashboard" style="-fx-background-color: transparent; -fx-text-fill: white;" />
+            <Button text="Courses" style="-fx-background-color: #1E293B; -fx-text-fill: white;" />
+            <Button text="Lessons" style="-fx-background-color: transparent; -fx-text-fill: white;" />
+            <Button text="Logout" style="-fx-background-color: #EF4444; -fx-text-fill: white;" />
+        </VBox>
+    </left>
+
+    <!-- MAIN CONTENT -->
+    <center>
+        <VBox spacing="20" style="-fx-background-color: #F1F5F9; -fx-padding: 25;">
+            <Label text="Courses List" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #1E293B;" />
+
+            <TableView fx:id="courseTable" style="-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2);">
+                <columns>
+                    <TableColumn fx:id="titleColumn" text="Title" prefWidth="180"/>
+                    <TableColumn fx:id="descriptionColumn" text="Description" prefWidth="300"/>
+                    <TableColumn fx:id="levelColumn" text="Level" prefWidth="120"/>
+                    <TableColumn fx:id="categoryColumn" text="Category" prefWidth="150"/>
+                    <TableColumn fx:id="actionColumn" text="Actions" prefWidth="150"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+</BorderPane>

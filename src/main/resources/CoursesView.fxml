@@ -13,8 +13,15 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.AmbientLight?>
-
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Slider?>
+
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.TitledPane?>
 <StackPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
            fx:controller="tn.learniverse.controllers.CoursesViewController">
 
@@ -139,6 +146,105 @@
                         </VBox.margin>
                     </HBox>
 
+                    <!-- Search and Filter Bar -->
+                    <HBox spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 3, 0, 0, 1);">
+                        <VBox.margin>
+                            <Insets left="30.0" right="30.0" top="10.0" />
+                        </VBox.margin>
+                        <!-- Search by Name -->
+                        <HBox alignment="CENTER_LEFT" spacing="10.0" HBox.hgrow="ALWAYS">
+                            <Label text="🔍" />
+                            <TextField fx:id="searchField" promptText="Search by course name" prefHeight="35.0" HBox.hgrow="ALWAYS"
+                                       style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: #e2e8f0; -fx-padding: 0 15 0 15;"
+                                       onKeyReleased="#handleSearch" />
+                        </HBox>
+                        <!-- Filter by Category -->
+                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                            <Label text="Category:" />
+                            <ComboBox fx:id="categoryFilter" prefWidth="150.0" prefHeight="35.0" promptText="All Categories"
+                                      style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: #e2e8f0; -fx-background-color: white;"
+                                      onAction="#handleFilter" />
+                        </HBox>
+
+                        <!-- Filter by Price Range -->
+                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                            <Label text="Max Price:" />
+                            <Slider fx:id="priceSlider" min="0" max="1000" value="1000" showTickLabels="true" showTickMarks="true"
+                                    prefWidth="150.0" prefHeight="35.0" onMouseReleased="#handleFilter"
+                                    style="-fx-control-inner-background: #e2e8f0; -fx-accent: #6A11CB;" />
+                            <Label fx:id="priceLabel" text="1000 DT" />
+                        </HBox>
+                        <!-- Favorites Filter Button -->
+                        <Button fx:id="favoriteFilterButton" text="My Favorites" prefHeight="35.0"
+                                style="-fx-background-color: white; -fx-text-fill: #4338ca; -fx-border-color: #4338ca; -fx-border-radius: 20; -fx-background-radius: 20;"
+                                onAction="#showOnlyFavorites" />
+                        <!-- Reset Filters Button -->
+                        <Button text="Reset Filters" onAction="#resetFilters"
+                                style="-fx-background-color: linear-gradient(to right, #6A11CB, #2575FC); -fx-text-fill: white; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 2, 0, 0, 1); -fx-font-weight: bold; -fx-padding: 8 15;" />
+                    </HBox>
+
+
+                    <StackPane alignment="CENTER">
+                        <!-- Bouton toggle avec style dynamique -->
+                            <Button fx:id="youtubeToggleBtn" text="Press here to discover!" onAction="#toggleYoutubeSearch"
+                                style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-background-radius: 15; -fx-padding: 8 15; -fx-effect: dropshadow(three-pass-box, rgba(76,175,80,0.4), 5, 0, 0, 2);"
+                                StackPane.alignment="TOP_RIGHT">
+                            <StackPane.margin>
+                                <Insets top="20" right="20"/>
+                            </StackPane.margin>
+                        </Button>
+
+                        <VBox fx:id="youtubeSearchBox" visible="false" managed="false" spacing="20" alignment="CENTER"
+                              style="-fx-padding: 30; -fx-background-color: white; -fx-background-radius: 20; -fx-border-color: #667eea; -fx-border-width: 3; -fx-border-radius: 20; -fx-effect: dropshadow(gaussian, rgba(102, 126, 234, 0.3), 12, 0.3, 0, 4); -fx-max-width: 600px; -fx-alignment: CENTER;">
+
+                            <VBox spacing="5" alignment="CENTER">
+                                <!-- Première partie du message d'accroche -->
+                                <Text text="Want to discover even more? "
+                                      style="-fx-font-size: 22px; -fx-fill: linear-gradient(to right, #667eea, #764ba2); -fx-font-weight: bold;"/>
+                                <Text text="Access YouTube freely via Learniverse!"
+                                      style="-fx-font-size: 22px; -fx-fill: linear-gradient(to right, #667eea, #764ba2); -fx-font-weight: bold;"
+                                      textAlignment="CENTER"/>
+                            </VBox>
+
+                            <!-- Barre de recherche stylée -->
+                            <HBox spacing="10" alignment="CENTER" style="-fx-padding: 10; -fx-background-color: white; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 3); -fx-max-width: 500px;">
+
+                                <SVGPath content="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                                         fill="#718096" scaleX="0.7" scaleY="0.7"/>
+
+                                <TextField fx:id="youtubeSearchField" promptText="Search for more videos..."
+                                           style="-fx-background-color: transparent; -fx-font-size: 13px; -fx-padding: 5 0; -fx-text-fill: #2d3748;"
+                                           HBox.hgrow="ALWAYS"/>
+
+                                <Button fx:id="youtubeSearchButton" text="Search" onAction="#handleYoutubeSearch"
+                                        style="-fx-background-color: linear-gradient(to right, #ff416c, #ff4b2b); -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 6 12; -fx-background-radius: 20; -fx-cursor: hand;"/>
+                            </HBox>
+
+                            <!-- Résultats de recherche -->
+                            <VBox fx:id="youtubeResultsPanel" visible="false" managed="false" spacing="15"
+                                  style="-fx-background-color: white; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 3); -fx-padding: 20; -fx-max-width: 500px;">
+
+                                <HBox alignment="CENTER_LEFT" spacing="10">
+                                    <Label fx:id="youtubeResultsTitle" text="Results for: "
+                                           style="-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: #2d3748;"/>
+                                    <Region HBox.hgrow="ALWAYS"/>
+                                    <Button fx:id="closeYoutubeResultsButton" text="✕" onAction="#closeYoutubeResults"
+                                            style="-fx-background-color: transparent; -fx-text-fill: #4a5568; -fx-font-size: 18px; -fx-cursor: hand;"/>
+                                </HBox>
+
+                                <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS"
+                                            style="-fx-background-color: transparent; -fx-border-color: transparent;">
+                                    <VBox fx:id="youtubeVideosContainer" spacing="15">
+                                        <!-- Les résultats seront ajoutés dynamiquement ici -->
+                                    </VBox>
+                                </ScrollPane>
+                            </VBox>
+                        </VBox>
+                    </StackPane>
+
+
+
+
                     <!-- Main Content Area -->
                     <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;" VBox.vgrow="ALWAYS">
                         <content>
@@ -149,6 +255,38 @@
                             </VBox>
                         </content>
                     </ScrollPane>
+
+                    <TitledPane fx:id="recommendedCoursesSection" text="Recommended Courses For You"
+                                style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-background-color: white; -fx-border-color: #e2e8f0;">
+                        <content>
+                            <VBox spacing="10">
+                                <!-- Bouton Refresh en haut à droite -->
+                                <HBox alignment="CENTER_RIGHT" style="-fx-padding: 0 10 10 0;">
+                                    <Button text="Refresh" onAction="#refreshRecommendedCourses"
+                                            style="-fx-background-color: #4caf50; -fx-text-fill: white; -fx-background-radius: 20; -fx-padding: 5 10; -fx-font-size: 12px;"/>
+                                </HBox>
+
+                                <!-- ScrollPane pour permettre le défilement horizontal -->
+                                <ScrollPane fitToHeight="true" fitToWidth="true"
+                                            hbarPolicy="NEVER" vbarPolicy="NEVER"
+                                            style="-fx-background-color: transparent; -fx-padding: 0 15 15 15;"
+                                            minHeight="200" prefHeight="300" maxHeight="400">
+                                    <content>
+                                        <HBox fx:id="recommendedCoursesContainer"
+                                              spacing="20"
+                                              style="-fx-background-color: #f8fafc;"
+                                              minHeight="300" prefHeight="400">
+                                            <!-- Les cours recommandés seront ajoutés dynamiquement ici -->
+                                        </HBox>
+                                    </content>
+                                </ScrollPane>
+                            </VBox>
+                        </content>
+                        <VBox.margin>
+                            <Insets left="30.0" right="30.0" bottom="30.0"/>
+                        </VBox.margin>
+                    </TitledPane>
+
                 </VBox>
 
                 <!-- Course Details View (initially not visible) -->
@@ -304,6 +442,7 @@
             <Insets bottom="28.0" right="31.0" />
         </StackPane.margin>
     </Button>
+
 
     <!-- AmbientLight preserved from original code -->
     <AmbientLight color="CHARTREUSE" lightOn="true" StackPane.alignment="BOTTOM_CENTER">

@@ -9,7 +9,7 @@ public class  DBConnection {
     public final String URL="jdbc:mysql://localhost:3306/learniverse";
     public final String USER="root";
     public final String PWD="";
-    private Connection connection;
+    private static Connection connection;
     public static DBConnection DB;
     private  DBConnection(){
         try {
@@ -27,7 +27,7 @@ public class  DBConnection {
         return DB;
     }
 
-    public Connection getConnection() {
+    public static Connection getConnection() {
         return connection;
     }
 }

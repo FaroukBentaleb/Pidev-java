@@ -7,15 +7,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import tn.learniverse.entities.Course;
+import tn.learniverse.entities.User;
 import tn.learniverse.services.CourseService;
+import tn.learniverse.services.MailService;
+import tn.learniverse.services.UserService;
+import tn.learniverse.tools.Session;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class AddCourseController implements Initializable {
@@ -71,6 +73,8 @@ public class AddCourseController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+
         // Initialize the service
         courseService = new CourseService();
 
@@ -240,11 +244,9 @@ public class AddCourseController implements Initializable {
         addButton.setDisable(!(isTitleValid && isDescriptionValid && isDurationValid &&
                 isPriceValid && isLevelValid && isCategoryValid));
     }
-
     @FXML
     private void AddCourse(ActionEvent event) {
         try {
-            // Create new course from form data
             Course course = new Course(
                     titleField.getText(),
                     descriptionField.getText(),
@@ -252,17 +254,16 @@ public class AddCourseController implements Initializable {
                     Double.parseDouble(priceField.getText()),
                     levelComboBox.getValue(),
                     categoryComboBox.getValue(),
-                    // In the service, the user ID is hardcoded to 7
                     7
             );
 
-            // Add course to database
             courseService.addCourse(course);
 
-            // Show success message
-            showAlert(AlertType.INFORMATION, "Succès", "Le cours a été ajouté avec succès !");
+            if (course.getPrice() == 0) {
+                sendEmailToStudents(course);
+            }
 
-            // Clear form
+            showAlert(AlertType.INFORMATION, "Succès", "Le cours a été ajouté avec succès !");
             clearForm();
 
         } catch (SQLException e) {
@@ -270,6 +271,57 @@ public class AddCourseController implements Initializable {
             e.printStackTrace();
         }
     }
+
+    private void sendEmailToStudents(Course course) {
+        try {
+            UserService userService = new UserService();
+            List<User> students = userService.getAllStudents();
+
+            for (User student : students) {
+                String to = student.getEmail();
+                String subject = "New Free Course Available on Learniverse!";
+
+                String body = "<!DOCTYPE html>"
+                        + "<html lang='en'>"
+                        + "<head>"
+                        + "  <meta charset='UTF-8'>"
+                        + "  <meta name='viewport' content='width=device-width, initial-scale=1.0'>"
+                        + "  <title>Learniverse Email</title>"
+                        + "</head>"
+                        + "<body style='margin: 0; padding: 0; background-color: #f8ebf4;'>"
+                        + "  <div style='padding: 20px;'>"
+                        + "    <div style='background-color: #fcfafd; padding: 20px; border-radius: 8px; box-shadow: 0px 0px 15px rgba(0,0,0,0.1); max-width: 600px; width: 100%; margin: auto;'>"
+                        + "      <h2 style='color: #333; font-size: 26px; margin-bottom: 10px; text-align: center;'>🚀 New Free Course: " + course.getTitle() + "</h2>"
+                        + "      <p style='font-size: 16px; color: #555; line-height: 1.5; margin-bottom: 20px; text-align: center;'>"
+                        + "        🌟 Here's an exciting opportunity for you! A new free course, <strong>" + course.getTitle() + "</strong>, is now available on <strong>Learniverse.</strong>!"
+                        + "      </p>"
+                        + "      <p style='font-size: 16px; color: #555; text-align: center;'>Don't miss this chance to enhance your skills! We invite you to check it out now.</p>"
+                        + "      <div style='text-align: center; margin-top: 30px;'>"
+                        + "        <p style='font-size: 17px; color: #007bff; font-weight: bold;'>"
+                        + "          Open the Learniverse app now and explore this free course — and many more exciting opportunities await you!"
+                        + "        </p>"
+                        + "      </div>"
+                        + "      <p style='margin-top: 30px; font-size: 14px; color: #999; text-align: center;'>🙏 Thank you for being part of the <strong>Learniverse</strong> community.</p>"
+                        + "      <p style='font-size: 14px; color: #999; text-align: center;'>📩 Feel free to contact us if you need help.</p>"
+                        + "      <div style='text-align: center; margin-top: 30px;'>"
+                        + "        <img src='https://karimtrabelsi.s3.eu-west-3.amazonaws.com/logo.png' alt='Learniverse' style='width: 100px; margin-top: 10px;'>"
+                        + "        <p style='color: #aaa; font-size: 12px; margin-top: 10px;'>🌍 Learniverse | Your Path to Knowledge 📚</p>"
+                        + "        <p style='color: #aaa; font-size: 12px;'>© 2025 Learniverse, All rights reserved.</p>"
+                        + "      </div>"
+                        + "    </div>"
+                        + "  </div>"
+                        + "</body>"
+                        + "</html>";
+
+                MailService.sendMail(to, subject, body);
+            }
+        } catch (Exception e) {
+            System.out.println("Erreur lors de l'envoi des emails aux étudiants : " + e.getMessage());
+        }
+    }
+
+
+
 
     private void clearForm() {
         titleField.clear();

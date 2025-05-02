@@ -1,8 +1,7 @@
 package tn.learniverse.tests;
 
-import tn.learniverse.entities.Course;
 import tn.learniverse.entities.Lesson;
-import tn.learniverse.entities.user;
+import tn.learniverse.entities.User;
 import tn.learniverse.services.CourseService;
 import tn.learniverse.services.LessonService;
 import tn.learniverse.services.UserService;
@@ -13,7 +12,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws SQLException {
         UserService userService = new UserService();
-        user usr = new user("adem", "abidi", "adem@gmail.com","12345678", "1980-05-01", 123456789, "Instructor", "Experienced Instructor", 5, "Instructor", "resume.pdf", "profile.jpg", "facebook.com/adem", "instagram.com/adem", "linkedin.com/in/adem", true, 10, 0);
+        User usr = new User("adem", "abidi", "adem@gmail.com","12345678", "1980-05-01", 123456789, "Instructor", "Experienced Instructor", 5, "Instructor", "resume.pdf", "profile.jpg", "facebook.com/adem", "instagram.com/adem", "linkedin.com/in/adem", true, 10, 0);
 
         try{
             System.out.println(userService.getAllUsers());
