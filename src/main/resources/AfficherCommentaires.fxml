@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<VBox xmlns="http://javafx.com/javafx/21.0.2"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="tn.learniverse.controllers.AfficherCommentairesController"
+      spacing="10" style="-fx-padding: 15;">
+
+    <Label text="Post:" style="-fx-font-weight: bold; -fx-font-size: 16;"/>
+
+    <VBox fx:id="posteContainer" style="-fx-border-color: #ddd; -fx-border-width: 1; -fx-border-radius: 5; -fx-padding: 10;"/>
+
+    <Label text="Comments:" style="-fx-font-weight: bold; -fx-font-size: 16;"/>
+
+    <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background: #fff;">
+        <VBox fx:id="commentairesVBox" spacing="10" style="-fx-padding: 10;"/>
+    </ScrollPane>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <TextField fx:id="commentaireField" promptText="Write your comment..." HBox.hgrow="ALWAYS"/>
+
+        <Button fx:id="gifButton" onAction="#ouvrirFenetreGif" style="-fx-background-color: transparent;">
+            <graphic>
+                <ImageView fitHeight="20" fitWidth="20">
+                    <image>
+                        <Image url="@/assets/gifJava.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+
+        <Button text="comment" onAction="#ajouterCommentaire" style="-fx-background-color: #4a90e2; -fx-text-fill: white;"/>
+    </HBox>
+
+    <!-- Aperçu du GIF -->
+    <ImageView fx:id="gifPreview" fitHeight="100" fitWidth="100" preserveRatio="true"/>
+
+
+</VBox>
