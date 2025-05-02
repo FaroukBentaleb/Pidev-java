@@ -1,7 +1,7 @@
-package com.learniverse.controller;
+package tn.learniverse.controller;
 
-import com.learniverse.dao.SubscriptionDAO;
-import com.learniverse.model.Subscription;
+import tn.learniverse.dao.SubscriptionDAO;
+import tn.learniverse.model.Subscription;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.collections.FXCollections;
@@ -21,10 +21,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.layout.Region;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;

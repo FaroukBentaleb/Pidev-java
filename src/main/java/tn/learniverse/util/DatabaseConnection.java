@@ -1,4 +1,4 @@
-package com.learniverse.util;
+package tn.learniverse.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

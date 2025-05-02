@@ -1,4 +1,4 @@
-package com.learniverse.model;
+package tn.learniverse.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

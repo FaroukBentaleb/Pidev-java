@@ -1,11 +1,9 @@
-package com.learniverse.dao;
+package tn.learniverse.dao;
 
-import com.learniverse.model.Offre;
-import com.learniverse.util.DatabaseConnection;
+import tn.learniverse.model.Offre;
+import tn.learniverse.util.DatabaseConnection;
 
 import java.sql.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

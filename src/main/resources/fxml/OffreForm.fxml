@@ -8,7 +8,7 @@
 
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.learniverse.controller.OffreFormController"
+      fx:controller="tn.learniverse.controller.OffreFormController"
       styleClass="form-container"
       stylesheets="@../styles/offre-form.css"
       spacing="20" prefWidth="800" prefHeight="800">

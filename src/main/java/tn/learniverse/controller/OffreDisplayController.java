@@ -1,7 +1,8 @@
-package com.learniverse.controller;
+package tn.learniverse.controller;
 
-import com.learniverse.dao.OffreDAO;
-import com.learniverse.model.Offre;
+import tn.learniverse.dao.OffreDAO;
+import tn.learniverse.model.Offre;
+import tn.learniverse.service.QRCodeService;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.fxml.FXML;
@@ -10,12 +11,23 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.geometry.Pos;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.control.Dialog;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.Base64;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.WritableImage;
 
 import java.io.IOException;
 import java.util.List;
@@ -27,7 +39,12 @@ public class OffreDisplayController {
     @FXML
     private Button offersButton;
     
+    private Dialog<Void> qrDialog;
+    private ImageView qrImageView;
+    
     private OffreDAO offreDAO;
+    private QRCodeService qrCodeService;
+    private Offre currentOffer;
 
     @FXML
     public void initialize() {
@@ -47,12 +64,49 @@ public class OffreDisplayController {
         // Set up offers button click handler
         offersButton.setOnAction(event -> loadOffersView());
         
+        // Initialize QR code dialog
+        initializeQRDialog();
+        
         loadOffers();
         
         // Find all NEW badges and set their visibility randomly
         offersContainer.lookupAll(".new-badge").forEach(node -> {
             node.setVisible(Math.random() < 0.3);
         });
+        
+        qrCodeService = new QRCodeService();
+    }
+
+    private void initializeQRDialog() {
+        qrDialog = new Dialog<>();
+        qrDialog.setTitle("QR Code");
+        qrDialog.initModality(Modality.APPLICATION_MODAL);
+
+        // Create dialog content
+        VBox content = new VBox(15);
+        content.setAlignment(Pos.CENTER);
+        content.setPadding(new Insets(20));
+
+        qrImageView = new ImageView();
+        qrImageView.setFitWidth(250);
+        qrImageView.setFitHeight(250);
+        qrImageView.setPreserveRatio(true);
+
+        Button downloadButton = new Button("Download QR Code");
+        downloadButton.getStyleClass().add("download-button");
+        downloadButton.setStyle("-fx-background-color: #2962FF; -fx-text-fill: white; -fx-font-size: 14px;");
+        downloadButton.setOnAction(e -> downloadQRCode());
+
+        content.getChildren().addAll(qrImageView, downloadButton);
+
+        // Set up dialog
+        DialogPane dialogPane = qrDialog.getDialogPane();
+        dialogPane.setContent(content);
+        dialogPane.getButtonTypes().add(ButtonType.CLOSE);
+        
+        // Add stylesheet
+        String css = getClass().getResource("/styles/offer-display.css").toExternalForm();
+        dialogPane.getStylesheets().add(css);
     }
 
     private void loadOffersView() {
@@ -460,5 +514,60 @@ public class OffreDisplayController {
 
     public void refreshOffers() {
         loadOffers();
+    }
+
+    @FXML
+    private void showQRCode() {
+        try {
+            // Generate QR code
+            String qrCodeBase64 = qrCodeService.generateQRCode(currentOffer);
+            byte[] imageBytes = Base64.getDecoder().decode(qrCodeBase64);
+            
+            // Create and display image
+            Image qrImage = new Image(new ByteArrayInputStream(imageBytes));
+            qrImageView.setImage(qrImage);
+            
+            // Show dialog
+            qrDialog.showAndWait();
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Error", 
+                     "Failed to generate QR code: " + e.getMessage());
+        }
+    }
+    
+    @FXML
+    private void downloadQRCode() {
+        try {
+            // Create file chooser
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Save QR Code");
+            fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("PNG files (*.png)", "*.png"));
+            
+            // Show save dialog
+            File file = fileChooser.showSaveDialog(qrDialog.getDialogPane().getScene().getWindow());
+            if (file != null) {
+                // Get image from ImageView
+                Image image = qrImageView.getImage();
+                BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
+                
+                // Save image
+                ImageIO.write(bufferedImage, "png", file);
+                
+                showAlert(Alert.AlertType.INFORMATION, "Success", 
+                         "QR code saved successfully!");
+            }
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Error", 
+                     "Failed to save QR code: " + e.getMessage());
+        }
+    }
+
+    private void showAlert(Alert.AlertType type, String title, String content) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 }

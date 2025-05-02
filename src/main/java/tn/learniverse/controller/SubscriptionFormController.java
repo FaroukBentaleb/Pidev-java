@@ -1,7 +1,7 @@
-package com.learniverse.controller;
+package tn.learniverse.controller;
 
-import com.learniverse.dao.SubscriptionDAO;
-import com.learniverse.model.Subscription;
+import tn.learniverse.dao.SubscriptionDAO;
+import tn.learniverse.model.Subscription;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;

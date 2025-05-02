@@ -6,7 +6,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.learniverse.controller.SubscriptionFormController"
+            fx:controller="tn.learniverse.controller.SubscriptionFormController"
             prefHeight="400.0" prefWidth="600.0">
 
     <top>

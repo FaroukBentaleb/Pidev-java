@@ -1,12 +1,10 @@
-package com.learniverse.controller;
+package tn.learniverse.controller;
 
-import com.learniverse.dao.OffreDAO;
-import com.learniverse.model.Offre;
+import tn.learniverse.dao.OffreDAO;
+import tn.learniverse.model.Offre;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import javafx.scene.Node;
-import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.scene.layout.VBox;
 

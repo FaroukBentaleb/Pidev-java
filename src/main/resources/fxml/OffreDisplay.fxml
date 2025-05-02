@@ -10,9 +10,11 @@
 <?import javafx.collections.FXCollections?>
 <?import javafx.scene.control.Tooltip?>
 <?import java.lang.String?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 
 <BorderPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" 
-            fx:controller="com.learniverse.controller.OffreDisplayController" 
+            fx:controller="tn.learniverse.controller.OffreDisplayController"
             stylesheets="@../styles/offer-display.css"
             style="-fx-background-color: #f8f9fa;">
 
@@ -282,6 +284,11 @@
                                             <FontAwesomeIconView glyphName="CHECK" fill="white" size="14"/>
                                         </graphic>
                                     </Button>
+                                    <Button styleClass="qr-button" text="QR Code" onAction="#showQRCode">
+                                        <graphic>
+                                            <FontAwesomeIconView glyphName="QRCODE" size="14"/>
+                                        </graphic>
+                                    </Button>
                                 </HBox>
                             </VBox>
                         </FlowPane>
@@ -290,5 +297,4 @@
             </ScrollPane>
         </VBox>
     </center>
-
 </BorderPane> 
