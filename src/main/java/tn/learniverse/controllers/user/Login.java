@@ -69,20 +69,25 @@ public class Login implements Initializable {
                                 Navigator.showAlert(Alert.AlertType.ERROR,"Account locked","Your account has been locked due to many login attempts.\nPlease reset your password or contact support for more details!");
                             }
                             else{
-                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                                alert.setTitle("Login Successful");
-                                alert.setHeaderText("Welcome !!");
-                                alert.setContentText("Connected successfully");
-                                alert.showAndWait();
-                                Session.setCurrentUser(usr);
-                                saveLogs();
-                                if(Session.getCurrentUser().getRole().equals("Admin")){
-                                    Navigator.redirect(actionEvent, "/fxml/Back.fxml");
+                                if(usr.getGoogleAuthenticatorSecret() != null){
+                                    Session.setCurrentUser(usr);
+                                    Navigator.redirect(actionEvent, "/fxml/user/VerifyCode.fxml");
                                 }
                                 else{
-                                    Navigator.redirect(actionEvent, "/fxml/homePage.fxml");
+                                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                    alert.setTitle("Login Successful");
+                                    alert.setHeaderText("Welcome !!");
+                                    alert.setContentText("Connected successfully");
+                                    alert.showAndWait();
+                                    Session.setCurrentUser(usr);
+                                    saveLogs();
+                                    if(Session.getCurrentUser().getRole().equals("Admin")){
+                                        Navigator.redirect(actionEvent, "/fxml/Back.fxml");
+                                    }
+                                    else{
+                                        Navigator.redirect(actionEvent, "/fxml/homePage.fxml");
+                                    }
                                 }
-
                             }
                         }
                     } else {

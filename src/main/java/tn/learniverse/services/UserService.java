@@ -147,6 +147,7 @@ public class UserService implements IUser <User>{
                         rs.getInt("logs"),
                         rs.getInt("ban")
                 );
+                usr.setGoogleAuthenticatorSecret(rs.getString("google_authenticator_secret"));
             }
         }
         catch (SQLException e) {
@@ -238,6 +239,16 @@ public class UserService implements IUser <User>{
         catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
     }
+    public void GoogleAuthStore(String google_auth) throws SQLException {
+        User currentUser = Session.getCurrentUser();
+        String updateQuery = "UPDATE user SET google_authenticator_secret = ? WHERE email = ?";
+        PreparedStatement statement = connection.prepareStatement(updateQuery);
+        statement.setString(1, google_auth);
+        System.out.println("Auth: " + google_auth + "For: " + currentUser.getEmail());
+        statement.setString(2, currentUser.getEmail());
+        statement.executeUpdate();
+        Session.getCurrentUser().setGoogleAuthenticatorSecret(google_auth);
+    }
+
 }
