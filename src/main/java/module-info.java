@@ -13,7 +13,16 @@ module tn.learniverse {
     
     // Add access to JavaFX standard modules 
     requires javafx.graphics;
-    
+    requires com.github.oshi;
+    requires jbcrypt;
+    requires jakarta.validation;
+    requires com.fasterxml.jackson.core;
+    requires com.fasterxml.jackson.databind;
+    requires com.google.gson;
+    requires java.net.http;
+    requires org.slf4j;
+    requires twilio;
+
     // Make sure tools package is properly exported and opened
     opens tn.learniverse.controllers.Competition to javafx.fxml;
     opens tn.learniverse to javafx.fxml;
@@ -23,4 +32,10 @@ module tn.learniverse {
     exports tn.learniverse;
     exports tn.learniverse.controllers.Competition to javafx.fxml;
     exports tn.learniverse.tools to javafx.fxml, javafx.base, javafx.controls, javafx.web;
+    exports tn.learniverse.tests to javafx.graphics;
+    exports tn.learniverse.controllers.user to javafx.fxml;
+    opens tn.learniverse.controllers to javafx.fxml;
+    opens tn.learniverse.controllers.user to javafx.fxml;
+
+
 }

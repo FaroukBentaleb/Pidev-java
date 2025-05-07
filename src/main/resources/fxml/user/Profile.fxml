@@ -121,6 +121,8 @@
                                 </HBox>
                             </HBox>
                             <Label fx:id="roleLabel" style="-fx-text-fill: #666;" text="Student • Member since January 2023" />
+                            <Button fx:id="myCompetitionButton" onAction="#handleMyCompetition" style="-fx-background-color: #1976D2; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 10;" text="My Competition" />
+
                         </VBox>
                     </HBox>
                     <!-- Personal Details -->

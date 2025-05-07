@@ -1,25 +1,32 @@
 package tn.learniverse.controllers.user;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import tn.learniverse.entities.User;
 import tn.learniverse.services.UserService;
 import tn.learniverse.tools.Navigator;
 import tn.learniverse.tools.Session;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import static tn.learniverse.tools.Navigator.showAlert;
 
 public class Profile implements Initializable {
     public TextField linkedinField;
@@ -56,6 +63,7 @@ public class Profile implements Initializable {
     public Label birthDateErrorLabel;
     public Button btnUpload;
     public Label roleLabel;
+    public Button myCompetitionButton;
 
 
     UserService userService = new UserService();
@@ -117,7 +125,7 @@ public class Profile implements Initializable {
                 );
                 userService.ModifyAccount(usr);
                 Session.setCurrentUser(usr);
-                Navigator.showAlert(Alert.AlertType.INFORMATION, "Profile Updated", "Your information has been updated successfully.");
+                showAlert(Alert.AlertType.INFORMATION, "Profile Updated", "Your information has been updated successfully.");
             }
             else{
                 Navigator.redirect(actionEvent, "fxml/user/Login.fxml");
@@ -148,6 +156,7 @@ public class Profile implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setupRealTimeValidation();
+        myCompetitionButton.setVisible( Session.getCurrentUser().getRole().equals("Student"));
         System.out.println("in!!");
         birthDatePicker.setDayCellFactory(picker -> new DateCell() {
             @Override
@@ -223,7 +232,7 @@ public class Profile implements Initializable {
 
     public void Logout(ActionEvent actionEvent) {
         Session.clear();
-        Navigator.showAlert(Alert.AlertType.INFORMATION,"See you soon ","You are going to logout");
+        showAlert(Alert.AlertType.INFORMATION,"See you soon ","You are going to logout");
         Navigator.redirect(actionEvent,"/fxml/user/Login.fxml");
     }
     private void setupRealTimeValidation() {
@@ -367,4 +376,23 @@ public class Profile implements Initializable {
     public void Comp(ActionEvent actionEvent) {
         Navigator.redirect(actionEvent,"/fxml/competitions_list.fxml");
     }
+
+        public void handleMyCompetition() {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MyCompetition.fxml"));
+                Parent root = loader.load();
+
+
+
+                // Set the new scene
+                Scene scene = new Scene(root);
+                Stage stage = (Stage) myCompetitionButton.getScene().getWindow();
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
 }

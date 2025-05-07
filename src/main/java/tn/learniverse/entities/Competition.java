@@ -1,5 +1,7 @@
 package tn.learniverse.entities;
 
+import tn.learniverse.tools.Session;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -15,12 +17,43 @@ public class Competition {
     private LocalDateTime dateFin;
     private String imageUrl;
     private boolean isFreesed;
+
+    public boolean isNotification_sent2h() {
+        return notification_sent2h;
+    }
+
+    public void setNotification_sent2h(boolean notification_sent2h) {
+        this.notification_sent2h = notification_sent2h;
+    }
+
+    private boolean notification_sent2h;
+
+    public boolean isNotification_sent_start() {
+        return notification_sent_start;
+    }
+
+    public void setNotification_sent_start(boolean notification_sent_start) {
+        this.notification_sent_start = notification_sent_start;
+    }
+
+    private boolean notification_sent_start;
+
+    public boolean isNotifiedEnd() {
+        return notifiedEnd;
+    }
+
+    public void setNotifiedEnd(boolean notifiedEnd) {
+        this.notifiedEnd = notifiedEnd;
+    }
+
+    private boolean notifiedEnd ;
     private int instructorId;
     private List<Challenge> challenges;
     private String webImageUrl;
-//    private List<Submission> submissions;
+   private List<Submission> submissions;
+   private List<User> Participants;
 
-    // Constructors, getters, and setters...
+
 
     public Competition() {
     }
@@ -103,6 +136,7 @@ public class Competition {
     }
 
     public void setImageUrl(String imageUrl) {
+
         this.imageUrl = imageUrl;
     }
 
@@ -123,10 +157,12 @@ public class Competition {
     }
 
     public List<Challenge> getChallenges() {
+
         return challenges;
     }
 
     public void setChallenges(List<Challenge> challenges) {
+
         this.challenges = challenges;
     }
 
@@ -138,12 +174,21 @@ public class Competition {
         this.webImageUrl = webImageUrl;
     }
 
-//    public List<Submission> getSubmissions() {
-//        return submissions;
-//    }
-//
-//    public void setSubmissions(List<Submission> submissions) {
-//        this.submissions = submissions;
-//    }
+    public List<Submission> getSubmissions() {
+        return submissions;
+    }
+
+    public void setSubmissions(List<Submission> submissions) {
+        this.submissions = submissions;
+    }
+
+
+    public List<User> getParticipants() {
+        return Participants;
+    }
+
+    public void setParticipants(List<User> Participants) {
+        this.Participants = Participants;
+    }
 
 }

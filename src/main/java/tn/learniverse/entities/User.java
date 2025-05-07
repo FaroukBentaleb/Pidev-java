@@ -48,6 +48,13 @@ public class User {
     this.logs = logs;
     this.ban = ban;
 }
+
+    public User(int userId, String userName, String userlastName) {
+        this.id = userId;
+        this.nom = userName;
+        this.prenom = userlastName;
+    }
+
     public int getId() {
         return id;
     }

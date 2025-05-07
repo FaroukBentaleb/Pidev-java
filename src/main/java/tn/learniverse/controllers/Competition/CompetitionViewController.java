@@ -7,33 +7,23 @@ import java.util.ResourceBundle;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.Optional;
 import java.util.Locale;
 
-import io.github.palexdev.materialfx.controls.MFXScrollPane;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-import javafx.scene.web.WebView;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.Scene;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import  tn.learniverse.tools.DatabaseConnection;
@@ -88,11 +78,17 @@ public class CompetitionViewController implements Initializable {
     private List<Challenge> challenges;
     private Runnable onCloseHandler;
     private Map<String, Boolean> validationStatus;
-    
+    @FXML
+    private ImageView UserPicture;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // Initialize validation map
         validationStatus = new HashMap<>();
+        Image image = null;
+        this.UserPicture.setImage(image);
+        Circle clip = new Circle(25, 25, 25);
+        this.UserPicture.setClip(clip);
         
         // Set all validation statuses to false initially
         validationStatus.put("name", false);
@@ -124,9 +120,14 @@ public class CompetitionViewController implements Initializable {
     /**
      * Overloaded version that extracts challenges from the competition
      */
-    public void setCompetition(Competition competition) {
+    public void setCompetition(Competition competition) throws SQLException {
         this.competition = competition;
-        this.challenges = competition.getChallenges();
+        if (competition.getChallenges() == null || competition.getChallenges().isEmpty()) {
+            challenges = CompetitionService.getChallengesForCompetition(competition.getId());
+        } else {
+
+            this.challenges = competition.getChallenges();
+        }
         updateView();
     }
 
@@ -134,31 +135,31 @@ public class CompetitionViewController implements Initializable {
         this.onCloseHandler = handler;
     }
     
-    private void updateView() {
+private void updateView() {
         if (competition == null) return;
-        
+
         // Update basic info
         nameLabel.setText(competition.getNom());
         categoryLabel.setText("Category: " + competition.getCategorie());
         statusLabel.setText(competition.getEtat());
-        
+
         // Format and set dates with time
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE, MMM d, yyyy • h:mm a").withLocale(Locale.ENGLISH);
         startDateLabel.setText(competition.getDateComp().format(formatter));
         endDateLabel.setText(competition.getDateFin().format(formatter));
-        
+
         // Set duration
         durationLabel.setText("Duration: " + formatDuration(competition.getDuration()));
-        
+
         // Set status style with enhanced design
         String statusStyle = switch (competition.getEtat().toLowerCase()) {
-         case "Completed" -> "-fx-background-color: #6b7280; -fx-text-fill: white; -fx-padding: 8 20; -fx-background-radius: 20; -fx-font-weight: bold; -fx-font-size: 14px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 4, 0, 0, 1);";
+            case "Completed" -> "-fx-background-color: #6b7280; -fx-text-fill: white; -fx-padding: 8 20; -fx-background-radius: 20; -fx-font-weight: bold; -fx-font-size: 14px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 4, 0, 0, 1);";
             case "InProgress" -> "-fx-background-color: #10b981; -fx-text-fill: white; -fx-padding: 8 20; -fx-background-radius: 20; -fx-font-weight: bold; -fx-font-size: 14px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 4, 0, 0, 1);";
             case "Planned" -> "-fx-background-color: #6366f1; -fx-text-fill: white; -fx-padding: 8 20; -fx-background-radius: 20; -fx-font-weight: bold; -fx-font-size: 14px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 4, 0, 0, 1);";
             default -> "-fx-background-color: #6b7280; -fx-text-fill: white; -fx-padding: 8 20; -fx-background-radius: 20; -fx-font-weight: bold; -fx-font-size: 14px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 4, 0, 0, 1);";
         };
         statusLabel.setStyle(statusStyle);
-        
+
         // Set competition image
         if (competition.getWebImageUrl() != null && !competition.getWebImageUrl().isEmpty()) {
             try {
@@ -176,34 +177,54 @@ public class CompetitionViewController implements Initializable {
         } else {
             loadLocalImage();
         }
-        
+
         // Set description as static text
         String descriptionText = extractTextFromHtml(competition.getDescription());
         descriptionLabel.setText(descriptionText);
-        
+        descriptionLabel.setMinHeight(60);
         // Add challenges
         challengesContainer.getChildren().clear();
-        for (Challenge challenge : competition.getChallenges()) {
-            addChallengeCard(challenge);
+        if (competition.getChallenges() != null) {
+            for (Challenge challenge : competition.getChallenges()) {
+                addChallengeCard(challenge);
+            }
         }
-        
+
         // Add the Participate button after the challenges
         addParticipateButton();
+    }    private void handleStart() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/start.fxml"));
+            Parent root = loader.load();
+            SubmissionViewController controller = loader.getController();
+            controller.setCompetition(competition);
+
+
+            // Set the new scene
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) competitionImage.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException | SQLException e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to load the submission view: " + e.getMessage());
+        }
     }
-    
+
     /**
      * Adds the Participate button after the challenges
      */
     private void addParticipateButton() {
+
         // Create the Participate button container
         VBox participateContainer = new VBox();
         participateContainer.setStyle("-fx-padding: 15 10 5 10;" +
                                    "-fx-alignment: center-right;" +
                                    "-fx-spacing: 15;");
-        
+
         // Create the Participate button
-        Button participateButton = new Button("Participate");
-        participateButton.setStyle("-fx-background-color: #2196F3;" +  // Blue to match our theme
+        Button participateButton = new Button();
+        participateButton.setStyle("-fx-background-color: #2196F3;" +
                                 "-fx-text-fill: white;" +
                                 "-fx-font-size: 15px;" +
                                 "-fx-font-weight: bold;" +
@@ -211,23 +232,98 @@ public class CompetitionViewController implements Initializable {
                                 "-fx-background-radius: 8;" +
                                 "-fx-cursor: hand;" +
                                 "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 6, 0, 0, 2);");
-        
+
         // Add hover effect
-        participateButton.setOnMouseEntered(e -> 
+        participateButton.setOnMouseEntered(e ->
             participateButton.setStyle(participateButton.getStyle().replace("-fx-background-color: #2196F3;", "-fx-background-color: #1976D2;")));
-        participateButton.setOnMouseExited(e -> 
+        participateButton.setOnMouseExited(e ->
             participateButton.setStyle(participateButton.getStyle().replace("-fx-background-color: #1976D2;", "-fx-background-color: #2196F3;")));
-        
-        // Add click handler
-        participateButton.setOnAction(e -> handleParticipate());
-        
+
+        // Set button text and action based on competition status
+        switch (competition.getEtat().toLowerCase()) {
+            case "inprogress":
+                if (CompetitionService.isUserSubmissited(competition.getId(),Session.getCurrentUser().getId())){
+                    participateButton.setText("Submitted");
+                    participateButton.setOnAction(e -> handleViewSubmission());
+                }
+                else{
+
+                participateButton.setText("Start");
+                participateButton.setOnAction(e -> handleStart());
+                }
+                break;
+            case "planned":
+                if (CompetitionService.isUserParticipant(competition.getId(),Session.getCurrentUser().getId())){
+                    participateButton.setText("Participated");
+                    participateButton.setOnAction(e -> handleRemoveParti());
+
+                }
+
+                else{
+                participateButton.setText("Participate");
+                participateButton.setOnAction(e -> handleParticipate());
+                }
+                break;
+            case "completed":
+                participateButton.setText("Leaderboard");
+                participateButton.setOnAction(e -> handleLeaderboard());
+                break;
+            default:
+                participateButton.setText("Unknown Status");
+                participateButton.setDisable(true);
+                break;
+        }
+
         // Add the button to the container
         participateContainer.getChildren().add(participateButton);
-        
+
         // Add the participate container to the challenges container
         challengesContainer.getChildren().add(participateContainer);
     }
-    
+
+    private void handleViewSubmission() {
+
+    }
+
+    private void handleRemoveParti() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Participate in Competition");
+        alert.setHeaderText("Competition: " + competition.getNom());
+        alert.setContentText("Are you sure you want to leave  this competition?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            // User confirmed participation
+            CompetitionService.removeParticipant(competition);
+            // Dynamically update the button text to "Participated"
+            Button participateButton = (Button) challengesContainer.lookup("#participateButton");
+            if (participateButton != null) {
+                participateButton.setText("Participate");
+            }
+
+            showAlert("Success", "You have successfully left  the competition: " + competition.getNom());
+        }
+    }
+
+    private void handleLeaderboard() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CompetitionLeaderboard.fxml"));
+            Parent root = loader.load();
+            CompetitionLeaderboardController controller = loader.getController();
+            controller.initData(competition.getId());
+
+
+            // Set the new scene
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) competitionImage.getScene().getWindow();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException | SQLException e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to load the leaderboard: " + e.getMessage());
+        }
+    }
+
     /**
      * Extracts plain text from HTML content
      */
@@ -261,7 +357,7 @@ public class CompetitionViewController implements Initializable {
             }
         }
     }
-    
+
     private void addChallengeCard(Challenge challenge) {
         try {
             // Create a VBox for the challenge card with modern styling
@@ -269,42 +365,46 @@ public class CompetitionViewController implements Initializable {
             card.setStyle("-fx-padding: 25;");
             card.getStyleClass().add("challenge-card");
             card.setSpacing(20);
-            
+
             // Challenge number and title
             Label titleLabel = new Label("Challenge " + (challengesContainer.getChildren().size() + 1) + ": " + challenge.getTitle());
             titleLabel.setStyle("-fx-font-size: 22px;" +
-                              "-fx-font-weight: bold;" +
-                              "-fx-text-fill: #1a365d;");
-            
+                    "-fx-font-weight: bold;" +
+                    "-fx-text-fill: #1a365d;");
+            titleLabel.setWrapText(true);
+            titleLabel.setMaxWidth(Double.MAX_VALUE); // Add this line
+
             // Description section
             VBox descriptionBox = new VBox(10);
             Label descriptionHeader = new Label("Description");
             descriptionHeader.setStyle("-fx-font-size: 16px;" +
-                                    "-fx-font-weight: bold;" +
-                                    "-fx-text-fill: #2196F3;");
-            
+                    "-fx-font-weight: bold;" +
+                    "-fx-text-fill: #2196F3;");
+
             Label descriptionContent = new Label(extractTextFromHtml(challenge.getDescription()));
             descriptionContent.setStyle("-fx-font-size: 14px;" +
-                                     "-fx-text-fill: #334155;" +
-                                     "-fx-wrap-text: true;" +
-                                     "-fx-line-spacing: 1.4;");
+                    "-fx-text-fill: #334155;" +
+                    "-fx-wrap-text: true;" +
+                    "-fx-line-spacing: 1.4;");
+            descriptionContent.setMaxWidth(Double.MAX_VALUE); // Add this line
+            descriptionContent.setWrapText(true); // Enable text wrapping
+            descriptionContent.setMinHeight(60); // Set minimum height to preferred size
             descriptionBox.getChildren().addAll(descriptionHeader, descriptionContent);
-            
+
             // Add all sections to the card
             card.getChildren().addAll(titleLabel, descriptionBox);
-            
+
             // Add spacing between cards
             VBox.setMargin(card, new javafx.geometry.Insets(0, 5, 20, 5));
-            
+
             // Add the card to the container
             challengesContainer.getChildren().add(card);
-            
+
         } catch (Exception e) {
             e.printStackTrace();
             showAlert("Error", "Failed to load challenge: " + e.getMessage());
         }
     }
-    
     /**
      * Handles the participate button click
      */
@@ -323,12 +423,15 @@ public class CompetitionViewController implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             // User confirmed participation
+            CompetitionService.AddParticipant(competition);
+
+            // Dynamically update the button text to "Participated"
+            Button participateButton = (Button) challengesContainer.lookup("#participateButton");
+            if (participateButton != null) {
+                participateButton.setText("Participated");
+            }
+
             showAlert("Success", "You have successfully registered for the competition: " + competition.getNom());
-            
-            // Here you would typically:
-            // 1. Save the participation to the database
-            // 2. Navigate to the competition solving interface
-            // 3. Update the UI to reflect participation
         }
     }
     
@@ -585,13 +688,16 @@ public class CompetitionViewController implements Initializable {
         }
     }
 
-    public void Profile(ActionEvent actionEvent) {
-        Navigator.redirect(actionEvent,"/fxml/user/Profile.fxml");
-    }
-
     public void Logout(ActionEvent actionEvent) {
         Session.clear();
         Navigator.showAlert(Alert.AlertType.INFORMATION,"See you soon ","You are going to logout");
         Navigator.redirect(actionEvent,"/fxml/user/Login.fxml");
+    }
+
+    public void Profile(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/fxml/user/Profile.fxml");
+    }
+    public void Comp(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/fxml/competitions_list.fxml");
     }
 }

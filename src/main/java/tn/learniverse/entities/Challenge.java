@@ -13,6 +13,24 @@ public class Challenge {
 
     }
 
+    public Challenge(int challengeId, String challengeTitle, String challengeContent, String challengeSolution) {
+        this.id = challengeId;
+        this.title = challengeTitle;
+        this.content = challengeContent;
+        this.solution = challengeSolution;
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Challenge)) return false;
+        Challenge that = (Challenge) o;
+        return this.id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(id);
+    }
     public int getId() {
         return id;
     }
