@@ -14,6 +14,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import tn.learniverse.entities.User;
 import tn.learniverse.entities.Reclamation;
+import tn.learniverse.services.FlaskClient;
 import tn.learniverse.services.ReclamationService;
 import javafx.event.EventHandler;
 import java.io.IOException;
@@ -22,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import tn.learniverse.services.ChatBotReclamationService;
+import tn.learniverse.tools.Navigator;
 
 public class DisplayReclamations {
     private User user;
@@ -176,9 +178,13 @@ public class DisplayReclamations {
                 Node sourceNode = (Node) event.getSource();
                 viewResponses(rec, sourceNode);
             });
-            Button btnArchiver = createButton("Archiver", "btn-danger");
-            btnArchiver.setOnAction(event -> archiverReclamation(rec));
-            actions.getChildren().addAll(btnVoirReponse, btnArchiver);
+            if (rec.getStatutArchivation() == 0) {
+                Button btnArchiver = createButton("Archiver", "btn-danger");
+                btnArchiver.setOnAction(event -> archiverReclamation(rec));
+                actions.getChildren().addAll(btnVoirReponse, btnArchiver);
+            } else {
+                actions.getChildren().add(btnVoirReponse);
+            }
         } else if (rec.getStatut().equals("En Cours")) {
             actions.getChildren().add(createButton("Voir Réponse", "btn-primary",
                     e -> viewResponses(rec, (Node) e.getSource())));
@@ -240,6 +246,16 @@ public class DisplayReclamations {
             Button btnModifier = new Button("Modifier");
             btnModifier.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5px; -fx-background-radius: 5px;");
             btnModifier.setOnAction(event -> {
+                String contenu = reclamationContenu.getText();
+                boolean test = FlaskClient.containsBadWords(contenu);
+                if (test) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Attention");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Votre contenu contient des mots inappropriés. Veuillez corriger votre réclamation.");
+                    alert.showAndWait();
+                    return;
+                }
                 Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
                 confirmationAlert.setTitle("Confirmation de modification");
                 confirmationAlert.setHeaderText(null);
@@ -293,16 +309,40 @@ public class DisplayReclamations {
     @FXML
     private void afficherReclamationsArchivees() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reclamation/ReclamationsArchivéesFront.fxml"));
-            Parent root = loader.load();
-
-            Stage stage = new Stage();
-            stage.setTitle("Réclamations Archivées");
-            stage.setScene(new Scene(root));
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
-        } catch (IOException e) {
+            if (user == null) {
+                user = new User();
+                user.setId(3);
+            }
+            
+            reclamationsContainer.getChildren().clear();
+            List<Reclamation> reclamations = reclamationService.recupererReclamationsArchivéesFront(user);
+            
+            if (reclamations.isEmpty()) {
+                VBox emptyMessageBox = new VBox();
+                emptyMessageBox.setAlignment(javafx.geometry.Pos.CENTER);
+                emptyMessageBox.setPrefHeight(400);
+                Label emptyMessage = new Label("Aucune réclamation archivée disponible");
+                emptyMessage.setStyle("-fx-font-size: 24px; " +
+                                    "-fx-font-weight: bold; " +
+                                    "-fx-text-fill: #666666; " +
+                                    "-fx-background-color: white; " +
+                                    "-fx-padding: 20px 40px; " +
+                                    "-fx-background-radius: 10px; " +
+                                    "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0.5, 0, 4);");
+                
+                emptyMessageBox.getChildren().add(emptyMessage);
+                reclamationsContainer.getChildren().add(emptyMessageBox);
+                reclamationsContainer.setAlignment(javafx.geometry.Pos.CENTER);
+            } else {
+                for (Reclamation rec : reclamations) {
+                    VBox box = createReclamationBox(rec);
+                    VBox.setMargin(box, new Insets(5, 0, 5, 0));
+                    reclamationsContainer.getChildren().add(box);
+                }
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
+            headerLabel.setText("Erreur lors de la récupération des réclamations archivées");
         }
     }
 
@@ -311,11 +351,17 @@ public class DisplayReclamations {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reclamation/AjouterReclamation.fxml"));
             Parent root = loader.load();
+            
+            AjouterReclamation controller = loader.getController();
+            controller.setDisplayReclamationsController(this);
+            
             Stage stage = new Stage();
             stage.setTitle("Ajouter Réclamation");
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
+            
+            // Rafraîchir la liste des réclamations après la fermeture de la fenêtre
             initialize();
         } catch (IOException e) {
             e.printStackTrace();
@@ -384,6 +430,10 @@ public class DisplayReclamations {
     @FXML
     private void closeChat() {
         chatContainer.setVisible(false);
+    }
+
+    public void complaints(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/Reclamation/DisplayReclamations.fxml");
     }
 }
 

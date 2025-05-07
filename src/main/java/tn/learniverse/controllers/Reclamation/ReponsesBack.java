@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import tn.learniverse.tools.Navigator;
 
 import javax.mail.MessagingException;
 
@@ -434,5 +435,13 @@ public class ReponsesBack {
                 errorAlert.showAndWait();
             }
         }
+    }
+
+    public void Dashboard(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/Dashboard.fxml");
+    }
+
+    public void complaints(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/Reclamation/DisplayReclamationBack.fxml");
     }
 }

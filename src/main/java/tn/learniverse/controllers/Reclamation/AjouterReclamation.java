@@ -3,6 +3,7 @@ package tn.learniverse.controllers.Reclamation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -17,6 +18,7 @@ import tn.learniverse.entities.Reclamation;
 import tn.learniverse.entities.User;
 import tn.learniverse.services.FlaskClient;
 import tn.learniverse.services.ReclamationService;
+import tn.learniverse.tools.Navigator;
 
 import java.io.File;
 import java.io.IOException;
@@ -293,5 +295,10 @@ public class AjouterReclamation implements Initializable {
                 contenuErrorLabel.setText("");
             }
         });
+    }
+
+    public void returnToDisplayReclamations(ActionEvent actionEvent) {
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.close();
     }
 }

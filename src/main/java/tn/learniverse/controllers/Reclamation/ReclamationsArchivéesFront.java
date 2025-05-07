@@ -16,6 +16,8 @@ import tn.learniverse.entities.User;
 import tn.learniverse.entities.Reclamation;
 import tn.learniverse.services.ReclamationService;
 import javafx.event.EventHandler;
+import tn.learniverse.tools.Navigator;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -214,6 +216,10 @@ public class ReclamationsArchivéesFront {
     public void retourListeReclamations() {
         Stage stage = (Stage) reclamationsContainer.getScene().getWindow();
         stage.close();
+    }
+
+    public void complaints(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/Reclamation/DisplayReclamationBack.fxml");
     }
 }
 

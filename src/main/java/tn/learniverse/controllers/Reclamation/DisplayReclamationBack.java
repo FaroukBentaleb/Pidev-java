@@ -31,7 +31,7 @@ import tn.learniverse.services.ReponseService;
 import tn.learniverse.services.EmailService;
 import javax.mail.MessagingException;
 import com.twilio.type.PhoneNumber;
-
+import tn.learniverse.tools.Navigator;
 
 
 public class DisplayReclamationBack {
@@ -590,5 +590,13 @@ public class DisplayReclamationBack {
         reclamationsContainer.getChildren().clear();
         reclamationsContainer.getChildren().add(emptyMessageBox);
         reclamationsContainer.setAlignment(Pos.CENTER);
+    }
+
+    public void Dashboard(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/Dashboard.fxml");
+    }
+
+    public void complaints(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/Reclamation/DisplayReclamationBack.fxml");
     }
 }

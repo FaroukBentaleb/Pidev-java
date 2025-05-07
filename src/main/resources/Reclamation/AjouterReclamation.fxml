@@ -135,7 +135,7 @@
                         <DropShadow color="#00000040" height="8.0" radius="3.5" width="8.0" />
                      </effect>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #e0e0e0; -fx-background-radius: 25;" text="ANNULER" textFill="#555555" AnchorPane.leftAnchor="0.0">
+                  <Button mnemonicParsing="false" onAction="#returnToDisplayReclamations" prefHeight="50.0" prefWidth="150.0" style="-fx-background-color: #e0e0e0; -fx-background-radius: 25;" text="ANNULER" textFill="#555555" AnchorPane.leftAnchor="0.0">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>

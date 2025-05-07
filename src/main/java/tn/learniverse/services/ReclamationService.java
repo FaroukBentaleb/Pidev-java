@@ -706,8 +706,6 @@ public class ReclamationService implements IReclamation<Reclamation> {
             rec.setId(rs.getInt("id"));
             reclamations.add(rec);
         }
-
-        // Récupérer les réponses pour chaque réclamation
         for (Reclamation reclamation : reclamations) {
             String sql1 = "SELECT r.*, u.id AS user_id, u.nom, u.prenom, u.email, u.role " +
                     "FROM reponse r " +
@@ -740,6 +738,92 @@ public class ReclamationService implements IReclamation<Reclamation> {
         }
 
         return reclamations;
+    }
+
+    public int getCountByStatus(String status) throws SQLException {
+        sql = "SELECT COUNT(*) FROM reclamation WHERE statut = ?";
+        PreparedStatement ste = cnx.prepareStatement(sql);
+        ste.setString(1, status);
+        ResultSet rs = ste.executeQuery();
+        if (rs.next()) {
+            return rs.getInt(1);
+        }
+        return 0;
+    }
+
+    public List<MonthlyStats> getMonthlyStats(int year) throws SQLException {
+        List<MonthlyStats> stats = new ArrayList<>();
+        sql = "SELECT MONTH(date_reclamation) as month, COUNT(*) as count " +
+              "FROM reclamation " +
+              "WHERE YEAR(date_reclamation) = ? " +
+              "GROUP BY MONTH(date_reclamation) " +
+              "ORDER BY month";
+        
+        PreparedStatement ste = cnx.prepareStatement(sql);
+        ste.setInt(1, year);
+        ResultSet rs = ste.executeQuery();
+        
+        while (rs.next()) {
+            stats.add(new MonthlyStats(
+                rs.getInt("month"),
+                rs.getInt("count")
+            ));
+        }
+        return stats;
+    }
+
+    public List<MonthlyStats> getMonthlyStatsByStatus(int year, String status) throws SQLException {
+        List<MonthlyStats> stats = new ArrayList<>();
+        sql = "SELECT MONTH(date_reclamation) as month, COUNT(*) as count " +
+              "FROM reclamation " +
+              "WHERE YEAR(date_reclamation) = ? AND statut = ? " +
+              "GROUP BY MONTH(date_reclamation) " +
+              "ORDER BY month";
+        
+        PreparedStatement ste = cnx.prepareStatement(sql);
+        ste.setInt(1, year);
+        ste.setString(2, status);
+        ResultSet rs = ste.executeQuery();
+        
+        while (rs.next()) {
+            stats.add(new MonthlyStats(
+                rs.getInt("month"),
+                rs.getInt("count")
+            ));
+        }
+        return stats;
+    }
+
+    public static class MonthlyStats {
+        private int month;
+        private int count;
+
+        public MonthlyStats(int month, int count) {
+            this.month = month;
+            this.count = count;
+        }
+
+        public String getMonthName() {
+            return switch (month) {
+                case 1 -> "Janvier";
+                case 2 -> "Février";
+                case 3 -> "Mars";
+                case 4 -> "Avril";
+                case 5 -> "Mai";
+                case 6 -> "Juin";
+                case 7 -> "Juillet";
+                case 8 -> "Août";
+                case 9 -> "Septembre";
+                case 10 -> "Octobre";
+                case 11 -> "Novembre";
+                case 12 -> "Décembre";
+                default -> "Inconnu";
+            };
+        }
+
+        public int getCount() {
+            return count;
+        }
     }
 }
 
