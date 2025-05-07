@@ -344,7 +344,47 @@ public class CoursesViewController implements Initializable {
         // Configurer la section recommandée
         recommendedCoursesSection.setExpanded(false);
         recommendedCoursesSection.setAnimated(false);
-        recommendedCoursesSection.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
+        recommendedCoursesSection.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; " +
+                "-fx-text-fill: white; " +
+                "-fx-background-color: #4f46e5; " +
+                "-fx-border-color: #4338ca; " +
+                "-fx-border-width: 2; " +
+                "-fx-border-radius: 5; " +
+                "-fx-background-radius: 5;");
+
+        // Ajouter un listener pour appliquer le style après l'initialisation
+        recommendedCoursesSection.skinProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null) {
+                Node titleNode = recommendedCoursesSection.lookup(".title");
+                if (titleNode != null) {
+                    titleNode.setStyle("-fx-background-color: #4f46e5;");
+                }
+                Node contentNode = recommendedCoursesSection.lookup(".content");
+                if (contentNode != null) {
+                    contentNode.setStyle("-fx-background-color: white; -fx-border-color: #4338ca; -fx-border-width: 2;");
+                }
+            }
+        });
+
+        // Style pour le bouton Enroll
+        if (enrollButton != null) {
+            enrollButton.setStyle("-fx-background-color: #4f46e5; -fx-text-fill: white; " +
+                    "-fx-font-size: 14px; -fx-padding: 8 15; -fx-background-radius: 20; -fx-cursor: hand;");
+            enrollButton.setOnMouseEntered(e -> enrollButton.setStyle("-fx-background-color: #4338ca; -fx-text-fill: white; " +
+                    "-fx-font-size: 14px; -fx-padding: 8 15; -fx-background-radius: 20; -fx-cursor: hand;"));
+            enrollButton.setOnMouseExited(e -> enrollButton.setStyle("-fx-background-color: #4f46e5; -fx-text-fill: white; " +
+                    "-fx-font-size: 14px; -fx-padding: 8 15; -fx-background-radius: 20; -fx-cursor: hand;"));
+        }
+
+        // Style pour le bouton Add Lesson
+        if (addLessonButton != null) {
+            addLessonButton.setStyle("-fx-background-color: #4f46e5; -fx-text-fill: white; " +
+                    "-fx-font-size: 14px; -fx-padding: 8 15; -fx-background-radius: 20; -fx-cursor: hand;");
+            addLessonButton.setOnMouseEntered(e -> addLessonButton.setStyle("-fx-background-color: #4338ca; -fx-text-fill: white; " +
+                    "-fx-font-size: 14px; -fx-padding: 8 15; -fx-background-radius: 20; -fx-cursor: hand;"));
+            addLessonButton.setOnMouseExited(e -> addLessonButton.setStyle("-fx-background-color: #4f46e5; -fx-text-fill: white; " +
+                    "-fx-font-size: 14px; -fx-padding: 8 15; -fx-background-radius: 20; -fx-cursor: hand;"));
+        }
     }
 
     @FXML
@@ -354,10 +394,8 @@ public class CoursesViewController implements Initializable {
 
     private void loadRecommendedCourses() {
         try {
-            // Récupérer les cours recommandés
             recommendedCourses = courseService.getRecommendedCourses(currentUserId);
 
-            // Si pas assez de recommandations, ajouter des cours aléatoires
             if (recommendedCourses.size() < 3) {
                 List<Course> allCourses = courseService.getVisibleCourses();
                 Collections.shuffle(allCourses);
@@ -371,9 +409,9 @@ public class CoursesViewController implements Initializable {
 
             displayRecommendedCourses();
         } catch (SQLException e) {
-            System.err.println("Erreur lors du chargement des cours recommandés: " + e.getMessage());
+            System.err.println("Error while loading recommended courses: " + e.getMessage());
             recommendedCourses = new ArrayList<>();
-            Label errorLabel = new Label("Impossible de charger les recommandations");
+            Label errorLabel = new Label("Unable to load recommendations");
             errorLabel.setStyle("-fx-text-fill: red;");
             recommendedCoursesContainer.getChildren().add(errorLabel);
         }
@@ -537,13 +575,13 @@ public class CoursesViewController implements Initializable {
     private void displayVideosInCurrentView(List<YouTubeVideo> videos) {
         youtubeVideosContainer.getChildren().clear();
 
-        // Titre des résultats
-        Label headerLabel = new Label("Résultats de recherche pour: \"" + youtubeSearchField.getText().trim() + "\"");
+        // Results title
+        Label headerLabel = new Label("Search results for: \"" + youtubeSearchField.getText().trim() + "\"");
         headerLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: #2d3748; -fx-padding: 10 0;");
         youtubeVideosContainer.getChildren().add(headerLabel);
 
         if (videos.isEmpty()) {
-            Label emptyLabel = new Label("Aucune vidéo trouvée pour cette recherche.");
+            Label emptyLabel = new Label("No videos found for this search.");
             emptyLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #4a5568; -fx-padding: 20 0;");
             youtubeVideosContainer.getChildren().add(emptyLabel);
             return;
@@ -615,7 +653,7 @@ public class CoursesViewController implements Initializable {
         descriptionLabel.setWrapText(true);
 
         // Bouton pour ouvrir dans YouTube
-        Button openInYouTubeButton = new Button("Voir sur YouTube");
+        Button openInYouTubeButton = new Button("View on YouTube");
         openInYouTubeButton.setStyle("-fx-background-color: #FF0000; -fx-text-fill: white; -fx-font-size: 12px; " +
                 "-fx-padding: 5 10; -fx-background-radius: 5; -fx-cursor: hand;");
         openInYouTubeButton.setOnAction(e -> {
@@ -656,20 +694,14 @@ public class CoursesViewController implements Initializable {
             List<Course> courses = courseService.getVisibleCourses();
             Set<String> categories = new HashSet<>();
 
-            // Extract unique categories
             for (Course course : courses) {
                 if (course.getCategory() != null && !course.getCategory().isEmpty()) {
                     categories.add(course.getCategory());
                 }
             }
 
-            // Add "All Categories" option
             categoryFilter.getItems().add("All Categories");
-
-            // Add all unique categories
             categoryFilter.getItems().addAll(categories);
-
-            // Set default selection
             categoryFilter.setValue("All Categories");
 
         } catch (SQLException e) {
@@ -735,19 +767,14 @@ public class CoursesViewController implements Initializable {
 
         List<Course> filteredCourses = allCourses.stream()
                 .filter(course -> {
-                    // Filter by search text
                     boolean matchesSearch = searchText.isEmpty() ||
                             (course.getTitle() != null && course.getTitle().toLowerCase().contains(searchText)) ||
                             (course.getDescription() != null && course.getDescription().toLowerCase().contains(searchText));
 
-                    // Filter by category
                     boolean matchesCategory = "All Categories".equals(category) ||
                             (course.getCategory() != null && course.getCategory().equals(category));
 
-                    // Filter by price
                     boolean matchesPrice = course.getPrice() <= maxPrice;
-
-                    // Filter by favorites if needed
                     boolean matchesFavorites = !showOnlyFavorites || userFavorites.contains(course.getId());
 
                     return matchesSearch && matchesCategory && matchesPrice && matchesFavorites;
@@ -763,7 +790,6 @@ public class CoursesViewController implements Initializable {
     @FXML
     private void showOnlyFavorites() {
         if (favoriteFilterButton.getStyle().contains("-fx-background-color: #4338ca")) {
-            // Reset le filtre
             favoriteFilterButton.setStyle("-fx-background-color: white; -fx-text-fill: #4338ca; -fx-border-color: #4338ca; -fx-border-radius: 20; -fx-background-radius: 20;");
             applyFilters();
 
@@ -772,14 +798,12 @@ public class CoursesViewController implements Initializable {
                 youtubeSearchBox.setManaged(true);
             }
         } else {
-            // Activer le filtre favoris
             favoriteFilterButton.setStyle("-fx-background-color: #4338ca; -fx-text-fill: white; -fx-border-color: #4338ca; -fx-border-radius: 20; -fx-background-radius: 20;");
 
             List<Course> favoriteCourses = allCourses.stream()
                     .filter(course -> userFavorites.contains(course.getId()))
                     .collect(Collectors.toList());
             displayFilteredCourses(favoriteCourses);
-
 
             if (youtubeSearchBox != null) {
                 youtubeSearchBox.setVisible(false);
@@ -911,15 +935,40 @@ public class CoursesViewController implements Initializable {
         buttonsBox.setStyle("-fx-padding: 10 0 0 0;");
 
         Button viewDetailsButton = new Button("View Course Details");
-        viewDetailsButton.setStyle("-fx-background-color: #3b82f6; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 8 15; -fx-background-radius: 8; -fx-cursor: hand;");
+        viewDetailsButton.setStyle("-fx-background-color: #4f46e5; -fx-text-fill: white; " +
+                "-fx-font-size: 14px; -fx-padding: 8 15; -fx-background-radius: 20; -fx-cursor: hand;");
         viewDetailsButton.setOnAction(e -> viewCourseDetails(course));
 
-        Button updateButton = new Button("Update");
-        updateButton.setStyle("-fx-background-color: #10b981; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 8 15; -fx-background-radius: 8; -fx-cursor: hand;");
+        Button updateButton = createIconButton(
+            "M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z",
+            "Update Course",
+            "update-icon-button"
+        );
+        updateButton.setStyle("-fx-background-color: #10b981; -fx-padding: 10; " +
+                "-fx-background-radius: 50%; -fx-min-width: 40px; -fx-min-height: 40px; " +
+                "-fx-max-width: 40px; -fx-max-height: 40px; -fx-cursor: hand;");
+        updateButton.setOnMouseEntered(e -> updateButton.setStyle("-fx-background-color: #059669; -fx-padding: 10; " +
+                "-fx-background-radius: 50%; -fx-min-width: 40px; -fx-min-height: 40px; " +
+                "-fx-max-width: 40px; -fx-max-height: 40px; -fx-cursor: hand;"));
+        updateButton.setOnMouseExited(e -> updateButton.setStyle("-fx-background-color: #10b981; -fx-padding: 10; " +
+                "-fx-background-radius: 50%; -fx-min-width: 40px; -fx-min-height: 40px; " +
+                "-fx-max-width: 40px; -fx-max-height: 40px; -fx-cursor: hand;"));
         updateButton.setOnAction(e -> updateCourse(course));
 
-        Button deleteButton = new Button("Delete");
-        deleteButton.setStyle("-fx-background-color: #ef4444; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 8 15; -fx-background-radius: 8; -fx-cursor: hand;");
+        Button deleteButton = createIconButton(
+            "M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z",
+            "Delete Course",
+            "delete-icon-button"
+        );
+        deleteButton.setStyle("-fx-background-color: #ef4444; -fx-padding: 10; " +
+                "-fx-background-radius: 50%; -fx-min-width: 40px; -fx-min-height: 40px; " +
+                "-fx-max-width: 40px; -fx-max-height: 40px; -fx-cursor: hand;");
+        deleteButton.setOnMouseEntered(e -> deleteButton.setStyle("-fx-background-color: #dc2626; -fx-padding: 10; " +
+                "-fx-background-radius: 50%; -fx-min-width: 40px; -fx-min-height: 40px; " +
+                "-fx-max-width: 40px; -fx-max-height: 40px; -fx-cursor: hand;"));
+        deleteButton.setOnMouseExited(e -> deleteButton.setStyle("-fx-background-color: #ef4444; -fx-padding: 10; " +
+                "-fx-background-radius: 50%; -fx-min-width: 40px; -fx-min-height: 40px; " +
+                "-fx-max-width: 40px; -fx-max-height: 40px; -fx-cursor: hand;"));
         deleteButton.setOnAction(e -> deleteCourse(course));
 
         buttonsBox.getChildren().addAll(viewDetailsButton, updateButton, deleteButton);
@@ -1146,11 +1195,9 @@ public class CoursesViewController implements Initializable {
     }
 
     private void loadLessonsForCourse(Course course) {
-        // Clear previous lessons
         courseContentContainer.getChildren().clear();
 
         try {
-            // Get lessons for the course
             List<Lesson> lessons = lessonService.getAllLessons().stream()
                     .filter(lesson -> lesson.getCourse().getId() == course.getId())
                     .toList();
@@ -1160,7 +1207,6 @@ public class CoursesViewController implements Initializable {
                 noLessonsLabel.getStyleClass().add("info-label");
                 courseContentContainer.getChildren().add(noLessonsLabel);
             } else {
-                // Create lesson UI elements for each lesson
                 for (Lesson lesson : lessons) {
                     courseContentContainer.getChildren().add(createLessonItem(lesson));
                 }
@@ -1212,19 +1258,37 @@ public class CoursesViewController implements Initializable {
         actions.setAlignment(Pos.CENTER_RIGHT);
 
         // Bouton pour éditer la leçon
-        Button editButton = new Button("Edit Lesson");
-        editButton.setStyle("-fx-background-color: #3b82f6; -fx-text-fill: white; " +
-                "-fx-font-size: 13px; -fx-font-weight: bold; -fx-padding: 8 15; " +
-                "-fx-background-radius: 20; -fx-cursor: hand; " +
-                "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);");
+        Button editButton = createIconButton(
+            "M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z",
+            "Edit Lesson",
+            "edit-icon-button"
+        );
+        editButton.setStyle("-fx-background-color: #10b981; -fx-padding: 10; " +
+                "-fx-background-radius: 50%; -fx-min-width: 40px; -fx-min-height: 40px; " +
+                "-fx-max-width: 40px; -fx-max-height: 40px; -fx-cursor: hand;");
+        editButton.setOnMouseEntered(e -> editButton.setStyle("-fx-background-color: #059669; -fx-padding: 10; " +
+                "-fx-background-radius: 50%; -fx-min-width: 40px; -fx-min-height: 40px; " +
+                "-fx-max-width: 40px; -fx-max-height: 40px; -fx-cursor: hand;"));
+        editButton.setOnMouseExited(e -> editButton.setStyle("-fx-background-color: #10b981; -fx-padding: 10; " +
+                "-fx-background-radius: 50%; -fx-min-width: 40px; -fx-min-height: 40px; " +
+                "-fx-max-width: 40px; -fx-max-height: 40px; -fx-cursor: hand;"));
         editButton.setOnAction(e -> openEditLessonWindow(lesson));
 
         // Bouton pour supprimer la leçon
-        Button deleteButton = new Button("Delete Lesson");
-        deleteButton.setStyle("-fx-background-color: #ef4444; -fx-text-fill: white; " +
-                "-fx-font-size: 13px; -fx-font-weight: bold; -fx-padding: 8 15; " +
-                "-fx-background-radius: 20; -fx-cursor: hand; " +
-                "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);");
+        Button deleteButton = createIconButton(
+            "M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z",
+            "Delete Lesson",
+            "delete-icon-button"
+        );
+        deleteButton.setStyle("-fx-background-color: #ef4444; -fx-padding: 10; " +
+                "-fx-background-radius: 50%; -fx-min-width: 40px; -fx-min-height: 40px; " +
+                "-fx-max-width: 40px; -fx-max-height: 40px; -fx-cursor: hand;");
+        deleteButton.setOnMouseEntered(e -> deleteButton.setStyle("-fx-background-color: #dc2626; -fx-padding: 10; " +
+                "-fx-background-radius: 50%; -fx-min-width: 40px; -fx-min-height: 40px; " +
+                "-fx-max-width: 40px; -fx-max-height: 40px; -fx-cursor: hand;"));
+        deleteButton.setOnMouseExited(e -> deleteButton.setStyle("-fx-background-color: #ef4444; -fx-padding: 10; " +
+                "-fx-background-radius: 50%; -fx-min-width: 40px; -fx-min-height: 40px; " +
+                "-fx-max-width: 40px; -fx-max-height: 40px; -fx-cursor: hand;"));
         deleteButton.setOnAction(e -> deleteLesson(lesson));
 
         // Bouton pour développer/réduire la leçon avec icône simple
@@ -1388,17 +1452,13 @@ public class CoursesViewController implements Initializable {
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Mise à jour du cours");
+            stage.setTitle("Update Course");
             stage.setScene(new Scene(root));
             stage.showAndWait();
 
-            // Reload courses after update
             loadAllCourses();
 
-            // If we're in the details view and the updated course is the current one,
-            // refresh the details view
             if (courseDetailsView.isVisible() && currentCourse != null && currentCourse.getId() == course.getId()) {
-                // Get updated course info
                 try {
                     Course updatedCourse = courseService.getCourseById(course.getId());
                     if (updatedCourse != null) {
@@ -1409,31 +1469,29 @@ public class CoursesViewController implements Initializable {
                 }
             }
         } catch (IOException e) {
-            showAlert(AlertType.ERROR, "Erreur", "Erreur lors de l'ouverture de la page de mise à jour: " + e.getMessage());
+            showAlert(AlertType.ERROR, "Error", "Error while opening the update page: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
     private void deleteCourse(Course course) {
         Alert confirmAlert = new Alert(AlertType.CONFIRMATION);
-        confirmAlert.setTitle("Confirmation de suppression");
-        confirmAlert.setHeaderText("Êtes-vous sûr de vouloir supprimer ce cours ?");
+        confirmAlert.setTitle("Delete Confirmation");
+        confirmAlert.setHeaderText("Are you sure you want to delete this course?");
 
         confirmAlert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
                 try {
                     courseService.deleteCourse(course);
-                    showAlert(AlertType.INFORMATION, "Succès", "Le cours a été supprimé avec succès !");
+                    showAlert(AlertType.INFORMATION, "Success", "Course has been successfully deleted!");
 
-                    // If we're in the details view and the deleted course is the current one,
-                    // go back to the courses list
                     if (courseDetailsView.isVisible() && currentCourse != null && currentCourse.getId() == course.getId()) {
                         backToCoursesList();
                     }
 
                     loadAllCourses();
                 } catch (SQLException e) {
-                    showAlert(AlertType.ERROR, "Erreur", "Erreur lors de la suppression du cours: " + e.getMessage());
+                    showAlert(AlertType.ERROR, "Error", "Error while deleting the course: " + e.getMessage());
                     e.printStackTrace();
                 }
             }
@@ -1482,14 +1540,13 @@ public class CoursesViewController implements Initializable {
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Ajouter un cours");
+            stage.setTitle("Add a Course");
             stage.setScene(new Scene(root));
             stage.showAndWait();
 
-            // Reload courses after adding
             loadAllCourses();
         } catch (IOException e) {
-            showAlert(AlertType.ERROR, "Erreur", "Erreur lors de l'ouverture de la page d'ajout: " + e.getMessage());
+            showAlert(AlertType.ERROR, "Error", "Error while opening the add page: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -1503,15 +1560,9 @@ public class CoursesViewController implements Initializable {
             Scene scene = coursesContainer.getScene();
             scene.setRoot(root);
         } catch (IOException e) {
-            showAlert(AlertType.ERROR, "Erreur", "Erreur lors de la navigation: " + e.getMessage());
+            showAlert(AlertType.ERROR, "Error", "Error while navigating: " + e.getMessage());
             e.printStackTrace();
         }
-    }
-
-    @FXML
-    private void navigateToCourses() {
-        // Already on courses page, just refresh
-        loadAllCourses();
     }
 
     @FXML
@@ -1523,7 +1574,7 @@ public class CoursesViewController implements Initializable {
             Scene scene = coursesContainer.getScene();
             scene.setRoot(root);
         } catch (IOException e) {
-            showAlert(AlertType.ERROR, "Erreur", "Erreur lors de la navigation: " + e.getMessage());
+            showAlert(AlertType.ERROR, "Error", "Error while navigating: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -1577,27 +1628,22 @@ public class CoursesViewController implements Initializable {
 
     private void openYouTubeResultsWindow(String query) {
         try {
-            // Créer une nouvelle fenêtre (Stage)
             Stage youtubeResultsStage = new Stage();
-            youtubeResultsStage.setTitle("Résultats YouTube pour: " + query);
+            youtubeResultsStage.setTitle("YouTube Results for: " + query);
 
-            // Créer le conteneur principal
             VBox mainContainer = new VBox(15);
             mainContainer.setPadding(new Insets(20));
             mainContainer.setStyle("-fx-background-color: white;");
 
-            // Titre de la fenêtre
-            Label titleLabel = new Label("Résultats pour: \"" + query + "\"");
+            Label titleLabel = new Label("Results for: \"" + query + "\"");
             titleLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 18px;");
 
-            // Conteneur pour les vidéos
             VBox videosContainer = new VBox(15);
             videosContainer.setPadding(new Insets(10, 0, 0, 0));
             ScrollPane scrollPane = new ScrollPane(videosContainer);
             scrollPane.setFitToWidth(true);
             scrollPane.setPrefHeight(600);
 
-            // Indicateur de chargement
             ProgressIndicator progressIndicator = new ProgressIndicator();
             progressIndicator.setPrefSize(50, 50);
             HBox loadingBox = new HBox(progressIndicator);
@@ -1605,15 +1651,12 @@ public class CoursesViewController implements Initializable {
             loadingBox.setPadding(new Insets(20));
             videosContainer.getChildren().add(loadingBox);
 
-            // Ajouter les composants au conteneur principal
             mainContainer.getChildren().addAll(titleLabel, scrollPane);
 
-            // Créer la scène et l'afficher
             Scene scene = new Scene(mainContainer, 900, 700);
             youtubeResultsStage.setScene(scene);
             youtubeResultsStage.show();
 
-            // Effectuer la recherche en arrière-plan
             Task<List<YouTubeVideo>> searchTask = new Task<>() {
                 @Override
                 protected List<YouTubeVideo> call() throws Exception {
@@ -1626,11 +1669,10 @@ public class CoursesViewController implements Initializable {
                 videosContainer.getChildren().clear();
 
                 if (videos.isEmpty()) {
-                    Label emptyLabel = new Label("Aucune vidéo trouvée pour cette recherche.");
+                    Label emptyLabel = new Label("No videos found for this search.");
                     emptyLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #4a5568; -fx-padding: 20 0;");
                     videosContainer.getChildren().add(emptyLabel);
                 } else {
-                    // Ajouter les vidéos avec animation
                     for (YouTubeVideo video : videos) {
                         HBox videoItem = createVideoItem(video, true);
 
@@ -1647,7 +1689,7 @@ public class CoursesViewController implements Initializable {
             searchTask.setOnFailed(event -> {
                 Throwable exception = searchTask.getException();
                 videosContainer.getChildren().clear();
-                Label errorLabel = new Label("Erreur lors de la recherche: " + exception.getMessage());
+                Label errorLabel = new Label("Error during search: " + exception.getMessage());
                 errorLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #e53e3e;");
                 videosContainer.getChildren().add(errorLabel);
             });
@@ -1656,7 +1698,7 @@ public class CoursesViewController implements Initializable {
 
         } catch (Exception e) {
             e.printStackTrace();
-            showAlert(AlertType.ERROR, "Erreur", "Erreur lors de l'ouverture de la fenêtre de résultats: " + e.getMessage());
+            showAlert(AlertType.ERROR, "Error", "Error while opening the results window: " + e.getMessage());
         }
     }
 
@@ -1689,11 +1731,45 @@ public class CoursesViewController implements Initializable {
         if (result.isPresent() && result.get() == ButtonType.OK) {
             try {
                 lessonService.deleteLesson(lesson);
-                loadLessonsForCourse(currentCourse); // Recharger la liste des leçons
+                loadLessonsForCourse(currentCourse);
             } catch (SQLException e) {
                 showAlert(AlertType.ERROR, "Error", "Failed to delete lesson");
             }
         }
+    }
+
+    // Add new method for creating icon buttons
+    private Button createIconButton(String svgPath, String tooltipText, String styleClass) {
+        Button button = new Button();
+        SVGPath icon = new SVGPath();
+        icon.setContent(svgPath);
+        icon.setFill(Color.WHITE);
+        icon.setScaleX(0.8);
+        icon.setScaleY(0.8);
+        button.setGraphic(icon);
+        button.setTooltip(new Tooltip(tooltipText));
+        button.getStyleClass().add(styleClass);
+        
+        // Style de base pour tous les boutons
+        button.setStyle("-fx-background-color: #4f46e5; -fx-padding: 10; " +
+                "-fx-background-radius: 50%; -fx-min-width: 40px; -fx-min-height: 40px; " +
+                "-fx-max-width: 40px; -fx-max-height: 40px; -fx-cursor: hand;");
+        
+        // Effet de survol - changement de couleur
+        button.setOnMouseEntered(e -> {
+            button.setStyle("-fx-background-color: #4338ca; -fx-padding: 10; " +
+                    "-fx-background-radius: 50%; -fx-min-width: 40px; -fx-min-height: 40px; " +
+                    "-fx-max-width: 40px; -fx-max-height: 40px; -fx-cursor: hand;");
+        });
+        
+        // Retour à la couleur d'origine quand le curseur quitte le bouton
+        button.setOnMouseExited(e -> {
+            button.setStyle("-fx-background-color: #4f46e5; -fx-padding: 10; " +
+                    "-fx-background-radius: 50%; -fx-min-width: 40px; -fx-min-height: 40px; " +
+                    "-fx-max-width: 40px; -fx-max-height: 40px; -fx-cursor: hand;");
+        });
+        
+        return button;
     }
 
 }

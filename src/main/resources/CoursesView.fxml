@@ -252,7 +252,7 @@
                                 <!-- Bouton Refresh en haut à droite -->
                                 <HBox alignment="CENTER_RIGHT" style="-fx-padding: 0 10 10 0;">
                                     <Button text="Refresh" onAction="#refreshRecommendedCourses"
-                                            style="-fx-background-color: #4caf50; -fx-text-fill: white; -fx-background-radius: 20; -fx-padding: 5 10; -fx-font-size: 12px;"/>
+                                            style="-fx-background-color:rgb(161, 111, 236); -fx-text-fill: white; -fx-background-radius: 20; -fx-padding: 5 10; -fx-font-size: 12px;"/>
                                 </HBox>
 
                                 <!-- ScrollPane pour permettre le défilement horizontal -->
