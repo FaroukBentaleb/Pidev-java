@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.web.WebView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.effect.DropShadow?>
+
+<VBox fx:id="paymentContainer" alignment="CENTER" spacing="20"
+      xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="tn.learniverse.controllers.PaymentDialogController"
+      style="-fx-background-color: white; -fx-padding: 30; -fx-background-radius: 15;">
+    <effect>
+        <DropShadow color="rgba(0,0,0,0.2)" radius="10" spread="0.1"/>
+    </effect>
+    <Label text="Complete Your Payment" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2962FF;"/>
+    <WebView fx:id="webView" prefWidth="600" prefHeight="600"/>
+</VBox> 
