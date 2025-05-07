@@ -12,7 +12,6 @@
 <?import javafx.scene.text.Font?>
 
 <?import java.net.URL?>
-<?import javafx.scene.control.ProgressBar?>
 <AnchorPane prefHeight="650.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.CourseDetailsViewController">
     <children>
         <VBox alignment="TOP_CENTER" prefHeight="650.0" prefWidth="900.0" style="-fx-background-color: #f5f7fa;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -132,17 +131,6 @@
                                                 </Button>
                                             </children>
                                         </HBox>
-
-                                        <VBox spacing="10.0" alignment="CENTER_LEFT">
-                                            <Label text="Course Progress:" textFill="#555555">
-                                                <font>
-                                                    <Font name="System Bold" size="14.0" />
-                                                </font>
-                                            </Label>
-                                            <ProgressBar progress="0.0" prefWidth="200.0" />
-                                            <Label text="Tracking coming soon..." textFill="#999999" />
-                                        </VBox>
-
                                         <VBox fx:id="courseContentContainer" spacing="10.0" styleClass="lessons-container">
                                             <!-- Lessons will be added dynamically -->
                                         </VBox>

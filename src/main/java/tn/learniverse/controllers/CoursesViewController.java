@@ -7,6 +7,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -15,6 +17,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
@@ -40,12 +43,9 @@ import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.AudioClip;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
-import javafx.util.Duration;
-import javafx.scene.transform.Rotate;
 import javafx.scene.shape.SVGPath;
 import javafx.scene.web.WebView;
 import javafx.scene.web.WebEngine;
@@ -179,8 +179,124 @@ public class CoursesViewController implements Initializable {
             currentUserId = currentUser.getId();
         }
 
-        youtubeSearchBox.setVisible(true);
-        youtubeSearchBox.setManaged(true);
+        // Style pour le bouton YouTube avec logo uniquement
+        if (youtubeToggleBtn != null) {
+            // Créer l'icône YouTube
+            SVGPath youtubeIcon = new SVGPath();
+            youtubeIcon.setContent("M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z");
+            youtubeIcon.setFill(Color.WHITE);
+            youtubeIcon.setScaleX(1.2);
+            youtubeIcon.setScaleY(1.2);
+
+            youtubeToggleBtn.setGraphic(youtubeIcon);
+            youtubeToggleBtn.setText(""); // Enlever le texte
+            youtubeToggleBtn.setStyle("-fx-background-color: #FF0000; -fx-text-fill: white; " +
+                    "-fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 10 20; " +
+                    "-fx-background-radius: 20; -fx-cursor: hand; " +
+                    "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);");
+
+            youtubeToggleBtn.setOnMouseEntered(e -> {
+                ScaleTransition st = new ScaleTransition(Duration.millis(100), youtubeToggleBtn);
+                st.setToX(1.05);
+                st.setToY(1.05);
+                st.play();
+                youtubeToggleBtn.setStyle("-fx-background-color: #CC0000; -fx-text-fill: white; " +
+                        "-fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 10 20; " +
+                        "-fx-background-radius: 20; -fx-cursor: hand; " +
+                        "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 15, 0, 0, 5);");
+            });
+
+            youtubeToggleBtn.setOnMouseExited(e -> {
+                ScaleTransition st = new ScaleTransition(Duration.millis(100), youtubeToggleBtn);
+                st.setToX(1.0);
+                st.setToY(1.0);
+                st.play();
+                youtubeToggleBtn.setStyle("-fx-background-color: #FF0000; -fx-text-fill: white; " +
+                        "-fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 10 20; " +
+                        "-fx-background-radius: 20; -fx-cursor: hand; " +
+                        "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);");
+            });
+        }
+
+        // Style pour le bouton de recherche YouTube
+        if (youtubeSearchButton != null) {
+            youtubeSearchButton.setStyle("-fx-background-color: #FF0000; -fx-text-fill: white; " +
+                    "-fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 8 15; " +
+                    "-fx-background-radius: 20; -fx-cursor: hand; " +
+                    "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);");
+
+            youtubeSearchButton.setOnMouseEntered(e -> {
+                ScaleTransition st = new ScaleTransition(Duration.millis(100), youtubeSearchButton);
+                st.setToX(1.05);
+                st.setToY(1.05);
+                st.play();
+                youtubeSearchButton.setStyle("-fx-background-color: #CC0000; -fx-text-fill: white; " +
+                        "-fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 8 15; " +
+                        "-fx-background-radius: 20; -fx-cursor: hand; " +
+                        "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 15, 0, 0, 5);");
+            });
+
+            youtubeSearchButton.setOnMouseExited(e -> {
+                ScaleTransition st = new ScaleTransition(Duration.millis(100), youtubeSearchButton);
+                st.setToX(1.0);
+                st.setToY(1.0);
+                st.play();
+                youtubeSearchButton.setStyle("-fx-background-color: #FF0000; -fx-text-fill: white; " +
+                        "-fx-font-size: 14px; -fx-font-weight: bold; -fx-padding: 8 15; " +
+                        "-fx-background-radius: 20; -fx-cursor: hand; " +
+                        "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);");
+            });
+        }
+
+        // Style pour le bouton refresh avec dégradé bleu-violet
+        for (Node node : recommendedCoursesSection.getChildrenUnmodifiable()) {
+            if (node instanceof Button && ((Button) node).getText().contains("Refresh")) {
+                Button refreshButton = (Button) node;
+                
+                // Créer l'icône de rafraîchissement
+                SVGPath refreshIcon = new SVGPath();
+                refreshIcon.setContent("M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z");
+                refreshIcon.setFill(Color.WHITE);
+                refreshIcon.setScaleX(0.8);
+                refreshIcon.setScaleY(0.8);
+
+                // Créer un conteneur pour l'icône et le texte
+                HBox content = new HBox(10);
+                content.setAlignment(Pos.CENTER);
+                content.getChildren().addAll(refreshIcon, new Label("Refresh"));
+
+                refreshButton.setGraphic(content);
+                refreshButton.setStyle("-fx-background-color: linear-gradient(to right, #4f46e5, #3b82f6); " +
+                        "-fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; " +
+                        "-fx-padding: 10 20; -fx-background-radius: 20; -fx-cursor: hand; " +
+                        "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);");
+
+                refreshButton.setOnMouseEntered(e -> {
+                    ScaleTransition st = new ScaleTransition(Duration.millis(100), refreshButton);
+                    st.setToX(1.05);
+                    st.setToY(1.05);
+                    st.play();
+                    refreshButton.setStyle("-fx-background-color: linear-gradient(to right, #4338ca, #2563eb); " +
+                            "-fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; " +
+                            "-fx-padding: 10 20; -fx-background-radius: 20; -fx-cursor: hand; " +
+                            "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 15, 0, 0, 5);");
+                });
+
+                refreshButton.setOnMouseExited(e -> {
+                    ScaleTransition st = new ScaleTransition(Duration.millis(100), refreshButton);
+                    st.setToX(1.0);
+                    st.setToY(1.0);
+                    st.play();
+                    refreshButton.setStyle("-fx-background-color: linear-gradient(to right, #4f46e5, #3b82f6); " +
+                            "-fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; " +
+                            "-fx-padding: 10 20; -fx-background-radius: 20; -fx-cursor: hand; " +
+                            "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);");
+                });
+            }
+        }
+
+        youtubeSearchBox.setVisible(false);
+        youtubeSearchBox.setManaged(false);
 
         // Chargez les favoris de l'utilisateur
         try {
@@ -226,8 +342,8 @@ public class CoursesViewController implements Initializable {
         loadRecommendedCourses();
 
         // Configurer la section recommandée
-        recommendedCoursesSection.setExpanded(true);
-        recommendedCoursesSection.setAnimated(true);
+        recommendedCoursesSection.setExpanded(false);
+        recommendedCoursesSection.setAnimated(false);
         recommendedCoursesSection.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
     }
 
@@ -273,57 +389,131 @@ public class CoursesViewController implements Initializable {
             return;
         }
 
+        // Create a horizontal container for the cards
+        HBox cardsContainer = new HBox(20); // 20 pixels spacing between cards
+        cardsContainer.setStyle("-fx-padding: 10;");
+        cardsContainer.setAlignment(Pos.CENTER_LEFT);
+
+        // Add all course cards to the horizontal container
         for (Course course : recommendedCourses) {
             VBox courseCard = createRecommendedCourseCard(course);
-            recommendedCoursesContainer.getChildren().add(courseCard);
+            cardsContainer.getChildren().add(courseCard);
         }
+
+        // Create a ScrollPane for horizontal scrolling
+        ScrollPane scrollPane = new ScrollPane(cardsContainer);
+        scrollPane.setFitToHeight(true);
+        scrollPane.setFitToWidth(false);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setStyle("-fx-background: transparent; -fx-background-color: transparent;");
+        scrollPane.setPrefHeight(350); // Adjust height as needed
+
+        // Add the ScrollPane to the recommended courses container
+        recommendedCoursesContainer.getChildren().add(scrollPane);
     }
 
     private VBox createRecommendedCourseCard(Course course) {
-        VBox card = new VBox(10);
-        card.setStyle("-fx-background-color: white; -fx-background-radius: 10; " +
-                "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2); " +
-                "-fx-padding: 15; -fx-min-width: 250; -fx-max-width: 250;");
+        VBox card = new VBox(12);
+        card.setStyle("-fx-background-color: white; -fx-background-radius: 15; " +
+                "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5); " +
+                "-fx-padding: 15; -fx-min-width: 280; -fx-max-width: 280;");
+        card.setCursor(Cursor.HAND); // Change cursor to hand on hover
 
-        // Image du cours
+        // Conteneur pour l'image avec effet de survol
+        StackPane imageContainer = new StackPane();
+        imageContainer.setStyle("-fx-background-color: #f8fafc; -fx-background-radius: 10;");
+
+        // Image du cours avec effet de zoom au survol
         ImageView imageView = new ImageView(courseDefaultImage);
-        imageView.setFitWidth(220);
-        imageView.setFitHeight(120);
+        imageView.setFitWidth(250);
+        imageView.setFitHeight(150);
         imageView.setPreserveRatio(true);
+        imageView.setStyle("-fx-background-radius: 10;");
 
-        // Titre
+        // Badge "Recommended" en haut à droite
+        Label recommendedBadge = new Label("Recommended");
+        recommendedBadge.setStyle("-fx-background-color: #3b82f6; -fx-text-fill: white; " +
+                "-fx-font-size: 12px; -fx-font-weight: bold; -fx-padding: 5 10; " +
+                "-fx-background-radius: 15;");
+        StackPane.setAlignment(recommendedBadge, Pos.TOP_RIGHT);
+        StackPane.setMargin(recommendedBadge, new Insets(10));
+
+        imageContainer.getChildren().addAll(imageView, recommendedBadge);
+
+        // Titre avec style amélioré
         Label titleLabel = new Label(course.getTitle());
-        titleLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
+        titleLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: #1e293b;");
         titleLabel.setWrapText(true);
+        titleLabel.setMaxHeight(50);
 
-        // Catégorie
+        // Catégorie avec icône
+        HBox categoryBox = new HBox(8);
+        categoryBox.setAlignment(Pos.CENTER_LEFT);
+
+        SVGPath categoryIcon = new SVGPath();
+        categoryIcon.setContent("M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5");
+        categoryIcon.setFill(Color.web("#64748b"));
+        categoryIcon.setScaleX(0.8);
+        categoryIcon.setScaleY(0.8);
+
         Label categoryLabel = new Label(course.getCategory());
-        categoryLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #718096;");
+        categoryLabel.setStyle("-fx-font-size: 13px; -fx-text-fill: #64748b;");
 
-        // Prix
+        categoryBox.getChildren().addAll(categoryIcon, categoryLabel);
+
+        // Prix avec style attractif
+        HBox priceBox = new HBox(8);
+        priceBox.setAlignment(Pos.CENTER_LEFT);
+
         Label priceLabel = new Label(String.format("%.2f DT", course.getPrice()));
-        priceLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 14px; -fx-text-fill: #4338ca;");
+        priceLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 20px; -fx-text-fill: #3b82f6;");
 
-        // Bouton "Voir détails"
-        Button viewButton = new Button("View Details");
-        viewButton.setStyle("-fx-background-color: #4338ca; -fx-text-fill: white; " +
-                "-fx-background-radius: 5; -fx-padding: 5 15;");
-        viewButton.setOnAction(e -> viewCourseDetails(course));
+        Label durationLabel = new Label(String.format("• %d hours", course.getDuration()));
+        durationLabel.setStyle("-fx-font-size: 13px; -fx-text-fill: #64748b;");
 
-        card.getChildren().addAll(imageView, titleLabel, categoryLabel, priceLabel, viewButton);
+        priceBox.getChildren().addAll(priceLabel, durationLabel);
 
-        // Effet de survol
-        card.setOnMouseEntered(e ->
-                card.setStyle("-fx-background-color: #f8fafc; -fx-background-radius: 10; " +
-                        "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 8, 0, 0, 3); " +
-                        "-fx-padding: 15; -fx-min-width: 250; -fx-max-width: 250;")
-        );
+        // Assemblage des éléments
+        card.getChildren().addAll(imageContainer, titleLabel, categoryBox, priceBox);
 
-        card.setOnMouseExited(e ->
-                card.setStyle("-fx-background-color: white; -fx-background-radius: 10; " +
-                        "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2); " +
-                        "-fx-padding: 15; -fx-min-width: 250; -fx-max-width: 250;")
-        );
+        // Rendre toute la carte cliquable
+        card.setOnMouseClicked(e -> viewCourseDetails(course));
+
+        // Animation de survol de la carte
+        card.setOnMouseEntered(e -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(100), card);
+            st.setToX(1.02);
+            st.setToY(1.02);
+            st.play();
+
+            card.setStyle("-fx-background-color: #f8fafc; -fx-background-radius: 15; " +
+                    "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 15, 0, 0, 7); " +
+                    "-fx-padding: 15; -fx-min-width: 280; -fx-max-width: 280;");
+
+            // Animation de l'image
+            ScaleTransition imageSt = new ScaleTransition(Duration.millis(100), imageView);
+            imageSt.setToX(1.05);
+            imageSt.setToY(1.05);
+            imageSt.play();
+        });
+
+        card.setOnMouseExited(e -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(100), card);
+            st.setToX(1.0);
+            st.setToY(1.0);
+            st.play();
+
+            card.setStyle("-fx-background-color: white; -fx-background-radius: 15; " +
+                    "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5); " +
+                    "-fx-padding: 15; -fx-min-width: 280; -fx-max-width: 280;");
+
+            // Animation de l'image
+            ScaleTransition imageSt = new ScaleTransition(Duration.millis(100), imageView);
+            imageSt.setToX(1.0);
+            imageSt.setToY(1.0);
+            imageSt.play();
+        });
 
         return card;
     }
@@ -601,22 +791,23 @@ public class CoursesViewController implements Initializable {
     private HBox createCourseItem(Course course) {
         HBox courseItem = new HBox();
         courseItem.setSpacing(15);
-        courseItem.setStyle("-fx-background-color: white; -fx-background-radius: 15; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5); -fx-padding: 20;");
+        courseItem.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 15; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5); -fx-padding: 20;");
 
         // Image à gauche
         ImageView courseImageView = new ImageView(courseDefaultImage);
-        courseImageView.setFitWidth(100);
-        courseImageView.setFitHeight(100);
+        courseImageView.setFitWidth(120);
+        courseImageView.setFitHeight(120);
         courseImageView.setPreserveRatio(true);
+        courseImageView.setStyle("-fx-background-color: #f8fafc; -fx-background-radius: 10;");
 
         // Détails du cours
         VBox courseDetails = new VBox();
-        courseDetails.setSpacing(8);
+        courseDetails.setSpacing(10);
         HBox.setHgrow(courseDetails, Priority.ALWAYS);
 
         // Label du titre
         Label titleLabel = new Label(course.getTitle());
-        titleLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: #2d3748;");
+        titleLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 20px; -fx-text-fill: #1e293b; -fx-padding: 0 0 5 0;");
 
         // Bouton favori avec SVG
         Button favoriteButton = new Button();
@@ -632,16 +823,14 @@ public class CoursesViewController implements Initializable {
                 + "C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3z");
 
         heartIcon.setFill(isFavorite ? Color.RED : Color.GRAY);
-        heartIcon.setScaleX(0.5);
-        heartIcon.setScaleY(0.5);
+        heartIcon.setScaleX(0.6);
+        heartIcon.setScaleY(0.6);
 
         favoriteButton.setGraphic(heartIcon);
         favoriteButton.setStyle("-fx-background-color: transparent; -fx-cursor: hand;");
 
         favoriteButton.setOnAction(e -> {
-            boolean isNowFavorite = toggleFavorite(course); // toggleFavorite doit retourner true/false
-
-            // 1. Scale / Rebond du cœur
+            boolean isNowFavorite = toggleFavorite(course);
             ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(150), heartIcon);
             scaleTransition.setFromX(1.0);
             scaleTransition.setFromY(1.0);
@@ -649,14 +838,13 @@ public class CoursesViewController implements Initializable {
             scaleTransition.setToY(1.5);
             scaleTransition.setAutoReverse(true);
             scaleTransition.setCycleCount(2);
+            scaleTransition.play();
 
-            // 2. Rotation légère
             RotateTransition rotateTransition = new RotateTransition(Duration.millis(300), heartIcon);
             rotateTransition.setByAngle(20);
             rotateTransition.setAutoReverse(true);
             rotateTransition.setCycleCount(2);
 
-            // 3. Changement de couleur
             FillTransition fillTransition = new FillTransition(Duration.millis(300), heartIcon);
             if (isNowFavorite) {
                 fillTransition.setFromValue(Color.GRAY);
@@ -666,14 +854,12 @@ public class CoursesViewController implements Initializable {
                 fillTransition.setToValue(Color.GRAY);
             }
 
-            // 4. Glow
             DropShadow glow = new DropShadow(20, Color.RED);
             heartIcon.setEffect(glow);
 
             PauseTransition removeGlow = new PauseTransition(Duration.millis(300));
             removeGlow.setOnFinished(eventGlow -> heartIcon.setEffect(null));
 
-            // 5. Cercle d'ondes
             Circle ripple = new Circle(0, Color.web("#ff6b6b", 0.4));
             ripple.setCenterX(heartIcon.getBoundsInParent().getCenterX());
             ripple.setCenterY(heartIcon.getBoundsInParent().getCenterY());
@@ -689,7 +875,6 @@ public class CoursesViewController implements Initializable {
             );
             rippleAnimation.setOnFinished(ev -> ((Pane) favoriteButton.getParent()).getChildren().remove(ripple));
 
-            // 6. Jouer un son
             try {
                 AudioClip sound = new AudioClip(getClass().getResource("/sounds/sparkle.mp3").toExternalForm());
                 sound.play();
@@ -697,7 +882,6 @@ public class CoursesViewController implements Initializable {
                 ex.printStackTrace();
             }
 
-            // 7. Lancer toutes les animations ensemble
             ParallelTransition parallelTransition = new ParallelTransition(scaleTransition, rotateTransition, fillTransition);
             parallelTransition.play();
             removeGlow.play();
@@ -713,13 +897,13 @@ public class CoursesViewController implements Initializable {
 
         // Description
         Label descriptionLabel = new Label(course.getDescription());
-        descriptionLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #4a5568;");
+        descriptionLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #475569; -fx-padding: 5 0;");
         descriptionLabel.setWrapText(true);
 
         // Infos supplémentaires
         Label infoLabel = new Label(String.format("Duration: %d hours • Price: %.2f DT • Level: %s • Category: %s",
                 course.getDuration(), course.getPrice(), course.getLevel(), course.getCategory()));
-        infoLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #718096;");
+        infoLabel.setStyle("-fx-font-size: 13px; -fx-text-fill: #64748b; -fx-padding: 5 0;");
 
         // Boutons d'action
         HBox buttonsBox = new HBox();
@@ -727,15 +911,15 @@ public class CoursesViewController implements Initializable {
         buttonsBox.setStyle("-fx-padding: 10 0 0 0;");
 
         Button viewDetailsButton = new Button("View Course Details");
-        viewDetailsButton.setStyle("-fx-background-color: white; -fx-text-fill: #4338ca; -fx-border-color: #4338ca; -fx-border-radius: 20; -fx-background-radius: 20; -fx-cursor: hand;");
+        viewDetailsButton.setStyle("-fx-background-color: #3b82f6; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 8 15; -fx-background-radius: 8; -fx-cursor: hand;");
         viewDetailsButton.setOnAction(e -> viewCourseDetails(course));
 
         Button updateButton = new Button("Update");
-        updateButton.setStyle("-fx-background-color: white; -fx-text-fill: #3182ce; -fx-border-color: #3182ce; -fx-border-radius: 20; -fx-background-radius: 20; -fx-cursor: hand;");
+        updateButton.setStyle("-fx-background-color: #10b981; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 8 15; -fx-background-radius: 8; -fx-cursor: hand;");
         updateButton.setOnAction(e -> updateCourse(course));
 
         Button deleteButton = new Button("Delete");
-        deleteButton.setStyle("-fx-background-color: white; -fx-text-fill: #e53e3e; -fx-border-color: #e53e3e; -fx-border-radius: 20; -fx-background-radius: 20; -fx-cursor: hand;");
+        deleteButton.setStyle("-fx-background-color: #ef4444; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 8 15; -fx-background-radius: 8; -fx-cursor: hand;");
         deleteButton.setOnAction(e -> deleteCourse(course));
 
         buttonsBox.getChildren().addAll(viewDetailsButton, updateButton, deleteButton);
@@ -743,6 +927,15 @@ public class CoursesViewController implements Initializable {
         // Ajout des composants
         courseDetails.getChildren().addAll(titleRow, descriptionLabel, infoLabel, buttonsBox);
         courseItem.getChildren().addAll(courseImageView, courseDetails);
+
+        // Effet de survol
+        courseItem.setOnMouseEntered(e ->
+                courseItem.setStyle("-fx-background-color: #f8fafc; -fx-background-radius: 15; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 15, 0, 0, 7); -fx-padding: 20;")
+        );
+
+        courseItem.setOnMouseExited(e ->
+                courseItem.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 15; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5); -fx-padding: 20;")
+        );
 
         return courseItem;
     }
@@ -982,89 +1175,137 @@ public class CoursesViewController implements Initializable {
         // Conteneur principal pour toute la leçon
         VBox lessonItem = new VBox();
         lessonItem.setSpacing(0);
-        lessonItem.getStyleClass().add("lesson-item");
+        lessonItem.setStyle("-fx-background-color: white; -fx-background-radius: 15; " +
+                "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 5); " +
+                "-fx-margin: 10;");
 
-        // En-tête de la leçon (toujours visible)
+        // En-tête de la leçon avec style moderne
         HBox header = new HBox();
         header.setAlignment(Pos.CENTER_LEFT);
-        header.setPadding(new Insets(15));
-        header.setSpacing(10);
-        header.getStyleClass().add("lesson-header");
-        header.setStyle("-fx-background-color: white; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 0, 1);");
+        header.setPadding(new Insets(20));
+        header.setSpacing(15);
+        header.setStyle("-fx-background-color: white; -fx-background-radius: 15 15 0 0;");
+
+        // Icône de la leçon
+        SVGPath lessonIcon = new SVGPath();
+        lessonIcon.setContent("M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5");
+        lessonIcon.setFill(Color.web("#3b82f6"));
+        lessonIcon.setScaleX(1.2);
+        lessonIcon.setScaleY(1.2);
 
         // Les infos de la leçon
-        VBox lessonInfo = new VBox(5);
+        VBox lessonInfo = new VBox(8);
         lessonInfo.setAlignment(Pos.CENTER_LEFT);
         HBox.setHgrow(lessonInfo, Priority.ALWAYS);
 
         Label titleLabel = new Label(lesson.getTitle());
-        titleLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
+        titleLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: #1e293b;");
 
         Label descLabel = new Label(lesson.getDescription());
-        descLabel.setStyle("-fx-font-size: 13px; -fx-text-fill: #4a5568;");
+        descLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #64748b;");
         descLabel.setWrapText(true);
 
         lessonInfo.getChildren().addAll(titleLabel, descLabel);
 
-        // Les boutons d'action
+        // Les boutons d'action avec style moderne
         HBox actions = new HBox(10);
         actions.setAlignment(Pos.CENTER_RIGHT);
 
         // Bouton pour éditer la leçon
-        Button editButton = new Button("Edit");
-        editButton.setStyle("-fx-background-color: transparent; -fx-text-fill: #3182ce; -fx-border-color: #3182ce; -fx-border-radius: 15; -fx-background-radius: 15;");
+        Button editButton = new Button("Edit Lesson");
+        editButton.setStyle("-fx-background-color: #3b82f6; -fx-text-fill: white; " +
+                "-fx-font-size: 13px; -fx-font-weight: bold; -fx-padding: 8 15; " +
+                "-fx-background-radius: 20; -fx-cursor: hand; " +
+                "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);");
         editButton.setOnAction(e -> openEditLessonWindow(lesson));
 
         // Bouton pour supprimer la leçon
-        Button deleteButton = new Button("Delete");
-        deleteButton.setStyle("-fx-background-color: transparent; -fx-text-fill: #e53e3e; -fx-border-color: #e53e3e; -fx-border-radius: 15; -fx-background-radius: 15;");
+        Button deleteButton = new Button("Delete Lesson");
+        deleteButton.setStyle("-fx-background-color: #ef4444; -fx-text-fill: white; " +
+                "-fx-font-size: 13px; -fx-font-weight: bold; -fx-padding: 8 15; " +
+                "-fx-background-radius: 20; -fx-cursor: hand; " +
+                "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);");
         deleteButton.setOnAction(e -> deleteLesson(lesson));
 
-        // Bouton pour développer/réduire la leçon
-        Button expandButton = new Button("⯆");
-        expandButton.setStyle("-fx-background-color: #f7fafc; -fx-text-fill: #4a5568; -fx-border-color: #cbd5e0; -fx-border-radius: 15; -fx-background-radius: 15;");
+        // Bouton pour développer/réduire la leçon avec icône simple
+        Button expandButton = new Button("+");
+        expandButton.setStyle("-fx-background-color: #f1f5f9; -fx-text-fill: #64748b; " +
+                "-fx-font-size: 20px; -fx-font-weight: bold; -fx-padding: 8 15; " +
+                "-fx-background-radius: 20; -fx-cursor: hand;");
 
         actions.getChildren().addAll(editButton, deleteButton, expandButton);
 
         // Assembler l'en-tête
-        header.getChildren().addAll(lessonInfo, actions);
+        header.getChildren().addAll(lessonIcon, lessonInfo, actions);
 
-        // Contenu détaillé de la leçon (initialement caché)
-        VBox content = new VBox(10);
-        content.setPadding(new Insets(0, 15, 15, 15));
+        // Contenu détaillé de la leçon avec style moderne
+        VBox content = new VBox(15);
+        content.setPadding(new Insets(0, 20, 20, 20));
         content.setMaxHeight(0);
         content.setVisible(false);
-        content.setStyle("-fx-background-color: #f9fafc; -fx-background-radius: 0 0 8 8; -fx-border-color: #e2e8f0; -fx-border-width: 0 1 1 1; -fx-border-radius: 0 0 8 8;");
+        content.setStyle("-fx-background-color: #f8fafc; -fx-background-radius: 0 0 15 15;");
 
-        // Le contenu de la leçon
+        // Le contenu de la leçon avec style amélioré
         TextArea contentText = new TextArea(lesson.getContent());
         contentText.setEditable(false);
         contentText.setWrapText(true);
         contentText.setPrefHeight(200);
-        contentText.setStyle("-fx-control-inner-background: #f9fafc; -fx-background-radius: 4;");
+        contentText.setStyle("-fx-control-inner-background: white; " +
+                "-fx-background-radius: 10; -fx-border-radius: 10; " +
+                "-fx-border-color: #e2e8f0; -fx-font-size: 14px; " +
+                "-fx-text-fill: #334155;");
 
-        content.getChildren().add(contentText);
-
-        // Ajouter l'attachement si présent
+        // Ajouter l'attachement si présent avec style moderne
         if (lesson.getAttachment() != null && !lesson.getAttachment().isEmpty()) {
             HBox attachmentBox = new HBox(10);
             attachmentBox.setAlignment(Pos.CENTER_LEFT);
+            attachmentBox.setStyle("-fx-background-color: white; -fx-background-radius: 10; " +
+                    "-fx-padding: 10; -fx-border-color: #e2e8f0; -fx-border-radius: 10;");
+
+            SVGPath attachmentIcon = new SVGPath();
+            attachmentIcon.setContent("M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z");
+            attachmentIcon.setFill(Color.web("#3b82f6"));
+            attachmentIcon.setScaleX(0.8);
+            attachmentIcon.setScaleY(0.8);
 
             Label attachmentLabel = new Label("Attachment: ");
-            attachmentLabel.setStyle("-fx-font-weight: bold;");
+            attachmentLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: #64748b;");
 
             Hyperlink attachmentLink = new Hyperlink(lesson.getAttachment());
-            attachmentLink.setStyle("-fx-text-fill: #4338ca;");
+            attachmentLink.setStyle("-fx-text-fill: #3b82f6; -fx-font-weight: bold;");
             attachmentLink.setOnAction(e -> {
                 // Logique pour ouvrir l'attachement
             });
 
-            attachmentBox.getChildren().addAll(attachmentLabel, attachmentLink);
+            attachmentBox.getChildren().addAll(attachmentIcon, attachmentLabel, attachmentLink);
             content.getChildren().add(attachmentBox);
         }
 
+        content.getChildren().add(contentText);
+
         // Ajouter l'en-tête et le contenu au conteneur principal
         lessonItem.getChildren().addAll(header, content);
+
+        // Effets de survol pour l'en-tête
+        header.setOnMouseEntered(e -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(100), lessonItem);
+            st.setToX(1.02);
+            st.setToY(1.02);
+            st.play();
+            lessonItem.setStyle("-fx-background-color: white; -fx-background-radius: 15; " +
+                    "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 15, 0, 0, 7); " +
+                    "-fx-margin: 10;");
+        });
+
+        header.setOnMouseExited(e -> {
+            ScaleTransition st = new ScaleTransition(Duration.millis(100), lessonItem);
+            st.setToX(1.0);
+            st.setToY(1.0);
+            st.play();
+            lessonItem.setStyle("-fx-background-color: white; -fx-background-radius: 15; " +
+                    "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 5); " +
+                    "-fx-margin: 10;");
+        });
 
         // Configurer le comportement d'accordéon
         expandButton.setOnAction(e -> toggleLessonContent(content, expandButton));
@@ -1077,26 +1318,43 @@ public class CoursesViewController implements Initializable {
             expandedLessonContent.setVisible(false);
             expandedLessonContent.setMaxHeight(0);
             Button prevExpandButton = findExpandButtonForContent(expandedLessonContent);
-            if (prevExpandButton != null) prevExpandButton.setText("⯆");
+            if (prevExpandButton != null) {
+                prevExpandButton.setText("▼");
+                prevExpandButton.setStyle("-fx-background-color: #f1f5f9; -fx-text-fill: #64748b; " +
+                        "-fx-font-size: 16px; -fx-font-weight: bold; -fx-padding: 8 15; " +
+                        "-fx-background-radius: 20; -fx-cursor: hand;");
+            }
         }
 
         boolean isExpanded = content.isVisible();
         if (isExpanded) {
             content.setVisible(false);
             content.setMaxHeight(0);
-            expandButton.setText("⯆");
+            expandButton.setText("▼");
+            expandButton.setStyle("-fx-background-color: #f1f5f9; -fx-text-fill: #64748b; " +
+                    "-fx-font-size: 16px; -fx-font-weight: bold; -fx-padding: 8 15; " +
+                    "-fx-background-radius: 20; -fx-cursor: hand;");
             expandedLessonContent = null;
         } else {
             content.setVisible(true);
             content.setMaxHeight(Double.MAX_VALUE);
-            expandButton.setText("⯅");
+            expandButton.setText("▲");
+            expandButton.setStyle("-fx-background-color: #3b82f6; -fx-text-fill: white; " +
+                    "-fx-font-size: 16px; -fx-font-weight: bold; -fx-padding: 8 15; " +
+                    "-fx-background-radius: 20; -fx-cursor: hand;");
             expandedLessonContent = content;
 
-            // Animation de slide
-            TranslateTransition tt = new TranslateTransition(Duration.millis(300), content);
-            tt.setFromY(-10);
-            tt.setToY(0);
-            tt.play();
+            // Animation de slide avec fade
+            FadeTransition fadeTransition = new FadeTransition(Duration.millis(300), content);
+            fadeTransition.setFromValue(0);
+            fadeTransition.setToValue(1);
+
+            TranslateTransition slideTransition = new TranslateTransition(Duration.millis(300), content);
+            slideTransition.setFromY(-10);
+            slideTransition.setToY(0);
+
+            ParallelTransition parallelTransition = new ParallelTransition(fadeTransition, slideTransition);
+            parallelTransition.play();
         }
     }
 
@@ -1180,42 +1438,6 @@ public class CoursesViewController implements Initializable {
                 }
             }
         });
-    }
-
-    private void openEditLessonWindow(Lesson lesson) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/EditLesson.fxml"));
-            Parent root = loader.load();
-
-            EditLessonController controller = loader.getController();
-            controller.setLesson(lesson);
-            controller.setRefreshCallback(() -> loadLessonsForCourse(currentCourse));
-
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Edit Lesson");
-            stage.setScene(new Scene(root));
-            stage.showAndWait();
-        } catch (IOException e) {
-            showAlert(AlertType.ERROR, "Error", "Could not open Edit Lesson window");
-        }
-    }
-
-    private void deleteLesson(Lesson lesson) {
-        Alert confirmAlert = new Alert(AlertType.CONFIRMATION);
-        confirmAlert.setTitle("Delete Lesson");
-        confirmAlert.setHeaderText("Delete " + lesson.getTitle());
-        confirmAlert.setContentText("Are you sure you want to delete this lesson? This action cannot be undone.");
-
-        Optional<ButtonType> result = confirmAlert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            try {
-                lessonService.deleteLesson(lesson);
-                loadLessonsForCourse(currentCourse); // Recharger la liste des leçons
-            } catch (SQLException e) {
-                showAlert(AlertType.ERROR, "Error", "Failed to delete lesson");
-            }
-        }
     }
 
     @FXML
@@ -1438,6 +1660,40 @@ public class CoursesViewController implements Initializable {
         }
     }
 
+    private void openEditLessonWindow(Lesson lesson) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/EditLesson.fxml"));
+            Parent root = loader.load();
 
+            EditLessonController controller = loader.getController();
+            controller.setLesson(lesson);
+            controller.setRefreshCallback(() -> loadLessonsForCourse(currentCourse));
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Edit Lesson");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+        } catch (IOException e) {
+            showAlert(AlertType.ERROR, "Error", "Could not open Edit Lesson window");
+        }
+    }
+
+    private void deleteLesson(Lesson lesson) {
+        Alert confirmAlert = new Alert(AlertType.CONFIRMATION);
+        confirmAlert.setTitle("Delete Lesson");
+        confirmAlert.setHeaderText("Delete " + lesson.getTitle());
+        confirmAlert.setContentText("Are you sure you want to delete this lesson? This action cannot be undone.");
+
+        Optional<ButtonType> result = confirmAlert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            try {
+                lessonService.deleteLesson(lesson);
+                loadLessonsForCourse(currentCourse); // Recharger la liste des leçons
+            } catch (SQLException e) {
+                showAlert(AlertType.ERROR, "Error", "Failed to delete lesson");
+            }
+        }
+    }
 
 }

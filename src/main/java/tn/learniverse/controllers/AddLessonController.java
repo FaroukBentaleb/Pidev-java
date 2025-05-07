@@ -316,6 +316,4 @@ public class AddLessonController implements Initializable {
         alert.setContentText(content);
         alert.showAndWait();
     }
-
-
 }
