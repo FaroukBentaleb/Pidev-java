@@ -9,14 +9,14 @@ public class Commentaire {
     private String contenu;
     private String dateComment;
     private Poste poste;
-    private user user;
+    private User user;
     private boolean visible;
     private String gifurl;
 
     public Commentaire() {}
 
     public Commentaire(int id, String contenu, String dateComment,
-                       Poste poste, user user, boolean visible, String gifurl) {
+                       Poste poste, User user, boolean visible, String gifurl) {
         this.id = id;
         this.contenu = contenu;
         this.dateComment = dateComment;
@@ -58,11 +58,11 @@ public class Commentaire {
         this.poste = poste;
     }
 
-    public user getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(user user) {
+    public void setUser(User user) {
         this.user = user;
     }
 

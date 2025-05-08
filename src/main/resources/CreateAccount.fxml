@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.CreateAccount">
+   <children>
+      <VBox alignment="CENTER" layoutX="872.0" layoutY="11.0" prefHeight="629.0" prefWidth="400.0" spacing="15.0" styleClass="form-container">
+         <padding>
+            <Insets bottom="40" left="60" right="60" top="40" />
+         </padding>
+
+         <Label styleClass="title-label" text="Create Your Account" />
+         <Label text="Name" />
+         <TextField fx:id="signup_name" promptText="Enter your first name" />
+         <Label fx:id="error_name" textFill="red" />
+
+         <Label text="Family Name" />
+         <TextField fx:id="signup_family_name" promptText="Enter your last name" />
+         <Label fx:id="error_family_name" textFill="red" />
+
+         <Label text="Email" />
+         <TextField fx:id="signup_email" promptText="Enter your email address" />
+         <Label fx:id="error_email" textFill="red" />
+         <Label text="Role" />
+         <ChoiceBox fx:id="signup_role" prefWidth="200.0" />
+         <Label text="Password" />
+         <PasswordField fx:id="signup_pwd" promptText="Enter your password" />
+         <Label fx:id="error_pwd" textFill="red" />
+
+         <Label text="Confirm Password" />
+         <PasswordField fx:id="signup_conf_pwd" promptText="Re-enter your password" />
+         <Label fx:id="error_conf_pwd" textFill="red" />
+
+         <Button onAction="#Signup_btn" prefHeight="40.0" prefWidth="274.0" styleClass="signup-button" stylesheets="@btn-style.css" text="Sign Up" />
+      </VBox>
+      <Button layoutX="319.0" layoutY="298.0" onAction="#Login_btn" styleClass="signup-button" text="Login" />
+      <Label layoutX="296.0" layoutY="209.0" text="Already have an account?" />
+   </children>
+</AnchorPane>

@@ -3,16 +3,16 @@ package tn.learniverse.tools;
 import tn.learniverse.entities.*;
 
 public class Session {
-    private static user currentUser;
+    private static User currentUser;
     private static Logs currentLog;
     private static String email;
     private static String url;
 
-    public static void setCurrentUser(user user) {
+    public static void setCurrentUser(User user) {
         currentUser = user;
     }
 
-    public static user getCurrentUser() {
+    public static User getCurrentUser() {
         return currentUser;
     }
     public static void setCurrentLog(Logs log) {

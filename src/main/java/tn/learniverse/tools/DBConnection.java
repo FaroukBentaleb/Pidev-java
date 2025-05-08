@@ -9,9 +9,10 @@ public class DBConnection {
     public final String URL="jdbc:mysql://localhost:3306/learniverse";
     public final String USER="root";
     public final String PWD="";
-    private Connection connection;
+    private static Connection connection;
     public static DBConnection DB;
-    public DBConnection(){
+
+    private  DBConnection(){
         try {
             connection = DriverManager.getConnection(URL,USER,PWD);
             System.out.println("Connection established!!");
@@ -23,10 +24,11 @@ public class DBConnection {
     public static DBConnection getInstance(){
         if(DB == null){
             DB = new DBConnection();
-        }return DB;
+        }
+        return DB;
     }
 
-    public Connection getConnection() {
+    public static Connection getConnection() {
         return connection;
     }
 }

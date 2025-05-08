@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.Reclamation.Reponses">
+
+    <Label fx:id="labelTitre" layoutX="20.0" layoutY="10.0" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+
+    <ScrollPane layoutX="20.0" layoutY="50.0" prefHeight="650.0" prefWidth="1240.0">
+        <VBox fx:id="vboxReponses" spacing="15.0" style="-fx-padding: 20;" />
+    </ScrollPane>
+    <Button fx:id="btnRetour" layoutX="331.0" mnemonicParsing="false" onAction="#retournerVersDisplayReclamations" prefHeight="46.0" prefWidth="230.0" style="-fx-background-color: #1a73e8; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.5, 0, 4);" text="Retour" />
+</AnchorPane>

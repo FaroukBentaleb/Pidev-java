@@ -1,7 +1,7 @@
 package tn.learniverse.services;
 
 import tn.learniverse.entities.Commentaire;
-import tn.learniverse.entities.user;
+import tn.learniverse.entities.*;
 import tn.learniverse.entities.Poste;
 import tn.learniverse.tools.Session;
 
@@ -25,7 +25,7 @@ public class CommentaireService implements IForum<Commentaire> {
     public void ajouter(Commentaire c) {
         try {
             // Fixer l'utilisateur manuellement
-            user u = new user();
+            User u = new User();
             u.setId(1); // utilisateur par défaut
             c.setUser(u);
 
@@ -162,7 +162,7 @@ public class CommentaireService implements IForum<Commentaire> {
                 c.setGifurl(rs.getString("gifurl"));
 
                 // Créer et associer l'utilisateur
-                user u = new user();
+                User u = new User();
                 u.setId(rs.getInt("id_user_id"));
                 c.setUser(u);
 
@@ -204,7 +204,7 @@ public class CommentaireService implements IForum<Commentaire> {
                 c.setPoste(p);
 
                 // Créer l'objet User
-                user u = new user();
+                User u = new User();
                 u.setId(rs.getInt("id_user_id"));
                 u.setPrenom(rs.getString("prenom"));
                 u.setNom(rs.getString("nom"));

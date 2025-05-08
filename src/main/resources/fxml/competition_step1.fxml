@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXComboBox?>
+<?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
+<?import io.github.palexdev.materialfx.controls.MFXProgressBar?>
+<?import io.github.palexdev.materialfx.controls.MFXScrollPane?>
+<?import io.github.palexdev.materialfx.controls.MFXSpinner?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<?import tn.learniverse.tools.CustomHtmlEditor?>
+<?import javafx.scene.layout.Region?>
+<AnchorPane prefHeight="800.0" prefWidth="800.0" style="-fx-background-color: #f1f5f9;" stylesheets="@../css/styles.css, @../css/MFXColors.css, @../css/MFXTextField.css, @../css/MFXComboBox.css, @../css/MFXDatePicker.css, @../css/MFXSpinner.css, @../css/MFXButton.css, @../css/competition-steps.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.Competition.CompetitionStep1Controller">
+    <children>
+        <!-- Enhanced Header with Border Radius -->
+        <HBox alignment="CENTER_LEFT" spacing="15" style="-fx-background-color: linear-gradient(to right, #4f46e5, #6366f1); -fx-padding: 20; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 2); -fx-background-radius: 0 0 20 20;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Label style="-fx-text-fill: white; -fx-font-size: 20px;" text="🏆" />
+                <VBox spacing="2">
+                    <Label styleClass="header-title" text="Create Competition" />
+                    <Label styleClass="header-subtitle" text="Step 1 of 2" />
+                </VBox>
+            </children>
+        </HBox>
+
+        <!-- Scrollable Form Content with More Spacing -->
+        <MFXScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="100.0">
+            <content>
+                <VBox fx:id="competitionDetailsBox" spacing="30" style="-fx-background-color: white; -fx-background-radius: 16; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 3); -fx-padding: 35;">
+                    <VBox.margin>
+                       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                    </VBox.margin>
+                    <!-- Competition Name -->
+                    <VBox spacing="8.0" VBox.vgrow="NEVER">
+                        <children>
+                            <Label styleClass="form-label" text="Competition Name">
+                               <graphic>
+                                  <Label style="-fx-text-fill: #4f46e5;" text="📝" />
+                               </graphic>
+                            </Label>
+                            <MFXTextField fx:id="nameField" floatMode="BORDER" prefWidth="Infinity" maxWidth="Infinity" promptText="Enter competition name" styleClass="form-input">
+                               <VBox.margin>
+                                  <Insets bottom="2.0" />
+                               </VBox.margin>
+                            </MFXTextField>
+                            <Label fx:id="nameError" styleClass="error-label" style="-fx-text-fill: #ef4444;" text="Name error" visible="false" />
+                        </children>
+                    </VBox>
+                    <!-- Competition Description -->
+                    <VBox spacing="8.0" VBox.vgrow="ALWAYS">
+                        <children>
+                            <Label styleClass="form-label" text="Description">
+                               <graphic>
+                                  <Label style="-fx-text-fill: #4f46e5;" text="📄" />
+                               </graphic>
+                            </Label>
+                            <CustomHtmlEditor fx:id="descriptionEditor" htmlText="" prefHeight="220.0" styleClass="small-html-editor" VBox.vgrow="ALWAYS" />
+                            <Label fx:id="descriptionError" styleClass="error-label" text="Description error" visible="false" />
+                        </children>
+                    </VBox>
+                    <!-- Row for Category and Duration -->
+                    <HBox spacing="20.0">
+                        <children>
+                            <!-- Category -->
+                            <VBox spacing="8.0" HBox.hgrow="ALWAYS">
+                                <children>
+                                    <Label styleClass="form-label" text="Category">
+                                       <graphic>
+                                          <Label style="-fx-text-fill: #4f46e5;" text="⚙️" />
+                                       </graphic>
+                                    </Label>
+                                    <MFXComboBox fx:id="categoryComboBox" floatMode="BORDER" promptText="Select category" styleClass="form-input" HBox.hgrow="ALWAYS" />
+                                    <Label fx:id="categoryError" styleClass="error-label" text="Category error" visible="false" />
+                                </children>
+                            </VBox>
+                            <!-- Duration -->
+                            <VBox spacing="8.0" HBox.hgrow="ALWAYS">
+                                <children>
+                                    <Label styleClass="form-label" text="Duration (minutes)">
+                                       <graphic>
+                                          <Label style="-fx-text-fill: #4f46e5;" text="⏰" />
+                                       </graphic>
+                                    </Label>
+                                    <MFXSpinner fx:id="durationSpinner" editable="true" styleClass="form-input" />
+                                    <Label fx:id="durationError" styleClass="error-label" text="Duration error" visible="false" />
+                                </children>
+                            </VBox>
+                        </children>
+                    </HBox>
+                    <!-- Row for Dates -->
+                    <HBox spacing="20.0">
+                        <children>
+                            <!-- Start Date -->
+                            <VBox spacing="8.0" HBox.hgrow="ALWAYS">
+                                <children>
+                                    <Label styleClass="form-label" text="Start Date">
+                                       <graphic>
+                                          <Label style="-fx-text-fill: #4f46e5;" text="📅" />
+                                       </graphic>
+                                    </Label>
+                                    <HBox spacing="5.0">
+                                        <MFXDatePicker fx:id="dateCompPicker" styleClass="form-input" HBox.hgrow="ALWAYS" />
+                                        <HBox spacing="2.0" alignment="CENTER" styleClass="time-picker-box">
+                                            <MFXTextField fx:id="startHourField" prefWidth="35" promptText="HH" styleClass="time-input" />
+                                            <Label text=":" style="-fx-text-fill: #4f46e5; -fx-font-weight: bold;" />
+                                            <MFXTextField fx:id="startMinuteField" prefWidth="35" promptText="MM" styleClass="time-input" />
+                                        </HBox>
+                                    </HBox>
+                                    <Label fx:id="startDateError" styleClass="error-label" text="Date error" visible="false" />
+                                </children>
+                            </VBox>
+                            <!-- End Date -->
+                            <VBox spacing="8.0" HBox.hgrow="ALWAYS">
+                                <children>
+                                    <Label styleClass="form-label" text="End Date">
+                                       <graphic>
+                                          <Label style="-fx-text-fill: #4f46e5;" text="📆" />
+                                       </graphic>
+                                    </Label>
+                                    <HBox spacing="5.0">
+                                        <MFXDatePicker fx:id="endDatePicker" styleClass="form-input" HBox.hgrow="ALWAYS" />
+                                        <HBox spacing="2.0" alignment="CENTER" styleClass="time-picker-box">
+                                            <MFXTextField fx:id="endHourField" prefWidth="35" promptText="HH" styleClass="time-input" />
+                                            <Label text=":" style="-fx-text-fill: #4f46e5; -fx-font-weight: bold;" />
+                                            <MFXTextField fx:id="endMinuteField" prefWidth="35" promptText="MM" styleClass="time-input" />
+                                        </HBox>
+                                    </HBox>
+                                    <Label fx:id="endDateError" styleClass="error-label" text="End date error" visible="false" />
+                                </children>
+                            </VBox>
+                        </children>
+                    </HBox>
+                    <!-- Image Upload Section -->
+                    <VBox spacing="8.0">
+                        <children>
+                            <Label styleClass="form-label" text="Competition Image (Optional)">
+                               <graphic>
+                                  <Label style="-fx-text-fill: #4f46e5;" text="🖼️" />
+                               </graphic>
+                            </Label>
+                            <HBox alignment="CENTER_LEFT" spacing="10.0" style="-fx-pref-width: 600;">
+                                <children>
+                                    <MFXTextField fx:id="imageUrlField" editable="false" floatMode="BORDER" promptText="No image selected" styleClass="form-input" HBox.hgrow="ALWAYS" style="-fx-pref-width: 500;" />
+                                    <MFXButton onAction="#handleUploadImage" styleClass="button-outline" text="Upload">
+                                       <graphic>
+                                          <Label style="-fx-text-fill: #4f46e5;" text="⬆️" />
+                                       </graphic>
+                                    </MFXButton>
+                                    <MFXButton onAction="#handleClearImage" styleClass="button-outline" text="Clear">
+                                       <graphic>
+                                          <Label style="-fx-text-fill: #4f46e5;" text="❌" />
+                                       </graphic>
+                                    </MFXButton>
+                                </children>
+                            </HBox>
+                            <ImageView fx:id="imagePreview" fitHeight="120.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+                            <Label fx:id="imageError" styleClass="error-label" text="Image error" visible="false" />
+                        </children>
+                    </VBox>
+                </VBox>
+            </content>
+        </MFXScrollPane>
+
+        <!-- Enhanced Action Buttons with More Spacing -->
+        <HBox alignment="CENTER_RIGHT" spacing="15.0" style="-fx-background-color: linear-gradient(to right, #4f46e5, #6366f1); -fx-padding: 15 20; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 2, 0); -fx-background-radius: 20 20 0 0;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <children>
+                <MFXButton onAction="#handleCancel" styleClass="button-outline" text="Cancel" style="-fx-border-color: white; -fx-text-fill: white; -fx-background-color: transparent;">
+                    <graphic>
+                        <Label style="-fx-text-fill: white;" text="❌" />
+                    </graphic>
+                </MFXButton>
+                <Region HBox.hgrow="ALWAYS" />
+                <MFXButton onAction="#handleNext" text="Next Step" style="-fx-background-color: white; -fx-text-fill: #4f46e5; -fx-font-weight: bold;">
+                    <graphic>
+                        <Label style="-fx-text-fill: #4f46e5;" text="➡️" />
+                    </graphic>
+                </MFXButton>
+            </children>
+        </HBox>
+    </children>
+</AnchorPane>

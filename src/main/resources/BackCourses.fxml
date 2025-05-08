@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="tn.learniverse.controllers.BackCoursesController"
+            prefHeight="700.0" prefWidth="1350.0">
+
+    <!-- LEFT NAVIGATION - Kept exactly the same -->
+    <left>
+        <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="220.0" spacing="15" style="-fx-background-color: linear-gradient(to bottom, #1E293B, #334155); -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 0);">
+            <padding>
+                <Insets bottom="15.0" left="15.0" right="15.0" top="20.0" />
+            </padding>
+
+            <!-- App Name/Logo with Admin indicator -->
+            <VBox alignment="CENTER" spacing="5">
+                <Label style="-fx-text-fill: white; -fx-font-size: 26px; -fx-font-weight: bold;" text="Learniverse" />
+                <Label style="-fx-text-fill: #64B5F6; -fx-font-size: 14px;" text="Admin Panel" />
+            </VBox>
+
+            <!-- Navigation Buttons -->
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: rgba(255,255,255,0.2); -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic>
+                    <Label style="-fx-text-fill: white;" text="📊" />
+                </graphic>
+                <padding>
+                    <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
+                </padding>
+                <HBox.margin>
+                    <Insets top="10.0" />
+                </HBox.margin>
+                <font>
+                    <Font size="14.0" />
+                </font>
+                <text>Dashboard</text>
+            </Button>
+
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308"  prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-cursor: hand ; -fx-background-radius: 8;">
+                <graphic>
+                    <Label style="-fx-text-fill: white;" text="👥" />
+                </graphic>
+                <padding>
+                    <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
+                </padding>
+                <text>Users</text>
+            </Button>
+
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic>
+                    <Label style="-fx-text-fill: white;" text="📚" />
+                </graphic>
+                <padding>
+                    <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
+                </padding>
+                <text>Offers</text>
+            </Button>
+
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic>
+                    <Label style="-fx-text-fill: white;" text="📚" />
+                </graphic>
+                <padding>
+                    <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
+                </padding>
+                <text>Courses</text>
+            </Button>
+
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic>
+                    <Label style="-fx-text-fill: white;" text="📝" />
+                </graphic>
+                <padding>
+                    <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
+                </padding>
+                <text>Competitions</text>
+            </Button>
+
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic>
+                    <Label style="-fx-text-fill: white;" text="📢" />
+                </graphic>
+                <padding>
+                    <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
+                </padding>
+                <text>Forums</text>
+            </Button>
+
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic>
+                    <Label style="-fx-text-fill: white;" text="📈" />
+                </graphic>
+                <padding>
+                    <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
+                </padding>
+                <text>Complaints</text>
+            </Button>
+
+            <!-- Profile at bottom -->
+            <VBox VBox.vgrow="ALWAYS" />
+            <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0" style="-fx-background-color: rgba(255,255,255,0.1); -fx-background-radius: 8;">
+                <padding>
+                    <Insets bottom="8.0" left="5.0" right="5.0" top="8.0" />
+                </padding>
+                <StackPane>
+                    <Circle fx:id="circleProfile" fill="#FF5722" radius="18" />
+                    <Label fx:id="FirstLetter" style="-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;" text="A" />
+                </StackPane>
+                <VBox prefHeight="36.0" prefWidth="72.0" spacing="2">
+                    <Label fx:id="navUsernameLabel" minWidth="60.0" style="-fx-text-fill: white; -fx-font-weight: bold;" text="Username" />
+                    <Label style="-fx-text-fill: rgba(255,255,255,0.7); -fx-font-size: 11px;" text="Admin" />
+                </VBox>
+                <Button fx:id="Profilebtn" mnemonicParsing="false"  style="-fx-background-color: transparent; -fx-cursor: hand; -fx-border-color: transparent;">
+                    <tooltip>
+                        <Tooltip text="Logout" />
+                    </tooltip>
+                    <HBox.margin>
+                        <Insets left="30.0" />
+                    </HBox.margin>
+                </Button>
+                <Button fx:id="logoutButton" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-border-color: transparent;">
+                    <tooltip>
+                        <Tooltip text="Logout" />
+                    </tooltip>
+                </Button>
+            </HBox>
+        </VBox>
+    </left>
+
+    <!-- MAIN CONTENT - Modified to use cards for courses -->
+    <center>
+        <ScrollPane fitToWidth="true" fitToHeight="true" style="-fx-background-color: transparent; -fx-background: transparent;">
+            <VBox fx:id="mainContainer" spacing="20" style="-fx-background-color: #F1F5F9; -fx-padding: 25;">
+                <!-- COURSES SECTION -->
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label text="Courses List" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #1E293B;" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="searchField" promptText="Search courses..." prefWidth="250" style="-fx-background-color: white; -fx-background-radius: 20; -fx-padding: 8; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2);" />
+                </HBox>
+
+                <!-- The TableView is hidden now -->
+                <TableView fx:id="courseTable" visible="false" managed="false" />
+
+                <!-- New FlowPane for Course Cards -->
+                <FlowPane fx:id="courseCardsContainer" hgap="15" vgap="15" prefWrapLength="800">
+                    <!-- Course cards will be added here dynamically in the controller -->
+                </FlowPane>
+
+                <!-- Les leçons seront ajoutées dynamiquement ici -->
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>

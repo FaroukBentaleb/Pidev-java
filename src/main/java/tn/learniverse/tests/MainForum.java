@@ -2,7 +2,7 @@ package tn.learniverse.tests;
 
 import tn.learniverse.entities.Commentaire;
 import tn.learniverse.entities.Poste;
-import tn.learniverse.entities.user;
+import tn.learniverse.entities.User;
 import tn.learniverse.services.CommentaireService;
 import tn.learniverse.services.PosteService;
 import java.time.LocalDate;
@@ -38,7 +38,7 @@ public class MainForum {
             switch (choix) {
                 case 1 -> {
                     Poste p = new Poste();
-                    user u = new user();
+                    User u = new User();
                     p.setUser(u);
                     System.out.print("Titre : ");
                     p.setTitre(sc.nextLine());
@@ -68,7 +68,7 @@ public class MainForum {
 
                 case 4 -> {
                     Commentaire c = new Commentaire();
-                    user u = new user();
+                    User u = new User();
                     Poste p = new Poste();
 
                     System.out.print("ID du poste : ");
