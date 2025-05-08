@@ -1,8 +1,9 @@
+
 package tn.learniverse.entities;
 
 import java.util.Objects;
 
-public class user {
+public class User {
     private int id;
     private String nom;
     private String prenom;
@@ -24,6 +25,35 @@ public class user {
     private int logs;
     private String googleAuthenticatorSecret;
     private int ban;
+
+    public User(int id, String nom, String prenom, String email, String role, String mdp, String dateDeNaissance, int tel, String field, String description, int experience, String job, String resume, String picture, String facebookLink, String instagramLink, String linkedinLink, boolean verified, int logs, int ban) {
+    this.id = id;
+    this.nom = nom;
+    this.prenom = prenom;
+    this.email = email;
+    this.role = role;
+    this.mdp = mdp;
+    this.dateDeNaissance = dateDeNaissance;
+    this.tel = tel;
+    this.field = field;
+    this.description = description;
+    this.experience = experience;
+    this.job = job;
+    this.resume = resume;
+    this.picture = picture;
+    this.facebookLink = facebookLink;
+    this.instagramLink = instagramLink;
+    this.linkedinLink = linkedinLink;
+    this.verified = verified;
+    this.logs = logs;
+    this.ban = ban;
+}
+
+    public User(int userId, String userName, String userlastName) {
+        this.id = userId;
+        this.nom = userName;
+        this.prenom = userlastName;
+    }
 
     public int getId() {
         return id;
@@ -193,20 +223,34 @@ public class user {
         this.ban = ban;
     }
 
-    public user() {
+    public User() {
     }
 
-    public user(String nom, String prenom, String email,String role, String mdp) {
+
+    public User(String nom, String prenom, String email,String role, String mdp) {
+
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.role = role;
         this.mdp = mdp;
     }
-    public user(String nom, String prenom, String email, String mdp, String dateDeNaissance, int tel, String field, String description, int experience, String job, String resume, String picture, String facebookLink, String instagramLink, String linkedinLink, boolean verified, int logs, int ban) {
+    public User(String nom, String prenom, String email, String mdp, String dateDeNaissance, int tel, String field, String description, int experience, String job, String resume, String picture, String facebookLink, String instagramLink, String linkedinLink, boolean verified, int logs, int ban) {
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
+    }
+    public User(String nom, String prenom, String email, int phone) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.tel = phone;
+    }
+    public User(String nom, String prenom, String email,String role, String mdp, String dateDeNaissance, int tel, String field, String description, int experience, String job, String resume, String picture, String facebookLink, String instagramLink, String linkedinLink, boolean verified, int logs, int ban) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.role = role;
         this.mdp = mdp;
         this.dateDeNaissance = dateDeNaissance;
         this.tel = tel;
@@ -228,7 +272,7 @@ public class user {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        user user = (user) o;
+        User user = (User) o;
         return id == user.id && tel == user.tel && experience == user.experience && verified == user.verified && logs == user.logs && ban == user.ban && Objects.equals(nom, user.nom) && Objects.equals(prenom, user.prenom) && Objects.equals(email, user.email) && Objects.equals(mdp, user.mdp) && Objects.equals(dateDeNaissance, user.dateDeNaissance) && Objects.equals(role, user.role) && Objects.equals(field, user.field) && Objects.equals(description, user.description) && Objects.equals(job, user.job) && Objects.equals(resume, user.resume) && Objects.equals(picture, user.picture) && Objects.equals(facebookLink, user.facebookLink) && Objects.equals(instagramLink, user.instagramLink) && Objects.equals(linkedinLink, user.linkedinLink) && Objects.equals(googleAuthenticatorSecret, user.googleAuthenticatorSecret);
     }
 
@@ -239,7 +283,7 @@ public class user {
 
     @Override
     public String toString() {
-        return "user{" +
+        return "User{" +
                 ", nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +
                 ", email='" + email + '\'' +
