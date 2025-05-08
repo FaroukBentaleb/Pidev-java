@@ -254,5 +254,23 @@ public class UserService implements IUser <User>{
         statement.executeUpdate();
         Session.getCurrentUser().setGoogleAuthenticatorSecret(google_auth);
     }
+    public List<User> getAllStudents() throws SQLException {
+        List<User> students = new ArrayList<>();
+        String query = "SELECT * FROM user WHERE role = 'student'";
+
+        try (
+                PreparedStatement ps = connection.prepareStatement(query);
+                ResultSet rs = ps.executeQuery()
+        ) {
+            while (rs.next()) {
+                User usr = new User();
+                usr.setNom(rs.getString("nom"));
+                usr.setPrenom(rs.getString("prenom"));
+                usr.setEmail(rs.getString("email"));
+                students.add(usr);
+            }
+        }
+        return students;
+    }
 
 }

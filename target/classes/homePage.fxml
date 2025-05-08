@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #f0f4f8;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.homePage">
+
+    <!-- LEFT NAV BAR - Modern with gradient -->
+    <left>
+        <VBox alignment="TOP_CENTER" prefHeight="720.0" prefWidth="220.0" spacing="15" style="-fx-background-color: linear-gradient(to bottom, #1976D2, #64B5F6); -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 0);">
+            <padding>
+                <Insets bottom="15.0" left="15.0" right="15.0" top="20.0" />
+            </padding>
+
+            <!-- App Name/Logo -->
+            <Label style="-fx-text-fill: white; -fx-font-size: 26px; -fx-font-weight: bold;" text="Learniverse" />
+
+            <!-- Navigation Buttons -->
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: rgba(255,255,255,0.2); -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic>
+                    <Label style="-fx-text-fill: white;" text="📊" />
+                </graphic>
+                <padding>
+                    <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
+                </padding>
+                <HBox.margin>
+                    <Insets top="10.0" />
+                </HBox.margin>
+                <font>
+                    <Font size="14.0" />
+                </font>
+                <text>Dashboard</text>
+            </Button>
+
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic>
+                    <Label style="-fx-text-fill: white;" text="📚" />
+                </graphic>
+                <padding>
+                    <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
+                </padding>
+                <text>My Courses</text>
+            </Button>
+
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic>
+                    <Label style="-fx-text-fill: white;" text="🔍" />
+                </graphic>
+                <padding>
+                    <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
+                </padding>
+                <text>Discover</text>
+            </Button>
+
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic>
+                    <Label style="-fx-text-fill: white;" text="👥" />
+                </graphic>
+                <padding>
+                    <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
+                </padding>
+                <text>Community</text>
+            </Button>
+
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic>
+                    <Label style="-fx-text-fill: white;" text="⚙️" />
+                </graphic>
+                <padding>
+                    <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
+                </padding>
+                <text>Settings</text>
+            </Button>
+
+            <!-- Profile at bottom -->
+            <VBox VBox.vgrow="ALWAYS" />
+            <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0" style="-fx-background-color: rgba(255,255,255,0.1); -fx-background-radius: 8;">
+                <padding>
+                    <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
+                </padding>
+                <StackPane>
+                    <Circle fill="#ffffff53" radius="26.0" />
+               <ImageView fx:id="UserPicture" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+                </StackPane>
+                <VBox spacing="2">
+                    <Label fx:id="username" style="-fx-text-fill: white; -fx-font-weight: bold;" text="Farouk">
+                  <VBox.margin>
+                     <Insets top="10.0" />
+                  </VBox.margin></Label>
+                    <Label fx:id="role" style="-fx-text-fill: rgba(255,255,255,0.7); -fx-font-size: 11px;" text="Student" />
+                </VBox>
+                <Button onAction="#Profile" prefHeight="25.0" prefWidth="32.0" style="-fx-background-color: transparent; -fx-cursor: hand;" text="👥">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin></Button>
+            <Button onAction="#Logout" prefHeight="25.0" prefWidth="32.0" style="-fx-background-color: transparent; -fx-cursor: hand;" text="🔓" />
+
+
+            </HBox>
+        </VBox>
+    </left>
+
+    <center>
+        <ListView>
+            <VBox>
+                <!-- TOP BAR -->
+                <HBox alignment="CENTER" maxWidth="1041.0" prefHeight="70.0" prefWidth="1041.0" style="-fx-background-color: white; -fx-padding: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2);">
+                    <!-- Welcome message -->
+                    <Label fx:id="greetings" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Welcome back, Farouk!" />
+
+                    <HBox HBox.hgrow="ALWAYS" />
+
+                    <!-- Search Area -->
+                    <HBox alignment="CENTER" maxHeight="-Infinity" prefHeight="40.0" prefWidth="350.0" spacing="10" style="-fx-background-color: #F0F2F5; -fx-background-radius: 20;">
+                        <padding>
+                            <Insets left="15.0" right="15.0" />
+                        </padding>
+                        <Label style="-fx-text-fill: #666;" text="🔍" />
+                        <TextField fx:id="searchField" prefHeight="40.0" promptText="Search for courses..." style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS" />
+                    </HBox>
+
+                    <!-- Notification icons and login buttons -->
+                    <HBox alignment="CENTER" spacing="15" style="-fx-padding: 0 0 0 20;">
+                        <Label style="-fx-text-fill: #555; -fx-font-size: 18px;" text="🔔" />
+
+                        <!-- Auth buttons -->
+                        <HBox fx:id="authButtons" alignment="CENTER" prefHeight="40.0" spacing="10" />
+                    </HBox>
+                </HBox>
+
+                <!-- MAIN CONTENT -->
+                <VBox prefHeight="1065.0" prefWidth="955.0" spacing="20" style="-fx-padding: 25;">
+                    <!-- Hero Banner -->
+                    <VBox alignment="CENTER_LEFT" maxWidth="980.0" spacing="15" style="-fx-background-color: linear-gradient(to right, #2196F3, #64B5F6); -fx-background-radius: 12; -fx-padding: 30;">
+                        <Label style="-fx-text-fill: white; -fx-font-size: 28px; -fx-font-weight: bold;" text="Expand Your Knowledge" />
+                        <Label style="-fx-text-fill: white; -fx-font-size: 16px;" text="Discover thousands of courses and learning resources tailored to your needs." wrapText="true" />
+                        <HBox spacing="15" style="-fx-padding: 10 0 0 0;">
+                            <Button style="-fx-background-color: white; -fx-text-fill: #2196F3; -fx-font-weight: bold; -fx-background-radius: 20; -fx-padding: 10 20;" text="Explore Courses" />
+                            <Button style="-fx-background-color: transparent; -fx-border-color: white; -fx-text-fill: white; -fx-background-radius: 20; -fx-border-radius: 20; -fx-padding: 10 20;" text="View Catalog" />
+                        </HBox>
+                    </VBox>
+
+                    <!-- Your Progress Section -->
+                    <HBox maxWidth="980.0" spacing="20">
+                        <!-- Progress Stats -->
+                        <VBox prefHeight="237.0" prefWidth="510.0" spacing="15" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2);" HBox.hgrow="ALWAYS">
+                            <HBox alignment="CENTER_LEFT">
+                                <Label style="-fx-font-weight: bold; -fx-font-size: 18px;" text="Your Learning Progress" />
+                            </HBox>
+
+                            <HBox spacing="15">
+                                <VBox alignment="CENTER" prefHeight="84.0" prefWidth="142.0" spacing="5" style="-fx-background-color: #E3F2FD; -fx-background-radius: 8; -fx-padding: 15;" HBox.hgrow="ALWAYS">
+                                    <Label style="-fx-text-fill: #1976D2; -fx-font-size: 22px; -fx-font-weight: bold;" text="5" />
+                                    <Label text="Active Courses" />
+                                </VBox>
+
+                                <VBox alignment="CENTER" prefHeight="84.0" prefWidth="157.0" spacing="5" style="-fx-background-color: #E8F5E9; -fx-background-radius: 8; -fx-padding: 15;" HBox.hgrow="ALWAYS">
+                                    <Label style="-fx-text-fill: #388E3C; -fx-font-size: 22px; -fx-font-weight: bold;" text="75%" />
+                                    <Label text="Average Progress" />
+                                </VBox>
+
+                                <VBox alignment="CENTER" prefHeight="84.0" prefWidth="140.0" spacing="5" style="-fx-background-color: #FFF8E1; -fx-background-radius: 8; -fx-padding: 15;" HBox.hgrow="ALWAYS">
+                                    <Label style="-fx-text-fill: #FF9800; -fx-font-size: 22px; -fx-font-weight: bold;" text="12" />
+                                    <Label text="Completed" />
+                                </VBox>
+                            </HBox>
+                        </VBox>
+
+                        <!-- Daily Quote -->
+                        <VBox maxWidth="980.0" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2);" HBox.hgrow="ALWAYS">
+                            <Label style="-fx-font-weight: bold; -fx-font-size: 18px;" text="Quote of the Day" />
+                            <VBox alignment="CENTER" spacing="10" style="-fx-padding: 15 0;" VBox.vgrow="ALWAYS">
+                                <Label style="-fx-font-size: 36px; -fx-text-fill: #2196F3;" text="❝" />
+                                <Label style="-fx-font-size: 16px; -fx-font-style: italic; -fx-text-alignment: center;" text="Education is the most powerful weapon which you can use to change the world." wrapText="true" />
+                                <Label style="-fx-font-weight: bold;" text="— Nelson Mandela" />
+                            </VBox>
+                        </VBox>
+                    </HBox>
+
+                    <!-- Continue Learning -->
+                    <VBox spacing="15">
+                        <HBox alignment="CENTER_LEFT" maxWidth="980.0">
+                            <Label style="-fx-font-weight: bold; -fx-font-size: 18px;" text="Continue Learning" />
+                            <HBox maxWidth="750.0" prefHeight="27.0" prefWidth="436.0" HBox.hgrow="ALWAYS" />
+                            <Button style="-fx-background-color: transparent; -fx-text-fill: #2196F3;" text="View All &gt;" />
+                        </HBox>
+
+                        <HBox maxWidth="980.0" spacing="20">
+                            <!-- Course Card 1 -->
+                            <VBox style="-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2);" HBox.hgrow="ALWAYS">
+                                <VBox alignment="CENTER" style="-fx-background-color: #3F51B5; -fx-background-radius: 12 12 0 0; -fx-min-height: 100;">
+                                    <Label style="-fx-text-fill: white; -fx-font-size: 28px;" text="💻" />
+                                </VBox>
+                                <VBox spacing="10" style="-fx-padding: 15;">
+                                    <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Java Programming Masterclass" />
+                                    <Label style="-fx-text-fill: #666;" text="Prof. Smith • 6h remaining" />
+                                    <HBox alignment="CENTER_LEFT" spacing="10">
+                                        <Label text="Progress:" />
+                                        <HBox style="-fx-background-color: #EEEEEE; -fx-background-radius: 5; -fx-min-width: 100; -fx-min-height: 6;">
+                                            <HBox style="-fx-background-color: #4CAF50; -fx-background-radius: 5; -fx-min-width: 70; -fx-min-height: 6;" />
+                                        </HBox>
+                                        <Label style="-fx-text-fill: #4CAF50;" text="70%" />
+                                    </HBox>
+                                    <Button style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-background-radius: 5;" text="Resume" />
+                                </VBox>
+                            </VBox>
+
+                            <!-- Course Card 2 -->
+                            <VBox style="-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2);" HBox.hgrow="ALWAYS">
+                                <VBox alignment="CENTER" style="-fx-background-color: #F44336; -fx-background-radius: 12 12 0 0; -fx-min-height: 100;">
+                                    <Label style="-fx-text-fill: white; -fx-font-size: 28px;" text="📊" />
+                                </VBox>
+                                <VBox spacing="10" style="-fx-padding: 15;">
+                                    <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Data Science Fundamentals" />
+                                    <Label style="-fx-text-fill: #666;" text="Dr. Johnson • 12h remaining" />
+                                    <HBox alignment="CENTER_LEFT" spacing="10">
+                                        <Label text="Progress:" />
+                                        <HBox style="-fx-background-color: #EEEEEE; -fx-background-radius: 5; -fx-min-width: 100; -fx-min-height: 6;">
+                                            <HBox style="-fx-background-color: #FF9800; -fx-background-radius: 5; -fx-min-width: 40; -fx-min-height: 6;" />
+                                        </HBox>
+                                        <Label style="-fx-text-fill: #FF9800;" text="40%" />
+                                    </HBox>
+                                    <Button style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-background-radius: 5;" text="Resume" />
+                                </VBox>
+                            </VBox>
+
+                            <!-- Course Card 3 -->
+                            <VBox style="-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2);" HBox.hgrow="ALWAYS">
+                                <VBox alignment="CENTER" style="-fx-background-color: #009688; -fx-background-radius: 12 12 0 0; -fx-min-height: 100;">
+                                    <Label style="-fx-text-fill: white; -fx-font-size: 28px;" text="🧠" />
+                                </VBox>
+                                <VBox spacing="10" style="-fx-padding: 15;">
+                                    <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Machine Learning Basics" />
+                                    <Label style="-fx-text-fill: #666;" text="Prof. Chen • 18h remaining" />
+                                    <HBox alignment="CENTER_LEFT" spacing="10">
+                                        <Label text="Progress:" />
+                                        <HBox style="-fx-background-color: #EEEEEE; -fx-background-radius: 5; -fx-min-width: 100; -fx-min-height: 6;">
+                                            <HBox style="-fx-background-color: #2196F3; -fx-background-radius: 5; -fx-min-width: 20; -fx-min-height: 6;" />
+                                        </HBox>
+                                        <Label style="-fx-text-fill: #2196F3;" text="20%" />
+                                    </HBox>
+                                    <Button style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-background-radius: 5;" text="Resume" />
+                                </VBox>
+                            </VBox>
+                        </HBox>
+                    </VBox>
+
+                    <!-- Learning Resources -->
+                    <VBox spacing="15">
+                        <HBox alignment="CENTER_LEFT">
+                            <Label style="-fx-font-weight: bold; -fx-font-size: 18px;" text="Learning Resources" />
+                            <HBox HBox.hgrow="ALWAYS" />
+                            <Button style="-fx-background-color: transparent; -fx-text-fill: #2196F3;" text="View All &gt;" />
+                        </HBox>
+
+                        <HBox spacing="20">
+                            <!-- Resource Card 1 -->
+                            <VBox spacing="10" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2);" HBox.hgrow="ALWAYS">
+                                <Label style="-fx-font-size: 28px;" text="📝" />
+                                <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Study Techniques" />
+                                <Label style="-fx-text-fill: #666;" text="Learn effective methods to improve your study habits and retention." wrapText="true" />
+                                <Button style="-fx-background-color: transparent; -fx-text-fill: #2196F3; -fx-padding: 0;" text="Read More &gt;" />
+                            </VBox>
+
+                            <!-- Resource Card 2 -->
+                            <VBox spacing="10" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2);" HBox.hgrow="ALWAYS">
+                                <Label style="-fx-font-size: 28px;" text="📅" />
+                                <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Time Management" />
+                                <Label style="-fx-text-fill: #666;" text="Strategies to balance your studies and maximize productivity." wrapText="true" />
+                                <Button style="-fx-background-color: transparent; -fx-text-fill: #2196F3; -fx-padding: 0;" text="Read More &gt;" />
+                            </VBox>
+
+                            <!-- Resource Card 3 -->
+                            <VBox spacing="10" style="-fx-background-color: white; -fx-background-radius: 12; -fx-padding: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2);" HBox.hgrow="ALWAYS">
+                                <Label style="-fx-font-size: 28px;" text="🧩" />
+                                <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Problem Solving" />
+                                <Label style="-fx-text-fill: #666;" text="Critical thinking approaches to solve complex problems effectively." wrapText="true" />
+                                <Button style="-fx-background-color: transparent; -fx-text-fill: #2196F3; -fx-padding: 0;" text="Read More &gt;" />
+                            </VBox>
+                        </HBox>
+                    </VBox>
+                </VBox>
+            </VBox>
+        </ListView>
+    </center>
+</BorderPane>

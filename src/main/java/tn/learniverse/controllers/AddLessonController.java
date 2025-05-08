@@ -60,11 +60,9 @@ public class AddLessonController implements Initializable {
     private Course selectedCourse;
     private LessonService lessonService;
     private Runnable refreshCallback;
-
-    // Pour stocker le fichier sélectionné
     private File selectedFile;
 
-    // Chemin où les fichiers seront sauvegardés (dans le répertoire www de WAMP)
+    // Chemin où les fichiers seront sauvegardés
     private final String UPLOAD_DIRECTORY = "C:/wamp64/www/learniverse/uploads/lessons/";
 
     // URL relative pour accéder aux fichiers depuis le navigateur
@@ -74,10 +72,8 @@ public class AddLessonController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         lessonService = new LessonService();
 
-        // Initialisation des validations
         setupValidations();
 
-        // S'assurer que le répertoire de téléchargement existe
         createUploadDirectoryIfNotExists();
     }
 
@@ -257,7 +253,6 @@ public class AddLessonController implements Initializable {
         }
 
         try {
-            // Générer un nom de fichier unique pour éviter les écrasements
             String uniqueFileName = System.currentTimeMillis() + "_" + selectedFile.getName();
             Path targetPath = Paths.get(UPLOAD_DIRECTORY, uniqueFileName);
 
@@ -279,10 +274,8 @@ public class AddLessonController implements Initializable {
         }
 
         try {
-            // Sauvegarder le fichier d'attachement s'il existe
             String savedFileName = saveAttachmentFile();
 
-            // Créer une nouvelle leçon
             Lesson newLesson = new Lesson(
                     titleField.getText(),
                     descriptionField.getText(),
@@ -299,7 +292,6 @@ public class AddLessonController implements Initializable {
                 refreshCallback.run();
             }
 
-            // Fermer la fenêtre
             closeWindow();
 
         } catch (SQLException e) {
@@ -324,6 +316,4 @@ public class AddLessonController implements Initializable {
         alert.setContentText(content);
         alert.showAndWait();
     }
-
-
 }

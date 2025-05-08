@@ -18,7 +18,9 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import tn.learniverse.entities.Course;
 import tn.learniverse.entities.Lesson;
+import tn.learniverse.entities.User;
 import tn.learniverse.services.LessonService;
+import tn.learniverse.tools.Session;
 
 import java.io.IOException;
 import java.net.URL;
@@ -28,6 +30,12 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class CourseDetailsViewController implements Initializable {
+
+    @FXML
+    private ProgressBar courseProgressBar;
+
+    @FXML
+    private Label progressNoteLabel;
 
     @FXML
     private Label courseTitle;
@@ -65,8 +73,15 @@ public class CourseDetailsViewController implements Initializable {
     private List<Lesson> courseLessons;
     private VBox expandedLessonContent = null; // Pour suivre quelle leçon est actuellement développée
 
+    @FXML
+    private Label lessonCountLabel;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        User currentUser = Session.getCurrentUser();
+
+
         System.out.println("Initializing CourseDetailsViewController");
 
         // Charge l'image par défaut

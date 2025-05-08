@@ -10,7 +10,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="800.0" stylesheets="@add-course.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.AddLessonController">
+<AnchorPane prefHeight="700.0" prefWidth="800.0" stylesheets="@add-course.css"
+            xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="tn.learniverse.controllers.AddLessonController">
 
     <children>
         <VBox alignment="CENTER" layoutX="63.0" layoutY="21.0" prefHeight="710.0" prefWidth="673.0" spacing="10.0" style="-fx-background-color: linear-gradient(to right, #6A11CB, #2575FC); -fx-background-radius: 15;" AnchorPane.bottomAnchor="51.0" AnchorPane.leftAnchor="63.0" AnchorPane.rightAnchor="64.19999999999993" AnchorPane.topAnchor="21.0">

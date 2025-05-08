@@ -31,6 +31,7 @@ D:\Integration\Pidev-java\src\main\java\tn\learniverse\controllers\CreateAccount
 D:\Integration\Pidev-java\src\main\java\tn\learniverse\controllers\EditLessonController.java
 D:\Integration\Pidev-java\src\main\java\tn\learniverse\controllers\Home.java
 D:\Integration\Pidev-java\src\main\java\tn\learniverse\controllers\homePage.java
+D:\Integration\Pidev-java\src\main\java\tn\learniverse\controllers\LessonsBackViewController.java
 D:\Integration\Pidev-java\src\main\java\tn\learniverse\controllers\Login.java
 D:\Integration\Pidev-java\src\main\java\tn\learniverse\controllers\ModifierPosteController.java
 D:\Integration\Pidev-java\src\main\java\tn\learniverse\controllers\PosteItemController.java
@@ -54,10 +55,12 @@ D:\Integration\Pidev-java\src\main\java\tn\learniverse\controllers\user\Settings
 D:\Integration\Pidev-java\src\main\java\tn\learniverse\controllers\user\TwoFA.java
 D:\Integration\Pidev-java\src\main\java\tn\learniverse\controllers\user\usersBack.java
 D:\Integration\Pidev-java\src\main\java\tn\learniverse\controllers\user\VeriyCode.java
+D:\Integration\Pidev-java\src\main\java\tn\learniverse\controllers\YouTubeVideo.java
 D:\Integration\Pidev-java\src\main\java\tn\learniverse\entities\Challenge.java
 D:\Integration\Pidev-java\src\main\java\tn\learniverse\entities\Commentaire.java
 D:\Integration\Pidev-java\src\main\java\tn\learniverse\entities\Competition.java
 D:\Integration\Pidev-java\src\main\java\tn\learniverse\entities\Course.java
+D:\Integration\Pidev-java\src\main\java\tn\learniverse\entities\Favorite.java
 D:\Integration\Pidev-java\src\main\java\tn\learniverse\entities\Lesson.java
 D:\Integration\Pidev-java\src\main\java\tn\learniverse\entities\Logs.java
 D:\Integration\Pidev-java\src\main\java\tn\learniverse\entities\PasswordResetToken.java
@@ -74,6 +77,7 @@ D:\Integration\Pidev-java\src\main\java\tn\learniverse\services\ChallengeService
 D:\Integration\Pidev-java\src\main\java\tn\learniverse\services\CommentaireService.java
 D:\Integration\Pidev-java\src\main\java\tn\learniverse\services\CompetitionService.java
 D:\Integration\Pidev-java\src\main\java\tn\learniverse\services\CourseService.java
+D:\Integration\Pidev-java\src\main\java\tn\learniverse\services\FavoriteService.java
 D:\Integration\Pidev-java\src\main\java\tn\learniverse\services\GradingService.java
 D:\Integration\Pidev-java\src\main\java\tn\learniverse\services\ICourse.java
 D:\Integration\Pidev-java\src\main\java\tn\learniverse\services\IForum.java
@@ -84,6 +88,7 @@ D:\Integration\Pidev-java\src\main\java\tn\learniverse\services\IReponse.java
 D:\Integration\Pidev-java\src\main\java\tn\learniverse\services\IUser.java
 D:\Integration\Pidev-java\src\main\java\tn\learniverse\services\LessonService.java
 D:\Integration\Pidev-java\src\main\java\tn\learniverse\services\LogsService.java
+D:\Integration\Pidev-java\src\main\java\tn\learniverse\services\MailService.java
 D:\Integration\Pidev-java\src\main\java\tn\learniverse\services\PasswordResetService.java
 D:\Integration\Pidev-java\src\main\java\tn\learniverse\services\PosteService.java
 D:\Integration\Pidev-java\src\main\java\tn\learniverse\services\ReclamationService.java

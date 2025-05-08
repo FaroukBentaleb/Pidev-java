@@ -33,6 +33,7 @@ module tn.learniverse {
     requires org.apache.commons.codec;
     requires com.google.zxing;
     requires jdk.httpserver;
+    requires javafx.media;
 
     // Make sure tools package is properly exported and opened
     opens tn.learniverse.controllers.Competition to javafx.fxml;
