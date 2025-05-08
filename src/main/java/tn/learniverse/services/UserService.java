@@ -151,6 +151,7 @@ public class UserService implements IUser <User>{
                         rs.getInt("logs"),
                         rs.getInt("ban")
                 );
+                usr.setGoogleAuthenticatorSecret(rs.getString("google_authenticator_secret"));
             }
         }
         catch (SQLException e) {
@@ -159,6 +160,7 @@ public class UserService implements IUser <User>{
         }
         return usr;
     }
+    @Override
     public void banUser(int userId) throws SQLException {
         String query = "UPDATE User SET ban = 1 WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
@@ -170,7 +172,7 @@ public class UserService implements IUser <User>{
             System.out.println(e.getMessage());
         }
     }
-
+    @Override
     public void activateUser(int userId) throws SQLException {
         String query = "UPDATE User SET ban = 0 WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
@@ -181,4 +183,76 @@ public class UserService implements IUser <User>{
             System.out.println(e.getMessage());
         }
     }
+    @Override
+    public int getUserIdByEmail(String email) {
+        int userId = 0;
+        try {
+            String query = "SELECT id FROM User u WHERE u.email = ? ";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                userId = Integer.parseInt(rs.getString("id"));
+            }
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return userId;
+    }
+    @Override
+    public boolean ChangePwd(String email, String pwd)  throws SQLException {
+        try {
+            String query = "UPDATE User u SET "
+                    + "u.mdp = ? ,"
+                    + "u.logs = ? "
+                    + "WHERE u.email = ?";
+
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, pwd);
+            ps.setInt(2, 5);
+            ps.setString(3, email);
+            ps.executeUpdate();
+            System.out.println("Password Changed successfully");
+            return true;
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+
+    }
+    @Override
+    public void MnsLogs(String email,int logs)  throws SQLException {
+        try {
+            int log = 0;
+            if(logs>0){
+                log = logs-1;
+            }
+            String query = "UPDATE User u SET "
+                    + "u.logs = ? "
+                    + "WHERE u.email = ?";
+
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, log);
+            ps.setString(2, email);
+            ps.executeUpdate();
+            System.out.println("Logs -1");
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    public void GoogleAuthStore(String google_auth) throws SQLException {
+        User currentUser = Session.getCurrentUser();
+        String updateQuery = "UPDATE user SET google_authenticator_secret = ? WHERE email = ?";
+        PreparedStatement statement = connection.prepareStatement(updateQuery);
+        statement.setString(1, google_auth);
+        System.out.println("Auth: " + google_auth + "For: " + currentUser.getEmail());
+        statement.setString(2, currentUser.getEmail());
+        statement.executeUpdate();
+        Session.getCurrentUser().setGoogleAuthenticatorSecret(google_auth);
+    }
+
 }

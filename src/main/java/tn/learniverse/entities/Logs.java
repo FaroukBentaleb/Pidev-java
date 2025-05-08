@@ -11,12 +11,12 @@ public class Logs {
     private String deviceModel;
     private String osInfo;
     private String location;
-    private boolean sessionActive;
+    private int sessionActive;
 
     public Logs() {}
 
     public Logs(int userId, String action, LocalDateTime timestamp, String deviceType, String deviceModel,
-                String osInfo, String location, boolean sessionActive) {
+                String osInfo, String location, int sessionActive) {
         this.userId = userId;
         this.action = action;
         this.timestamp = timestamp;
@@ -53,6 +53,6 @@ public class Logs {
     public String getLocation() { return location; }
     public void setLocation(String location) { this.location = location; }
 
-    public boolean isSessionActive() { return sessionActive; }
-    public void setSessionActive(boolean sessionActive) { this.sessionActive = sessionActive; }
+    public int isSessionActive() { return sessionActive; }
+    public void setSessionActive(int sessionActive) { this.sessionActive = sessionActive; }
 }

@@ -1,6 +1,7 @@
 package tn.learniverse.services;
 
 import tn.learniverse.entities.Logs;
+import tn.learniverse.tools.DBConnection;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -9,9 +10,8 @@ import java.util.List;
 
 public class LogsService implements ILogs {
     private Connection connection;
-
-    public LogsService(Connection connection) {
-        this.connection = connection;
+    public LogsService() {
+        this.connection = DBConnection.getInstance().getConnection();
     }
 
     @Override
@@ -26,10 +26,10 @@ public class LogsService implements ILogs {
             ps.setString(5, log.getDeviceModel());
             ps.setString(6, log.getOsInfo());
             ps.setString(7, log.getLocation());
-            ps.setBoolean(8, log.isSessionActive());
+            ps.setInt(8, log.isSessionActive());
             ps.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -39,12 +39,14 @@ public class LogsService implements ILogs {
         String sql = "SELECT * FROM logs";
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
+            System.out.println("LogsList IDs: ");
             while (rs.next()) {
                 Logs log = extractLog(rs);
                 logsList.add(log);
+                System.out.println(log.getId());
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return logsList;
     }
@@ -61,7 +63,7 @@ public class LogsService implements ILogs {
                 logsList.add(log);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return logsList;
     }
@@ -73,13 +75,28 @@ public class LogsService implements ILogs {
             int rowsAffected = ps.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             return false;
         }
     }
+    public boolean logExists(int logId) {
+        String sql = "SELECT COUNT(*) FROM logs WHERE id = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, logId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+
 
     private Logs extractLog(ResultSet rs) throws SQLException {
         Logs log = new Logs();
+        log.setId(rs.getInt("id"));
         log.setUserId(rs.getInt("user_id"));
         log.setAction(rs.getString("action"));
         log.setTimestamp(rs.getTimestamp("timestamp").toLocalDateTime());
@@ -87,7 +104,7 @@ public class LogsService implements ILogs {
         log.setDeviceModel(rs.getString("device_model"));
         log.setOsInfo(rs.getString("os_info"));
         log.setLocation(rs.getString("location"));
-        log.setSessionActive(rs.getBoolean("session_active"));
+        log.setSessionActive(rs.getInt("session_active"));
         return log;
     }
 }

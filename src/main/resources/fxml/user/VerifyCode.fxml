@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.user.VeriyCode">
+    <HBox alignment="CENTER" prefHeight="720.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+        <!-- Right Panel -->
+        <StackPane styleClass="right-panel" HBox.hgrow="ALWAYS">
+            <VBox alignment="CENTER" maxWidth="400" spacing="10.0">
+                <ImageView fx:id="logoImageView" fitHeight="188.0" fitWidth="241.0" pickOnBounds="true" preserveRatio="true">
+                </ImageView>
+                <Label style="-fx-font-size: 20px;-fx-font-weight: bold;" text="Please type in your 2FA code to be able to login." textAlignment="CENTER" textFill="#5668fa" wrapText="true" />
+                <!-- Login Form -->
+                <VBox spacing="10">
+                    <!-- Email Field -->
+                    <TextField fx:id="Code" alignment="CENTER" maxWidth="402.0" prefHeight="46.0" prefWidth="402.0" promptText="Code" style="-fx-font-size: 20px;                  -fx-pref-width: 40px;                  -fx-min-width: 40px;                  -fx-padding: 10px;                  -fx-border-color: #ccc;                  -fx-border-radius: 5px;                  -fx-background-radius: 5px;                  -fx-text-fill: #333;                  -fx-font-weight: bold;                  -fx-border-width: 1px;" styleClass="input-field" />
+
+                    <Label fx:id="CodeError" minHeight="10.0" style="-fx-font-size: 12px;-fx-text-fill: red;" styleClass="error-label" textFill="red" />
+
+
+                    <!-- Login Button -->
+                    <Button onAction="#ProceedBtn" prefHeight="43.0" prefWidth="404.0" style="-fx-cursor: hand;" styleClass="login-button" text="Proceed" />
+               <Button onAction="#Backbtn" prefHeight="35.0" prefWidth="401.0" style="-fx-cursor: hand;" styleClass="social-button" text="Go back" />
+                </VBox>
+            <padding>
+               <Insets top="-10.0" />
+            </padding>
+            </VBox>
+        </StackPane>
+    </HBox>
+</AnchorPane>

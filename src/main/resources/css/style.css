@@ -213,3 +213,40 @@
 .signup-button:pressed {
     -fx-background-color: #4B5AE5;
 }
+.refresh-button {
+    -fx-background-color: #E3F2FD;
+    -fx-text-fill: #1976D2;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-padding: 6 12;
+}
+
+.refresh-button:hover {
+    -fx-background-color: #BBDEFB;
+}
+
+.refresh-button:pressed {
+    -fx-background-color: #90CAF9;
+}
+.toggle-2fa {
+    -fx-background-color: linear-gradient(to right, #4CAF50, #45A049);
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.2), 4, 0.0, 0, 2);
+    -fx-transition: all 0.3s ease;
+}
+
+.toggle-2fa:hover {
+    -fx-background-color: linear-gradient(to right, #66BB6A, #43A047);
+}
+
+.toggle-2fa:selected {
+    -fx-background-color: linear-gradient(to right, #e53935, #d32f2f);
+    -fx-text-fill: white;
+}
