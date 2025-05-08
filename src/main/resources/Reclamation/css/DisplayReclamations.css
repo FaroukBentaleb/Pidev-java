@@ -1,0 +1,169 @@
+/* Style général */
+.header-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+/* Scroll */
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+/* Bouton archive */
+.btn-archive {
+    -fx-background-color: #f0f0f0;
+    -fx-text-fill: #007BFF;
+    -fx-border-color: #007BFF;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-padding: 8 16;
+}
+
+.btn-archive:hover {
+    -fx-background-color: #007BFF;
+    -fx-text-fill: white;
+}
+
+/* Boutons personnalisés */
+.button {
+    -fx-background-radius: 8px;
+    -fx-padding: 6 12;
+    -fx-font-size: 14px;
+}
+
+/* Bouton principal */
+.btn-primary {
+    -fx-background-color: #007bff;
+    -fx-text-fill: white;
+    -fx-pref-height: 40px;
+    -fx-pref-width: 120px;
+    -fx-translate-x: 660px;
+    -fx-translate-y: 15px;
+}
+
+.btn-primary:hover {
+    -fx-background-color: #0056b3;
+}
+
+/* Bouton succès */
+.btn-success {
+    -fx-background-color: #28a745;
+    -fx-text-fill: white;
+    -fx-pref-width: 180px;
+    -fx-min-width: 180px;
+    -fx-max-width: 180px;
+    -fx-pref-height: 50px;
+    -fx-min-height: 50px;
+    -fx-max-height: 50px;
+    -fx-translate-x: 730px;
+    -fx-translate-y: -20px;
+}
+
+
+.btn-success:hover {
+    -fx-background-color: #1e7e34;
+}
+
+/* Bouton danger */
+.btn-danger {
+    -fx-background-color: #dc3545;
+    -fx-text-fill: white;
+    -fx-pref-height: 100px;
+    -fx-pref-width: 120px;
+    -fx-translate-x: 670px;
+    -fx-translate-y: 15px;
+}
+
+.btn-danger:hover {
+    -fx-background-color: #c82333;
+}
+
+/* Statuts */
+.statut-traite {
+    -fx-text-fill: green;
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+}
+
+.statut-encours {
+    -fx-text-fill: orange;
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+}
+
+.statut-non-traite {
+    -fx-text-fill: red;
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+}
+.status-date-row {
+    -fx-pref-width: 400px;
+}
+#date-label {
+    -fx-font-size: 20px;
+    -fx-translate-x: 650px;
+}
+
+.custom-pagination {
+    -fx-background-color: transparent;
+    -fx-padding: 10px;
+    -fx-pref-width: 1000px;
+}
+
+.custom-pagination .pagination-control {
+    -fx-spacing: 2;
+}
+
+.custom-pagination .pagination-control .control-box {
+    -fx-spacing: 2;
+    -fx-alignment: center;
+    -fx-pref-width: 1000px;
+}
+
+.custom-pagination .pagination-control .button,
+.custom-pagination .pagination-control .number-button {
+    -fx-background-color: #1a73e8;
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-padding: 4px;
+    -fx-background-radius: 4px;
+    -fx-min-width: 25px;
+    -fx-min-height: 25px;
+    -fx-pref-width: 25px;
+    -fx-pref-height: 25px;
+    -fx-cursor: hand;
+    -fx-alignment: center;
+    -fx-content-display: center;
+}
+
+.custom-pagination .pagination-control .number-button {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #1a73e8;
+    -fx-border-color: #1a73e8;
+    -fx-border-radius: 4px;
+}
+
+.custom-pagination .pagination-control .number-button:selected {
+    -fx-background-color: #1a73e8;
+    -fx-text-fill: white;
+}
+
+.custom-pagination .pagination-control .button:hover,
+.custom-pagination .pagination-control .number-button:hover {
+    -fx-background-color: #e8f0fe;
+    -fx-text-fill: #1a73e8;
+}
+
+.custom-pagination .pagination-control .page-information {
+    visibility: hidden;
+    -fx-max-width: 0;
+    -fx-pref-width: 0;
+    -fx-opacity: 0;
+}
+
+.custom-pagination > .page {
+    -fx-background-color: transparent;
+}
+

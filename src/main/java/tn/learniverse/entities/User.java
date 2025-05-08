@@ -1,3 +1,4 @@
+
 package tn.learniverse.entities;
 
 import java.util.Objects;
@@ -24,6 +25,35 @@ public class User {
     private int logs;
     private String googleAuthenticatorSecret;
     private int ban;
+
+    public User(int id, String nom, String prenom, String email, String role, String mdp, String dateDeNaissance, int tel, String field, String description, int experience, String job, String resume, String picture, String facebookLink, String instagramLink, String linkedinLink, boolean verified, int logs, int ban) {
+    this.id = id;
+    this.nom = nom;
+    this.prenom = prenom;
+    this.email = email;
+    this.role = role;
+    this.mdp = mdp;
+    this.dateDeNaissance = dateDeNaissance;
+    this.tel = tel;
+    this.field = field;
+    this.description = description;
+    this.experience = experience;
+    this.job = job;
+    this.resume = resume;
+    this.picture = picture;
+    this.facebookLink = facebookLink;
+    this.instagramLink = instagramLink;
+    this.linkedinLink = linkedinLink;
+    this.verified = verified;
+    this.logs = logs;
+    this.ban = ban;
+}
+
+    public User(int userId, String userName, String userlastName) {
+        this.id = userId;
+        this.nom = userName;
+        this.prenom = userlastName;
+    }
 
     public int getId() {
         return id;
@@ -196,7 +226,9 @@ public class User {
     public User() {
     }
 
-    public User(String nom, String prenom, String email, String role, String mdp) {
+
+    public User(String nom, String prenom, String email,String role, String mdp) {
+
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
@@ -207,6 +239,18 @@ public class User {
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
+    }
+    public User(String nom, String prenom, String email, int phone) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.tel = phone;
+    }
+    public User(String nom, String prenom, String email,String role, String mdp, String dateDeNaissance, int tel, String field, String description, int experience, String job, String resume, String picture, String facebookLink, String instagramLink, String linkedinLink, boolean verified, int logs, int ban) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.role = role;
         this.mdp = mdp;
         this.dateDeNaissance = dateDeNaissance;
         this.tel = tel;
@@ -239,7 +283,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "user{" +
+        return "User{" +
                 ", nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +
                 ", email='" + email + '\'' +

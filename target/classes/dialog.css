@@ -1,0 +1,27 @@
+/* dialog.css */
+.custom-dialog {
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
+.dialog-pane .content.label {
+    -fx-font-size: 13px;
+    -fx-text-fill: #333;
+}
+
+.dialog-pane .header-panel {
+    -fx-background-color: #f0f0f0;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+.dialog-pane .button-bar .button {
+    -fx-background-color: #1976D2;
+    -fx-text-fill: white;
+    -fx-background-radius: 5;
+}
+
+.dialog-pane .button-bar .button:hover {
+    -fx-background-color: #135ba1;
+}

@@ -1,0 +1,323 @@
+/* Base Styles */
+.main-container {
+    -fx-background-color: #f5f7fa;
+    -fx-font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+}
+
+/* Top Banner Styling */
+.top-banner {
+    -fx-background-color: linear-gradient(to right, #4568dc, #3a7bd5);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 4);
+}
+
+/* Modern Image Container Styling */
+.image-container {
+    -fx-background-color: white;
+    -fx-background-radius: 50%;
+    -fx-border-radius: 50%;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 15, 0, 0, 4);
+    -fx-padding: 5px;
+    -fx-border-color: rgba(255,255,255,0.6);
+    -fx-border-width: 3px;
+}
+
+/* Title & Subtitle Styling */
+.page-title {
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 2, 0, 0, 1);
+}
+
+.page-subtitle {
+    -fx-text-fill: rgba(255,255,255,0.9);
+    -fx-font-size: 16px;
+    -fx-font-style: italic;
+}
+
+/* Modern Search Bar */
+.search-container {
+    -fx-background-color: rgba(255,255,255,0.2);
+    -fx-background-radius: 30px;
+    -fx-border-radius: 30px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 2);
+    -fx-min-width: 300px;
+    -fx-max-width: 450px;
+    -fx-padding: 5px;
+    -fx-spacing: 5px;
+    -fx-border-color: rgba(255,255,255,0.3);
+    -fx-border-width: 1.5px;
+}
+
+.search-field {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: rgba(255,255,255,0.7);
+    -fx-background-radius: 30px;
+    -fx-padding: 8px 15px;
+    -fx-font-size: 14px;
+    -fx-highlight-fill: #5b80e9;
+    -fx-highlight-text-fill: white;
+    -fx-border-width: 0;
+}
+
+.search-button {
+    -fx-background-color: rgba(255,255,255,0.25);
+    -fx-background-radius: 50%;
+    -fx-min-width: 36px;
+    -fx-min-height: 36px;
+    -fx-max-width: 36px;
+    -fx-max-height: 36px;
+    -fx-cursor: hand;
+}
+
+.search-button:hover {
+    -fx-background-color: rgba(255,255,255,0.4);
+}
+
+.search-icon {
+    -fx-background-color: white;
+    -fx-shape: "M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z";
+    -fx-min-width: 18px;
+    -fx-min-height: 18px;
+}
+
+/* Content Split Pane */
+.content-split-pane {
+    -fx-background-color: transparent;
+    -fx-padding: 10px;
+}
+
+.content-split-pane .split-pane-divider {
+    -fx-background-color: transparent;
+    -fx-padding: 0 5px;
+}
+
+/* Modern Leaderboard Container */
+.leaderboard-container {
+    -fx-background-color: white;
+    -fx-background-radius: 12px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);
+    -fx-padding: 15px;
+    -fx-spacing: 15px;
+    -fx-border-color: rgba(69, 104, 220, 0.1);
+    -fx-border-width: 1px;
+    -fx-border-radius: 12px;
+}
+
+.section-header {
+    -fx-padding: 5px 0 15px 0;
+    -fx-spacing: 10px;
+    -fx-alignment: center-left;
+}
+
+.section-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.filter-dropdown {
+    -fx-background-color: rgba(69, 104, 220, 0.1);
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-padding: 5px 10px;
+    -fx-font-size: 13px;
+    -fx-cursor: hand;
+}
+
+.filter-dropdown .arrow {
+    -fx-background-color: #4568dc;
+}
+
+/* Leaderboard Table */
+.leaderboard-table {
+    -fx-background-color: transparent;
+    -fx-table-cell-border-color: transparent;
+    -fx-background-radius: 8px;
+    -fx-padding: 5px;
+}
+
+.leaderboard-table .column-header-background {
+    -fx-background-color: rgba(69, 104, 220, 0.1);
+    -fx-background-radius: 8px 8px 0 0;
+    -fx-padding: 5px;
+}
+
+.leaderboard-table .column-header {
+    -fx-background-color: transparent;
+    -fx-font-weight: bold;
+    -fx-text-fill: #4568dc;
+    -fx-padding: 10px 5px;
+    -fx-alignment: center-left;
+}
+
+.leaderboard-table .table-row-cell {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent rgba(69, 104, 220, 0.1) transparent;
+    -fx-border-width: 0 0 1px 0;
+    -fx-padding: 5px 0;
+}
+
+.leaderboard-table .table-row-cell:odd {
+    -fx-background-color: rgba(69, 104, 220, 0.03);
+}
+
+.leaderboard-table .table-row-cell:selected {
+    -fx-background-color: rgba(69, 104, 220, 0.15);
+}
+
+.rank-column {
+    -fx-alignment: center;
+    -fx-font-weight: bold;
+}
+
+.user-column {
+    -fx-alignment: center-left;
+}
+
+.score-column {
+    -fx-alignment: center-right;
+    -fx-font-weight: bold;
+}
+
+/* Challenges Container */
+.challenges-scroll {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+    -fx-padding: 0;
+}
+
+.challenges-scroll > .viewport {
+    -fx-background-color: transparent;
+}
+
+.challenges-container {
+    -fx-background-color: white;
+    -fx-background-radius: 12px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);
+    -fx-padding: 15px;
+    -fx-border-color: rgba(69, 104, 220, 0.1);
+    -fx-border-width: 1px;
+    -fx-border-radius: 12px;
+}
+
+/* TitledPane Styling - Updated from your original */
+.titled-pane, .challenge-pane {
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 2);
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+}
+
+.titled-pane > .title, .challenge-pane > .title {
+    -fx-background-color: linear-gradient(to right, #4568dc, #3a7bd5);
+    -fx-background-radius: 10px 10px 0 0;
+    -fx-padding: 14px 18px;
+}
+
+.titled-pane > .title > .text, .challenge-pane > .title > .text {
+    -fx-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+}
+
+.titled-pane > .title > .arrow-button .arrow, .challenge-pane > .title > .arrow-button .arrow {
+    -fx-background-color: white;
+    -fx-background-insets: 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 2, 0, 0, 1);
+}
+
+.titled-pane:expanded > .title, .challenge-pane:expanded > .title {
+    -fx-background-radius: 10px 10px 0 0;
+}
+
+.titled-pane > .content, .challenge-pane > .content {
+    -fx-background-color: rgba(245, 247, 250, 0.7);
+    -fx-background-radius: 0 0 10px 10px;
+    -fx-border-radius: 0 0 10px 10px;
+    -fx-padding: 15px;
+    -fx-border-color: rgba(69, 104, 220, 0.1);
+    -fx-border-width: 0 1px 1px 1px;
+}
+
+/* Content styling */
+.content-box {
+    -fx-background-color: white;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 1);
+    -fx-border-color: rgba(69, 104, 220, 0.1);
+    -fx-border-width: 1px;
+}
+
+.content .label {
+    -fx-font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.content .text {
+    -fx-font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+    -fx-font-size: 14px;
+    -fx-line-spacing: 1.5;
+    -fx-fill: #4a4a4a;
+}
+
+/* Challenge section styling */
+.content .label:contains("Challenge Description") {
+    -fx-text-fill: #4568dc;
+}
+
+/* Solution section styling */
+.content .label:contains("Solution") {
+    -fx-text-fill: #43a047;
+}
+
+.separator, .custom-separator {
+    -fx-padding: 10px 0;
+    -fx-opacity: 0.6;
+}
+
+/* Buttons */
+.action-button {
+    -fx-background-color: #f0f3f8;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-text-fill: #4568dc;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-cursor: hand;
+}
+
+.action-button:hover {
+    -fx-background-color: #e4e9f2;
+}
+
+.primary-button {
+    -fx-background-color: linear-gradient(to right, #4568dc, #3a7bd5);
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 5, 0, 0, 1);
+}
+
+.primary-button:hover {
+    -fx-background-color: linear-gradient(to right, #3d5bc4, #3373cb);
+}
+
+/* Section Box */
+.section-box {
+    -fx-padding: 10px;
+}
+
+.section-box .section-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.section-box .section-content {
+    -fx-font-size: 14px;
+    -fx-line-spacing: 1.5;
+    -fx-fill: #4a4a4a;
+}

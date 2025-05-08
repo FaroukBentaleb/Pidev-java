@@ -1,0 +1,38 @@
+
+#responsesContainer {
+    -fx-background-color: #f9f9f9;
+    -fx-padding: 10; 
+    -fx-spacing: 10; 
+}
+
+
+.text {
+    -fx-font-size: 14px; 
+    -fx-padding: 5; 
+    -fx-border-radius: 5; 
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.5, 0, 2); /* Ombre légère */
+}
+.text.admin {
+    -fx-text-fill: blue; 
+}
+
+.text.user {
+    -fx-text-fill: green; 
+}
+
+#responseInput {
+    -fx-pref-height: 50; 
+    -fx-font-size: 14px;
+}
+
+.button {
+    -fx-background-color: #4CAF50; 
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 10;
+    -fx-border-radius: 5; 
+}
+
+.button:hover {
+    -fx-background-color: #45a049;
+}
