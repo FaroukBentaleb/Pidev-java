@@ -51,9 +51,6 @@ public class MainFX extends Application {
             System.out.println("No token provided, loading login screen...");
             // load login screen
         }
-
-
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/BackCourses.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);

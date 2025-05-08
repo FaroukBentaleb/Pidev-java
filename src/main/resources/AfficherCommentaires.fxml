@@ -42,7 +42,7 @@
                     <graphic>
                         <ImageView fitHeight="24" fitWidth="24">
                             <image>
-                                <Image url="@/assets/gifJava.png"/>
+                                <Image url="@assets/gifJava.png"/>
                             </image>
                         </ImageView>
                     </graphic>

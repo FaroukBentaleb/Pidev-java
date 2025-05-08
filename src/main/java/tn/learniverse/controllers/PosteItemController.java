@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 import javafx.stage.Stage;
 import tn.learniverse.entities.Like;
 import tn.learniverse.entities.Poste;
-import tn.learniverse.entities.user;
+import tn.learniverse.entities.User;
 import tn.learniverse.services.LikeService;
 import tn.learniverse.services.PosteService;
 import java.io.*;
@@ -69,7 +69,7 @@ public class PosteItemController {
     private ImageView photoImageView;
 
     private LikeService likeService = new LikeService(); // Service pour gérer les Likes
-    private user connectedUser; // Utilisateur connecté
+    private User connectedUser; // Utilisateur connecté
 
     // On initialise l'utilisateur connecté ici
     public void setData(Poste poste, Runnable refreshCallback) {
@@ -77,7 +77,7 @@ public class PosteItemController {
         this.onDeleteCallback = refreshCallback;
 
         // Simuler l'utilisateur connecté
-        connectedUser = new user();
+        connectedUser = new User();
         connectedUser.setId(1); // Mettre l'ID de l'utilisateur connecté ici
 
         // Remplir les autres champs comme tu le fais déjà

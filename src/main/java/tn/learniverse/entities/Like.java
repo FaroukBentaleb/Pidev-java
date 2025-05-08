@@ -6,14 +6,14 @@ public class Like {
     private int id;
     private String type; // Exemple : "smile", "love", "angry"
     private Poste poste;
-    private user user;
+    private User user;
 
     // Constructeur vide
     public Like() {
     }
 
     // Constructeur plein
-    public Like(int id, String type, Poste poste, user user) {
+    public Like(int id, String type, Poste poste, User user) {
         this.id = id;
         this.type = type;
         this.poste = poste;
@@ -21,7 +21,7 @@ public class Like {
     }
 
     // Constructeur sans id (utile pour l'ajout avant de générer l'id en base)
-    public Like(String type, Poste poste, user user) {
+    public Like(String type, Poste poste, User user) {
         this.type = type;
         this.poste = poste;
         this.user = user;
@@ -52,11 +52,11 @@ public class Like {
         this.poste = poste;
     }
 
-    public user getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(user user) {
+    public void setUser(User user) {
         this.user = user;
     }
 

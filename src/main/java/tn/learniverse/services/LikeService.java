@@ -2,7 +2,7 @@ package tn.learniverse.services;
 
 import tn.learniverse.entities.Like;
 import tn.learniverse.entities.Poste;
-import tn.learniverse.entities.user;
+import tn.learniverse.entities.User;
 import tn.learniverse.tools.DBConnection;
 
 import java.sql.*;
@@ -60,7 +60,7 @@ public class LikeService implements IForum<Like> {
             like.setId(rs.getInt("id"));
             like.setType(rs.getString("type"));
 
-            user u = new user();
+            User u = new User();
             u.setId(rs.getInt("id_user_id"));
             like.setUser(u);
 
@@ -86,7 +86,7 @@ public class LikeService implements IForum<Like> {
                 like.setId(rs.getInt("id"));
                 like.setType(rs.getString("type"));
 
-                user u = new user();
+                User u = new User();
                 u.setId(rs.getInt("id_user_id"));
                 like.setUser(u);
 
@@ -118,7 +118,7 @@ public class LikeService implements IForum<Like> {
         return compteur;
     }
 
-    public boolean existeDeja(Poste poste, user user, String type) throws SQLException {
+    public boolean existeDeja(Poste poste, User user, String type) throws SQLException {
         String query = "SELECT COUNT(*) FROM `like` WHERE id_poste_id = ? AND id_user_id = ? AND type = ?";
         PreparedStatement ps = cnx.prepareStatement(query);
         ps.setInt(1, poste.getId());
@@ -143,7 +143,7 @@ public class LikeService implements IForum<Like> {
             like.setId(rs.getInt("id"));
             like.setType(rs.getString("type"));
 
-            user u = new user();
+            User u = new User();
             u.setId(rs.getInt("id_user_id"));
             like.setUser(u);
 
@@ -168,7 +168,7 @@ public class LikeService implements IForum<Like> {
             Like like = new Like();
             like.setId(rs.getInt("id"));
 
-            user u = new user();
+            User u = new User();
             u.setId(rs.getInt("id_user_id"));
             like.setUser(u);
 
