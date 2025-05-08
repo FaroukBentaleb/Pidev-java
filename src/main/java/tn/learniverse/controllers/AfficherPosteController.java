@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class AfficherPosteController implements Initializable {
+    public Button ajouterButton1;
     @FXML
     private VBox postsContainer; 
 

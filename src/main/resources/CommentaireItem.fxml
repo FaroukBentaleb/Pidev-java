@@ -6,26 +6,30 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="80.0" prefWidth="100.0" spacing="5" style="-fx-padding: 15; -fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #e0e0e0; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0.3, 0, 2);" stylesheets="@styleAffichage.css" xmlns="http://javafx.com/javafx/21.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.CommentaireItemController">
+<VBox maxWidth="600" style="-fx-padding: 12; -fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #e0e0e0; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0.3, 0, 2);" stylesheets="@styleAffichage.css" xmlns="http://javafx.com/javafx/21.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.CommentaireItemController">
 
-
-
-    <HBox spacing="10" styleClass="post-header">
+    <!-- En-tête du commentaire - version compacte -->
+    <HBox alignment="CENTER_LEFT" spacing="5" style="-fx-padding: 0 0 5 0;">
+        <!-- Structure organisée avec des espaces logiques -->
         <Label styleClass="published-by-label" text="Published By" />
         <Label fx:id="auteurLabel" styleClass="author-name" />
 
-        <Label styleClass="post-category" text="📅" />
-        <Label fx:id="dateLabel" styleClass="post-category" />
+        <!-- Espace visuel séparateur (option flexible) -->
+        <HBox style="-fx-padding: 0 20 0 10;" /> <!-- Ajustez le 10 pour contrôler l'espace -->
+         <Label styleClass="date-icon" text="📅" />
+
+        <Label fx:id="dateLabel" styleClass="post-date" />
     </HBox>
 
+    <!-- Contenu du commentaire - s'adapte au texte -->
+    <Label fx:id="contenuLabel" maxWidth="-Infinity" styleClass="comment-content" wrapText="true" />
 
-    <Label fx:id="contenuLabel" style="-fx-font-size:20;" wrapText="true" />
+    <!-- Gif/image jointe - taille automatique -->
+    <ImageView fx:id="gifImageView" fitWidth="150" preserveRatio="true" styleClass="comment-image" visible="false" />
 
-    <ImageView fx:id="gifImageView" fitWidth="100" preserveRatio="true" style="-fx-background-color: #f0f0f0; -fx-padding: 5;" visible="false" />
-
-    <HBox alignment="CENTER_RIGHT" spacing="10">
-        <Button onAction="#handleModifier" style="-fx-background-color: #1976D2; -fx-text-fill: white; -fx-background-radius: 5;" text="Update" />
-        <Button onAction="#handleSupprimer" style="-fx-background-color: #00087d; -fx-text-fill: white; -fx-background-radius: 5;" text="Delete" />
-
+    <!-- Boutons alignés à droite -->
+    <HBox alignment="CENTER_RIGHT">
+        <Button onAction="#handleModifier" styleClass="small-edit-btn" text="Modify" />
+        <Button onAction="#handleSupprimer" styleClass="small-delete-btn" text="Delete" />
     </HBox>
 </VBox>

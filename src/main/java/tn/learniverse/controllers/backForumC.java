@@ -96,10 +96,10 @@ public class backForumC implements Initializable {
 
     private void addActionColumnToPosts() {
         // Bouton Voir commentaires
-        TableColumn<Poste, Void> commentCol = new TableColumn<>("Commentaires");
+        TableColumn<Poste, Void> commentCol = new TableColumn<>("Comments");
         commentCol.setPrefWidth(130);
         commentCol.setCellFactory(param -> new TableCell<>() {
-            private final Button btn = new Button("Voir commentaires");
+            private final Button btn = new Button("See comments");
 
             {
                 btn.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
@@ -124,7 +124,7 @@ public class backForumC implements Initializable {
         TableColumn<Poste, Void> deleteCol = new TableColumn<>("Action");
         deleteCol.setPrefWidth(100);
         deleteCol.setCellFactory(param -> new TableCell<>() {
-            private final Button deleteButton = new Button("Supprimer");
+            private final Button deleteButton = new Button("Delete");
 
             {
                 deleteButton.setStyle("-fx-background-color: red; -fx-text-fill: white;");

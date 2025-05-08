@@ -88,7 +88,6 @@ public class PosteItemController {
         titreLabel.setText(poste.getTitre());
         contenuLabel.setText(poste.getContenu());
 
-        // Affichage photo
         if (poste.getPhoto() != null && !poste.getPhoto().isEmpty()) {
             try {
                 File imageFile = new File("C:/wamp64/www/" + poste.getPhoto());
@@ -96,13 +95,21 @@ public class PosteItemController {
                     String photoPath = imageFile.toURI().toString();
                     Image image = new Image(photoPath, true);
                     photoImageView.setImage(image);
+                    photoImageView.setVisible(true);
+                    photoImageView.setManaged(true); // affiche l'espace si photo existe
                 } else {
                     photoImageView.setVisible(false);
+                    photoImageView.setManaged(false); // enlève l'espace si pas de photo
                 }
             } catch (Exception e) {
                 photoImageView.setVisible(false);
+                photoImageView.setManaged(false);
             }
+        } else {
+            photoImageView.setVisible(false);
+            photoImageView.setManaged(false);
         }
+
 
         setupEmojis(); // Configurer les emojis
     }
@@ -169,9 +176,8 @@ public class PosteItemController {
     private void handleDelete(ActionEvent event) {
         try {
             Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
-            confirm.setTitle("Confirmation");
-            confirm.setHeaderText("Supprimer ce post ?");
-            confirm.setContentText("Êtes-vous sûr de vouloir supprimer : " + poste.getTitre());
+            confirm.setTitle("Delete");
+            confirm.setContentText("Warning: This will permanently delete the selected item :" + poste.getTitre()+ ". Are you absolutely sure?" );
 
             Optional<ButtonType> result = confirm.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -183,7 +189,7 @@ public class PosteItemController {
                 }
             }
         } catch (Exception e) {
-            new Alert(Alert.AlertType.ERROR, "Erreur lors de la suppression : " + e.getMessage()).show();
+            new Alert(Alert.AlertType.ERROR, "Error : " + e.getMessage()).show();
         }
     }
 
@@ -206,8 +212,8 @@ public class PosteItemController {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
-            alert.setHeaderText("Impossible d'ouvrir l'éditeur");
-            alert.setContentText("Erreur lors du chargement de l'interface: " + e.getMessage());
+
+            alert.setContentText("Error " + e.getMessage());
             alert.showAndWait();
         }
     }
@@ -230,7 +236,7 @@ public class PosteItemController {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
-            alert.setHeaderText("Impossible d'ouvrir les commentaires");
+            alert.setHeaderText("Error while opening comments");
             alert.setContentText(e.getMessage());
             alert.showAndWait();
         }
@@ -280,34 +286,39 @@ public class PosteItemController {
     @FXML
     private void handleTraduire(ActionEvent event) {
         if (!traduit) {
-            originalContent = contenuLabel.getText();
-            traduireButton.setText("Traduction...");
-            traduireButton.setDisable(true);
+            originalContent = contenuLabel.getText(); // Sauvegarder le texte original
+            traduireButton.setText(".."); // Afficher une sorte de chargement dans le bouton
+            traduireButton.setDisable(true); // Désactiver le bouton pendant la traduction
 
+            // Lancer la traduction dans un thread séparé pour éviter de bloquer l'UI
             new Thread(() -> {
                 try {
-                    String translated = translateText(originalContent, "fr");
+                    String translated = translateText(originalContent, "fr"); // Traduction vers le français
 
+                    // Mettre à jour l'UI sur le thread principal après la traduction
                     Platform.runLater(() -> {
-                        contenuLabel.setText(translated);
-                        traduireButton.setText("Original");
-                        traduireButton.setDisable(false);
-                        traduit = true;
+                        contenuLabel.setText(translated); // Remplacer le contenu par la traduction
+                        traduireButton.setText("🌍"); // Changer l'icône du bouton
+                        traduireButton.setDisable(false); // Réactiver le bouton
+                        traduit = true; // Indiquer que le texte est traduit
                     });
                 } catch (IOException e) {
+                    // Si erreur, afficher un message d'erreur
                     Platform.runLater(() -> {
-                        contenuLabel.setText("Erreur: " + e.getMessage());
+                        contenuLabel.setText("Erreur : " + e.getMessage());
                         traduireButton.setText("Traduire");
                         traduireButton.setDisable(false);
                     });
                 }
             }).start();
         } else {
+            // Si déjà traduit, revenir au texte original
             contenuLabel.setText(originalContent);
-            traduireButton.setText("Traduire");
-            traduit = false;
+            traduireButton.setText("🌍"); // Réinitialiser le texte du bouton
+            traduit = false; // Indiquer que le texte est original
         }
     }
+
 
 
 

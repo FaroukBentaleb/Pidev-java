@@ -53,7 +53,7 @@
                 <padding>
                     <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
                 </padding>
-                <text>User Management</text>
+                <text>Users</text>
             </Button>
 
             <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
@@ -63,7 +63,7 @@
                 <padding>
                     <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
                 </padding>
-                <text>Offer Management</text>
+                <text>Courses</text>
             </Button>
 
             <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
@@ -73,7 +73,7 @@
                 <padding>
                     <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
                 </padding>
-                <text>Course Management</text>
+                <text>Competitions</text>
             </Button>
 
             <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
@@ -83,7 +83,7 @@
                 <padding>
                     <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
                 </padding>
-                <text>Competition Management</text>
+                <text>Forums</text>
             </Button>
 
             <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
@@ -93,18 +93,10 @@
                 <padding>
                     <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
                 </padding>
-                <text>Forum Management</text>
+                <text>Complaints</text>
             </Button>
 
-            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
-                <graphic>
-                    <Label style="-fx-text-fill: white;" text="📈" />
-                </graphic>
-                <padding>
-                    <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
-                </padding>
-                <text>Complaint Management</text>
-            </Button>
+
 
             <!-- Profile at bottom -->
             <VBox VBox.vgrow="ALWAYS" />
@@ -158,17 +150,17 @@
                                 <TableColumn fx:id="contenu" prefWidth="360.00006103515625" text="body" />
                                 <TableColumn fx:id="date" prefWidth="141.59991455078125" text="date" />
                                 <TableColumn fx:id="nbCom" prefWidth="56.800048828125" text="nbCom" />
-                                <TableColumn fx:id="actionColumn" text="Action"/>
+
 
                             </columns>
                         </TableView>
 
-                <Label text="Commentaires du poste sélectionné" />
+                <Label text="Comments from the selected post" />
                 <TableView fx:id="tableCommentaires">
                     <columns>
                         <TableColumn text="ID" fx:id="colIdCommentaire"/>
-                        <TableColumn text="Contenu" fx:id="colContenu"/>
-                        <TableColumn text="Auteur" fx:id="colAuteur"/>
+                        <TableColumn text="Body" fx:id="colContenu"/>
+                        <TableColumn text="User Name" fx:id="colAuteur"/>
                     </columns>
                 </TableView>
 

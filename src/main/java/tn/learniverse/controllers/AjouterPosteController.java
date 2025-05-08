@@ -104,16 +104,16 @@ public class AjouterPosteController {
                 labelimg.setText("Erreur lors de la copie");
             }
         } else {
-            labelimg.setText("Aucun fichier sélectionné");
+            labelimg.setText("Error");
         }
     }
     private void setupValidationListeners() {
         titreA.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null || newValue.trim().isEmpty()) {
-                titreErrorLabel.setText("Le titre ne peut pas être vide");
+                titreErrorLabel.setText("Title cannot be empty");
                 isTitreValid = false;
-            } else if (newValue.length() > 10) {
-                titreErrorLabel.setText("Le titre ne peut pas dépasser 10 caractères");
+            } else if (newValue.length() > 20) {
+                titreErrorLabel.setText("The Title cannot exceed 20 characters");
                 isTitreValid = false;
             } else {
                 titreErrorLabel.setText("");
@@ -123,10 +123,10 @@ public class AjouterPosteController {
         });
         contenuA.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null || newValue.trim().isEmpty()) {
-                contenuErrorLabel.setText("Le contenu ne peut pas être vide");
+                contenuErrorLabel.setText("Content cannot be empty");
                 isContenuValid = false;
-            } else if (newValue.length() > 10) {
-                contenuErrorLabel.setText("Le contenu ne peut pas dépasser 10 caractères");
+            } else if (newValue.length() > 500) {
+                contenuErrorLabel.setText("The content cannot exceed 500 characters");
                 isContenuValid = false;
             } else {
                 contenuErrorLabel.setText("");

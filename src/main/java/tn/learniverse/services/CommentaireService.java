@@ -3,6 +3,7 @@ package tn.learniverse.services;
 import tn.learniverse.entities.Commentaire;
 import tn.learniverse.entities.user;
 import tn.learniverse.entities.Poste;
+import tn.learniverse.tools.Session;
 
 import tn.learniverse.tools.DBConnection;
 

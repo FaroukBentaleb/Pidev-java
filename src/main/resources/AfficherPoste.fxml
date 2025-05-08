@@ -2,156 +2,212 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
+
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.text.Font?>
-
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.layout.FlowPane?>
 <BorderPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #f0f4f8;" stylesheets="@styleAffichage.css" xmlns="http://javafx.com/javafx/21.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.AfficherPosteController">
-
-    <!-- LEFT NAV BAR - Modern with gradient -->
     <left>
-        <VBox alignment="TOP_CENTER" prefHeight="720.0" prefWidth="220.0" spacing="15" style="-fx-background-color: linear-gradient(to bottom, #1976D2, #64B5F6); -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 0);">
-            <padding>
-                <Insets bottom="15.0" left="15.0" right="15.0" top="20.0" />
-            </padding>
-
-            <!-- App Name/Logo -->
+        <VBox alignment="TOP_CENTER" maxHeight="887.0" prefHeight="674.0" prefWidth="220.0" spacing="15" style="-fx-background-color: linear-gradient(to bottom, #1976D2, #64B5F6); -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 0);">
+            <padding><Insets bottom="15.0" left="15.0" right="15.0" top="20.0" /></padding>
             <Label style="-fx-text-fill: white; -fx-font-size: 26px; -fx-font-weight: bold;" text="Learniverse" />
-
-            <!-- Navigation Buttons -->
-            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: rgba(255,255,255,0.2); -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
-                <graphic>
-                    <Label style="-fx-text-fill: white;" text="📊" />
-                </graphic>
-                <padding>
-                    <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
-                </padding>
-                <HBox.margin>
-                    <Insets top="10.0" />
-                </HBox.margin>
-                <font>
-                    <Font size="14.0" />
-                </font>
-                <text>Dashboard</text>
-            </Button>
-
+            <VBox maxHeight="30.0" prefHeight="30.0" prefWidth="190.0" />
             <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
-                <graphic>
-                    <Label style="-fx-text-fill: white;" text="📚" />
-                </graphic>
-                <padding>
-                    <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
-                </padding>
+                <graphic><Label style="-fx-text-fill: white;" text="🛍" /></graphic>
+                <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
+                <text>Offers</text>
+            </Button>
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic><Label style="-fx-text-fill: white;" text="📚" /></graphic>
+                <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
                 <text>My Courses</text>
             </Button>
-
-            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
-                <graphic>
-                    <Label style="-fx-text-fill: white;" text="🔍" />
-                </graphic>
-                <padding>
-                    <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
-                </padding>
+            <!--<Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" onAction="#ToLogs" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic><Label style="-fx-text-fill: white;" text="🔍" /></graphic>
+                <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
                 <text>Discover</text>
-            </Button>
-
+            </Button>-->
             <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic><Label style="-fx-text-fill: white;" text="👥" /></graphic>
+                <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
+                <text>Forum</text>
+            </Button>
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8; -fx-cursor: hand;">
+                <graphic><Label style="-fx-text-fill: white;" text="🏆" /></graphic>
+                <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
+                <text>Competitions</text>
+            </Button>
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;" text="Complaints">
                 <graphic>
-                    <Label style="-fx-text-fill: white;" text="👥" />
+                    <Label style="-fx-text-fill: white;" text="📝" />
                 </graphic>
                 <padding>
                     <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
                 </padding>
-                <text>Community</text>
             </Button>
-
-            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
-                <graphic>
-                    <Label style="-fx-text-fill: white;" text="⚙️" />
-                </graphic>
+            <VBox prefHeight="180.0" prefWidth="190.0" VBox.vgrow="ALWAYS" />
+            <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0" style="-fx-background-color: rgba(255,255,255,0.1); -fx-background-radius: 8;">
                 <padding>
-                    <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
+                    <Insets bottom="8.0" left="5.0" right="5.0" top="8.0" />
                 </padding>
-                <text>Settings</text>
-            </Button>
-
-            <!-- Profile at bottom -->
-            <VBox VBox.vgrow="ALWAYS" />
-            <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="10" style="-fx-background-color: rgba(255,255,255,0.1); -fx-background-radius: 8;">
-                <padding>
-                    <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
-                </padding>
-                <StackPane>
-                    <Circle fill="white" radius="18" />
-                    <Label style="-fx-text-fill: #1976D2; -fx-font-size: 16px; -fx-font-weight: bold;" text="F" />
-                </StackPane>
-                <VBox spacing="2">
-                    <Label fx:id="navUsernameLabel" style="-fx-text-fill: white; -fx-font-weight: bold;" text="Farouk" />
-                    <Label style="-fx-text-fill: rgba(255,255,255,0.7); -fx-font-size: 11px;" text="Student" />
-                </VBox>
+                <!--<children>
+                    <StackPane>
+                        <children>
+                            <Circle fill="#ffffff53" radius="26.0" />
+                            <ImageView fx:id="UserPicture" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                <StackPane.margin>
+                                    <Insets right="5.0" />
+                                </StackPane.margin>
+                            </ImageView>
+                        </children>
+                    </StackPane>
+                    <VBox prefHeight="36.0" prefWidth="72.0" spacing="2">
+                        <children>
+                            <Label fx:id="usernameLabel" minWidth="60.0" style="-fx-text-fill: white; -fx-font-weight: bold;" text="Username">
+                                <VBox.margin>
+                                    <Insets top="10.0" />
+                                </VBox.margin>
+                            </Label>
+                            <Label fx:id="role" style="-fx-text-fill: rgba(255,255,255,0.7); -fx-font-size: 11px;" text="Admin" />
+                        </children>
+                    </VBox>
+                    <Button fx:id="Settingsbtn" mnemonicParsing="false" onAction="#Settings" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-border-color: transparent;">
+                        <tooltip>
+                            <Tooltip text="Logout" />
+                        </tooltip>
+                        <HBox.margin>
+                            <Insets left="30.0" />
+                        </HBox.margin>
+                    </Button>
+                    <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#Logout" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-border-color: transparent;">
+                        <tooltip>
+                            <Tooltip text="Logout" />
+                        </tooltip>
+                    </Button>
+                </children> -->
             </HBox>
+            <BorderPane.margin>
+                <Insets />
+            </BorderPane.margin>
         </VBox>
     </left>
-
+    <!-- CENTER AREA (TopBar + Main Content + Right Sidebar) -->
     <center>
-        <ListView>
-            <VBox>
+        <HBox spacing="0">
+            <!-- Main Content Area -->
+            <VBox spacing="10" style="-fx-padding: 10 20;" HBox.hgrow="ALWAYS">
                 <!-- TOP BAR -->
-                <HBox alignment="CENTER" maxWidth="1041.0" prefHeight="70.0" prefWidth="1041.0" style="-fx-background-color: white; -fx-padding: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2);">
-                    <!-- Welcome message -->
+                <HBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="574.0" spacing="20" style="-fx-background-color: white; -fx-padding: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2);">
+                    <!-- Forum title -->
                     <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Forum" />
 
                     <HBox HBox.hgrow="ALWAYS" />
 
                     <!-- Search Area -->
-                    <HBox alignment="CENTER" maxHeight="-Infinity" prefHeight="40.0" prefWidth="350.0" spacing="10" style="-fx-background-color: #F0F2F5; -fx-background-radius: 20;">
+                    <HBox alignment="CENTER" prefHeight="40.0" prefWidth="250.0" spacing="10" style="-fx-background-color: #F0F2F5; -fx-background-radius: 20;">
                         <padding>
                             <Insets left="15.0" right="15.0" />
                         </padding>
                         <Label style="-fx-text-fill: #666;" text="🔍" />
-                        <TextField fx:id="searchField" prefHeight="40.0" promptText="Search for posts..." style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS" />
-                        <ChoiceBox fx:id="categoryChoiceBox" prefWidth="150.0" style="-fx-background-radius: 20;" />
-
+                        <TextField fx:id="searchField" promptText="Search..." style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS" />
                     </HBox>
 
-                    <!-- Notification icons and login buttons -->
+                    <!-- Category dropdown and icons -->
                     <HBox alignment="CENTER" spacing="15" style="-fx-padding: 0 0 0 20;">
-                        <Label style="-fx-text-fill: #555; -fx-font-size: 18px;" text="🔔" />
-                        <Label style="-fx-text-fill: #555; -fx-font-size: 18px;" text="✉️" />
+                        <ChoiceBox fx:id="categoryChoiceBox" prefWidth="150.0" style="-fx-background-radius: 5;" />
 
-                        <!-- Auth buttons -->
-                        <HBox fx:id="authButtons" alignment="CENTER" prefHeight="40.0" spacing="10">
-                            <Button style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-background-radius: 20; -fx-padding: 8 20;" text="Login" />
-                            <Button style="-fx-background-color: white; -fx-text-fill: #2196F3; -fx-border-color: #2196F3; -fx-border-radius: 20; -fx-padding: 8 20;" text="Sign Up" />
-                        </HBox>
+
+
                     </HBox>
                 </HBox>
 
-                <VBox spacing="10" alignment="TOP_CENTER" style="-fx-padding: 20;">
+                <!-- Ask a Question Button -->
+                <Button fx:id="ajouterButton" onAction="#AjoutPoste1" styleClass="add-post-btn" text="+ Ask a Question" />
 
-                    <!-- Ton bouton d'ajout -->
-                    <Button fx:id="ajouterButton" text="+ Add New Post" onAction="#AjoutPoste1" styleClass="add-post-btn" />
+                <!-- Posts Scroll Area -->
+                <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;" styleClass="post-scroll" prefHeight="600">
+                    <content>
+                        <VBox fx:id="postsContainer" alignment="TOP_CENTER" spacing="20" style="-fx-padding: 10 0;" />
+                    </content>
+                </ScrollPane>
+            </VBox>
 
-                    <!-- La liste des posts dans une ScrollPane -->
-                    <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;" styleClass="post-scroll" prefHeight="600">
-                        <content>
-                            <VBox fx:id="postsContainer" alignment="TOP_CENTER" spacing="20" style="-fx-padding: 10 0;" />
-                        </content>
-                    </ScrollPane>
+
+
+            <!-- Right Sidebar - Version améliorée -->
+            <VBox alignment="TOP_LEFT" prefWidth="280" spacing="15" style="-fx-background-color: #ffffff; -fx-padding: 20; -fx-border-color: #e0e0e0; -fx-border-width: 0 0 0 1;">
+
+                <!-- Sneak Peek Section -->
+                <VBox spacing="10" style="-fx-background-color: #f8fafc; -fx-background-radius: 10; -fx-padding: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 1);">
+                    <Label style="-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: #2d3748;" text="Forum Sneak Peek 👀"/>
+                    <Separator style="-fx-padding: 5 0;"/>
+
+                    <!-- Conversation Example -->
+                    <VBox spacing="8" style="-fx-padding: 10; -fx-background-color: white; -fx-background-radius: 8;">
+                        <HBox spacing="8" alignment="CENTER_LEFT">
+                            <Circle radius="12" fill="#4299e1"/>
+                            <Label style="-fx-font-weight: bold; -fx-text-fill: #2d3748;" text="Teacher:"/>
+                        </HBox>
+                        <Label style="-fx-text-fill: #4a5568; -fx-wrap-text: true;" text="Remember the assignment deadline is tomorrow!"/>
+                    </VBox>
+
+                    <VBox spacing="8" style="-fx-padding: 10; -fx-background-color: #ebf8ff; -fx-background-radius: 8;">
+                        <HBox spacing="8" alignment="CENTER_LEFT">
+                            <Circle radius="12" fill="#68d391"/>
+                            <Label style="-fx-font-weight: bold; -fx-text-fill: #2d3748;" text="Student:"/>
+                        </HBox>
+                        <Label style="-fx-text-fill: #4a5568; -fx-wrap-text: true;" text="I have a question about question 3 in the exercise..."/>
+                    </VBox>
+                    <Button fx:id="ajouterButton1" onAction="#AjoutPoste1" style="-fx-background-color: #4cb0ed; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20; -fx-padding: 8 15;" text="Join Conversation →"/>
+
+
                 </VBox>
 
+                <Separator style="-fx-padding: 10 0;"/>
 
+                <!-- Quick Actions -->
+                <Label style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #2d3748;" text="Key Benefits of Educational Forums"/>
+                <VBox spacing="8">
+                    <Button text="💡 Knowledge Sharing" style="-fx-background-color: #edf2f7; -fx-text-fill: #2d3748; -fx-background-radius: 20; -fx-padding: 8 15; -fx-alignment: CENTER_LEFT;"/>
+                    <Button text="📘 Resource Centralization" style="-fx-background-color: #edf2f7; -fx-text-fill: #2d3748; -fx-background-radius: 20; -fx-padding: 8 15; -fx-alignment: CENTER_LEFT;"/>
+                    <Button text="🔔 24/7 Availability" style="-fx-background-color: #edf2f7; -fx-text-fill: #2d3748; -fx-background-radius: 20; -fx-padding: 8 15; -fx-alignment: CENTER_LEFT;"/>
+                </VBox>
 
+                <Separator style="-fx-padding: 10 0;"/>
 
+                <!-- Trending Topics -->
+                <Label style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #2d3748;" text="Trending Topics"/>
+                <FlowPane style="-fx-padding: 5 0;">
+                    <Label text="#JavaFX" style="-fx-background-color: #e2e8f0; -fx-background-radius: 15; -fx-padding: 5 10;"/>
+                    <Label text="#SpringBoot" style="-fx-background-color: #e2e8f0; -fx-background-radius: 15; -fx-padding: 5 10;"/>
+                    <Label text="#Database" style="-fx-background-color: #e2e8f0; -fx-background-radius: 15; -fx-padding: 5 10;"/>
+                    <Label text="#AI" style="-fx-background-color: #e2e8f0; -fx-background-radius: 15; -fx-padding: 5 10;"/>
+                    <Label text="#WebDev" style="-fx-background-color: #e2e8f0; -fx-background-radius: 15; -fx-padding: 5 10;"/>
+                </FlowPane>
+
+                <Separator style="-fx-padding: 10 0;"/>
+
+                <!-- Online Users -->
+                <Label style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #2d3748;" text="Collaboration"/>
+                <FlowPane>
+                    <StackPane><Circle radius="16" fill="#48bb78"/><Label text="👩‍💻" style="-fx-font-size: 12px;"/></StackPane>
+                    <StackPane><Circle radius="16" fill="#4299e1"/><Label text="👨‍🎓" style="-fx-font-size: 12px;"/></StackPane>
+                    <StackPane><Circle radius="16" fill="#9f7aea"/><Label text="👩‍🏫" style="-fx-font-size: 12px;"/></StackPane>
+                    <StackPane><Circle radius="16" fill="#ff0c7e"/><Label text="🧑‍💻" style="-fx-font-size: 12px;"/></StackPane>
+                </FlowPane>
             </VBox>
-        </ListView>
+
+        </HBox>
     </center>
 </BorderPane>
