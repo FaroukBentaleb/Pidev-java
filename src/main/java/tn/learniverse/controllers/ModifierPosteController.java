@@ -98,7 +98,7 @@ public class ModifierPosteController {
         try {
             // Validation des champs
             if (titreU.getText().isEmpty() || contenuU.getText().isEmpty() || categorieU.getValue() == null) {
-                showAlert("Erreur", "Veuillez remplir tous les champs obligatoires", Alert.AlertType.ERROR);
+                showAlert("Error", "Please fill in all required fields", Alert.AlertType.ERROR);
                 return;
             }
 
@@ -116,7 +116,7 @@ public class ModifierPosteController {
             posteService.modifier(currentPoste);
 
             // Afficher un message de succès
-            showAlert("Succès", "Poste modifié avec succès!", Alert.AlertType.INFORMATION);
+            showAlert("Success", "Post successfully modified!", Alert.AlertType.INFORMATION);
 
             // Fermer la fenêtre et rafraîchir la liste
             if (refreshCallback != null) {
@@ -125,7 +125,7 @@ public class ModifierPosteController {
             ((Stage) titreU.getScene().getWindow()).close();
 
         } catch (Exception e) {
-            showAlert("Erreur", "Erreur lors de la modification: " + e.getMessage(), Alert.AlertType.ERROR);
+            showAlert("Erreur", "Error while editing: " + e.getMessage(), Alert.AlertType.ERROR);
             e.printStackTrace();
         }
     }
@@ -141,10 +141,10 @@ public class ModifierPosteController {
     private void setupValidationListenersU() {
         titreU.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null || newValue.trim().isEmpty()) {
-                titreErrorLabel.setText("Le titre ne peut pas être vide");
+                titreErrorLabel.setText("Title cannot be empty");
                 isTitreValid = false;
-            } else if (newValue.length() > 10) {
-                titreErrorLabel.setText("Le titre ne peut pas dépasser 10 caractères");
+            } else if (newValue.length() > 20) {
+                titreErrorLabel.setText("The Title cannot exceed 20 characters");
                 isTitreValid = false;
             } else {
                 titreErrorLabel.setText("");
@@ -155,10 +155,10 @@ public class ModifierPosteController {
 
         contenuU.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null || newValue.trim().isEmpty()) {
-                contenuErrorLabel.setText("Le contenu ne peut pas être vide");
+                contenuErrorLabel.setText("Content cannot be empty");
                 isContenuValid = false;
-            } else if (newValue.length() > 10) {
-                contenuErrorLabel.setText("Le contenu ne peut pas dépasser 10 caractères");
+            } else if (newValue.length() > 500) {
+                contenuErrorLabel.setText("The Title cannot exceed 500 characters");
                 isContenuValid = false;
             } else {
                 contenuErrorLabel.setText("");

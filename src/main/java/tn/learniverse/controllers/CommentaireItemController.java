@@ -53,8 +53,7 @@ public class CommentaireItemController {
             if (refreshCallback != null) {
                 refreshCallback.run();
             }
-        });
-    }
+        });}
 
     @FXML
     private void handleSupprimer() {
@@ -62,13 +61,12 @@ public class CommentaireItemController {
         System.out.println("Contenu du commentaire: " + commentaire.getContenu());
 
         Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
-        confirmation.setTitle("Confirmation de suppression");
-        confirmation.setHeaderText("Supprimer ce commentaire ?");
-        confirmation.setContentText("Êtes-vous sûr de vouloir supprimer définitivement ce commentaire ?");
+        confirmation.setTitle("Delete");
+        confirmation.setContentText("Warning: This will permanently delete the selected item. Are you absolutely sure?");
 
         Optional<ButtonType> result = confirmation.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            System.out.println("Utilisateur a confirmé la suppression");
+            System.out.println("Done");
 
             try {
                 commentaireService.supprimer(commentaire.getId());

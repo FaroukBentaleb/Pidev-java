@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21.0.2"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="tn.learniverse.controllers.RechercheGifController"
+      spacing="10" style="-fx-padding: 15;">
+
+    <TextField fx:id="searchField" promptText="Rechercher un GIF..."/>
+
+    <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="400">
+        <FlowPane fx:id="gifFlowPane" hgap="10" vgap="10" prefWrapLength="300"/>
+    </ScrollPane>
+</VBox>

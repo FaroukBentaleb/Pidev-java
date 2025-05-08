@@ -1,0 +1,59 @@
+/* styles-commentaires.css */
+
+/* Style de base pour les commentaires individuels */
+.comment-box {
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 3, 0, 0, 1);
+    -fx-padding: 12;
+}
+
+/* Style pour le texte des commentaires */
+.comment-text {
+    -fx-font-size: 14;
+    -fx-text-fill: #333;
+    -fx-wrap-text: true;
+}
+
+/* Style pour la zone de texte */
+.text-field {
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-padding: 8 15;
+}
+
+/* Animation pour les boutons */
+.button {
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 2, 0, 0, 1);
+}
+
+.button:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 4, 0, 0, 2);
+}
+
+/* styles-commentaires.css */
+#commentContainer {
+    -fx-alignment: center-left;
+}
+
+#embeddedGifView {
+    -fx-cursor: hand; /* Change le curseur au survol */
+}
+
+#embeddedGifView:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 1);
+}
+
+/* Style de debug - à garder jusqu'à ce que ça fonctionne */
+#gifPreview {
+    -fx-border-color: red !important;
+    -fx-border-width: 1px !important;
+    -fx-background-color: #f0f0f0 !important;
+}
+
+.stack-pane {
+    -fx-background-color: #f8f8f8 !important;
+}

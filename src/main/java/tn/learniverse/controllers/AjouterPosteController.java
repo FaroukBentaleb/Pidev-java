@@ -40,7 +40,7 @@ public class AjouterPosteController {
     @FXML
     private Label contenuErrorLabel;
     @FXML
-    private Button postButton;  // Ajoutez cette ligne avec vos autres déclarations @FXML
+    private Button postButton;
     private boolean isTitreValid = false;
     private boolean isContenuValid = false;
 
@@ -62,7 +62,6 @@ public class AjouterPosteController {
                 "Health & Fitness",
                 "Product Design"
         );
-
         setupValidationListeners();
         postButton.setDisable(true);
     }
@@ -73,16 +72,12 @@ public class AjouterPosteController {
         poste.setPhoto(imagePath); // affecte le chemin de la photo
         ps.ajouter(poste);
 
-        // Appeler le rafraîchissement de la vue des posts
         if (refreshCallback != null) {
             refreshCallback.run();
         }
-
-        // Fermer la fenêtre actuelle
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }
-
 
     @FXML
     void ajouterImage(ActionEvent event) {
@@ -91,12 +86,10 @@ public class AjouterPosteController {
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg", "*.gif")
         );
-
         selectedFile = fileChooser.showOpenDialog(null);
         if (selectedFile != null) {
             labelimg.setText(selectedFile.getName());
 
-            // Dossier cible
             File destinationDir = new File("C:/wamp64/www/images");
             if (!destinationDir.exists()) {
                 destinationDir.mkdirs();
@@ -105,23 +98,22 @@ public class AjouterPosteController {
 
             try {
                 Files.copy(selectedFile.toPath(), destinationFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                imagePath = "images/" + selectedFile.getName(); // Chemin à enregistrer dans la base
+                imagePath = "images/" + selectedFile.getName();
             } catch (IOException e) {
                 e.printStackTrace();
                 labelimg.setText("Erreur lors de la copie");
             }
         } else {
-            labelimg.setText("Aucun fichier sélectionné");
+            labelimg.setText("Error");
         }
     }
-
     private void setupValidationListeners() {
         titreA.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null || newValue.trim().isEmpty()) {
-                titreErrorLabel.setText("Le titre ne peut pas être vide");
+                titreErrorLabel.setText("Title cannot be empty");
                 isTitreValid = false;
-            } else if (newValue.length() > 10) {
-                titreErrorLabel.setText("Le titre ne peut pas dépasser 10 caractères");
+            } else if (newValue.length() > 20) {
+                titreErrorLabel.setText("The Title cannot exceed 20 characters");
                 isTitreValid = false;
             } else {
                 titreErrorLabel.setText("");
@@ -129,13 +121,12 @@ public class AjouterPosteController {
             }
             updatePostButtonState();
         });
-
         contenuA.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue == null || newValue.trim().isEmpty()) {
-                contenuErrorLabel.setText("Le contenu ne peut pas être vide");
+                contenuErrorLabel.setText("Content cannot be empty");
                 isContenuValid = false;
-            } else if (newValue.length() > 10) {
-                contenuErrorLabel.setText("Le contenu ne peut pas dépasser 10 caractères");
+            } else if (newValue.length() > 500) {
+                contenuErrorLabel.setText("The content cannot exceed 500 characters");
                 isContenuValid = false;
             } else {
                 contenuErrorLabel.setText("");
@@ -143,8 +134,6 @@ public class AjouterPosteController {
             }
             updatePostButtonState();
         });
-
-        // Validation de la catégorie
         categorieA.valueProperty().addListener((observable, oldValue, newValue) -> {
             updatePostButtonState();
         });
@@ -155,7 +144,6 @@ public class AjouterPosteController {
         boolean allFieldsValid = isTitreValid && isContenuValid && (categorieA.getValue() != null);
         postButton.setDisable(!allFieldsValid);
 
-        // Style optionnel
         if (allFieldsValid) {
             postButton.getStyleClass().removeAll("post-btn-disabled");
             postButton.getStyleClass().add("post-btn-enabled");

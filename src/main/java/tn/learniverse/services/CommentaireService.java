@@ -3,6 +3,7 @@ package tn.learniverse.services;
 import tn.learniverse.entities.Commentaire;
 import tn.learniverse.entities.*;
 import tn.learniverse.entities.Poste;
+import tn.learniverse.tools.Session;
 
 import tn.learniverse.tools.DBConnection;
 
@@ -47,6 +48,14 @@ public class CommentaireService implements IForum<Commentaire> {
             ps.setString(6, c.getGifurl());
 
             ps.executeUpdate();
+
+            // Incrémenter nbCom dans le poste
+            String updatePosteSql = "UPDATE poste SET nb_com = nb_com + 1 WHERE id = ?";
+            PreparedStatement psPoste = cnx.prepareStatement(updatePosteSql);
+            psPoste.setInt(1, c.getPoste().getId());
+            psPoste.executeUpdate();
+
+
             System.out.println("✅ Commentaire ajouté avec succès !");
         } catch (SQLException e) {
             System.out.println("❌ Erreur lors de l'ajout du commentaire : " + e.getMessage());
@@ -72,14 +81,35 @@ public class CommentaireService implements IForum<Commentaire> {
 
     @Override
     public void supprimer(int id) {
-        String sql = "DELETE FROM commentaire WHERE id=?";
-        try (PreparedStatement pst = cnx.prepareStatement(sql)) {
-            System.out.println("Exécution de la suppression pour commentaire ID: " + id);
+        try {
+            // Étape 1 : Récupérer l'ID du poste lié au commentaire
+            String getPosteIdSql = "SELECT id_poste_id FROM commentaire WHERE id = ?";
+            PreparedStatement getPostePs = cnx.prepareStatement(getPosteIdSql);
+            getPostePs.setInt(1, id);
+            ResultSet rs = getPostePs.executeQuery();
+
+            int posteId = -1;
+            if (rs.next()) {
+                posteId = rs.getInt("id_poste_id");
+            }
+
+            // Étape 2 : Supprimer le commentaire
+            String sql = "DELETE FROM commentaire WHERE id=?";
+            PreparedStatement pst = cnx.prepareStatement(sql);
             pst.setInt(1, id);
             int rowsDeleted = pst.executeUpdate();
 
             if (rowsDeleted > 0) {
-                System.out.println("✅ Commentaire ID " + id + " supprimé avec succès. Lignes affectées: " + rowsDeleted);
+                System.out.println("✅ Commentaire ID " + id + " supprimé avec succès.");
+
+                // Étape 3 : Décrémenter nb_com dans la table poste
+                if (posteId != -1) {
+                    String updatePosteSql = "UPDATE poste SET nb_com = nb_com - 1 WHERE id = ? AND nb_com > 0";
+                    PreparedStatement psPoste = cnx.prepareStatement(updatePosteSql);
+                    psPoste.setInt(1, posteId);
+                    psPoste.executeUpdate();
+                    System.out.println("🔁 Champ nbCom décrémenté pour le poste ID " + posteId);
+                }
             } else {
                 System.out.println("⚠️ Aucun commentaire trouvé avec l'ID: " + id);
             }
@@ -91,6 +121,7 @@ public class CommentaireService implements IForum<Commentaire> {
             e.printStackTrace();
         }
     }
+
 
     @Override
     public Commentaire getById(int id) {
