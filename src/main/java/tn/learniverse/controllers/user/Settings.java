@@ -22,6 +22,7 @@ public class Settings implements Initializable {
     public Label usernameLabel;
     public ImageView UserPicture;
     public Label role;
+    public Button securityBtn;
 
     public void LogsBtn(ActionEvent actionEvent) {
         Navigator.redirect(actionEvent, "/fxml/user/LogsList.fxml");
@@ -100,5 +101,9 @@ public class Settings implements Initializable {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public void pofile(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent, "/fxml/user/Profile.fxml");
     }
 }

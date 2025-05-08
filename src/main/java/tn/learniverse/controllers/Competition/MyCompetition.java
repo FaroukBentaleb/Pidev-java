@@ -551,6 +551,14 @@ public class MyCompetition implements Initializable {
         alert.showAndWait();
     }
 
+    public void Settings(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/fxml/user/Settings.fxml");
+    }
+
+    public void ToLogs(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/fxml/user/LogsList.fxml");
+    }
+
     private static class DialogHelper {
         public static void styleDialog(Alert dialog) {
             dialog.getDialogPane().getStylesheets().add(

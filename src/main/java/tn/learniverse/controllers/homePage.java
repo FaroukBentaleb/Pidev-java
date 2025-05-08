@@ -150,4 +150,8 @@ public class homePage implements Initializable {
     }
 
 
+    public void Comp(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/fxml/competitions_list.fxml");
+
+    }
 }

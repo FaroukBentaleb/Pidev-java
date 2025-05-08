@@ -763,4 +763,12 @@ public class CompetitionLeaderboardController implements Initializable {
     public void Comp(ActionEvent actionEvent) {
         Navigator.redirect(actionEvent,"/fxml/competitions_list.fxml");
     }
+
+    public void Settings(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/fxml/user/Settings.fxml");
+    }
+
+    public void ToLogs(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/fxml/user/LogsList.fxml");
+    }
 }

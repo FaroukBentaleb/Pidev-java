@@ -10,9 +10,8 @@ module tn.learniverse {
     requires java.sql;
     requires MaterialFX;
     requires javafx.web;
-    
-    // Add access to JavaFX standard modules 
-    requires javafx.graphics;
+
+    // Add access to JavaFX standard modules
     requires com.github.oshi;
     requires jbcrypt;
     requires jakarta.validation;
@@ -22,13 +21,25 @@ module tn.learniverse {
     requires java.net.http;
     requires org.slf4j;
     requires twilio;
+    requires com.google.api.client.auth;
+    requires google.http.client.jackson2;
+    requires com.google.api.client;
+    requires google.api.client;
+    requires com.google.api.client.extensions.jetty.auth;
+    requires com.google.api.client.extensions.java6.auth;
+    requires org.json;
+    requires java.mail;
+    requires javafx.swing;
+    requires org.apache.commons.codec;
+    requires com.google.zxing;
+    requires jdk.httpserver;
 
     // Make sure tools package is properly exported and opened
     opens tn.learniverse.controllers.Competition to javafx.fxml;
     opens tn.learniverse to javafx.fxml;
     opens tn.learniverse.tools to javafx.fxml, javafx.base, javafx.controls, javafx.web;
     opens tn.learniverse.entities to javafx.base, javafx.fxml;
-    
+
     exports tn.learniverse;
     exports tn.learniverse.controllers.Competition to javafx.fxml;
     exports tn.learniverse.tools to javafx.fxml, javafx.base, javafx.controls, javafx.web;

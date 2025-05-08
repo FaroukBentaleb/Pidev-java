@@ -50,11 +50,7 @@
                 <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
                 <text>Forum</text>
             </Button>
-            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8; -fx-cursor: hand;">
-                <graphic><Label style="-fx-text-fill: white;" text="🏆" /></graphic>
-                <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
-                <text>Competitions</text>
-            </Button>
+
          <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;" text="Complaints">
             <graphic>
                <Label style="-fx-text-fill: white;" text="📝" />

@@ -687,6 +687,14 @@ public class CompetitionsListController implements Initializable {
     private void showAlert(String error, String s) {
     }
 
+    public void Settings(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/fxml/user/Settings.fxml");
+    }
+
+    public void ToLogs(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/fxml/user/LogsList.fxml");
+    }
+
     private static class DialogHelper {
         public static void styleDialog(Alert dialog) {
             dialog.getDialogPane().getStylesheets().add(

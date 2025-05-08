@@ -8,6 +8,7 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -392,5 +393,25 @@ challengesContainer.getChildren().add(challengeCard);
             countdownTimeline.stop();
         }
         executorService.shutdown();
+    }
+
+    public void Settings(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/fxml/user/Settings.fxml");
+    }
+
+    public void ToLogs(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/fxml/user/LogsList.fxml");
+    }
+    public void Logout(ActionEvent actionEvent) {
+        Session.clear();
+        Navigator.showAlert(Alert.AlertType.INFORMATION,"See you soon ","You are going to logout");
+        Navigator.redirect(actionEvent,"/fxml/user/Login.fxml");
+    }
+
+    public void Profile(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/fxml/user/Profile.fxml");
+    }
+    public void Comp(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/fxml/competitions_list.fxml");
     }
 }
