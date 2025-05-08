@@ -31,6 +31,7 @@ import java.util.Date;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import tn.learniverse.tools.Session;
 
 public class Reponses {
 
@@ -57,8 +58,9 @@ public class Reponses {
     public void setReclamation(Reclamation rec) throws SQLException {
         this.reclamation = rec;
         labelTitre.setText("Réponses pour : " + rec.getTitre());
-        user = new User();
-        user.setId(3);
+        user = Session.getCurrentUser();
+        /*user = new User();
+        user.setId(3);*/
         user.setPrenom(rec.getUser().getPrenom());
         user.setNom(rec.getUser().getNom());
         user.setRole(rec.getUser().getRole());
@@ -66,9 +68,11 @@ public class Reponses {
 
         List<Reponse> reponses = rec.getReponses();
         for (Reponse reponse : reponses) {
-            if (reponse.getUser() == null) {
+            user = Session.getCurrentUser();
+            reponse.setUser(user);
+            /*if (reponse.getUser() == null) {
                 reponse.setUser(user);
-            }
+            }*/
         }
         observableReponses = FXCollections.observableArrayList(reponses);
         refreshReponses();
@@ -277,12 +281,17 @@ public class Reponses {
                         lastReponse.setStatut(1);
                         reponseService.updateStatut(lastReponse.getId(), 1);
                     }
-                    if (user.getPrenom() == null || user.getNom() == null || user.getRole() == null) {
+                    /*if (user.getPrenom() == null || user.getNom() == null || user.getRole() == null) {
                         user.setPrenom(reclamation.getUser().getPrenom());
                         user.setNom(reclamation.getUser().getNom());
                         user.setRole(reclamation.getUser().getRole());
                         user.setEmail(reclamation.getUser().getEmail());
-                    }
+                    }*/
+                    user = Session.getCurrentUser();
+                    user.setPrenom(reclamation.getUser().getPrenom());
+                    user.setNom(reclamation.getUser().getNom());
+                    user.setRole(reclamation.getUser().getRole());
+                    user.setEmail(reclamation.getUser().getEmail());
 
                     Reponse reponse = new Reponse(contenu, new Date(), reclamation, user, 0);
                     reponseService.ajouter(reponse, user, reclamation);

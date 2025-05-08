@@ -17,6 +17,7 @@ import tn.learniverse.entities.Reclamation;
 import tn.learniverse.services.ReclamationService;
 import javafx.event.EventHandler;
 import tn.learniverse.tools.Navigator;
+import tn.learniverse.tools.Session;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -39,8 +40,9 @@ public class ReclamationsArchivéesFront {
         reclamationsContainer.setSpacing(5);
 
         try {
-            User user = new User();
-            user.setId(3);
+            User user = Session.getCurrentUser();
+            /*User user = new User();
+            user.setId(3);*/
             List<Reclamation> reclamations = reclamationService.recupererReclamationsArchivéesFront(user);
             if (reclamations.isEmpty()) {
                 headerLabel.setText("Aucune réclamation pour l'utilisateur 3");

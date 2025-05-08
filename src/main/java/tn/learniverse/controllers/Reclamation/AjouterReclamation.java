@@ -19,6 +19,7 @@ import tn.learniverse.entities.User;
 import tn.learniverse.services.FlaskClient;
 import tn.learniverse.services.ReclamationService;
 import tn.learniverse.tools.Navigator;
+import tn.learniverse.tools.Session;
 
 import java.io.File;
 import java.io.IOException;
@@ -91,8 +92,8 @@ public class AjouterReclamation implements Initializable {
             reclamation.setContenu(contenu);
             reclamation.setFichier(fichier);
 
-            User user = new User();
-            user.setId(3);
+            User user = Session.getCurrentUser();
+
 
             try {
                 reclamationService.ajouter(reclamation, user);

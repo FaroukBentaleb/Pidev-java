@@ -38,6 +38,7 @@ import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import tn.learniverse.tools.Navigator;
+import tn.learniverse.tools.Session;
 
 import javax.mail.MessagingException;
 
@@ -73,21 +74,23 @@ public class ReponsesBack {
             reclamationTraite.setVisible(false);
             reclamationTraite.setManaged(false);
         }
-        
-        user = new User();
+        user = Session.getCurrentUser();
+        /*user = new User();
         user.setId(2);
-        user.setRole("Admin");
+        user.setRole("Admin");*/
 
         List<Reponse> reponses = rec.getReponses();
         for (Reponse reponse : reponses) {
-            if (reponse.getUser() == null) {
+            User defaultUser = Session.getCurrentUser();
+            reponse.setUser(defaultUser);
+            /*if (reponse.getUser() == null) {
                 User defaultUser = new User();
                 defaultUser.setId(2);
                 defaultUser.setRole("Admin");
                 defaultUser.setPrenom("Admin");
                 defaultUser.setNom("Learniverse");
                 reponse.setUser(defaultUser);
-            }
+            }*/
         }
 
         observableReponses = FXCollections.observableArrayList(reponses);

@@ -33,6 +33,7 @@ import javax.mail.MessagingException;
 import com.twilio.type.PhoneNumber;
 import tn.learniverse.tools.Navigator;
 import javafx.scene.image.ImageView;
+import tn.learniverse.tools.Session;
 
 
 public class DisplayReclamationBack {
@@ -374,9 +375,9 @@ public class DisplayReclamationBack {
 
                 btnRepondre.setOnAction(event -> {
                 try {
-                    User admin = new User();
-                    admin.setId(2);
-                    admin.setRole("Admin");
+                    User admin = Session.getCurrentUser();
+                    /*admin.setId(2);
+                    admin.setRole("Admin");*/
 
                     Reponse reponse = new Reponse(reponseTextArea.getText(), new Date(), reclamation, admin, 0);
                     ReponseService reponseService = new ReponseService();

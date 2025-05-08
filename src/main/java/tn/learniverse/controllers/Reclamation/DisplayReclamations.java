@@ -25,6 +25,7 @@ import java.util.List;
 import tn.learniverse.services.ChatBotReclamationService;
 import tn.learniverse.tools.Navigator;
 import javafx.scene.image.ImageView;
+import tn.learniverse.tools.Session;
 
 public class DisplayReclamations {
     private User user;
@@ -53,14 +54,14 @@ public class DisplayReclamations {
     public void initialize() {
         reclamationsContainer.getChildren().clear();
         reclamationsContainer.setSpacing(5);
-
+        user = Session.getCurrentUser();
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             try {
-                if (user == null) {
+                /*if (user == null) {
                     user = new User();
                     user.setId(3);
                     user.setRole("Student");
-                }
+                }*/
                 
                 reclamationsContainer.getChildren().clear();
                 List<Reclamation> reclamations;
@@ -102,11 +103,11 @@ public class DisplayReclamations {
             }
         });
         try {
-            if (user == null) {
+            /*if (user == null) {
                 user = new User();
                 user.setId(3);
                 user.setRole("Student");
-            }
+            }*/
             
             List<Reclamation> reclamations = reclamationService.recuperer(user);
             if (reclamations.isEmpty()) {
@@ -339,10 +340,10 @@ public class DisplayReclamations {
     @FXML
     private void afficherReclamationsArchivees() {
         try {
-            if (user == null) {
+            /*if (user == null) {
                 user = new User();
                 user.setId(3);
-            }
+            }*/
             
             reclamationsContainer.getChildren().clear();
             List<Reclamation> reclamations = reclamationService.recupererReclamationsArchivéesFront(user);
@@ -399,10 +400,10 @@ public class DisplayReclamations {
     }
 
     private void archiverReclamation(Reclamation reclamation) {
-        if (user == null) {
+        /*if (user == null) {
             user = new User();
             user.setId(3);
-        }
+        }*/
         try {
             reclamationService.ArchiverFront(reclamation.getId(), 1);
             List<Reclamation> reclamations = reclamationService.recuperer(user);
