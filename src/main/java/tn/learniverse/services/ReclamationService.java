@@ -825,6 +825,71 @@ public class ReclamationService implements IReclamation<Reclamation> {
             return count;
         }
     }
+
+    public List<Reclamation> recupererReclamationsArchivéesBack() throws SQLException {
+        List<Reclamation> reclamations = new ArrayList<>();
+        sql = "SELECT r.*, u.id AS user_id, u.nom, u.prenom, u.email, u.role " +
+                "FROM reclamation r " +
+                "LEFT JOIN user u ON r.id_user_id = u.id " +
+                "WHERE r.statut_archivation_back = 1";
+
+        PreparedStatement ste = cnx.prepareStatement(sql);
+        ResultSet rs = ste.executeQuery();
+
+        while (rs.next()) {
+            User u = new User();
+            u.setId(rs.getInt("id_user_id"));
+            u.setNom(rs.getString("nom"));
+            u.setPrenom(rs.getString("prenom"));
+            u.setEmail(rs.getString("email"));
+            u.setRole(rs.getString("role"));
+
+            Reclamation rec = new Reclamation(
+                    rs.getString("titre"),
+                    rs.getTimestamp("date_reclamation"),
+                    rs.getString("contenu"),
+                    rs.getString("statut"),
+                    u,
+                    rs.getInt("statut_archivation"),
+                    rs.getInt("statut_archivation_back"),
+                    rs.getTimestamp("date_modification"),
+                    rs.getString("fichier")
+            );
+            rec.setId(rs.getInt("id"));
+            reclamations.add(rec);
+        }
+        for (Reclamation reclamation : reclamations) {
+            String sql1 = "SELECT r.*, u.id AS user_id, u.nom, u.prenom, u.email, u.role " +
+                    "FROM reponse r " +
+                    "LEFT JOIN user u ON r.id_user_id = u.id " +
+                    "WHERE r.id_reclamation_id = ?";
+
+            PreparedStatement ste1 = cnx.prepareStatement(sql1);
+            ste1.setInt(1, reclamation.getId());
+            ResultSet rs1 = ste1.executeQuery();
+            List<Reponse> reponses = new ArrayList<>();
+            while (rs1.next()) {
+                User userReponse = new User();
+                userReponse.setId(rs1.getInt("user_id"));
+                userReponse.setNom(rs1.getString("nom"));
+                userReponse.setPrenom(rs1.getString("prenom"));
+                userReponse.setEmail(rs1.getString("email"));
+                userReponse.setRole(rs1.getString("role"));
+                Reponse rep = new Reponse(
+                        rs1.getString("contenu"),
+                        rs1.getTimestamp("date_reponse"),
+                        reclamation,
+                        rs1.getTimestamp("date_modification"),
+                        userReponse,
+                        rs1.getInt("statut")
+                );
+                rep.setId(rs1.getInt("id"));
+                reponses.add(rep);
+            }
+            reclamation.setReponses(reponses);
+        }
+        return reclamations;
+    }
 }
 
 

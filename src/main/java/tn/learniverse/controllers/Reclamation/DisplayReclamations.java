@@ -24,6 +24,7 @@ import java.util.Date;
 import java.util.List;
 import tn.learniverse.services.ChatBotReclamationService;
 import tn.learniverse.tools.Navigator;
+import javafx.scene.image.ImageView;
 
 public class DisplayReclamations {
     private User user;
@@ -171,6 +172,35 @@ public class DisplayReclamations {
         contentText.setWrappingWidth(600);
         contentText.setStyle("-fx-font-size: 20px;");
 
+        box.getChildren().addAll(statusDateBox, titleLabel, contentText);
+        if (rec.getFichier() != null && !rec.getFichier().isEmpty()) {
+            HBox fileBox = new HBox(8);
+            fileBox.setStyle("-fx-background-color: #f6f6f6; -fx-padding: 8 12; -fx-background-radius: 8;");
+            ImageView fileIcon = new ImageView();
+            fileIcon.setFitHeight(32);
+            fileIcon.setFitWidth(32);
+
+            String fileName = new java.io.File(rec.getFichier()).getName();
+            Label fileLabel = new Label(fileName);
+            fileLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 15px;");
+
+            if (fileName.toLowerCase().endsWith(".png") || fileName.toLowerCase().endsWith(".jpg") || fileName.toLowerCase().endsWith(".jpeg")) {
+                fileIcon.setImage(new javafx.scene.image.Image("file:///" + rec.getFichier().replace("\\", "/")));
+            } else if (fileName.toLowerCase().endsWith(".pdf")) {
+                fileIcon.setImage(new javafx.scene.image.Image("file:///C:/wamp64/www/images/icons/pdf_icon.png"));
+            }
+
+            fileBox.getChildren().addAll(fileIcon, fileLabel);
+            fileBox.setOnMouseClicked(e -> {
+                try {
+                    java.awt.Desktop.getDesktop().open(new java.io.File(rec.getFichier()));
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            });
+            box.getChildren().add(fileBox);
+        }
+
         HBox actions = new HBox(10);
         if (rec.getStatut().equals("Traité")) {
             Button btnVoirReponse = createButton("Voir Réponse", "btn-primary");
@@ -195,7 +225,7 @@ public class DisplayReclamations {
             }
         }
 
-        box.getChildren().addAll(statusDateBox, titleLabel, contentText, actions);
+        box.getChildren().add(actions);
         return box;
     }
 

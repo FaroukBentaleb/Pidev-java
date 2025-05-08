@@ -1,23 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.Pagination?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.text.Font?>
 
-<?import javafx.scene.control.Tooltip?>
-<BorderPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #f0f4f8;" stylesheets="@css/DisplayReclamations.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.Reclamation.DisplayReclamationBack">
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.shape.Circle?>
+<BorderPane prefHeight="720.0" stylesheets="@css/DisplayReclamations.css" prefWidth="1280.0" style="-fx-background-color: #f0f4f8;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.Reclamation.ReclamationsArchivéesBack">
 
     <left>
         <VBox alignment="TOP_CENTER" prefHeight="720.0" prefWidth="220.0" spacing="15" style="-fx-background-color: linear-gradient(to bottom, #1E293B, #334155); -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 0);">
@@ -143,7 +138,8 @@
             <VBox>
                 <!-- TOP BAR -->
                 <HBox alignment="CENTER" maxWidth="1041.0" prefHeight="70.0" prefWidth="1041.0" style="-fx-background-color: white; -fx-padding: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2);">
-                    <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Admin Dashboard" />
+                    <!-- Welcome message -->
+                    <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Welcome back, Farouk!" />
 
                     <HBox HBox.hgrow="ALWAYS" />
 
@@ -153,39 +149,31 @@
                             <Insets left="15.0" right="15.0" />
                         </padding>
                         <Label style="-fx-text-fill: #666;" text="🔍" />
-                        <TextField fx:id="searchField" prefHeight="40.0" promptText="rechercher des reclamations..." style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS" />
+                        <TextField fx:id="searchField" prefHeight="40.0" promptText="Search for courses..." style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS" />
                     </HBox>
 
-                    <!-- Notification icons -->
+                    <!-- Notification icons and login buttons -->
                     <HBox alignment="CENTER" spacing="15" style="-fx-padding: 0 0 0 20;">
                         <Label style="-fx-text-fill: #555; -fx-font-size: 18px;" text="🔔" />
-                        <Button style="-fx-background-color: #FF5722; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 8 15;" text="New Offer" />
+                        <Label style="-fx-text-fill: #555; -fx-font-size: 18px;" text="✉️" />
+
+                        <!-- Auth buttons -->
+                        <HBox fx:id="authButtons" alignment="CENTER" prefHeight="40.0" spacing="10">
+                            <Button style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-background-radius: 20; -fx-padding: 8 20;" text="Login" />
+                            <Button style="-fx-background-color: white; -fx-text-fill: #2196F3; -fx-border-color: #2196F3; -fx-border-radius: 20; -fx-padding: 8 20;" text="Sign Up" />
+                        </HBox>
                     </HBox>
                 </HBox>
 
+                <!-- MAIN CONTENT -->
                 <VBox prefHeight="1065.0" prefWidth="955.0" spacing="20" style="-fx-padding: 25;">
-                    <HBox maxWidth="980.0" spacing="20" />
 
+                    <!-- Your Progress Section -->
                     <HBox maxWidth="980.0" spacing="20" />
-
-                    <HBox maxWidth="980.0" spacing="20">
-                        <Button fx:id="ReclamationArchivées" onAction="#reclamationsArchivéesBack" layoutX="429.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="230.0" style="-fx-background-color: #1a73e8; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.5, 0, 4);" text="Reclamations Archivées" />
-                        <Button fx:id="Trier" layoutX="429.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="230.0" style="-fx-background-color: #1a73e8; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.5, 0, 4);" text="Trier Par Date" />
-                  <DatePicker fx:id="date" onAction="#filtrer" prefHeight="48.0" prefWidth="175.0" />
-                  <ComboBox fx:id="statut" onAction="#filtrer" prefHeight="48.0" prefWidth="150.0" />
-                    </HBox>
+                    <Button fx:id="ReclamationArchivées" layoutX="429.0" mnemonicParsing="false" onAction="#retourListeReclamations" prefHeight="46.0" prefWidth="230.0" style="-fx-background-color: #1a73e8; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5px; -fx-background-radius: 5px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.5, 0, 4);" text="Retour" />
                     <VBox fx:id="reclamationsContainer" />
-                    <HBox alignment="CENTER" spacing="10" style="-fx-padding: 20 0; -fx-pref-width: 1000;">
-                        <Pagination fx:id="pagination" maxPageIndicatorCount="100" pageCount="1" style="-fx-background-color: transparent;">
-                            <styleClass>
-                                <String fx:value="custom-pagination" />
-                            </styleClass>
-                        </Pagination>
-                    </HBox>
                 </VBox>
             </VBox>
         </ListView>
     </center>
-
-    <Label fx:id="errorMessageLabel" style="-fx-text-fill: red;" />
 </BorderPane>

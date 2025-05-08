@@ -53,11 +53,11 @@
     -fx-pref-width: 180px;
     -fx-min-width: 180px;
     -fx-max-width: 180px;
-    -fx-pref-height: 50px;
-    -fx-min-height: 50px;
-    -fx-max-height: 50px;
-    -fx-translate-x: 730px;
-    -fx-translate-y: -20px;
+    -fx-pref-height: 40px;
+    -fx-min-height: 40px;
+    -fx-max-height: 40px;
+    -fx-translate-x: 710px;
+    -fx-translate-y: -5px;
 }
 
 

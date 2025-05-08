@@ -1,34 +1,35 @@
 package tn.learniverse.controllers.Reclamation;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import javafx.scene.text.Text;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.VBox;
 import javafx.geometry.Insets;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import tn.learniverse.entities.User;
 import tn.learniverse.entities.Reclamation;
 import tn.learniverse.services.ReclamationService;
-import javafx.event.EventHandler;
-import tn.learniverse.tools.Navigator;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import javafx.scene.text.Text;
+import javafx.scene.control.Button;
+import javafx.scene.control.Alert;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.Image;
+import javafx.scene.layout.HBox;
+import tn.learniverse.tools.Navigator;
 
-public class ReclamationsArchivéesFront {
-    private User user;
-    public void setUser(User user) {
-        this.user = user;
-    }
+public class ReclamationsArchivéesBack {
     @FXML
     private VBox reclamationsContainer;
     @FXML
@@ -37,11 +38,8 @@ public class ReclamationsArchivéesFront {
 
     public void initialize() {
         reclamationsContainer.setSpacing(5);
-
         try {
-            User user = new User();
-            user.setId(3);
-            List<Reclamation> reclamations = reclamationService.recupererReclamationsArchivéesFront(user);
+            List<Reclamation> reclamations = reclamationService.recupererReclamationsArchivéesBack();
             if (reclamations.isEmpty()) {
                 headerLabel.setText("Aucune réclamation pour l'utilisateur 3");
             } else {
@@ -107,7 +105,49 @@ public class ReclamationsArchivéesFront {
                     e -> openModifierReclamationDialog(rec)));
         }
 
-        box.getChildren().addAll(statusDateBox, titleLabel, contentText, actions);
+        box.getChildren().addAll(statusDateBox, titleLabel, contentText);
+        if (rec.getFichier() != null && !rec.getFichier().isEmpty()) {
+            HBox fileBox = new HBox(8);
+            fileBox.setStyle("-fx-background-color: #f6f6f6; -fx-padding: 8 12; -fx-background-radius: 8;");
+            ImageView fileIcon = new ImageView();
+            fileIcon.setFitHeight(32);
+            fileIcon.setFitWidth(32);
+
+            String fileName = new java.io.File(rec.getFichier()).getName();
+            Label fileLabel = new Label(fileName);
+            fileLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 15px;");
+
+            if (fileName.toLowerCase().endsWith(".png") || fileName.toLowerCase().endsWith(".jpg") || fileName.toLowerCase().endsWith(".jpeg")) {
+                fileIcon.setImage(new Image("file:///" + rec.getFichier().replace("\\", "/")));
+            } else if (fileName.toLowerCase().endsWith(".pdf")) {
+                fileIcon.setImage(new Image("file:///C:/wamp64/www/images/icons/pdf_icon.png"));
+            }
+
+            fileBox.getChildren().addAll(fileIcon, fileLabel);
+            fileBox.setOnMouseClicked(e -> {
+                try {
+                    java.io.File file = new java.io.File(rec.getFichier());
+                    if (!file.exists()) {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Fichier introuvable");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Le fichier " + file.getName() + " n'existe pas ou a été supprimé.");
+                        alert.showAndWait();
+                        return;
+                    }
+                    java.awt.Desktop.getDesktop().open(file);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Erreur d'ouverture");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Impossible d'ouvrir le fichier.");
+                    alert.showAndWait();
+                }
+            });
+            box.getChildren().add(fileBox);
+        }
+        box.getChildren().add(actions);
         return box;
     }
 
@@ -134,15 +174,21 @@ public class ReclamationsArchivéesFront {
 
     private void viewResponses(Reclamation rec, Node sourceNode) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reclamation/Reponses.fxml"));
-            Parent responsesRoot = loader.load();
-            Reponses responsesController = loader.getController();
-            responsesController.setReclamation(rec);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reclamation/ReponsesBack.fxml"));
+            Parent root = loader.load();
 
-            reclamationsContainer.getChildren().clear();
-            reclamationsContainer.getChildren().add(responsesRoot);
+            ReponsesBack responsesController = loader.getController();
+            responsesController.setReclamation(rec);
+            Scene currentScene = sourceNode.getScene();
+            currentScene.setRoot(root);
+
         } catch (IOException | SQLException e) {
             e.printStackTrace();
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setTitle("Erreur");
+            errorAlert.setHeaderText(null);
+            errorAlert.setContentText("Une erreur est survenue lors de l'affichage des réponses : " + e.getMessage());
+            errorAlert.showAndWait();
         }
     }
     private void openModifierReclamationDialog(Reclamation reclamation) {
@@ -195,11 +241,11 @@ public class ReclamationsArchivéesFront {
 
     public void afficherReclamationsArchivees(VBox container) {
         try {
-            List<Reclamation> reclamationsArchivees = reclamationService.recupererReclamationsArchivéesFront(user);
+            List<Reclamation> reclamationsArchivees = reclamationService.recupererReclamationsArchivéesBack();
             container.getChildren().clear();
 
             if (reclamationsArchivees.isEmpty()) {
-                headerLabel.setText("Aucune réclamation archivée pour l'utilisateur " + user.getId());
+                headerLabel.setText("Aucune réclamation archivée ");
             } else {
                 for (Reclamation rec : reclamationsArchivees) {
                     VBox box = createReclamationBox(rec);
@@ -213,13 +259,15 @@ public class ReclamationsArchivéesFront {
         }
     }
 
-    public void retourListeReclamations() {
-        Stage stage = (Stage) reclamationsContainer.getScene().getWindow();
-        stage.close();
+    public void retourListeReclamations(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/Reclamation/DisplayReclamationBack.fxml");
+    }
+
+    public void Dashboard(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/Dashboard.fxml");
     }
 
     public void complaints(ActionEvent actionEvent) {
-        Navigator.redirect(actionEvent,"/Reclamation/DisplayReclamations.fxml");
+        Navigator.redirect(actionEvent,"/Reclamation/DisplayReclamationBack.fxml");
     }
 }
-
