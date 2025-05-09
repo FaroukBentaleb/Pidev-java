@@ -36,6 +36,11 @@ import java.io.ByteArrayInputStream;
 import java.io.FileOutputStream;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.awt.Desktop;
+import java.net.URI;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import tn.learniverse.services.SubscriptionDAO;
 
 public class OffreDisplayController {
     @FXML
@@ -296,19 +301,49 @@ public class OffreDisplayController {
         Separator bottomSeparator = new Separator();
 
         // Buttons
-        HBox buttonBox = new HBox();
-        buttonBox.setSpacing(5);
+        VBox buttonBox = new VBox(8); // vertical gap
         buttonBox.getStyleClass().add("button-box");
 
+        // First row: Show Details + Subscribe
+        HBox topRow = new HBox(8);
+        // Show Details button with icon
         Button detailsButton = new Button("Show Details");
-        detailsButton.getStyleClass().add("show-details-button");
+        detailsButton.getStyleClass().addAll("show-details-button");
+        FontAwesomeIconView detailsIcon = new FontAwesomeIconView(FontAwesomeIcon.INFO_CIRCLE);
+        detailsIcon.setStyle("-fx-fill: #1976D2;");
+        detailsIcon.setGlyphSize(16);
+        detailsButton.setGraphic(detailsIcon);
+        detailsButton.setContentDisplay(ContentDisplay.LEFT);
+        detailsButton.setGraphicTextGap(8);
         detailsButton.setOnAction(e -> showOfferDetails(offer));
 
+        // Subscribe button with icon
         Button subscribeButton = new Button("Subscribe");
-        subscribeButton.getStyleClass().add("subscribe-button");
+        subscribeButton.getStyleClass().addAll("subscribe-button");
+        FontAwesomeIconView subscribeIcon = new FontAwesomeIconView(FontAwesomeIcon.CHECK);
+        subscribeIcon.setStyle("-fx-fill: white;");
+        subscribeIcon.setGlyphSize(16);
+        subscribeButton.setGraphic(subscribeIcon);
+        subscribeButton.setContentDisplay(ContentDisplay.LEFT);
+        subscribeButton.setGraphicTextGap(8);
         subscribeButton.setOnAction(e -> handleSubscribe(offer));
+        topRow.getChildren().addAll(detailsButton, subscribeButton);
 
-        buttonBox.getChildren().addAll(detailsButton, subscribeButton);
+        // Second row: Add to Calendar with icon, centered
+        HBox calendarRow = new HBox();
+        calendarRow.setAlignment(Pos.CENTER);
+        Button calendarButton = new Button("Add to Calendar");
+        calendarButton.getStyleClass().addAll("show-details-button", "calendar-button");
+        FontAwesomeIconView calendarIcon = new FontAwesomeIconView(FontAwesomeIcon.CALENDAR);
+        calendarIcon.setStyle("-fx-fill: #1976D2;");
+        calendarIcon.setGlyphSize(16);
+        calendarButton.setGraphic(calendarIcon);
+        calendarButton.setContentDisplay(ContentDisplay.LEFT);
+        calendarButton.setGraphicTextGap(8);
+        calendarButton.setOnAction(e -> handleAddToCalendar(offer));
+        calendarRow.getChildren().add(calendarButton);
+
+        buttonBox.getChildren().addAll(topRow, calendarRow);
 
         // Add all components to card
         card.getChildren().addAll(
@@ -716,6 +751,39 @@ public class OffreDisplayController {
             long secs = seconds % 60;
             label.setText(String.format("Ends in: %dd %02dh %02dm %02ds", days, hours, minutes, secs));
             label.setVisible(true);
+        }
+    }
+
+    // Add this method to handle the Add to Calendar button
+    @FXML
+    private void handleAddToCalendar() {
+        // This method is only called from FXML if wired directly, but we want per-offer context
+        // So, we will wire the button in createOfferCard to a lambda that calls this logic with the offer
+        // This method is left for FXML compatibility, but does nothing
+    }
+
+    // Helper for per-offer calendar integration
+    private void handleAddToCalendar(Offre offer) {
+        try {
+            String title = offer.getName();
+            String description = offer.getDescription();
+            LocalDate endDate = offer.getValidUntil();
+            LocalDate startDate = offer.getValidFrom();
+            if (endDate == null) {
+                showAlert(Alert.AlertType.WARNING, "No Deadline", "This offer does not have a deadline to add to calendar.");
+                return;
+            }
+            // Google Calendar expects: yyyyMMdd'T'HHmmss'Z' (UTC). We'll use all-day event if no time.
+            String start = startDate != null ? startDate.format(java.time.format.DateTimeFormatter.BASIC_ISO_DATE) : endDate.format(java.time.format.DateTimeFormatter.BASIC_ISO_DATE);
+            String end = endDate.format(java.time.format.DateTimeFormatter.BASIC_ISO_DATE);
+            String url = "https://www.google.com/calendar/render?action=TEMPLATE"
+                + "&text=" + URLEncoder.encode(title, StandardCharsets.UTF_8)
+                + "&details=" + URLEncoder.encode(description, StandardCharsets.UTF_8)
+                + "&dates=" + start + "/" + end;
+            Desktop.getDesktop().browse(new URI(url));
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Calendar Error", "Could not add to calendar: " + e.getMessage());
         }
     }
 }

@@ -118,8 +118,8 @@
             <VBox alignment="CENTER" spacing="5">
                 <Label style="-fx-text-fill: white; -fx-font-size: 26px; -fx-font-weight: bold;" text="Learniverse" />
                 <Label style="-fx-text-fill: #64B5F6; -fx-font-size: 14px;" text="Admin Panel" />
-            </VBox>
-
+                </VBox>
+                
             <!-- Navigation Buttons -->
             <Button fx:id="dashboardButton" alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: rgba(255,255,255,0.2); -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;" onAction="#showDashboard">
                 <graphic>
@@ -138,64 +138,64 @@
             </Button>
 
             <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" onAction="#usersButton" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-cursor: hand ; -fx-background-radius: 8;">
-                <graphic>
+                        <graphic>
                     <Label style="-fx-text-fill: white;" text="👥" />
-                </graphic>
+                        </graphic>
                 <padding>
                     <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
                 </padding>
                 <text>Users</text>
-            </Button>
-
+                    </Button>
+                    
             <Button fx:id="offersButton" alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;" onAction="#showOffers">
-                <graphic>
+                        <graphic>
                     <Label style="-fx-text-fill: white;" text="📚" />
-                </graphic>
+                        </graphic>
                 <padding>
                     <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
                 </padding>
                 <text>Offers</text>
-            </Button>
-
+                    </Button>
+                    
             <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
-                <graphic>
+                        <graphic>
                     <Label style="-fx-text-fill: white;" text="📚" />
-                </graphic>
+                        </graphic>
                 <padding>
                     <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
                 </padding>
                 <text>Courses</text>
-            </Button>
+                    </Button>
 
             <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
-                <graphic>
+                        <graphic>
                     <Label style="-fx-text-fill: white;" text="📝" />
-                </graphic>
+                        </graphic>
                 <padding>
                     <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
                 </padding>
                 <text>Competitions</text>
-            </Button>
-
+                    </Button>
+                    
             <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
-                <graphic>
+                        <graphic>
                     <Label style="-fx-text-fill: white;" text="📢" />
-                </graphic>
+                        </graphic>
                 <padding>
                     <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
                 </padding>
                 <text>Forums</text>
-            </Button>
-
+                    </Button>
+                    
             <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
-                <graphic>
+                        <graphic>
                     <Label style="-fx-text-fill: white;" text="📈" />
-                </graphic>
+                        </graphic>
                 <padding>
                     <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
                 </padding>
                 <text>Complaints</text>
-            </Button>
+                    </Button>
 
             <!-- Profile at bottom -->
             <VBox VBox.vgrow="ALWAYS" />
@@ -224,8 +224,8 @@
                         <Tooltip text="Logout" />
                     </tooltip>
                 </Button>
-            </HBox>
-        </VBox>
+                    </HBox>
+                </VBox>
     </left>
 
     <!-- MAIN CONTENT AREA -->

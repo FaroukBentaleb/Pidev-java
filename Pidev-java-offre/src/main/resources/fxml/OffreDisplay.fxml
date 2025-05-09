@@ -196,12 +196,12 @@
                             </HBox>
                         </HBox>
 
-                        <FlowPane fx:id="offersContainer" 
-                                alignment="CENTER"
-                                hgap="20" 
-                                vgap="20" 
-                                style="-fx-padding: 20; -fx-background-color: transparent;"
-                                prefWrapLength="1200">
+                        <FlowPane fx:id="offersContainer"
+                                  alignment="CENTER"
+                                  hgap="20"
+                                  vgap="20"
+                                  style="-fx-padding: 20; -fx-background-color: transparent;"
+                                  prefWrapLength="1200">
                             <!-- Offer Card Template -->
                             <VBox styleClass="offer-card" 
                                   style="-fx-background-color: white; 
@@ -259,6 +259,11 @@
                                     <Button styleClass="qr-button" text="QR Code" onAction="#showQRCode">
                                         <graphic>
                                             <FontAwesomeIconView glyphName="QRCODE" size="14"/>
+                                        </graphic>
+                                    </Button>
+                                    <Button styleClass="calendar-button" text="Add to Calendar" onAction="#handleAddToCalendar">
+                                        <graphic>
+                                            <FontAwesomeIconView glyphName="CALENDAR" size="14"/>
                                         </graphic>
                                     </Button>
                                 </HBox>

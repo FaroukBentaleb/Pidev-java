@@ -124,10 +124,10 @@ public class OffreController {
 
         // Initialize sort options
         sortBy.getItems().setAll(
-            "Price (Low to High)",
-            "Price (High to Low)",
-            "Date (Newest)",
-            "Date (Oldest)",
+            "Price (Low to High)", 
+            "Price (High to Low)", 
+            "Date (Newest)", 
+            "Date (Oldest)", 
             "Name (A-Z)"
         );
         sortBy.setValue("Name (A-Z)");  // Set default value
