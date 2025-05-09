@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.user.ResetPwd">
+    <HBox alignment="CENTER" prefHeight="720.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <!-- Left Panel -->
+        <StackPane prefHeight="720.0" prefWidth="156.0" styleClass="left-panel" HBox.hgrow="ALWAYS">
+            <VBox alignment="CENTER" maxWidth="563.0" prefHeight="720.0" prefWidth="499.0" spacing="5.0">
+                <padding>
+                    <Insets bottom="20" top="20" />
+                </padding>
+            <children>
+                   <ImageView fx:id="logoImageView" fitHeight="226.0" fitWidth="270.0" pickOnBounds="true" preserveRatio="true">
+                </ImageView>
+            </children>
+            </VBox>
+        </StackPane>
+
+        <!-- Right Panel -->
+        <StackPane prefHeight="720.0" prefWidth="785.0" styleClass="right-panel" HBox.hgrow="ALWAYS">
+            <VBox alignment="CENTER" maxWidth="400.0" prefHeight="640.0" prefWidth="485.0" spacing="25">
+                <Label style="-fx-font-size: 20px;-fx-font-weight: bold;" text="You may change your password now, please be sure to make it strong!" textAlignment="CENTER" textFill="#5668fa" wrapText="true" />
+                <!-- Login Form -->
+                <VBox spacing="10">
+                    <!-- Email Field -->
+                    <PasswordField fx:id="pwd" promptText="Enter your Password" styleClass="input-field" />
+                    <TextField fx:id="textField" managed="false" promptText="Password" styleClass="input-field" visible="false" />
+                    <Label fx:id="error_pwd" styleClass="error-label" />
+
+                    <PasswordField fx:id="confpwd" promptText="Re-enter your password" styleClass="input-field" />
+                    <TextField fx:id="textFieldconf" managed="false" promptText="Password" styleClass="input-field" visible="false" />
+                    <Label fx:id="error_confpwd" styleClass="error-label" />
+                    <CheckBox fx:id="showPasswordCheckBox" text="Show" />
+
+                    <!-- Login Button -->
+                    <Button onAction="#Proceed_btn" prefHeight="43.0" prefWidth="404.0" styleClass="login-button" text="Proceed" />
+
+                    <!-- Social Login -->
+                    <HBox alignment="CENTER" spacing="15" />
+
+                    <!-- Sign Up Link -->
+                    <HBox alignment="CENTER" spacing="5" />
+                </VBox>
+            </VBox>
+        </StackPane>
+    </HBox>
+</AnchorPane>

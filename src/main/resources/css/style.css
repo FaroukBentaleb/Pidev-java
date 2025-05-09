@@ -1,0 +1,252 @@
+/* Main containers */
+.root {
+    -fx-font-family: 'Segoe UI', Arial, sans-serif;
+    -fx-background-color: white;
+}
+
+/* Split panel layout */
+.left-panel {
+    -fx-background-color: #4B6FFF;
+    -fx-pref-width: 50%;
+    -fx-alignment: center;
+}
+
+.right-panel {
+    -fx-background-color: white;
+    -fx-pref-width: 50%;
+    -fx-alignment: center;
+    -fx-padding: 40px;
+}
+
+/* Welcome panel content */
+.welcome-title {
+    -fx-font-size: 34px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.welcome-subtitle {
+    -fx-font-size: 18px;
+    -fx-text-fill: white;
+    -fx-opacity: 0.95;
+    -fx-text-alignment: center;
+    -fx-padding: 10 0 0 0;
+}
+
+.welcome-message {
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
+    -fx-opacity: 0.85;
+    -fx-text-alignment: center;
+    -fx-padding: 0 0 20 0;
+}
+
+.alt-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+    -fx-border-radius: 25;
+    -fx-background-radius: 25;
+    -fx-padding: 10 30;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+    -fx-min-width: 120px;
+}
+
+.alt-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Form elements */
+.input-field {
+    -fx-background-color: #f0f4ff;
+    -fx-background-radius: 25;
+    -fx-border-radius: 10;
+    -fx-padding: 12 15;
+    -fx-font-size: 14px;
+    -fx-pref-height: 40px;
+}
+
+.input-field:focused {
+    -fx-background-color: white;
+    -fx-border-color: #6878FF;
+    -fx-border-width: 1px;
+}
+
+/* Captcha */
+.captcha-container {
+    -fx-background-color: #f8f9ff;
+    -fx-background-radius: 8;
+    -fx-border-color: #eaeef5;
+    -fx-border-radius: 8;
+    -fx-padding: 10;
+    -fx-pref-height: 70px;
+    -fx-alignment: center;
+}
+
+.captcha-placeholder {
+    -fx-text-fill: #888;
+}
+
+/* Login button */
+.login-button {
+    -fx-background-color: #6878FF;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-padding: 12;
+    -fx-background-radius: 25;
+    -fx-cursor: hand;
+    -fx-pref-height: 40px;
+}
+
+.login-button:hover {
+    -fx-background-color: #5668FA;
+}
+
+.login-button:pressed {
+    -fx-background-color: #4B5AE5;
+}
+
+/* Links */
+.forgot-password {
+    -fx-text-fill: #4B6FFF;
+    -fx-font-size: 13px;
+    -fx-underline: false;
+    -fx-alignment: center;
+}
+
+.forgot-password:hover {
+    -fx-underline: true;
+}
+
+/* Social login buttons */
+.social-button {
+    -fx-background-color: white;
+    -fx-text-fill: #333;
+    -fx-border-color: #e0e0e0;
+    -fx-border-width: 1px;
+    -fx-border-radius: 25;
+    -fx-background-radius: 25;
+    -fx-padding: 8 15;
+    -fx-font-size: 13px;
+    -fx-cursor: hand;
+    -fx-min-width: 170px;
+}
+
+.social-button:hover {
+    -fx-background-color: #f8f8f8;
+    -fx-border-color: #ccc;
+}
+
+/* Create Account Link */
+.create-account {
+    -fx-text-fill: #4B6FFF;
+    -fx-underline: false;
+}
+
+.create-account:hover {
+    -fx-underline: true;
+}
+/* Form title */
+.form-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+    -fx-padding: 0 0 10 0;
+}
+
+/* Error labels */
+.error-label {
+    -fx-text-fill: #e74c3c;
+    -fx-font-size: 12px;
+    -fx-min-height: 5px;
+    -fx-max-height: 15px;
+    -fx-padding: -5 0 5 5;
+}
+
+/* Choice box styling to match input fields */
+.choice-box {
+    -fx-background-color: #f0f4ff;
+    -fx-background-radius: 25;
+    -fx-border-radius: 25;
+    -fx-padding: 5 10;
+    -fx-pref-height: 40px;
+    -fx-pref-width: 400px;
+    -fx-cursor: hand;
+}
+
+.choice-box:focused {
+    -fx-background-color: white;
+    -fx-border-color: #6878FF;
+    -fx-border-width: 1px;
+}
+
+.choice-box .context-menu {
+    -fx-background-color: white;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+}
+
+.choice-box .menu-item:focused {
+    -fx-background-color: #f0f4ff;
+}
+
+/* Signup button */
+.signup-button {
+    -fx-background-color: #6878FF;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-padding: 12;
+    -fx-background-radius: 25;
+    -fx-cursor: hand;
+    -fx-pref-height: 40px;
+    -fx-pref-width: 400px;
+}
+
+.signup-button:hover {
+    -fx-background-color: #5668FA;
+}
+
+.signup-button:pressed {
+    -fx-background-color: #4B5AE5;
+}
+.refresh-button {
+    -fx-background-color: #E3F2FD;
+    -fx-text-fill: #1976D2;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-padding: 6 12;
+}
+
+.refresh-button:hover {
+    -fx-background-color: #BBDEFB;
+}
+
+.refresh-button:pressed {
+    -fx-background-color: #90CAF9;
+}
+.toggle-2fa {
+    -fx-background-color: linear-gradient(to right, #4CAF50, #45A049);
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.2), 4, 0.0, 0, 2);
+    -fx-transition: all 0.3s ease;
+}
+
+.toggle-2fa:hover {
+    -fx-background-color: linear-gradient(to right, #66BB6A, #43A047);
+}
+
+.toggle-2fa:selected {
+    -fx-background-color: linear-gradient(to right, #e53935, #d32f2f);
+    -fx-text-fill: white;
+}
