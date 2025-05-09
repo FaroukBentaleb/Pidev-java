@@ -51,7 +51,7 @@ public class MainFX extends Application {
             System.out.println("No token provided, loading login screen...");
             // load login screen
         }
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Reclamation/DisplayReclamations.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/user/Login.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         Image icon = new Image(new FileInputStream("C:/wamp64/www/images/logo/logo.png"));

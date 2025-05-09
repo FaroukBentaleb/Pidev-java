@@ -82,7 +82,7 @@ public class Login implements Initializable {
                                     Session.setCurrentUser(usr);
                                     saveLogs();
                                     if(Session.getCurrentUser().getRole().equals("Admin")){
-                                        Navigator.redirect(actionEvent, "/fxml/Back.fxml");
+                                        Navigator.redirect(actionEvent, "/Back.fxml");
                                     }
                                     else{
                                         Navigator.redirect(actionEvent, "/fxml/homePage.fxml");
