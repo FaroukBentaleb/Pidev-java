@@ -1,64 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.AmbientLight?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.AmbientLight?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Slider?>
-
 <?import javafx.scene.shape.SVGPath?>
-<?import javafx.scene.layout.Region?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-<?import javafx.scene.control.TitledPane?>
-<?import javafx.scene.control.Tooltip?>
-<StackPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="tn.learniverse.controllers.CoursesViewController">
+
+<StackPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.CoursesViewController">
 
     <BorderPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #f0f4f8;">
         <!-- LEFT NAV BAR - Modern with gradient (From HomePage) -->
         <left>
-            <VBox alignment="TOP_CENTER" maxHeight="887.0" prefHeight="674.0" prefWidth="220.0" spacing="15" style="-fx-background-color: linear-gradient(to bottom, #1976D2, #64B5F6); -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 0);">
+            <VBox alignment="TOP_CENTER" maxHeight="887.0" maxWidth="236.0" minWidth="236.0" prefHeight="674.0" prefWidth="236.0" spacing="15" style="-fx-background-color: linear-gradient(to bottom, #1976D2, #64B5F6); -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 0);">
                 <padding><Insets bottom="15.0" left="15.0" right="15.0" top="20.0" /></padding>
                 <Label style="-fx-text-fill: white; -fx-font-size: 26px; -fx-font-weight: bold;" text="Learniverse" />
                 <VBox maxHeight="30.0" prefHeight="30.0" prefWidth="190.0" />
-                <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" onAction="#ToOffers" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;-fx-cursor: hand;">
                     <graphic><Label style="-fx-text-fill: white;" text="🛍" /></graphic>
                     <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
                     <text>Offers</text>
                 </Button>
-                <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" onAction="#ToCourses" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;-fx-cursor: hand;">
                     <graphic><Label style="-fx-text-fill: white;" text="📚" /></graphic>
                     <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
                     <text>My Courses</text>
                 </Button>
-                <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" onAction="#ToDiscover" prefHeight="40.0" style="-fx-background-color: rgba(255,255,255,0.2); -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8; -fx-cursor: hand;">
                     <graphic><Label style="-fx-text-fill: white;" text="🔍" /></graphic>
                     <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
                     <text>Discover</text>
                 </Button>
-                <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" onAction="#ToForum" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;-fx-cursor: hand;">
                     <graphic><Label style="-fx-text-fill: white;" text="👥" /></graphic>
                     <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
                     <text>Forum</text>
                 </Button>
-                <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8; -fx-cursor: hand;">
+                <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" onAction="#Comp" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8; -fx-cursor: hand;">
                     <graphic><Label style="-fx-text-fill: white;" text="🏆" /></graphic>
                     <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
                     <text>Competitions</text>
                 </Button>
-                <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;" text="Complaints">
+                <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" onAction="#ToReclamaitons" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;-fx-cursor: hand;" text="Complaints">
                     <graphic>
                         <Label style="-fx-text-fill: white;" text="📝" />
                     </graphic>
@@ -92,7 +90,7 @@
                                 <Label fx:id="role" style="-fx-text-fill: rgba(255,255,255,0.7); -fx-font-size: 11px;" text="Admin" />
                             </children>
                         </VBox>
-                        <Button fx:id="Settingsbtn" mnemonicParsing="false"  style="-fx-background-color: transparent; -fx-cursor: hand; -fx-border-color: transparent;">
+                        <Button fx:id="Settingsbtn" mnemonicParsing="false" onAction="#Settings" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-border-color: transparent;">
                             <tooltip>
                                 <Tooltip text="Logout" />
                             </tooltip>
@@ -100,7 +98,7 @@
                                 <Insets left="30.0" />
                             </HBox.margin>
                         </Button>
-                        <Button fx:id="logoutButton" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-border-color: transparent;">
+                        <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#Logout" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-border-color: transparent;">
                             <tooltip>
                                 <Tooltip text="Logout" />
                             </tooltip>
@@ -123,7 +121,7 @@
                             <Insets left="20.0" right="20.0" />
                         </padding>
                         <children>
-                            <Label text="My Courses" textFill="#1976D2">
+                            <Label text="Discover Courses" textFill="#1976D2">
                                 <font>
                                     <Font name="System Bold" size="24.0" />
                                 </font>
@@ -143,86 +141,63 @@
                         <!-- Search by Name -->
                         <HBox alignment="CENTER_LEFT" spacing="10.0" HBox.hgrow="ALWAYS">
                             <Label text="🔍" />
-                            <TextField fx:id="searchField" promptText="Search by course name" prefHeight="35.0" HBox.hgrow="ALWAYS"
-                                       style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: #e2e8f0; -fx-padding: 0 15 0 15;"
-                                       onKeyReleased="#handleSearch" />
+                            <TextField fx:id="searchField" onKeyReleased="#handleSearch" prefHeight="35.0" promptText="Search by course name" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: #e2e8f0; -fx-padding: 0 15 0 15;" HBox.hgrow="ALWAYS" />
                         </HBox>
                         <!-- Filter by Category -->
                         <HBox alignment="CENTER_LEFT" spacing="10.0">
                             <Label text="Category:" />
-                            <ComboBox fx:id="categoryFilter" prefWidth="150.0" prefHeight="35.0" promptText="All Categories"
-                                      style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: #e2e8f0; -fx-background-color: white;"
-                                      onAction="#handleFilter" />
+                            <ComboBox fx:id="categoryFilter" onAction="#handleFilter" prefHeight="35.0" prefWidth="150.0" promptText="All Categories" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: #e2e8f0; -fx-background-color: white;" />
                         </HBox>
 
                         <!-- Filter by Price Range -->
                         <HBox alignment="CENTER_LEFT" spacing="10.0">
                             <Label text="Max Price:" />
-                            <Slider fx:id="priceSlider" min="0" max="1000" value="1000" showTickLabels="true" showTickMarks="true"
-                                    prefWidth="150.0" prefHeight="35.0" onMouseReleased="#handleFilter"
-                                    style="-fx-control-inner-background: #e2e8f0; -fx-accent: #6A11CB;" />
+                            <Slider fx:id="priceSlider" max="1000" min="0" onMouseReleased="#handleFilter" prefHeight="35.0" prefWidth="150.0" showTickLabels="true" showTickMarks="true" style="-fx-control-inner-background: #e2e8f0; -fx-accent: #6A11CB;" value="1000" />
                             <Label fx:id="priceLabel" text="1000 DT" />
                         </HBox>
                         <!-- Favorites Filter Button -->
-                        <Button fx:id="favoriteFilterButton" text="My Favorites" prefHeight="35.0"
-                                style="-fx-background-color: white; -fx-text-fill: #4338ca; -fx-border-color: #4338ca; -fx-border-radius: 20; -fx-background-radius: 20;"
-                                onAction="#showOnlyFavorites" />
+                        <Button fx:id="favoriteFilterButton" onAction="#showOnlyFavorites" prefHeight="35.0" style="-fx-background-color: white; -fx-text-fill: #4338ca; -fx-border-color: #4338ca; -fx-border-radius: 20; -fx-background-radius: 20;" text="My Favorites" />
                         <!-- Reset Filters Button -->
-                        <Button text="Reset Filters" onAction="#resetFilters"
-                                style="-fx-background-color: linear-gradient(to right, #6A11CB, #2575FC); -fx-text-fill: white; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 2, 0, 0, 1); -fx-font-weight: bold; -fx-padding: 8 15;" />
+                        <Button onAction="#resetFilters" style="-fx-background-color: linear-gradient(to right, #6A11CB, #2575FC); -fx-text-fill: white; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 2, 0, 0, 1); -fx-font-weight: bold; -fx-padding: 8 15;" text="Reset Filters" />
                     </HBox>
 
 
                     <StackPane alignment="CENTER">
                         <!-- Bouton toggle avec style dynamique -->
-                            <Button fx:id="youtubeToggleBtn" text="Press here to discover!" onAction="#toggleYoutubeSearch"
-                                style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-background-radius: 15; -fx-padding: 8 15; -fx-effect: dropshadow(three-pass-box, rgba(76,175,80,0.4), 5, 0, 0, 2);"
-                                StackPane.alignment="TOP_RIGHT">
+                            <Button fx:id="youtubeToggleBtn" onAction="#toggleYoutubeSearch" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-background-radius: 15; -fx-padding: 8 15; -fx-effect: dropshadow(three-pass-box, rgba(76,175,80,0.4), 5, 0, 0, 2);" text="Press here to discover!" StackPane.alignment="TOP_RIGHT">
                             <StackPane.margin>
-                                <Insets top="20" right="20"/>
+                                <Insets right="20" top="20" />
                             </StackPane.margin>
                         </Button>
 
-                        <VBox fx:id="youtubeSearchBox" visible="false" managed="false" spacing="20" alignment="CENTER"
-                              style="-fx-padding: 30; -fx-background-color: white; -fx-background-radius: 20; -fx-border-color: #667eea; -fx-border-width: 3; -fx-border-radius: 20; -fx-effect: dropshadow(gaussian, rgba(102, 126, 234, 0.3), 12, 0.3, 0, 4); -fx-max-width: 600px; -fx-alignment: CENTER;">
+                        <VBox fx:id="youtubeSearchBox" alignment="CENTER" managed="false" spacing="20" style="-fx-padding: 30; -fx-background-color: white; -fx-background-radius: 20; -fx-border-color: #667eea; -fx-border-width: 3; -fx-border-radius: 20; -fx-effect: dropshadow(gaussian, rgba(102, 126, 234, 0.3), 12, 0.3, 0, 4); -fx-max-width: 600px; -fx-alignment: CENTER;" visible="false">
 
-                            <VBox spacing="5" alignment="CENTER">
+                            <VBox alignment="CENTER" spacing="5">
                                 <!-- Première partie du message d'accroche -->
-                                <Text text="Want to discover even more? "
-                                      style="-fx-font-size: 22px; -fx-fill: linear-gradient(to right, #667eea, #764ba2); -fx-font-weight: bold;"/>
-                                <Text text="Access YouTube freely via Learniverse!"
-                                      style="-fx-font-size: 22px; -fx-fill: linear-gradient(to right, #667eea, #764ba2); -fx-font-weight: bold;"
-                                      textAlignment="CENTER"/>
+                                <Text style="-fx-font-size: 22px; -fx-fill: linear-gradient(to right, #667eea, #764ba2); -fx-font-weight: bold;" text="Want to discover even more? " />
+                                <Text style="-fx-font-size: 22px; -fx-fill: linear-gradient(to right, #667eea, #764ba2); -fx-font-weight: bold;" text="Access YouTube freely via Learniverse!" textAlignment="CENTER" />
                             </VBox>
 
                             <!-- Barre de recherche stylée -->
-                            <HBox spacing="10" alignment="CENTER" style="-fx-padding: 10; -fx-background-color: white; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 3); -fx-max-width: 500px;">
+                            <HBox alignment="CENTER" spacing="10" style="-fx-padding: 10; -fx-background-color: white; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 3); -fx-max-width: 500px;">
 
-                                <SVGPath content="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
-                                         fill="#718096" scaleX="0.7" scaleY="0.7"/>
+                                <SVGPath content="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="#718096" scaleX="0.7" scaleY="0.7" />
 
-                                <TextField fx:id="youtubeSearchField" promptText="Search for more videos..."
-                                           style="-fx-background-color: transparent; -fx-font-size: 13px; -fx-padding: 5 0; -fx-text-fill: #2d3748;"
-                                           HBox.hgrow="ALWAYS"/>
+                                <TextField fx:id="youtubeSearchField" promptText="Search for more videos..." style="-fx-background-color: transparent; -fx-font-size: 13px; -fx-padding: 5 0; -fx-text-fill: #2d3748;" HBox.hgrow="ALWAYS" />
 
-                                <Button fx:id="youtubeSearchButton" text="Search" onAction="#handleYoutubeSearch"
-                                        style="-fx-background-color: linear-gradient(to right, #ff416c, #ff4b2b); -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 6 12; -fx-background-radius: 20; -fx-cursor: hand;"/>
+                                <Button fx:id="youtubeSearchButton" onAction="#handleYoutubeSearch" style="-fx-background-color: linear-gradient(to right, #ff416c, #ff4b2b); -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 6 12; -fx-background-radius: 20; -fx-cursor: hand;" text="Search" />
                             </HBox>
 
                             <!-- Résultats de recherche -->
-                            <VBox fx:id="youtubeResultsPanel" visible="false" managed="false" spacing="15"
-                                  style="-fx-background-color: white; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 3); -fx-padding: 20; -fx-max-width: 500px;">
+                            <VBox fx:id="youtubeResultsPanel" managed="false" spacing="15" style="-fx-background-color: white; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 3); -fx-padding: 20; -fx-max-width: 500px;" visible="false">
 
                                 <HBox alignment="CENTER_LEFT" spacing="10">
-                                    <Label fx:id="youtubeResultsTitle" text="Results for: "
-                                           style="-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: #2d3748;"/>
-                                    <Region HBox.hgrow="ALWAYS"/>
-                                    <Button fx:id="closeYoutubeResultsButton" text="✕" onAction="#closeYoutubeResults"
-                                            style="-fx-background-color: transparent; -fx-text-fill: #4a5568; -fx-font-size: 18px; -fx-cursor: hand;"/>
+                                    <Label fx:id="youtubeResultsTitle" style="-fx-font-weight: bold; -fx-font-size: 18px; -fx-text-fill: #2d3748;" text="Results for: " />
+                                    <Region HBox.hgrow="ALWAYS" />
+                                    <Button fx:id="closeYoutubeResultsButton" onAction="#closeYoutubeResults" style="-fx-background-color: transparent; -fx-text-fill: #4a5568; -fx-font-size: 18px; -fx-cursor: hand;" text="✕" />
                                 </HBox>
 
-                                <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS"
-                                            style="-fx-background-color: transparent; -fx-border-color: transparent;">
+                                <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-border-color: transparent;" VBox.vgrow="ALWAYS">
                                     <VBox fx:id="youtubeVideosContainer" spacing="15">
                                         <!-- Les résultats seront ajoutés dynamiquement ici -->
                                     </VBox>
@@ -245,26 +220,18 @@
                         </content>
                     </ScrollPane>
 
-                    <TitledPane fx:id="recommendedCoursesSection" text="Recommended Courses For You"
-                                style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-background-color: white; -fx-border-color: #e2e8f0;">
+                    <TitledPane fx:id="recommendedCoursesSection" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-background-color: white; -fx-border-color: #e2e8f0;" text="Recommended Courses For You">
                         <content>
                             <VBox spacing="10">
                                 <!-- Bouton Refresh en haut à droite -->
                                 <HBox alignment="CENTER_RIGHT" style="-fx-padding: 0 10 10 0;">
-                                    <Button text="Refresh" onAction="#refreshRecommendedCourses"
-                                            style="-fx-background-color:rgb(161, 111, 236); -fx-text-fill: white; -fx-background-radius: 20; -fx-padding: 5 10; -fx-font-size: 12px;"/>
+                                    <Button onAction="#refreshRecommendedCourses" style="-fx-background-color:rgb(161, 111, 236); -fx-text-fill: white; -fx-background-radius: 20; -fx-padding: 5 10; -fx-font-size: 12px;" text="Refresh" />
                                 </HBox>
 
                                 <!-- ScrollPane pour permettre le défilement horizontal -->
-                                <ScrollPane fitToHeight="true" fitToWidth="true"
-                                            hbarPolicy="NEVER" vbarPolicy="NEVER"
-                                            style="-fx-background-color: transparent; -fx-padding: 0 15 15 15;"
-                                            minHeight="200" prefHeight="300" maxHeight="400">
+                                <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" maxHeight="400" minHeight="200" prefHeight="300" style="-fx-background-color: transparent; -fx-padding: 0 15 15 15;" vbarPolicy="NEVER">
                                     <content>
-                                        <HBox fx:id="recommendedCoursesContainer"
-                                              spacing="20"
-                                              style="-fx-background-color: #f8fafc;"
-                                              minHeight="300" prefHeight="400">
+                                        <HBox fx:id="recommendedCoursesContainer" minHeight="300" prefHeight="400" spacing="20" style="-fx-background-color: #f8fafc;">
                                             <!-- Les cours recommandés seront ajoutés dynamiquement ici -->
                                         </HBox>
                                     </content>
@@ -272,14 +239,14 @@
                             </VBox>
                         </content>
                         <VBox.margin>
-                            <Insets left="30.0" right="30.0" bottom="30.0"/>
+                            <Insets bottom="30.0" left="30.0" right="30.0" />
                         </VBox.margin>
                     </TitledPane>
 
                 </VBox>
 
                 <!-- Course Details View (initially not visible) -->
-                <VBox fx:id="courseDetailsView" visible="false" managed="false" alignment="TOP_CENTER" style="-fx-background-color: #f5f7fa;">
+                <VBox fx:id="courseDetailsView" alignment="TOP_CENTER" managed="false" style="-fx-background-color: #f5f7fa;" visible="false">
                     <!-- Header Section -->
                     <HBox alignment="CENTER_LEFT" prefHeight="60.0" style="-fx-background-color: linear-gradient(to right, #6A11CB, #2575FC); -fx-background-radius: 0 0 15 15;">
                         <children>
@@ -379,7 +346,7 @@
                                     <!-- Course Content (Lessons) -->
                                     <VBox spacing="15.0">
                                         <padding>
-                                            <Insets left="20.0" right="20.0" bottom="20.0" />
+                                            <Insets bottom="20.0" left="20.0" right="20.0" />
                                         </padding>
                                         <children>
                                             <HBox alignment="CENTER_LEFT" spacing="15.0">
@@ -417,10 +384,7 @@
     </BorderPane>
 
     <!-- Bouton flottant "Add Course" maintenant dans le StackPane -->
-    <Button fx:id="addCourseButton" mnemonicParsing="false" onAction="#handleAddCourse" prefHeight="50.0" prefWidth="50.0"
-            style="-fx-background-color: #6A11CB; -fx-text-fill: white; -fx-background-radius: 30;
-                   -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 2);"
-            text="+" textFill="WHITE" StackPane.alignment="BOTTOM_RIGHT">
+    <Button fx:id="addCourseButton" mnemonicParsing="false" onAction="#handleAddCourse" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #6A11CB; -fx-text-fill: white; -fx-background-radius: 30;                    -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 2);" text="+" textFill="WHITE" StackPane.alignment="BOTTOM_RIGHT">
         <font>
             <Font name="System Bold" size="18.0" />
         </font>

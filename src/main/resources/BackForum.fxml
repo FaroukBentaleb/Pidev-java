@@ -14,11 +14,12 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #f0f4f8;" xmlns="http://javafx.com/javafx/21.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.backForumC">
+<?import javafx.scene.control.Tooltip?>
+<BorderPane maxHeight="720.0" maxWidth="1280.0" minHeight="720.0" minWidth="720.0" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #f0f4f8;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.backForumC">
 
     <!-- LEFT NAV BAR - Dark theme for admin panel -->
     <left>
-        <VBox alignment="TOP_CENTER" prefHeight="720.0" prefWidth="220.0" spacing="15" style="-fx-background-color: linear-gradient(to bottom, #1E293B, #334155); -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 0);">
+        <VBox alignment="TOP_CENTER" maxHeight="720.0" maxWidth="236.0" minHeight="720.0" minWidth="236.0" prefHeight="720.0" prefWidth="236.0" spacing="15" style="-fx-background-color: linear-gradient(to bottom, #1E293B, #334155); -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 0);">
             <padding>
                 <Insets bottom="15.0" left="15.0" right="15.0" top="20.0" />
             </padding>
@@ -30,7 +31,7 @@
             </VBox>
 
             <!-- Navigation Buttons -->
-            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: rgba(255,255,255,0.2); -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" onAction="#ToDash" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8; -fx-cursor: hand;">
                 <graphic>
                     <Label style="-fx-text-fill: white;" text="📊" />
                 </graphic>
@@ -46,7 +47,7 @@
                 <text>Dashboard</text>
             </Button>
 
-            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" onAction="#usersButton" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-cursor: hand ; -fx-background-radius: 8;">
                 <graphic>
                     <Label style="-fx-text-fill: white;" text="👥" />
                 </graphic>
@@ -56,7 +57,17 @@
                 <text>Users</text>
             </Button>
 
-            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" onAction="#ToOffers" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8; -fx-cursor: hand;">
+                <graphic>
+                    <Label style="-fx-text-fill: white;" text="📚" />
+                </graphic>
+                <padding>
+                    <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
+                </padding>
+                <text>Offers</text>
+            </Button>
+
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" onAction="#ToCourses" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8; -fx-cursor: hand;">
                 <graphic>
                     <Label style="-fx-text-fill: white;" text="📚" />
                 </graphic>
@@ -66,9 +77,9 @@
                 <text>Courses</text>
             </Button>
 
-            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" onAction="#Comp" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8; -fx-cursor: hand;">
                 <graphic>
-                    <Label style="-fx-text-fill: white;" text="📚" />
+                    <Label style="-fx-text-fill: white;" text="📝" />
                 </graphic>
                 <padding>
                     <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
@@ -76,9 +87,9 @@
                 <text>Competitions</text>
             </Button>
 
-            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" onAction="#ToForums" prefHeight="40.0" style="-fx-background-color: rgba(255,255,255,0.2); -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8; -fx-cursor: hand;">
                 <graphic>
-                    <Label style="-fx-text-fill: white;" text="📝" />
+                    <Label style="-fx-text-fill: white;" text="📢" />
                 </graphic>
                 <padding>
                     <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
@@ -86,9 +97,9 @@
                 <text>Forums</text>
             </Button>
 
-            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" onAction="#ToReclamations" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;-fx-cursor: hand;">
                 <graphic>
-                    <Label style="-fx-text-fill: white;" text="📢" />
+                    <Label style="-fx-text-fill: white;" text="📈" />
                 </graphic>
                 <padding>
                     <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
@@ -100,18 +111,31 @@
 
             <!-- Profile at bottom -->
             <VBox VBox.vgrow="ALWAYS" />
-            <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="10" style="-fx-background-color: rgba(255,255,255,0.1); -fx-background-radius: 8;">
+            <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0" style="-fx-background-color: rgba(255,255,255,0.1); -fx-background-radius: 8;">
                 <padding>
-                    <Insets bottom="8.0" left="10.0" right="10.0" top="8.0" />
+                    <Insets bottom="8.0" left="5.0" right="5.0" top="8.0" />
                 </padding>
                 <StackPane>
-                    <Circle fill="#FF5722" radius="18" />
-                    <Label style="-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;" text="A" />
+                    <Circle fx:id="circleProfile" fill="#FF5722" radius="18" />
+                    <Label fx:id="FirstLetter" style="-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;" text="A" />
                 </StackPane>
-                <VBox spacing="2">
-                    <Label fx:id="navUsernameLabel" style="-fx-text-fill: white; -fx-font-weight: bold;" text="Username" />
+                <VBox prefHeight="36.0" prefWidth="72.0" spacing="2">
+                    <Label fx:id="navUsernameLabel" minWidth="60.0" style="-fx-text-fill: white; -fx-font-weight: bold;" text="Username" />
                     <Label style="-fx-text-fill: rgba(255,255,255,0.7); -fx-font-size: 11px;" text="Admin" />
                 </VBox>
+                <Button fx:id="Profilebtn" onAction="#Profile" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-border-color: transparent;">
+                    <tooltip>
+                        <Tooltip text="Logout" />
+                    </tooltip>
+                    <HBox.margin>
+                        <Insets left="30.0" />
+                    </HBox.margin>
+                </Button>
+                <Button fx:id="logoutButton" onAction="#Logout" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-border-color: transparent;">
+                    <tooltip>
+                        <Tooltip text="Logout" />
+                    </tooltip>
+                </Button>
             </HBox>
         </VBox>
     </left>
@@ -136,10 +160,7 @@
                     </HBox>
 
                     <!-- Notification icons -->
-                    <HBox alignment="CENTER" spacing="15" style="-fx-padding: 0 0 0 20;">
-                        <Label style="-fx-text-fill: #555; -fx-font-size: 18px;" text="🔔" />
-                        <Button style="-fx-background-color: #FF5722; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 8 15;" text="New Offer" />
-                    </HBox>
+                    <HBox alignment="CENTER" spacing="15" style="-fx-padding: 0 0 0 20;" />
                 </HBox>
 
                         <TableView fx:id="tableView" prefHeight="390.0" prefWidth="1044.0">
@@ -158,9 +179,9 @@
                 <Label text="Comments from the selected post" />
                 <TableView fx:id="tableCommentaires">
                     <columns>
-                        <TableColumn text="ID" fx:id="colIdCommentaire"/>
-                        <TableColumn text="Body" fx:id="colContenu"/>
-                        <TableColumn text="User Name" fx:id="colAuteur"/>
+                        <TableColumn fx:id="colIdCommentaire" text="ID" />
+                        <TableColumn fx:id="colContenu" text="Body" />
+                        <TableColumn fx:id="colAuteur" text="User Name" />
                     </columns>
                 </TableView>
 

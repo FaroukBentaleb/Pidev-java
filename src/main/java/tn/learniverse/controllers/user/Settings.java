@@ -1,17 +1,17 @@
 package tn.learniverse.controllers.user;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.Parent;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Circle;
 import tn.learniverse.tools.Navigator;
 import tn.learniverse.tools.Session;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -23,6 +23,7 @@ public class Settings implements Initializable {
     public ImageView UserPicture;
     public Label role;
     public Button securityBtn;
+    public ScrollPane settingsContentPane;
 
     public void LogsBtn(ActionEvent actionEvent) {
         Navigator.redirect(actionEvent, "/fxml/user/LogsList.fxml");
@@ -43,6 +44,13 @@ public class Settings implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/user/Profile.fxml"));
+        try {
+            Parent profileContent = loader.load();
+            settingsContentPane.setContent(profileContent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         try {
             ImageView imageView = new ImageView();
             Image image = new Image("file:///C:/wamp64/www/images/icon/logout.png",
@@ -105,5 +113,30 @@ public class Settings implements Initializable {
 
     public void pofile(ActionEvent actionEvent) {
         Navigator.redirect(actionEvent, "/fxml/user/Profile.fxml");
+    }
+    public void Comp(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/fxml/competitions_list.fxml");
+
+    }
+
+    public void ToReclamaitons(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/Reclamation/DisplayReclamations.fxml");
+    }
+
+    public void ToForum(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/AfficherPoste.fxml");
+    }
+
+    public void ToDiscover(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/CoursesView.fxml");
+    }
+
+    public void ToCourses(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/CoursesView.fxml");
+    }
+
+    public void ToOffers(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/CoursesView.fxml");
+
     }
 }

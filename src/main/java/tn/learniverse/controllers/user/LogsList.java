@@ -237,4 +237,29 @@ public class LogsList implements Initializable {
         Navigator.showAlert(Alert.AlertType.INFORMATION,"See you soon ","You are going to logout");
         Navigator.redirect(actionEvent,"/fxml/user/Login.fxml");
     }
+    public void Comp(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/fxml/competitions_list.fxml");
+
+    }
+
+    public void ToReclamaitons(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/Reclamation/DisplayReclamations.fxml");
+    }
+
+    public void ToForum(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/AfficherPoste.fxml");
+    }
+
+    public void ToDiscover(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/CoursesView.fxml");
+    }
+
+    public void ToCourses(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/CoursesView.fxml");
+    }
+
+    public void ToOffers(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/CoursesView.fxml");
+
+    }
 }

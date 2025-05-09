@@ -80,18 +80,6 @@ public class ReponsesBack {
         user.setRole("Admin");*/
 
         List<Reponse> reponses = rec.getReponses();
-        for (Reponse reponse : reponses) {
-            User defaultUser = Session.getCurrentUser();
-            reponse.setUser(defaultUser);
-            /*if (reponse.getUser() == null) {
-                User defaultUser = new User();
-                defaultUser.setId(2);
-                defaultUser.setRole("Admin");
-                defaultUser.setPrenom("Admin");
-                defaultUser.setNom("Learniverse");
-                reponse.setUser(defaultUser);
-            }*/
-        }
 
         observableReponses = FXCollections.observableArrayList(reponses);
         refreshReponses();

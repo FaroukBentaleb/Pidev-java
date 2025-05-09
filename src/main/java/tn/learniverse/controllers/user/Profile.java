@@ -137,7 +137,7 @@ public class Profile implements Initializable {
     }
 
     public void cancelChanges(ActionEvent actionEvent) {
-        Navigator.redirect(actionEvent, "/fxml/homePage.fxml");
+        Navigator.redirect(actionEvent, "/CoursesView.fxml");
 
     }
     public void deleteAccount(ActionEvent actionEvent) {

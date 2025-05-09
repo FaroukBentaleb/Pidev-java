@@ -297,7 +297,31 @@ public class TwoFA implements Initializable {
             confirm2FAButton.setManaged(true);
         }
     }
+    public void Comp(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/fxml/competitions_list.fxml");
 
+    }
+
+    public void ToReclamaitons(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/Reclamation/DisplayReclamations.fxml");
+    }
+
+    public void ToForum(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/AfficherPoste.fxml");
+    }
+
+    public void ToDiscover(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/CoursesView.fxml");
+    }
+
+    public void ToCourses(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/CoursesView.fxml");
+    }
+
+    public void ToOffers(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/CoursesView.fxml");
+
+    }
 
 
 }

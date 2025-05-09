@@ -17,36 +17,36 @@
 
 <BorderPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #f0f4f8;" stylesheets="@../../css/profile-style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.user.LogsList">
     <left>
-        <VBox alignment="TOP_CENTER" maxHeight="887.0" maxWidth="224.0" prefHeight="650.0" prefWidth="224.0" spacing="15" style="-fx-background-color: linear-gradient(to bottom, #1976D2, #64B5F6); -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 0);">
+        <VBox alignment="TOP_CENTER" maxHeight="887.0" prefHeight="674.0" maxWidth="236.0" minWidth="236.0" prefWidth="236.0" spacing="15" style="-fx-background-color: linear-gradient(to bottom, #1976D2, #64B5F6); -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 0);">
             <padding><Insets bottom="15.0" left="15.0" right="15.0" top="20.0" /></padding>
             <Label style="-fx-text-fill: white; -fx-font-size: 26px; -fx-font-weight: bold;" text="Learniverse" />
             <VBox maxHeight="30.0" prefHeight="30.0" prefWidth="190.0" />
-            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" onAction="#ToOffers" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;-fx-cursor: hand;">
                 <graphic><Label style="-fx-text-fill: white;" text="🛍" /></graphic>
                 <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
                 <text>Offers</text>
             </Button>
-            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" onAction="#ToCourses" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;-fx-cursor: hand;">
                 <graphic><Label style="-fx-text-fill: white;" text="📚" /></graphic>
                 <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
                 <text>My Courses</text>
             </Button>
-            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" onAction="#ToDiscover" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;-fx-cursor: hand;">
                 <graphic><Label style="-fx-text-fill: white;" text="🔍" /></graphic>
                 <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
                 <text>Discover</text>
             </Button>
-            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" onAction="#ToForum" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;-fx-cursor: hand;">
                 <graphic><Label style="-fx-text-fill: white;" text="👥" /></graphic>
                 <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
                 <text>Forum</text>
             </Button>
-            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8; -fx-cursor: hand;">
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" onAction="#Comp" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8; -fx-cursor: hand;">
                 <graphic><Label style="-fx-text-fill: white;" text="🏆" /></graphic>
                 <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
                 <text>Competitions</text>
             </Button>
-            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;" text="Complaints">
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" onAction="#ToReclamaitons" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;-fx-cursor: hand;" text="Complaints">
                 <graphic>
                     <Label style="-fx-text-fill: white;" text="📝" />
                 </graphic>
@@ -72,7 +72,7 @@
                     </StackPane>
                     <VBox prefHeight="36.0" prefWidth="72.0" spacing="2">
                         <children>
-                            <Label fx:id="usernameLabel" minWidth="60.0" prefHeight="18.0" prefWidth="74.0" style="-fx-text-fill: white; -fx-font-weight: bold;" text="Username">
+                            <Label fx:id="usernameLabel" minWidth="60.0" style="-fx-text-fill: white; -fx-font-weight: bold;" text="Username">
                                 <VBox.margin>
                                     <Insets top="10.0" />
                                 </VBox.margin>

@@ -404,16 +404,39 @@ public class usersBack implements Initializable {
         alert.showAndWait();
     }
 
-    public void Logout(ActionEvent actionEvent) {
-        Session.clear();
-        Navigator.redirect(actionEvent,"/fxml/user/login.fxml");
+    public void usersButton(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/fxml/user/usersBack.fxml");
     }
 
     public void Profile(ActionEvent actionEvent) {
         Navigator.redirect(actionEvent,"/fxml/user/ProfileBack.fxml");
     }
-
     public void Comp(ActionEvent actionEvent) {
-    Navigator.redirect(actionEvent,"/fxml/backoffice_competitions.fxml");
+        Navigator.redirect(actionEvent,"/fxml/backoffice_competitions.fxml");
+    }
+
+    public void ToReclamations(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/Reclamation/DisplayReclamationBack.fxml");
+    }
+
+    public void ToForums(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/BackForum.fxml");
+    }
+
+    public void ToCourses(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/BackCourses.fxml");
+    }
+
+    public void ToOffers(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/BackCourses.fxml");
+    }
+
+    public void ToDash(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/fxml/Back.fxml");
+    }
+
+    public void Logout(ActionEvent actionEvent) {
+        Session.clear();
+        Navigator.redirect(actionEvent,"/fxml/user/login.fxml");
     }
 }

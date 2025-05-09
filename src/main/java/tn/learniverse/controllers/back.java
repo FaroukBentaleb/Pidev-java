@@ -25,9 +25,7 @@ public class back implements Initializable {
     public Button logoutButton;
     public Button Profilebtn;
 
-    public void usersButton(ActionEvent actionEvent) {
-        Navigator.redirect(actionEvent,"/fxml/user/usersBack.fxml");
-    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -75,6 +73,9 @@ public class back implements Initializable {
             circleProfile.setFill(randomColor);
         }
     }
+    public void usersButton(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/fxml/user/usersBack.fxml");
+    }
 
     public void Logout(ActionEvent actionEvent) {
         Session.clear();
@@ -90,5 +91,17 @@ public class back implements Initializable {
 
     public void ToReclamations(ActionEvent actionEvent) {
         Navigator.redirect(actionEvent,"/Reclamation/DisplayReclamationBack.fxml");
+    }
+
+    public void ToForums(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/BackForum.fxml");
+    }
+
+    public void ToCourses(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/BackCourses.fxml");
+    }
+
+    public void ToOffers(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/BackCourses.fxml");
     }
 }

@@ -30,7 +30,7 @@
             </VBox>
 
             <!-- Navigation Buttons -->
-            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" onAction="#OnDashboard" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-cursor: hand ; -fx-background-radius: 8;">
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" onAction="#ToDash" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8; -fx-cursor: hand;">
                 <graphic>
                     <Label style="-fx-text-fill: white;" text="📊" />
                 </graphic>
@@ -46,7 +46,7 @@
                 <text>Dashboard</text>
             </Button>
 
-            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: rgba(255,255,255,0.2); -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" onAction="#usersButton" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-cursor: hand ; -fx-background-radius: 8;">
                 <graphic>
                     <Label style="-fx-text-fill: white;" text="👥" />
                 </graphic>
@@ -56,7 +56,7 @@
                 <text>Users</text>
             </Button>
 
-            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" onAction="#ToOffers" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8; -fx-cursor: hand;">
                 <graphic>
                     <Label style="-fx-text-fill: white;" text="📚" />
                 </graphic>
@@ -66,7 +66,7 @@
                 <text>Offers</text>
             </Button>
 
-            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" onAction="#ToCourses" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8; -fx-cursor: hand;">
                 <graphic>
                     <Label style="-fx-text-fill: white;" text="📚" />
                 </graphic>
@@ -76,7 +76,7 @@
                 <text>Courses</text>
             </Button>
 
-            <Button alignment="BASELINE_LEFT" onAction="#Comp" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" onAction="#Comp" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8; -fx-cursor: hand;">
                 <graphic>
                     <Label style="-fx-text-fill: white;" text="📝" />
                 </graphic>
@@ -86,7 +86,7 @@
                 <text>Competitions</text>
             </Button>
 
-            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" onAction="#ToForums" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8; -fx-cursor: hand;">
                 <graphic>
                     <Label style="-fx-text-fill: white;" text="📢" />
                 </graphic>
@@ -96,7 +96,7 @@
                 <text>Forums</text>
             </Button>
 
-            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" onAction="#ToReclamations" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8; -fx-cursor: hand;">
                 <graphic>
                     <Label style="-fx-text-fill: white;" text="📈" />
                 </graphic>
@@ -108,7 +108,7 @@
 
             <!-- Profile at bottom -->
             <VBox VBox.vgrow="ALWAYS" />
-            <HBox alignment="CENTER_LEFT" maxWidth="150.0" spacing="5.0" style="-fx-background-color: rgba(255,255,255,0.1); -fx-background-radius: 8;">
+            <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0" style="-fx-background-color: rgba(255,255,255,0.1); -fx-background-radius: 8;">
                 <padding>
                     <Insets bottom="8.0" left="5.0" right="5.0" top="8.0" />
                 </padding>
@@ -120,7 +120,7 @@
                     <Label fx:id="navUsernameLabel" minWidth="60.0" style="-fx-text-fill: white; -fx-font-weight: bold;" text="Username" />
                     <Label style="-fx-text-fill: rgba(255,255,255,0.7); -fx-font-size: 11px;" text="Admin" />
                 </VBox>
-                <Button fx:id="Profilebtn" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-border-color: transparent;">
+                <Button fx:id="Profilebtn" onAction="#Profile" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-border-color: transparent;">
                     <tooltip>
                         <Tooltip text="Logout" />
                     </tooltip>
@@ -128,7 +128,7 @@
                         <Insets left="30.0" />
                     </HBox.margin>
                 </Button>
-                <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#Logout" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-border-color: transparent;">
+                <Button fx:id="logoutButton" onAction="#Logout" mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-border-color: transparent;">
                     <tooltip>
                         <Tooltip text="Logout" />
                     </tooltip>

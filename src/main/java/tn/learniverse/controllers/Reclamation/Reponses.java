@@ -67,13 +67,6 @@ public class Reponses {
         user.setEmail(rec.getUser().getEmail());
 
         List<Reponse> reponses = rec.getReponses();
-        for (Reponse reponse : reponses) {
-            user = Session.getCurrentUser();
-            reponse.setUser(user);
-            /*if (reponse.getUser() == null) {
-                reponse.setUser(user);
-            }*/
-        }
         observableReponses = FXCollections.observableArrayList(reponses);
         refreshReponses();
     }

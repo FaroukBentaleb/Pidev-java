@@ -117,7 +117,7 @@ public class homePage implements Initializable {
     }
     private Timeline sessionMonitor;
 
-    private void startSessionMonitor() {
+    public void startSessionMonitor() {
         sessionMonitor = new Timeline(
                 new KeyFrame(Duration.seconds(5), event -> {
                     LogsService logsService = new LogsService();
@@ -157,5 +157,22 @@ public class homePage implements Initializable {
 
     public void ToReclamaitons(ActionEvent actionEvent) {
         Navigator.redirect(actionEvent,"/Reclamation/DisplayReclamations.fxml");
+    }
+
+    public void ToForum(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/AfficherPoste.fxml");
+    }
+
+    public void ToDiscover(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/CoursesView.fxml");
+    }
+
+    public void ToCourses(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/CoursesView.fxml");
+    }
+
+    public void ToOffers(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/CoursesView.fxml");
+        
     }
 }

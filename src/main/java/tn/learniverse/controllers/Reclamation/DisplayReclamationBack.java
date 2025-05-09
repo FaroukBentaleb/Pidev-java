@@ -10,7 +10,10 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.geometry.Insets;
 import javafx.stage.Modality;
@@ -26,6 +29,8 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
+
 import javafx.geometry.Pos;
 import tn.learniverse.services.ReponseService;
 import tn.learniverse.services.EmailService;
@@ -39,6 +44,11 @@ import tn.learniverse.tools.Session;
 public class DisplayReclamationBack {
     public static final String ACCOUNT_SID = "ACa5b91cf8110a06dfde772f780d6f4e5a";
     public static final String AUTH_TOKEN = "21d4ea3471c5a8161b289db48a10674e";
+    public Circle circleProfile;
+    public Label FirstLetter;
+    public Label navUsernameLabel;
+    public Button Profilebtn;
+    public Button logoutButton;
     private User user;
     public void setUser(User user) {
         this.user = user;
@@ -65,6 +75,49 @@ public class DisplayReclamationBack {
     private boolean isFiltered = false;
 
     public void initialize() {
+        try {
+            ImageView imageView = new ImageView();
+            Image image = new Image("file:///C:/wamp64/www/images/icon/logout.png",
+                    16, 16, true, true);
+            if (image.isError()) {
+                System.out.println("Error loading image: " + image.getException().getMessage());
+            } else {
+                imageView.setImage(image);
+                imageView.setFitWidth(16);
+                imageView.setFitHeight(16);
+                imageView.setPreserveRatio(true);
+                this.logoutButton.setGraphic(imageView);
+            }
+        } catch (Exception e) {
+            System.out.println("Failed to load image: " + e.getMessage());
+        }
+        try {
+            ImageView imageView = new ImageView();
+            Image image = new Image("file:///C:/wamp64/www/images/icon/profile.png",
+                    16, 16, true, true);
+            if (image.isError()) {
+                System.out.println("Error loading image: " + image.getException().getMessage());
+            } else {
+                imageView.setImage(image);
+                imageView.setFitWidth(16);
+                imageView.setFitHeight(16);
+                imageView.setPreserveRatio(true);
+                this.Profilebtn.setGraphic(imageView);
+            }
+        } catch (Exception e) {
+            System.out.println("Failed to load image: " + e.getMessage());
+        }
+        if(Session.getCurrentUser()!=null){
+            this.navUsernameLabel.setText(Session.getCurrentUser().getNom());
+            this.FirstLetter.setText(Session.getCurrentUser().getNom().toUpperCase().substring(0, 1));
+            Random random = new Random();
+            Color randomColor = Color.rgb(
+                    random.nextInt(256),
+                    random.nextInt(256),
+                    random.nextInt(256)
+            );
+            circleProfile.setFill(randomColor);
+        }
         try {
             reclamationsContainer.setSpacing(5);
 
@@ -633,5 +686,40 @@ public class DisplayReclamationBack {
 
     public void reclamationsArchivéesBack(ActionEvent actionEvent) {
         Navigator.redirect(actionEvent,"/Reclamation/ReclamationsArchivéesBack.fxml");
+    }
+    public void Logout(ActionEvent actionEvent) {
+        Session.clear();
+        Navigator.redirect(actionEvent,"/fxml/user/login.fxml");
+    }
+
+    public void usersButton(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/fxml/user/usersBack.fxml");
+    }
+
+    public void Profile(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/fxml/user/ProfileBack.fxml");
+    }
+    public void Comp(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/fxml/backoffice_competitions.fxml");
+    }
+
+    public void ToReclamations(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/Reclamation/DisplayReclamationBack.fxml");
+    }
+
+    public void ToForums(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/BackForum.fxml");
+    }
+
+    public void ToCourses(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/BackCourses.fxml");
+    }
+
+    public void ToOffers(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/BackCourses.fxml");
+    }
+
+    public void ToDash(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/fxml/Back.fxml");
     }
 }
