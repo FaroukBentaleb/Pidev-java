@@ -52,6 +52,7 @@ import jakarta.mail.Transport;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import java.util.Properties;
+import javafx.event.ActionEvent;
 
 public class OffreController {
     @FXML
@@ -79,13 +80,13 @@ public class OffreController {
     @FXML
     private Pagination pagination;
     @FXML
-    private Text totalOffersText;
+    private Label totalOffersText;
     @FXML
-    private Text activeOffersText;
+    private Label activeOffersText;
     @FXML
-    private Text avgPriceText;
+    private Label avgPriceText;
     @FXML
-    private Text totalSubscriptionsText;
+    private Label totalSubscriptionsText;
     @FXML
     private PieChart statusDistributionChart;
     @FXML
@@ -118,17 +119,15 @@ public class OffreController {
         offres = FXCollections.observableArrayList();
 
         // Initialize filter options first
-        filterStatus = new ComboBox<>();
-        filterStatus.getItems().addAll("All", "Active", "Inactive");
+        filterStatus.getItems().setAll("All", "Active", "Inactive");
         filterStatus.setValue("All");  // Set default value
 
         // Initialize sort options
-        sortBy = new ComboBox<>();
-        sortBy.getItems().addAll(
-            "Price (Low to High)", 
-            "Price (High to Low)", 
-            "Date (Newest)", 
-            "Date (Oldest)", 
+        sortBy.getItems().setAll(
+            "Price (Low to High)",
+            "Price (High to Low)",
+            "Date (Newest)",
+            "Date (Oldest)",
             "Name (A-Z)"
         );
         sortBy.setValue("Name (A-Z)");  // Set default value
@@ -317,6 +316,15 @@ public class OffreController {
     private Node createOfferCard(Offre offre) {
         // Main card container
         VBox card = new VBox();
+        card.setStyle("-fx-background-color: white;"
+            + "-fx-background-radius: 18;"
+            + "-fx-effect: dropshadow(gaussian, rgba(30,41,59,0.08), 12, 0, 0, 2);"
+            + "-fx-padding: 24 24 18 24;"
+            + "-fx-spacing: 12;"
+            + "-fx-min-width: 340;"
+            + "-fx-max-width: 380;"
+            + "-fx-border-color: #e0e7ef;"
+            + "-fx-border-radius: 18;");
         card.getStyleClass().add("offer-card");
         
         // Content section (top part)
@@ -397,7 +405,8 @@ public class OffreController {
         // Add all sections to card
         contentBox.getChildren().addAll(buttonBox);
 
-        return contentBox;
+        card.getChildren().add(contentBox);
+        return card;
     }
 
     private void showOffreForm(Offre offre) {
@@ -565,22 +574,15 @@ public class OffreController {
     }
 
     @FXML
-    private void handleSubscriptionManagement() {
+    private void handleSubscriptions(ActionEvent event) {
+        System.out.println("Subscriptions button clicked!");
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/SubscriptionView.fxml"));
-            Parent root = loader.load();
-            
-            Scene currentScene = cardsContainer.getScene();
-            Stage stage = (Stage) currentScene.getWindow();
-            
-            Scene newScene = new Scene(root, currentScene.getWidth(), currentScene.getHeight());
-            // Ensure styles are carried over
-            newScene.getStylesheets().addAll(currentScene.getStylesheets());
-            
-            stage.setScene(newScene);
+            Parent subscriptionView = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(subscriptionView));
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Error", "Error loading Subscription Management view: " + e.getMessage());
         }
     }
 
@@ -1085,5 +1087,34 @@ public class OffreController {
         dialogPane.setContent(content);
 
         dialog.showAndWait();
+    }
+
+    @FXML
+    private void usersButton(ActionEvent event) {
+        // No action yet
+    }
+
+    @FXML
+    private void Profile(ActionEvent event) {
+        // No action yet
+        System.out.println("Profile button clicked!");
+    }
+
+    @FXML
+    private void Logout(ActionEvent event) {
+        // No action yet
+        System.out.println("Logout button clicked!");
+    }
+
+    @FXML
+    private void showOffers(ActionEvent event) {
+        // Reload or focus the offers dashboard
+        loadData();
+    }
+
+    @FXML
+    private void showDashboard(ActionEvent event) {
+        // Show or refresh the statistics of offers
+        updateStatistics();
     }
 } 

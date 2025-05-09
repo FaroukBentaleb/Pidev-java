@@ -15,123 +15,106 @@
 
 <BorderPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" 
             fx:controller="tn.learniverse.controllers.OffreDisplayController"
-            stylesheets="@../styles/offer-display.css"
             style="-fx-background-color: #f8f9fa;">
 
-    <!-- Left Navigation -->
+    <!-- LEFT NAV BAR - Modern with gradient -->
     <left>
-        <VBox alignment="TOP_CENTER" prefHeight="720.0" prefWidth="240.0" spacing="15" 
-              style="-fx-background-color: linear-gradient(to bottom right, #2962FF, #3D5AFE); 
-                     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 0);">
-            <padding>
-                <Insets bottom="20.0" left="15.0" right="15.0" top="25.0" />
-            </padding>
-
-            <!-- Animated Logo Container -->
-            <StackPane styleClass="logo-container" minHeight="60">
-                <Circle fill="WHITE" radius="25" opacity="0.2"/>
-                <Label style="-fx-text-fill: white; -fx-font-size: 28px; -fx-font-weight: bold; -fx-font-family: 'Segoe UI';" 
-                       text="Learniverse">
-                    <effect>
-                        <DropShadow color="rgba(0,0,0,0.2)" radius="5"/>
-                    </effect>
-                </Label>
-            </StackPane>
-
-            <!-- Enhanced Navigation Menu -->
-            <VBox spacing="8" style="-fx-padding: 20 0;">
-                <Button styleClass="nav-button" text="Dashboard">
-                    <graphic>
-                        <FontAwesomeIconView glyphName="DASHBOARD" size="18" fill="WHITE"/>
-                    </graphic>
+        <VBox alignment="TOP_CENTER" prefHeight="720.0" prefWidth="220.0" spacing="15" style="-fx-background-color: linear-gradient(to bottom, #1976D2, #64B5F6); -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 0);">
+            <padding><Insets bottom="15.0" left="15.0" right="15.0" top="20.0" /></padding>
+            <Label style="-fx-text-fill: white; -fx-font-size: 26px; -fx-font-weight: bold;" text="Learniverse" />
+            <VBox maxHeight="30.0" prefHeight="30.0" prefWidth="190.0" />
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic><Label style="-fx-text-fill: white;" text="🛍" /></graphic>
+                <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
+                <text>Offers</text>
+            </Button>
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic><Label style="-fx-text-fill: white;" text="📚" /></graphic>
+                <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
+                <text>My Courses</text>
+            </Button>
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic><Label style="-fx-text-fill: white;" text="🔍" /></graphic>
+                <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
+                <text>Discover</text>
+            </Button>
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                <graphic><Label style="-fx-text-fill: white;" text="👥" /></graphic>
+                <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
+                <text>Forum</text>
+            </Button>
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8; -fx-cursor: hand;">
+                <graphic><Label style="-fx-text-fill: white;" text="🏆" /></graphic>
+                <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
+                <text>Competitions</text>
+            </Button>
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;" text="Complaints">
+                <graphic>
+                    <Label style="-fx-text-fill: white;" text="📝" />
+                </graphic>
+                <padding>
+                    <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
+                </padding>
+            </Button>
+            <VBox prefHeight="180.0" prefWidth="190.0" VBox.vgrow="ALWAYS" />
+            <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0" style="-fx-background-color: rgba(255,255,255,0.1); -fx-background-radius: 8;">
+                <padding>
+                    <Insets bottom="8.0" left="5.0" right="5.0" top="8.0" />
+                </padding>
+                <StackPane>
+                    <Circle fill="#ffffff53" radius="26.0" />
+                    <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" />
+                </StackPane>
+                <VBox prefHeight="36.0" prefWidth="72.0" spacing="2">
+                    <Label minWidth="60.0" style="-fx-text-fill: white; -fx-font-weight: bold;" text="Username">
+                        <VBox.margin>
+                            <Insets top="10.0" />
+                        </VBox.margin>
+                    </Label>
+                    <Label style="-fx-text-fill: rgba(255,255,255,0.7); -fx-font-size: 11px;" text="Admin" />
+                </VBox>
+                <Button mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-border-color: transparent;">
+                    <tooltip>
+                        <Tooltip text="Settings" />
+                    </tooltip>
+                    <HBox.margin>
+                        <Insets left="30.0" />
+                    </HBox.margin>
                 </Button>
-                
-                <Button styleClass="nav-button, nav-button-active" text="Offers" fx:id="offersButton">
-                    <graphic>
-                        <FontAwesomeIconView glyphName="GIFT" size="18" fill="WHITE"/>
-                    </graphic>
+                <Button mnemonicParsing="false" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-border-color: transparent;">
+                    <tooltip>
+                        <Tooltip text="Logout" />
+                    </tooltip>
                 </Button>
-                
-                <Button styleClass="nav-button" text="My Courses">
-                    <graphic>
-                        <FontAwesomeIconView glyphName="BOOK" size="18" fill="WHITE"/>
-                    </graphic>
-                </Button>
-                
-                <Button styleClass="nav-button" text="Discover">
-                    <graphic>
-                        <FontAwesomeIconView glyphName="COMPASS" size="18" fill="WHITE"/>
-                    </graphic>
-                </Button>
-                
-                <Button styleClass="nav-button" text="Community">
-                    <graphic>
-                        <FontAwesomeIconView glyphName="USERS" size="18" fill="WHITE"/>
-                    </graphic>
-                </Button>
-                
-                <Button styleClass="nav-button" text="Settings">
-                    <graphic>
-                        <FontAwesomeIconView glyphName="COGS" size="18" fill="WHITE"/>
-                    </graphic>
-                </Button>
-            </VBox>
-
-            <VBox VBox.vgrow="ALWAYS"/>
-
-            <!-- Modern Profile Card -->
-            <VBox styleClass="profile-card" spacing="12">
-                <HBox alignment="CENTER" spacing="15">
-                    <StackPane styleClass="avatar-container">
-                        <Circle fill="WHITE" radius="25"/>
-                        <Label style="-fx-text-fill: #2962FF; -fx-font-size: 20px; -fx-font-weight: bold;" text="F"/>
-                    </StackPane>
-                    <VBox spacing="4">
-                        <Label style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px;" text="Farouk"/>
-                        <HBox spacing="8" alignment="CENTER_LEFT">
-                            <Circle fill="#4CAF50" radius="4"/>
-                            <Label style="-fx-text-fill: rgba(255,255,255,0.9); -fx-font-size: 13px;" text="Online"/>
-                        </HBox>
-                    </VBox>
-                </HBox>
-            </VBox>
+            </HBox>
+            <BorderPane.margin>
+                <Insets />
+            </BorderPane.margin>
         </VBox>
     </left>
 
     <center>
         <VBox>
-            <!-- Top Bar - Fixed -->
-            <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-background-color: white; -fx-padding: 20 30; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);">
-                <VBox spacing="4">
-                    <Label text="Welcome back!" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2962FF;"/>
-                </VBox>
-                <Region HBox.hgrow="ALWAYS"/>
-                
-                <!-- Search Box -->
-                <HBox alignment="CENTER" spacing="10" styleClass="modern-search-box">
-                    <FontAwesomeIconView glyphName="SEARCH" size="16" fill="#666"/>
-                    <TextField fx:id="searchField" promptText="Search for courses..." 
-                              style="-fx-background-color: transparent; -fx-font-size: 14px;"/>
+            <!-- TOP BAR -->
+            <HBox alignment="CENTER" spacing="20" style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2);">
+                <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Welcome back, Farouk!" />
+                <HBox HBox.hgrow="ALWAYS" />
+                <!-- Search Area -->
+                <HBox alignment="CENTER" maxHeight="40.0" prefHeight="40.0" prefWidth="350.0" spacing="10" style="-fx-background-color: #F0F2F5; -fx-background-radius: 20;">
+                    <padding>
+                        <Insets left="15.0" right="15.0" />
+                    </padding>
+                    <Label style="-fx-text-fill: #666;" text="🔍" />
+                    <TextField fx:id="searchField" promptText="Search for courses..." style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS" />
                 </HBox>
-                
-                <!-- Notification Bell -->
-                <StackPane styleClass="icon-button">
-                    <Circle fill="transparent" radius="20"/>
-                    <FontAwesomeIconView glyphName="BELL" size="18"/>
-                    <Circle styleClass="notification-dot" radius="4" 
-                            translateX="8" translateY="-8"/>
-                </StackPane>
-                
-                <!-- Cart Icon -->
-                <StackPane styleClass="icon-button">
-                    <Circle fill="transparent" radius="20"/>
-                    <FontAwesomeIconView glyphName="SHOPPING_CART" size="18"/>
-                </StackPane>
-                
-                <!-- Login/Signup Buttons -->
-                <HBox spacing="10" alignment="CENTER">
-                    <Button text="Login" styleClass="login-button"/>
-                    <Button text="Sign Up" styleClass="signup-button"/>
+                <!-- Notification icons and login buttons -->
+                <HBox alignment="CENTER" spacing="15" style="-fx-padding: 0 0 0 20;">
+                    <Label style="-fx-text-fill: #555; -fx-font-size: 18px;" text="📜" />
+                    <!-- Auth buttons -->
+                    <HBox alignment="CENTER" prefHeight="40.0" spacing="10">
+                        <Button style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-background-radius: 20; -fx-padding: 8 20;" text="Login" />
+                        <Button style="-fx-background-color: transparent; -fx-border-color: #2196F3; -fx-text-fill: #2196F3; -fx-background-radius: 20; -fx-border-radius: 20; -fx-padding: 8 20;" text="Sign Up" />
+                    </HBox>
                 </HBox>
             </HBox>
 
@@ -214,6 +197,7 @@
                         </HBox>
 
                         <FlowPane fx:id="offersContainer" 
+                                alignment="CENTER"
                                 hgap="20" 
                                 vgap="20" 
                                 style="-fx-padding: 20; -fx-background-color: transparent;"

@@ -21,6 +21,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.layout.Region;
+import javafx.application.Platform;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
@@ -67,6 +68,14 @@ public class SubscriptionController {
         
         // Initialize charts
         initializeCharts();
+
+        // Add stylesheet for modern sidebar
+        Platform.runLater(() -> {
+            Scene scene = cardsContainer.getScene();
+            if (scene != null) {
+                scene.getStylesheets().add(getClass().getResource("/styles/styles.css").toExternalForm());
+            }
+        });
     }
 
     private void initializeComboBoxes() {
