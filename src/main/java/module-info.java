@@ -40,12 +40,14 @@ module tn.learniverse {
     opens tn.learniverse to javafx.fxml;
     opens tn.learniverse.tools to javafx.fxml, javafx.base, javafx.controls, javafx.web;
     opens tn.learniverse.entities to javafx.base, javafx.fxml;
+    opens tn.learniverse.controllers.Reclamation to javafx.fxml;
 
     exports tn.learniverse;
     exports tn.learniverse.controllers.Competition to javafx.fxml;
     exports tn.learniverse.tools to javafx.fxml, javafx.base, javafx.controls, javafx.web;
     exports tn.learniverse.tests to javafx.graphics;
     exports tn.learniverse.controllers.user to javafx.fxml;
+    exports tn.learniverse.controllers.Reclamation;
     opens tn.learniverse.controllers to javafx.fxml;
     opens tn.learniverse.controllers.user to javafx.fxml;
 

@@ -87,4 +87,8 @@ public class back implements Initializable {
     public void Comp(ActionEvent actionEvent) {
         Navigator.redirect(actionEvent,"/fxml/backoffice_competitions.fxml");
     }
+
+    public void ToReclamations(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/Reclamation/DisplayReclamationBack.fxml");
+    }
 }

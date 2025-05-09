@@ -154,4 +154,8 @@ public class homePage implements Initializable {
         Navigator.redirect(actionEvent,"/fxml/competitions_list.fxml");
 
     }
+
+    public void ToReclamaitons(ActionEvent actionEvent) {
+        Navigator.redirect(actionEvent,"/Reclamation/DisplayReclamations.fxml");
+    }
 }
