@@ -85,7 +85,7 @@ public class Login implements Initializable {
                                         Navigator.redirect(actionEvent, "/Back.fxml");
                                     }
                                     else{
-                                        Navigator.redirect(actionEvent, "/fxml/homePage.fxml");
+                                        Navigator.redirect(actionEvent, "/CoursesView.fxml");
                                     }
                                 }
                             }
@@ -212,7 +212,7 @@ public class Login implements Initializable {
                                     if (Session.getCurrentUser().getRole().equals("Admin")) {
                                         Navigator.redirect(actionEvent, "/fxml/Back.fxml");
                                     } else {
-                                        Navigator.redirect(actionEvent, "/fxml/homePage.fxml");
+                                        Navigator.redirect(actionEvent, "/CoursesView.fxml");
                                     }
                                 }
                             } else {
@@ -555,7 +555,7 @@ public class Login implements Initializable {
                     if (Session.getCurrentUser().getRole().equals("Admin")) {
                         Navigator.redirect(actionEvent, "/fxml/Back.fxml");
                     } else {
-                        Navigator.redirect(actionEvent, "/fxml/homePage.fxml");
+                        Navigator.redirect(actionEvent, "/CoursesView.fxml");
                     }
                 }
             } else {

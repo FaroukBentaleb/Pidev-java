@@ -465,7 +465,7 @@ public class CompetitionService {
             competitionStatement.setString(9, competition.getImageUrl());
             competitionStatement.setString(10, competition.getWebImageUrl());
             competitionStatement.setBoolean(11, competition.isFreesed());
-            competitionStatement.setInt(12, 4);
+            competitionStatement.setInt(12, Session.getCurrentUser().getId());
             competitionStatement.setInt(13, competition.getId());
             int competitionRowsAffected = competitionStatement.executeUpdate();
             if (competitionRowsAffected == 0) {

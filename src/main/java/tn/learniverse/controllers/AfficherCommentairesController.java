@@ -13,6 +13,8 @@ import javafx.stage.Stage;
 import tn.learniverse.entities.Commentaire;
 import tn.learniverse.entities.Poste;
 import tn.learniverse.services.CommentaireService;
+import tn.learniverse.tools.Session;
+
 import java.io.IOException;
 import java.util.List;
 import java.io.BufferedReader;
@@ -60,6 +62,7 @@ public class AfficherCommentairesController {
 
             controller.getDeleteB().setVisible(false);
             controller.getUpdateB().setVisible(false);
+            controller.getCommentBtn().setVisible(false);
 
             posteContainer.getChildren().add(posteNode);
         } catch (IOException e) {
@@ -173,6 +176,7 @@ public class AfficherCommentairesController {
             nouveauCommentaire.setContenu(contenuFiltre);
             nouveauCommentaire.setGifurl(selectedGifUrl);
             nouveauCommentaire.setPoste(poste);
+            nouveauCommentaire.setUser(Session.getCurrentUser());
             // nouveauCommentaire.setUser(currentUser); // à activer si besoin
 
             commentaireService.ajouter(nouveauCommentaire);

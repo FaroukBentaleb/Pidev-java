@@ -26,8 +26,12 @@ public class CommentaireService implements IForum<Commentaire> {
         try {
             // Fixer l'utilisateur manuellement
             User u = new User();
-            u.setId(1); // utilisateur par défaut
-            c.setUser(u);
+            if( Session.getCurrentUser().getEmail()!=null ) {
+                u = Session.getCurrentUser();
+            }
+            else{
+                u.setId(1);
+            }
 
             if (c.getDateComment() == null || c.getDateComment().isEmpty()) {
                 String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));

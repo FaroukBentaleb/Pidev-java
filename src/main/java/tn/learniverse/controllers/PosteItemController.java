@@ -25,6 +25,7 @@ import java.net.*;
 import java.nio.charset.StandardCharsets;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import tn.learniverse.tools.Session;
 
 
 import java.io.File;
@@ -35,6 +36,7 @@ import java.util.Optional;
 
 public class PosteItemController {
 
+    public Button CommentBtn;
     private Runnable onDeleteCallback;
     private Poste poste;
 
@@ -78,7 +80,12 @@ public class PosteItemController {
 
         // Simuler l'utilisateur connecté
         connectedUser = new User();
-        connectedUser.setId(1); // Mettre l'ID de l'utilisateur connecté ici
+        if(Session.getCurrentUser().getEmail()!=null) {
+            connectedUser.setId(Session.getCurrentUser().getId());
+        }
+        else{
+            connectedUser.setId(1);
+        }
 
         // Remplir les autres champs comme tu le fais déjà
         auteurLabel.setText(poste.getUser().getPrenom() + " " + poste.getUser().getNom());
@@ -108,6 +115,10 @@ public class PosteItemController {
         } else {
             photoImageView.setVisible(false);
             photoImageView.setManaged(false);
+        }
+        if(poste.getUser().getId()!=Session.getCurrentUser().getId()) {
+            updateB.setVisible(false);
+            deleteB.setVisible(false);
         }
 
 
@@ -248,6 +259,9 @@ public class PosteItemController {
 
     public Button getUpdateB() {
         return updateB;
+    }
+    public Button getCommentBtn() {
+        return CommentBtn;
     }
 
     @FXML

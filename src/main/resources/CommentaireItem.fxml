@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxWidth="600" style="-fx-padding: 12; -fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #e0e0e0; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0.3, 0, 2);" stylesheets="@styleAffichage.css" xmlns="http://javafx.com/javafx/21.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.CommentaireItemController">
+<VBox maxWidth="600" style="-fx-padding: 12; -fx-background-color: white; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #e0e0e0; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0.3, 0, 2);" stylesheets="@styleAffichage.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.CommentaireItemController">
 
     <!-- En-tête du commentaire - version compacte -->
     <HBox alignment="CENTER_LEFT" spacing="5" style="-fx-padding: 0 0 5 0;">
@@ -29,7 +29,7 @@
 
     <!-- Boutons alignés à droite -->
     <HBox alignment="CENTER_RIGHT">
-        <Button onAction="#handleModifier" styleClass="small-edit-btn" text="Modify" />
-        <Button onAction="#handleSupprimer" styleClass="small-delete-btn" text="Delete" />
+        <Button fx:id="ModifyBtn" onAction="#handleModifier" styleClass="small-edit-btn" text="Modify" />
+        <Button fx:id="DeleteBtn" onAction="#handleSupprimer" styleClass="small-delete-btn" text="Delete" />
     </HBox>
 </VBox>

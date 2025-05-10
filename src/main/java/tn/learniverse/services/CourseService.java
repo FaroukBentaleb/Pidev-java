@@ -2,6 +2,7 @@ package tn.learniverse.services;
 
 import tn.learniverse.entities.Course;
 import tn.learniverse.tools.DBConnection;
+import tn.learniverse.tools.Session;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,7 +28,7 @@ public class CourseService implements ICourse<Course>{
         ps.setDouble(4, course.getPrice());
         ps.setString(5, course.getLevel());
         ps.setString(6, course.getCategory());
-        ps.setInt(7, 7);
+        ps.setInt(7, Session.getCurrentUser().getId());
         ps.executeUpdate();
         System.out.println("Course added!!");
     }
@@ -124,6 +125,34 @@ public class CourseService implements ICourse<Course>{
     public List<Course> getVisibleCourses() throws SQLException {
         String sql = "SELECT * FROM course WHERE is_frozen = false";
         PreparedStatement ps = connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+
+        List<Course> courses = new ArrayList<>();
+
+        while (rs.next()) {
+            Course c = new Course();
+            c.setId(rs.getInt("id"));
+            c.setTitle(rs.getString("title"));
+            c.setDescription(rs.getString("description"));
+            c.setDuration(rs.getInt("duration"));
+            c.setPrice(rs.getDouble("price"));
+            c.setLevel(rs.getString("level"));
+            c.setCategory(rs.getString("category"));
+            c.setIs_frozen(rs.getBoolean("is_frozen"));
+            c.setId_user(rs.getInt("id_user"));
+            courses.add(c);
+        }
+
+        // Close resources
+        rs.close();
+        ps.close();
+
+        return courses;
+    }
+    public List<Course> getVisibleCoursesForInstructor(int InstructorId) throws SQLException {
+        String sql = "SELECT * FROM course WHERE is_frozen = false AND id_user = ?";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setInt(1, InstructorId);
         ResultSet rs = ps.executeQuery();
 
         List<Course> courses = new ArrayList<>();

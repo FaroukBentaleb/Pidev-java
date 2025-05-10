@@ -4,6 +4,8 @@ import tn.learniverse.entities.Poste;
 import tn.learniverse.entities.User;
 import tn.learniverse.entities.Commentaire;
 import tn.learniverse.tools.DBConnection;
+import tn.learniverse.tools.Session;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -25,7 +27,12 @@ public class PosteService implements IForum<Poste> {
         try {
             // Fixer l'utilisateur manuellement (id = 1)
             User u = new User();
-            u.setId(1);
+            if( Session.getCurrentUser().getEmail()!=null ) {
+                u = Session.getCurrentUser();
+            }
+            else{
+                u.setId(1);
+            }
             p.setUser(u);
             // Générer la date du jour si non spécifiée
             if (p.getDatePost() == null || p.getDatePost().isEmpty()) {

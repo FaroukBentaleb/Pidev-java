@@ -6,10 +6,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import tn.learniverse.entities.Commentaire;
 import tn.learniverse.services.CommentaireService;
+import tn.learniverse.tools.Session;
 
 import java.util.Optional;
 
 public class CommentaireItemController {
+    public Button ModifyBtn;
+    public Button DeleteBtn;
     @FXML private Label auteurLabel;
     @FXML private Label dateLabel;
     @FXML private Label contenuLabel;
@@ -36,6 +39,10 @@ public class CommentaireItemController {
             } catch (Exception e) {
                 System.out.println("Erreur de chargement du GIF: " + e.getMessage());
             }
+        }
+        if(commentaire.getUser().getId()!= Session.getCurrentUser().getId()){
+            ModifyBtn.setVisible(false);
+            DeleteBtn.setVisible(false);
         }
     }
 
