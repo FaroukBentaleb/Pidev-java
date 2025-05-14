@@ -238,7 +238,7 @@ private void updateView() {
             participateButton.setStyle(participateButton.getStyle().replace("-fx-background-color: #2196F3;", "-fx-background-color: #1976D2;")));
         participateButton.setOnMouseExited(e ->
             participateButton.setStyle(participateButton.getStyle().replace("-fx-background-color: #1976D2;", "-fx-background-color: #2196F3;")));
-
+        participateButton.setVisible(Session.getCurrentUser().getRole().equals("Student"));
         // Set button text and action based on competition status
         switch (competition.getEtat().toLowerCase()) {
             case "inprogress":

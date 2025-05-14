@@ -142,7 +142,7 @@ public class PosteService implements IForum<Poste> {
         List<Poste> postes = new ArrayList<>();
         try {
             // Utilisation d'une seule requête avec jointure pour récupérer les données du poste et de l'utilisateur
-            String sql = "SELECT p.*, u.nom AS user_nom, u.prenom AS user_prenom FROM poste p JOIN user u ON p.id_user_id = u.id";
+            String sql = "SELECT p.*, u.nom AS user_nom, u.prenom AS user_prenom FROM poste p JOIN user u ON p.id_user_id = u.id ORDER BY id DESC";
             PreparedStatement ps = cnx.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
