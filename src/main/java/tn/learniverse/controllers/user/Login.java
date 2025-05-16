@@ -60,6 +60,7 @@ public class Login implements Initializable {
                 usr = userService.getUserByEmail(login_email.getText());
                 if (usr.getEmail() != null) {
                     String storedPassword = usr.getMdp();
+                    storedPassword = storedPassword.replace("$2y$", "$2a$");
                     if (storedPassword != null && BCrypt.checkpw(pwd, storedPassword)) {
                         if(usr.getBan()==1){
                             Navigator.showAlert(Alert.AlertType.ERROR,"Account Banned","Your account has been Banned by the admin.\nPlease contact support for more details!");
@@ -82,7 +83,7 @@ public class Login implements Initializable {
                                     Session.setCurrentUser(usr);
                                     saveLogs();
                                     if(Session.getCurrentUser().getRole().equals("Admin")){
-                                        Navigator.redirect(actionEvent, "/Back.fxml");
+                                        Navigator.redirect(actionEvent, "/fxml/Back.fxml");
                                     }
                                     else{
                                         Navigator.redirect(actionEvent, "/CoursesView.fxml");

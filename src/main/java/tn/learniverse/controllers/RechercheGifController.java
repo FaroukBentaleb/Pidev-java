@@ -53,7 +53,7 @@ public class RechercheGifController {
     }
 
     private List<String> searchGifs(String query) throws IOException, InterruptedException {
-        String apiKey = "uitgaAcN3LNhXruHEB2TIGuNdNvtBQhw"; // à remplacer par ta vraie clé
+        String apiKey = ""; // à remplacer par ta vraie clé
         String url = "https://api.giphy.com/v1/gifs/search?api_key=" + apiKey + "&q=" + query + "&limit=10";
 
         HttpClient client = HttpClient.newHttpClient();

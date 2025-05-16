@@ -641,8 +641,9 @@ public class BackofficeCompetitionsController implements Initializable {
         Navigator.redirect(actionEvent,"/BackCourses.fxml");
     }
 
+
     public void ToOffers(ActionEvent actionEvent) {
-        Navigator.redirect(actionEvent,"/BackCourses.fxml");
+        Navigator.redirect(actionEvent,"/fxml/OffreView.fxml");
     }
 
     public void ToDash(ActionEvent actionEvent) {

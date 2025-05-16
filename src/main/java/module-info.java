@@ -10,6 +10,7 @@ module tn.learniverse {
     requires java.sql;
     requires MaterialFX;
     requires javafx.web;
+    requires de.jensd.fx.glyphs.fontawesome; // For fontawesomefx
 
     // Add access to JavaFX standard modules
     requires com.github.oshi;
@@ -34,6 +35,13 @@ module tn.learniverse {
     requires com.google.zxing;
     requires jdk.httpserver;
     requires javafx.media;
+    requires stripe.java;
+    requires spring.context;
+    requires kernel;
+    requires layout;
+    requires org.apache.poi.poi;
+    requires org.apache.poi.ooxml;
+    requires com.google.zxing.javase;
 
     // Make sure tools package is properly exported and opened
     opens tn.learniverse.controllers.Competition to javafx.fxml;
@@ -41,11 +49,11 @@ module tn.learniverse {
     opens tn.learniverse.tools to javafx.fxml, javafx.base, javafx.controls, javafx.web;
     opens tn.learniverse.entities to javafx.base, javafx.fxml;
     opens tn.learniverse.controllers.Reclamation to javafx.fxml;
-
+    opens tn.learniverse.tests to javafx.fxml; // Open package for FXML loading
+    exports tn.learniverse.tests; // Export package containing MainFX
     exports tn.learniverse;
     exports tn.learniverse.controllers.Competition to javafx.fxml;
     exports tn.learniverse.tools to javafx.fxml, javafx.base, javafx.controls, javafx.web;
-    exports tn.learniverse.tests to javafx.graphics;
     exports tn.learniverse.controllers.user to javafx.fxml;
     exports tn.learniverse.controllers.Reclamation;
     opens tn.learniverse.controllers to javafx.fxml;

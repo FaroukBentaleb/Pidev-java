@@ -33,6 +33,7 @@ public class ConfirmPwd implements Initializable {
             try {
                 UserService userService = new UserService();
                 String hashedPassword = BCrypt.hashpw(pwd.getText(), BCrypt.gensalt());
+                hashedPassword = hashedPassword.replace("$2a$", "$2y$");
                 Session.getCurrentUser().setRole(role.getValue());
                 userService.CreateAccount(new User(Session.getCurrentUser().getNom(),Session.getCurrentUser().getPrenom(),Session.getCurrentUser().getEmail(),role.getValue(),hashedPassword));
                 Navigator.redirect(actionEvent, "/fxml/homePage.fxml");

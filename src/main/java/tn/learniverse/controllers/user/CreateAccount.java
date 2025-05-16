@@ -101,6 +101,7 @@ public class CreateAccount implements Initializable {
             if (isValid) {
                 try {
                     String hashedPassword = BCrypt.hashpw(pwd, BCrypt.gensalt());
+                    hashedPassword = hashedPassword.replace("$2a$", "$2y$");
                     System.out.println("pwd: " + pwd);
                     System.out.println("hashedPassword: " + hashedPassword);
                     userService.CreateAccount(new User(name,familyName,email,role,hashedPassword));
@@ -121,7 +122,7 @@ public class CreateAccount implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         logoImageView.setImage(new Image("file:///C:/wamp64/www/images/logo/logo.png"));
-        signup_role.getItems().addAll("Student", "Insctructor");
+        signup_role.getItems().addAll("Student", "Instructor");
         signup_role.setValue("Student");
         textField.textProperty().bindBidirectional(signup_pwd.textProperty());
         textFieldconf.textProperty().bindBidirectional(signup_conf_pwd.textProperty());

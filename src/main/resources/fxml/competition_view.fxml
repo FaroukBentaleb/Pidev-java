@@ -23,12 +23,12 @@
             <padding><Insets bottom="15.0" left="15.0" right="15.0" top="20.0" /></padding>
             <Label style="-fx-text-fill: white; -fx-font-size: 26px; -fx-font-weight: bold;" text="Learniverse" />
             <VBox maxHeight="30.0" prefHeight="30.0" prefWidth="190.0" />
-            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+            <Button onAction="#ToOffers" alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
                 <graphic><Label style="-fx-text-fill: white;" text="🛍" /></graphic>
                 <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
                 <text>Offers</text>
             </Button>
-            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+            <Button onAction="#ToCourses" alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
                 <graphic><Label style="-fx-text-fill: white;" text="📚" /></graphic>
                 <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
                 <text>My Courses</text>
@@ -42,12 +42,12 @@
                 </padding>
                 <text>Competitions</text>
             </Button>
-            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" onAction="#ToLogs" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" onAction="#ToDiscover" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
                 <graphic><Label style="-fx-text-fill: white;" text="🔍" /></graphic>
                 <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
                 <text>Discover</text>
             </Button>
-            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+            <Button  onAction="#ToForum" alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
                 <graphic><Label style="-fx-text-fill: white;" text="👥" /></graphic>
                 <padding><Insets bottom="10.0" left="15.0" right="10.0" top="10.0" /></padding>
                 <text>Forum</text>
