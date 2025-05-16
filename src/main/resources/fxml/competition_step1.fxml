@@ -24,7 +24,7 @@
             <children>
                 <Label style="-fx-text-fill: white; -fx-font-size: 20px;" text="🏆" />
                 <VBox spacing="2">
-                    <Label styleClass="header-title" text="Create Competition" />
+                    <Label styleClass="header-title" fx:id="title" />
                     <Label styleClass="header-subtitle" text="Step 1 of 2" />
                 </VBox>
             </children>

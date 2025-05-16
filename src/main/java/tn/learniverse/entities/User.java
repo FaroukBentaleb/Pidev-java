@@ -5,7 +5,17 @@ import java.util.Objects;
 
 public class User {
     private int id;
+    private int coins;
     private String nom;
+
+    public int getCoins() {
+        return coins;
+    }
+
+    public void setCoins(int coins) {
+        this.coins = coins;
+    }
+
     private String prenom;
     private String email;
     private String mdp;

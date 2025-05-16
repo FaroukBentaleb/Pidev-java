@@ -51,8 +51,19 @@
                         <VBox spacing="5">
                             <HBox alignment="CENTER_LEFT" spacing="10">
                                 <Label fx:id="profileNameLabel" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Farouk Bentaleb" />
-                                <HBox fx:id="verifiedBadge">
+                            <HBox fx:id="verifiedBadge">
                                     <Label style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-padding: 2 8; -fx-background-radius: 10;" text="Verified" />
+                                    <HBox.margin>
+                                        <Insets right="20.0" />
+                                    </HBox.margin>
+                                </HBox>
+                                <HBox alignment="CENTER" spacing="8" styleClass="coins-container">
+                                    <Label fx:id="coinsLabel" styleClass="coins-label" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #CA8A04;" text="0 coins" />
+                                    <ImageView fx:id="coinImageView" fitHeight="32.0" fitWidth="32.0">
+                                        <image>
+                                            <javafx.scene.image.Image url="http://localhost/coin.png" />
+                                        </image>
+                                    </ImageView>
                                 </HBox>
                             </HBox>
                             <Label fx:id="roleLabel" style="-fx-text-fill: #666;" text="Student • Member since January 2023" />

@@ -320,7 +320,7 @@ challengesContainer.getChildren().add(challengeCard);
                     Platform.runLater(() -> {
                         loadingOverlay.setVisible(false);
                         loadingOverlay.setManaged(false);
-                        navigateToResults(map,competition.getNom());
+                        navigateToResults(map,competition.getNom(),competition.getId());
                     });
                 } catch (SQLException | IOException | InterruptedException e) {
                     Platform.runLater(() -> {
@@ -356,13 +356,13 @@ challengesContainer.getChildren().add(challengeCard);
 
     }
 
-    private void navigateToResults(Map<Challenge, Submission>a,String z) {
+    private void navigateToResults(Map<Challenge, Submission>a,String z,int e) {
         try {
             // Replace with your actual navigation code to results page
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/result.fxml"));
 
             // Use the custom constructor
-            ResultViewController controller = new ResultViewController(a, z);
+            ResultViewController controller = new ResultViewController(a, z,e);
             loader.setController(controller);
 
             Parent root = loader.load();
@@ -373,9 +373,9 @@ challengesContainer.getChildren().add(challengeCard);
                     : (Stage) submitButton.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
-        } catch (IOException e) {
-            showErrorAlert("Navigation Error", "Failed to navigate to results: " + e.getMessage());
-            e.printStackTrace();
+        } catch (IOException t) {
+            showErrorAlert("Navigation Error", "Failed to navigate to results: " + t.getMessage());
+            t.printStackTrace();
         }
     }
 

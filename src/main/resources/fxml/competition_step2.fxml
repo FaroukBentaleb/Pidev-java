@@ -55,7 +55,7 @@
                         <MFXIconWrapper fx:id="backIcon" />
                     </graphic>
                 </MFXButton>
-                <MFXButton onAction="#handleCreateCompetition" text="Create Competition" style="-fx-background-color: white; -fx-text-fill: #4f46e5; -fx-font-weight: bold;">
+                <MFXButton onAction="#handleCreateCompetition" fx:id="btncreate" style="-fx-background-color: white; -fx-text-fill: #4f46e5; -fx-font-weight: bold;">
                     <graphic>
                         <MFXIconWrapper fx:id="checkIcon" />
                     </graphic>

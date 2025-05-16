@@ -14,6 +14,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import tn.learniverse.entities.User;
 import tn.learniverse.services.UserService;
+import tn.learniverse.tools.DatabaseConnection;
 import tn.learniverse.tools.Navigator;
 import tn.learniverse.tools.Session;
 
@@ -22,6 +23,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -33,6 +38,7 @@ public class Profile implements Initializable {
     public TextField instagramField;
     public TextField facebookField;
     public Label pictureFileLabel;
+    public Label coinsLabel;
     public Label resumeFileLabel;
     public TextArea descriptionArea;
     public TextField experienceField;
@@ -64,11 +70,28 @@ public class Profile implements Initializable {
     public Button btnUpload;
     public Label roleLabel;
     public Button myCompetitionButton;
+    public ImageView coinImageView;
 
 
     UserService userService = new UserService();
 
     public void chooseResumeFile(ActionEvent actionEvent) {
+    }
+    private int getUserCoins() {
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement("SELECT coins FROM user WHERE id = ?")) {
+
+            statement.setInt(1, Session.getCurrentUser().getId());
+
+            try (ResultSet rs = statement.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("coins");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving user coins: " + e.getMessage());
+        }
+        return 0;
     }
 
     public void chooseProfilePicture(ActionEvent actionEvent) {
@@ -156,6 +179,9 @@ public class Profile implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setupRealTimeValidation();
+        coinsLabel.setText(String.valueOf(getUserCoins()));
+        coinsLabel.setVisible(Session.getCurrentUser().getRole().equals("Student"));
+        coinImageView.setVisible(Session.getCurrentUser().getRole().equals("Student"));
         myCompetitionButton.setVisible( Session.getCurrentUser().getRole().equals("Student"));
         System.out.println("in!!");
         birthDatePicker.setDayCellFactory(picker -> new DateCell() {

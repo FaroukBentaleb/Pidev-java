@@ -22,16 +22,17 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.ResourceBundle;
 import tn.learniverse.entities.Challenge;
 import tn.learniverse.entities.Submission;
-import tn.learniverse.tools.CodeHighlighter;
-import tn.learniverse.tools.HtmlDisplayer;
-import tn.learniverse.tools.Navigator;
-import tn.learniverse.tools.Session;
+import tn.learniverse.tools.*;
 
 public class ResultViewController implements Initializable {
 
@@ -58,6 +59,10 @@ public class ResultViewController implements Initializable {
 
     @FXML
     private MFXButton exportButton;
+    @FXML
+    private Label coinsLabel;
+
+    private int coins;
 
     @FXML
     private MFXButton shareButton;
@@ -65,10 +70,16 @@ public class ResultViewController implements Initializable {
 
 
     private String competitionName;
+    private int id;
     private Map<Challenge, Submission> challengeSubmissionMap;
     private int totalScore = 0;
     private int maxPossibleScore = 0;
 
+    public ResultViewController(Map<Challenge, Submission> challengeSubmissionMap, String competitionName,int id) {
+        this.challengeSubmissionMap = challengeSubmissionMap;
+        this.competitionName = competitionName;
+        this.id = id;
+    }
     public ResultViewController(Map<Challenge, Submission> challengeSubmissionMap, String competitionName) {
         this.challengeSubmissionMap = challengeSubmissionMap;
         this.competitionName = competitionName;
@@ -80,11 +91,19 @@ public class ResultViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+
         System.out.println("ChallengeSubmissionMap contents:");
         challengeSubmissionMap.forEach((challenge, submission) -> {
             System.out.println("Challenge: " + challenge.getTitle() + ", Submission Rating: " + submission.getRating());
         });
         competitionNameLabel.setText(competitionName);
+        shareButton.setOnAction(event -> handleShare(event));
+        try {
+            coins = getCompetitionUserCoins();
+            coinsLabel.setText("Coins earned: " + coins);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         Image image = null;
 //        image=new Image("file:///C:/wamp64/www/images/users/user.jpg", 50, 50, false, false);
@@ -103,10 +122,78 @@ public class ResultViewController implements Initializable {
 
         // Display results
         displayResults();
+        shareButton.setOnAction(event -> handleShare(event));
 
         // Set up button handlers
         backButton.setOnAction(event -> handleBack());
         exportButton.setOnAction(event -> handleExport());
+    }
+    /**
+     * Gets the competition ID from the challenge submission map
+     */
+    private int getCompetitionId() {
+        if (!challengeSubmissionMap.isEmpty()) {
+            // Get the first challenge from the map keys
+            Challenge firstChallenge = challengeSubmissionMap.keySet().iterator().next();
+            return firstChallenge.getCompetitionId();
+
+        }
+        return -1; // Return an invalid ID if the map is empty
+    }
+
+    /**
+     * Gets the user ID from the challenge submission map
+     */
+    private int getUserId() {
+        if (!challengeSubmissionMap.isEmpty()) {
+            // Get the first submission from the map values
+            Submission firstSubmission = challengeSubmissionMap.values().iterator().next();
+            return firstSubmission.getIdUser().getId();
+        }
+        return -1; // Return an invalid ID if the map is empty
+    }
+    private int getCompetitionUserCoins() throws SQLException {
+        int competitionId = id;
+        int userId = Session.getCurrentUser().getId();
+
+        String sql = "SELECT coins FROM competition_user WHERE competition_id = ? AND user_id = ?";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, competitionId);
+            statement.setInt(2, userId);
+
+            try (ResultSet rs = statement.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("coins");
+                }
+            }
+        }
+        return 0;
+    }
+
+    @FXML
+    private void handleShare(ActionEvent actionEvent) {
+        try {
+            // Create a Facebook share URL with competition info
+            StringBuilder shareUrl = new StringBuilder();
+            shareUrl.append("https://www.facebook.com/sharer/sharer.php?u=https://learniverse.tn");
+            shareUrl.append("&quote=");
+
+            // Add share text
+            String shareText = "I scored " + totalScore + "/" + maxPossibleScore +
+                              " in the \"" + competitionName + "\" competition on Learniverse!";
+
+            // URL encode the text
+            shareText = java.net.URLEncoder.encode(shareText, "UTF-8");
+            shareUrl.append(shareText);
+
+            // Open the default web browser
+            java.awt.Desktop.getDesktop().browse(new java.net.URI(shareUrl.toString()));
+
+        } catch (Exception e) {
+            showErrorAlert("Share Error", "Could not open Facebook: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     private void displayResults() {
@@ -282,7 +369,7 @@ public class ResultViewController implements Initializable {
 
     @FXML
     private void handleBack() {
-
+Navigator.redirect(new ActionEvent(), "/fxml/competitions_list.fxml");
     }
 
     @FXML

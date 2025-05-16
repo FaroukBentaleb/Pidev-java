@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+import io.github.palexdev.materialfx.controls.MFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,6 +32,7 @@ import tn.learniverse.tools.Session;
 
 public class CompetitionStep2Controller implements Initializable {
 
+    public MFXButton btncreate;
     @FXML
     private VBox challengesContainer;
     
@@ -43,7 +45,9 @@ public class CompetitionStep2Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         challengeControllers = new ArrayList<>();
         existingChallenges = new ArrayList<>();
+        btncreate.setText("Save Competition");
     }
+
     
     public void setCompetition(Competition competition) {
         this.competition = competition;
@@ -185,6 +189,7 @@ public class CompetitionStep2Controller implements Initializable {
                 
                 // Save or update the competition
                 if (competition.getId() > 0) {
+                    btncreate.setText("Update Competition");
                     // Update existing competition
                     competitionService.updateCompetitionWithChallenges(competition, getChallenges());
                     successMessage = "Competition updated successfully.";

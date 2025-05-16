@@ -394,7 +394,7 @@ public class CompetitionsListController implements Initializable {
         // Set image if available
         if (competition.getImageUrl() != null && !competition.getImageUrl().isEmpty()) {
             try {
-                Image image = new Image("file:" + competition.getImageUrl(), true);
+                Image image = new Image(competition.getImageUrl());
                 competitionImage.setImage(image);
             } catch (Exception e) {
                 // Use default image or create a placeholder
@@ -417,7 +417,7 @@ public class CompetitionsListController implements Initializable {
             int instructorId = competition.getInstructorId();
             int userId = Session.getCurrentUser().getId();
             boolean isOwner = instructorId == userId;
-
+        System.out.println("User ID: " + userId + ", Instructor ID: " + instructorId);
             editBtn.setVisible(isOwner);
             editBtn.setManaged(isOwner);
             deleteBtn.setVisible(isOwner);
