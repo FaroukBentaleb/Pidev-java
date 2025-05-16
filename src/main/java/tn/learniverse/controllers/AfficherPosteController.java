@@ -222,11 +222,16 @@ public class AfficherPosteController implements Initializable {
     }
 
     public void ToCourses(ActionEvent actionEvent) {
-        Navigator.redirect(actionEvent,"/CoursesView.fxml");
+        if(Session.getCurrentUser().getRole().equals("Student")){
+            Navigator.redirect(actionEvent,"/SubscriptionCourses.fxml");
+        }
+        else{
+            Navigator.redirect(actionEvent,"/MyCourses.fxml");
+        }
     }
 
     public void ToOffers(ActionEvent actionEvent) {
-        Navigator.redirect(actionEvent,"/CoursesView.fxml");
+        Navigator.redirect(actionEvent,"/fxml/OffreDisplay.fxml");
 
     }
     private Timeline sessionMonitor;

@@ -42,8 +42,6 @@ public class backForumC implements Initializable {
     @FXML
     private TableView<Poste> tableView;
 
-    @FXML
-    private TableColumn<Poste, Integer> id;
 
     @FXML
     private TableColumn<Poste, String> username;
@@ -114,7 +112,6 @@ public class backForumC implements Initializable {
             circleProfile.setFill(randomColor);
         }
         // Configuration des colonnes pour les posts
-        id.setCellValueFactory(new PropertyValueFactory<>("id"));
         username.setCellValueFactory(cellData ->
                 javafx.beans.binding.Bindings.createStringBinding(() ->
                         cellData.getValue().getUser().getNom()));
@@ -238,8 +235,9 @@ public class backForumC implements Initializable {
         Navigator.redirect(actionEvent,"/BackCourses.fxml");
     }
 
+
     public void ToOffers(ActionEvent actionEvent) {
-        Navigator.redirect(actionEvent,"/BackCourses.fxml");
+        Navigator.redirect(actionEvent,"/fxml/OffreView.fxml");
     }
 
     public void ToDash(ActionEvent actionEvent) {

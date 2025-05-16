@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="tn.learniverse.controllers.SubscriptionFormController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <top>
+        <HBox alignment="CENTER" spacing="10.0" style="-fx-background-color: #2c3e50; -fx-padding: 10;">
+            <Text fill="WHITE" text="Subscription Form" style="-fx-font-size: 24; -fx-font-weight: bold;"/>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="10.0" style="-fx-padding: 20;">
+            <GridPane hgap="10.0" vgap="10.0">
+                <Label text="Course ID:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                <TextField fx:id="courseIdField" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                <Label text="Date Earned:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                <DatePicker fx:id="dateEarnedPicker" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                <Label text="Status:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                <ComboBox fx:id="statusComboBox" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                <Label text="User ID:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                <TextField fx:id="userIdField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+                <Label text="Offer ID:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                <TextField fx:id="offreIdField" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+            </GridPane>
+
+            <HBox spacing="10.0" alignment="CENTER" style="-fx-padding: 20;">
+                <Button fx:id="saveButton" text="Save" style="-fx-background-color: #27ae60; -fx-text-fill: white;"/>
+                <Button fx:id="cancelButton" text="Cancel" style="-fx-background-color: #e74c3c; -fx-text-fill: white;"/>
+            </HBox>
+        </VBox>
+    </center>
+
+</BorderPane> 

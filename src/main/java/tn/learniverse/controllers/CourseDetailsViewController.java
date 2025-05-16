@@ -18,13 +18,17 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import tn.learniverse.entities.Course;
 import tn.learniverse.entities.Lesson;
+import tn.learniverse.entities.Subscription;
 import tn.learniverse.entities.User;
 import tn.learniverse.services.LessonService;
+import tn.learniverse.services.SubscriptionDAO;
+import tn.learniverse.tools.Navigator;
 import tn.learniverse.tools.Session;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -102,6 +106,17 @@ public class CourseDetailsViewController implements Initializable {
             // addLessonButton.setOnAction(e -> openAddLessonWindow());
         } else {
             System.out.println("ERROR: addLessonButton is null!");
+        }
+        if(Session.getCurrentUser().getRole().equals("Student")) {
+            enrollButton.setVisible(true);
+        }
+        else{
+            enrollButton.setVisible(false);
+        }
+        SubscriptionDAO sbs = new SubscriptionDAO();
+        if(sbs.existsByUserCourse(Session.getCurrentUser().getId(), course.getId())) {
+            enrollButton.setText("✅ Enrolled");
+            enrollButton.setDisable(true);
         }
     }
 
@@ -375,11 +390,15 @@ public class CourseDetailsViewController implements Initializable {
 
     @FXML
     private void handleEnroll() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Enrollment");
-        alert.setHeaderText("Thank you for your interest!");
-        alert.setContentText("Enrollment feature will be available soon.");
-        alert.showAndWait();
+        SubscriptionDAO SubscriptionService = new SubscriptionDAO();
+        Subscription sbs = new Subscription();
+        sbs.setCourseId(course.getId());
+        sbs.setUserId(Session.getCurrentUser().getId());
+        sbs.setDateEarned(LocalDate.now().atStartOfDay());
+        sbs.setDurationInDays(90);
+        System.out.println("in");
+        SubscriptionService.create(sbs);
+        Navigator.showAlert(Alert.AlertType.INFORMATION,"Subscription Done","Your subscription was Done successfully!");
     }
 
     @FXML

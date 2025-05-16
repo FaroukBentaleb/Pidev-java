@@ -176,10 +176,37 @@ public class CourseService implements ICourse<Course>{
 
         return courses;
     }
+    public List<Course> getVisibleCoursesForStudent(int StudentId) throws SQLException {
+        String sql = "SELECT * FROM course WHERE (is_frozen = false) AND id NOT IN (SELECT id_course_id FROM subscription WHERE id_user_id = ?)";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setInt(1, StudentId);
+        ResultSet rs = ps.executeQuery();
+
+        List<Course> courses = new ArrayList<>();
+
+        while (rs.next()) {
+            Course c = new Course();
+            c.setId(rs.getInt("id"));
+            c.setTitle(rs.getString("title"));
+            c.setDescription(rs.getString("description"));
+            c.setDuration(rs.getInt("duration"));
+            c.setPrice(rs.getDouble("price"));
+            c.setLevel(rs.getString("level"));
+            c.setCategory(rs.getString("category"));
+            c.setIs_frozen(rs.getBoolean("is_frozen"));
+            courses.add(c);
+        }
+
+        // Close resources
+        rs.close();
+        ps.close();
+
+        return courses;
+    }
     public Course getCourseById(int id) throws SQLException {
         Connection connection = DBConnection.getConnection();
         Course course = null;
-        String query = "SELECT * FROM courses WHERE id = ?";
+        String query = "SELECT * FROM course WHERE id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
 
@@ -359,6 +386,35 @@ public class CourseService implements ICourse<Course>{
             if (stmt != null) try { stmt.close(); } catch (SQLException ignore) {}
             // 🚫 Pas de conn.close() ici
         }
+
+        return courses;
+    }
+
+    public static List<Course> getPurchasedCourses() throws SQLException {
+        String sql = "SELECT c.* FROM course c INNER JOIN subscription s ON s.id_course_id = c.id WHERE c.is_frozen = false AND s.id_user_id = ?";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setInt(1, Session.getCurrentUser().getId());
+        ResultSet rs = ps.executeQuery();
+
+        List<Course> courses = new ArrayList<>();
+
+        while (rs.next()) {
+            Course c = new Course();
+            c.setId(rs.getInt("id"));
+            c.setTitle(rs.getString("title"));
+            c.setDescription(rs.getString("description"));
+            c.setDuration(rs.getInt("duration"));
+            c.setPrice(rs.getDouble("price"));
+            c.setLevel(rs.getString("level"));
+            c.setCategory(rs.getString("category"));
+            c.setIs_frozen(rs.getBoolean("is_frozen"));
+            c.setId_user(rs.getInt("id_user"));
+            courses.add(c);
+        }
+
+        // Close resources
+        rs.close();
+        ps.close();
 
         return courses;
     }

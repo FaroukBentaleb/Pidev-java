@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import java.lang.String?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.collections.FXCollections?>
+
+<!--
+    Card Style:
+    .offer-card {
+        -fx-background-color: white;
+        -fx-background-radius: 18;
+        -fx-effect: dropshadow(gaussian, rgba(30,41,59,0.08), 12, 0, 0, 2);
+        -fx-padding: 24 24 18 24;
+        -fx-spacing: 12;
+        -fx-min-width: 340;
+        -fx-max-width: 380;
+        -fx-border-color: #e0e7ef;
+        -fx-border-radius: 18;
+    }
+    .offer-title {
+        -fx-font-size: 22px;
+        -fx-font-weight: bold;
+        -fx-text-fill: #1E293B;
+    }
+    .offer-status {
+        -fx-background-color: #22c55e;
+        -fx-text-fill: white;
+        -fx-font-size: 13px;
+        -fx-font-weight: bold;
+        -fx-background-radius: 8;
+        -fx-padding: 2 12;
+    }
+    .discount-badge {
+        -fx-background-color: #ef4444;
+        -fx-text-fill: white;
+        -fx-font-size: 13px;
+        -fx-font-weight: bold;
+        -fx-background-radius: 8;
+        -fx-padding: 2 12;
+    }
+    .offer-price {
+        -fx-font-size: 28px;
+        -fx-font-weight: bold;
+        -fx-text-fill: #2563eb;
+    }
+    .per-month {
+        -fx-font-size: 13px;
+        -fx-text-fill: #64748b;
+    }
+    .offer-description {
+        -fx-font-size: 15px;
+        -fx-text-fill: #334155;
+        -fx-padding: 8 0 0 0;
+    }
+    .edit-button {
+        -fx-background-color: #2563eb;
+        -fx-text-fill: white;
+        -fx-font-weight: bold;
+        -fx-background-radius: 6;
+        -fx-padding: 6 24;
+    }
+    .delete-button {
+        -fx-background-color: white;
+        -fx-text-fill: #ef4444;
+        -fx-border-color: #ef4444;
+        -fx-border-width: 2;
+        -fx-font-weight: bold;
+        -fx-background-radius: 6;
+        -fx-border-radius: 6;
+        -fx-padding: 6 24;
+    }
+    .email-button {
+        -fx-background-color: #22c55e;
+        -fx-text-fill: white;
+        -fx-font-weight: bold;
+        -fx-background-radius: 6;
+        -fx-padding: 6 24;
+    }
+    .button-box {
+        -fx-padding: 8 0 0 0;
+    }
+    .no-results-text {
+        -fx-font-size: 18px;
+        -fx-text-fill: #ef4444;
+        -fx-font-weight: bold;
+        -fx-padding: 40 0 0 0;
+    }
+-->
+
+<BorderPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: #f0f4f8;" xmlns="http://javafx.com/javafx/17.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tn.learniverse.controllers.OffreController">
+
+    <!-- LEFT NAV BAR - Modern dark theme -->
+    <left>
+        <VBox alignment="TOP_CENTER" prefHeight="720.0" prefWidth="220.0" spacing="15" style="-fx-background-color: linear-gradient(to bottom, #1E293B, #334155); -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 0);">
+            <padding>
+                <Insets bottom="15.0" left="15.0" right="15.0" top="20.0" />
+            </padding>
+
+            <!-- App Name/Logo with Admin indicator -->
+            <VBox alignment="CENTER" spacing="5">
+                <Label style="-fx-text-fill: white; -fx-font-size: 26px; -fx-font-weight: bold;" text="Learniverse" />
+                <Label style="-fx-text-fill: #64B5F6; -fx-font-size: 14px;" text="Admin Panel" />
+                </VBox>
+                
+            <!-- Navigation Buttons -->
+            <Button fx:id="dashboardButton" alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;" onAction="#ToDash">
+                <graphic>
+                    <Label style="-fx-text-fill: white;" text="📊" />
+                </graphic>
+                <padding>
+                    <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
+                </padding>
+                <HBox.margin>
+                    <Insets top="10.0" />
+                </HBox.margin>
+                <font>
+                    <Font size="14.0" />
+                </font>
+                <text>Dashboard</text>
+            </Button>
+
+            <Button alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" onAction="#usersButton" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-cursor: hand ; -fx-background-radius: 8;">
+                        <graphic>
+                    <Label style="-fx-text-fill: white;" text="👥" />
+                        </graphic>
+                <padding>
+                    <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
+                </padding>
+                <text>Users</text>
+                    </Button>
+                    
+            <Button fx:id="offersButton" alignment="BASELINE_LEFT" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: rgba(255,255,255,0.2); -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;" onAction="#ToOffers">
+                        <graphic>
+                    <Label style="-fx-text-fill: white;" text="📚" />
+                        </graphic>
+                <padding>
+                    <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
+                </padding>
+                <text>Offers</text>
+                    </Button>
+                    
+            <Button alignment="BASELINE_LEFT" onAction="#ToCourses" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                        <graphic>
+                    <Label style="-fx-text-fill: white;" text="📚" />
+                        </graphic>
+                <padding>
+                    <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
+                </padding>
+                <text>Courses</text>
+                    </Button>
+
+            <Button alignment="BASELINE_LEFT" onAction="#Comp" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                        <graphic>
+                    <Label style="-fx-text-fill: white;" text="📝" />
+                        </graphic>
+                <padding>
+                    <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
+                </padding>
+                <text>Competitions</text>
+                    </Button>
+                    
+            <Button alignment="BASELINE_LEFT" onAction="#ToForums" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                        <graphic>
+                    <Label style="-fx-text-fill: white;" text="📢" />
+                        </graphic>
+                <padding>
+                    <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
+                </padding>
+                <text>Forums</text>
+                    </Button>
+                    
+            <Button alignment="BASELINE_LEFT" onAction="#ToReclamations" graphicTextGap="10" maxWidth="1.7976931348623157E308" prefHeight="40.0" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 15px; -fx-background-radius: 8;">
+                        <graphic>
+                    <Label style="-fx-text-fill: white;" text="📈" />
+                        </graphic>
+                <padding>
+                    <Insets bottom="10.0" left="15.0" right="10.0" top="10.0" />
+                </padding>
+                <text>Complaints</text>
+                    </Button>
+
+            <!-- Profile at bottom -->
+            <VBox VBox.vgrow="ALWAYS" />
+            <HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0" style="-fx-background-color: rgba(255,255,255,0.1); -fx-background-radius: 8;">
+                <padding>
+                    <Insets bottom="8.0" left="5.0" right="5.0" top="8.0" />
+                </padding>
+                <StackPane>
+                    <Circle fx:id="circleProfile" fill="#FF5722" radius="18" />
+                    <Label fx:id="FirstLetter" style="-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;" text="A" />
+                </StackPane>
+                <VBox prefHeight="36.0" prefWidth="72.0" spacing="2">
+                    <Label fx:id="navUsernameLabel" minWidth="60.0" style="-fx-text-fill: white; -fx-font-weight: bold;" text="Username" />
+                    <Label style="-fx-text-fill: rgba(255,255,255,0.7); -fx-font-size: 11px;" text="Admin" />
+                </VBox>
+                <Button fx:id="Profilebtn" mnemonicParsing="false" onAction="#Profile" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-border-color: transparent;">
+                    <tooltip>
+                        <Tooltip text="Logout" />
+                    </tooltip>
+                    <HBox.margin>
+                        <Insets left="30.0" />
+                    </HBox.margin>
+                </Button>
+                <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#Logout" style="-fx-background-color: transparent; -fx-cursor: hand; -fx-border-color: transparent;">
+                    <tooltip>
+                        <Tooltip text="Logout" />
+                    </tooltip>
+                </Button>
+                    </HBox>
+                </VBox>
+    </left>
+
+    <!-- MAIN CONTENT AREA -->
+    <center>
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+            <VBox spacing="20" style="-fx-padding: 30;">
+                <!-- Top Bar -->
+                <HBox alignment="CENTER" spacing="20" style="-fx-background-color: white; -fx-padding: 15; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2);">
+                    <Label style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #1E293B;" text="Offer Management" />
+                    <HBox HBox.hgrow="ALWAYS" />
+                    <TextField fx:id="searchField" promptText="Search offers..." style="-fx-background-color: #F0F2F5; -fx-background-radius: 20; -fx-padding: 8 15; -fx-font-size: 14px;" />
+                    <Button fx:id="addButton" style="-fx-background-color: #FF5722; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 8 15;" text="New Offer" />
+                    <Button fx:id="refreshButton" style="-fx-background-color: #64B5F6; -fx-text-fill: white; -fx-background-radius: 5; -fx-padding: 8 15;" text="⟳ Refresh" />
+                </HBox>
+
+                <!-- Key Metrics Cards -->
+                <HBox spacing="20">
+                    <VBox alignment="CENTER" spacing="5" style="-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2); -fx-padding: 15;" HBox.hgrow="ALWAYS">
+                        <Label style="-fx-text-fill: #555; -fx-font-size: 14px;" text="Total Offers" />
+                        <Label fx:id="totalOffersText" style="-fx-text-fill: #1E293B; -fx-font-size: 28px; -fx-font-weight: bold;" text="0" />
+                    </VBox>
+                    <VBox alignment="CENTER" spacing="5" style="-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2); -fx-padding: 15;" HBox.hgrow="ALWAYS">
+                        <Label style="-fx-text-fill: #555; -fx-font-size: 14px;" text="Active Offers" />
+                        <Label fx:id="activeOffersText" style="-fx-text-fill: #1E293B; -fx-font-size: 28px; -fx-font-weight: bold;" text="0" />
+                    </VBox>
+                    <VBox alignment="CENTER" spacing="5" style="-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2); -fx-padding: 15;" HBox.hgrow="ALWAYS">
+                        <Label style="-fx-text-fill: #555; -fx-font-size: 14px;" text="Average Price" />
+                        <Label fx:id="avgPriceText" style="-fx-text-fill: #1E293B; -fx-font-size: 28px; -fx-font-weight: bold;" text="0" />
+                    </VBox>
+                    <VBox alignment="CENTER" spacing="5" style="-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 5, 0, 0, 2); -fx-padding: 15;" HBox.hgrow="ALWAYS">
+                        <Label style="-fx-text-fill: #555; -fx-font-size: 14px;" text="Total Subscriptions" />
+                        <Label fx:id="totalSubscriptionsText" style="-fx-text-fill: #1E293B; -fx-font-size: 28px; -fx-font-weight: bold;" text="0" />
+                    </VBox>
+                </HBox>
+
+                <!-- Filter and Sort Controls -->
+                <HBox spacing="15" alignment="CENTER_LEFT" style="-fx-padding: 0 0 10 0;">
+                    <ComboBox fx:id="filterStatus" promptText="Filter by Status" style="-fx-background-radius: 8; -fx-font-size: 15px; -fx-background-color: #fff; -fx-border-color: #e0e7ef; -fx-border-radius: 8; -fx-padding: 4 12;" />
+                    <ComboBox fx:id="sortBy" promptText="Sort by" style="-fx-background-radius: 8; -fx-font-size: 15px; -fx-background-color: #fff; -fx-border-color: #e0e7ef; -fx-border-radius: 8; -fx-padding: 4 12;" />
+                </HBox>
+
+                <!-- Offer Cards Container -->
+                <FlowPane fx:id="cardsContainer"
+                          hgap="20" vgap="20"
+                          alignment="CENTER"
+                          style="-fx-padding: 20 0 0 0; -fx-alignment: center;"
+                          prefWrapLength="900" />
+
+                <!-- Pagination Controls -->
+                <HBox alignment="CENTER" spacing="10" style="-fx-padding: 20 0 0 0;">
+                    <Button fx:id="prevPageButton" style="-fx-background-color: #E0E7EF; -fx-text-fill: #1E293B; -fx-background-radius: 5; -fx-font-weight: bold;" text="⟨ Prev" />
+                    <TextField fx:id="jumpToPageField" promptText="Page #" style="-fx-background-color: #F0F2F5; -fx-background-radius: 5; -fx-padding: 6 10; -fx-font-size: 14px; -fx-pref-width: 60;" />
+                    <Text fx:id="totalPagesText" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-fill: #1E293B;" text="of 1" />
+                    <Text fx:id="paginationInfo" style="-fx-font-size: 15px; -fx-font-weight: normal; -fx-fill: #1E293B;" text="" />
+                    <Button fx:id="nextPageButton" style="-fx-background-color: #E0E7EF; -fx-text-fill: #1E293B; -fx-background-radius: 5; -fx-font-weight: bold;" text="Next ⟩" />
+                </HBox>
+
+                <!-- Add your charts, offer cards, and other content here, using similar inline styles for modern look -->
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane> 
